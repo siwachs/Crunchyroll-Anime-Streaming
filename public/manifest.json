@@ -1,0 +1,9 @@
+{
+  "short_name": "Crunchyroll",
+  "name": "Crunchyroll - Watch Popular Anime & Read Manga Online",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#000000"
+}

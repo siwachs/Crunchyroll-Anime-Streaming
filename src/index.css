@@ -1,0 +1,115 @@
+:root {
+  --light-black: #23252b;
+  --primary-color: #000000;
+  --drawer-black: #141519;
+  --crunchyroll-orange: #f47521;
+  --genre-dropdown-back: #4a4e5880;
+  --nav-links-color: #dadada;
+  --text-color-gray: #a0a0a0;
+  --yellow-color: #fab818;
+  --bg-backdrop: #23252bcc;
+
+  --thin-border: 0.125rem solid #23252b;
+
+  --icons-inline-padding: 1.125rem;
+  --container-inline-padding: 4rem;
+  --container-icon-width: 1.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--primary-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  font-family: Lato, Helvetica Neue, helvetica, sans-serif;
+  font-weight: 400;
+  height: 100%;
+}
+
+#content {
+  height: 100%;
+  min-width: 20rem;
+  visibility: visible;
+}
+
+#content > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: none;
+  text-decoration: underline;
+  color: inherit;
+}
+
+.hide {
+  display: none;
+}
+
+.relative-position {
+  position: relative;
+}
+
+.h-center {
+  display: flex;
+  align-items: center;
+}
+
+.backdrop {
+  display: block;
+  position: fixed;
+  background-color: var(--bg-backdrop);
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.backdrop.active {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Icon Hover Effects Start */
+.hover_icon {
+  transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
+}
+
+.hover_icon.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.hover_icon:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Icon Hover Effects End */
