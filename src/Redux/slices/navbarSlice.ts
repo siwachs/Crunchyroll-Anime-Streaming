@@ -14,35 +14,35 @@ export const NavbarSlice = createSlice({
   name: "navbar",
   initialState,
   reducers: {
-    updateNavbar: (
-      state,
-      action: PayloadAction<{ key: keyof NavbarState }>
-    ) => {
-      const { key } = action.payload;
+    setIsMenuOpen: (state, action: PayloadAction<boolean | undefined>) => {
+      const payload = action.payload;
+      state.isMenuOpen = payload ? payload : !state.isMenuOpen;
     },
-    updateMobileNavbarState: (
-      state,
-      action: PayloadAction<{
-        key: keyof NavbarState;
-      }>
-    ) => {
-      const { key } = action.payload;
-      state[key] = !state[key];
+    setIsGenreMenuOpen: (state, action: PayloadAction<boolean | undefined>) => {
+      const payload = action.payload;
+      state.isGenresMenuOpen = payload ? payload : !state.isGenresMenuOpen;
     },
-    updateDesktopNavbarState: (
+    setIsNewsMenuOpen: (state, action: PayloadAction<boolean | undefined>) => {
+      const payload = action.payload;
+      state.isNewsMenuOpen = payload ? payload : !state.isNewsMenuOpen;
+    },
+    setIsDesktopMenuOpen: (
       state,
-      action: PayloadAction<{
-        key: keyof NavbarState;
-      }>
+      action: PayloadAction<boolean | undefined>
     ) => {
-      const { key } = action.payload;
-      if (key === "isDesktopMenuOpen") {
-        if (state.isDesktopNewsMenuOpen) state.isDesktopNewsMenuOpen = false;
-      } else if (key === "isDesktopNewsMenuOpen") {
-        if (state.isDesktopMenuOpen) state.isDesktopMenuOpen = false;
-      }
-
-      state[key] = !state[key];
+      const payload = action.payload;
+      state.isDesktopNewsMenuOpen = payload
+        ? payload
+        : !state.isDesktopMenuOpen;
+    },
+    setIsDesktopNewsMenuOpen: (
+      state,
+      action: PayloadAction<boolean | undefined>
+    ) => {
+      const payload = action.payload;
+      state.isDesktopNewsMenuOpen = payload
+        ? payload
+        : !state.isDesktopNewsMenuOpen;
     },
     resetNavbar: (state) => {
       return initialState;
@@ -51,8 +51,11 @@ export const NavbarSlice = createSlice({
 });
 
 export const {
-  updateMobileNavbarState,
-  updateDesktopNavbarState,
+  setIsMenuOpen,
+  setIsGenreMenuOpen,
+  setIsNewsMenuOpen,
+  setIsDesktopMenuOpen,
+  setIsDesktopNewsMenuOpen,
   resetNavbar,
 } = NavbarSlice.actions;
 

@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 
 // Components
-import Layout from "./components/Layout";
+import Layout from "./Wrappers/Layout";
 
 const App: React.FC = () => {
   return (

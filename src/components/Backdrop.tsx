@@ -6,18 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetNavbar } from "../Redux/slices/navbarSlice";
 
 const Backdrop: React.FC = () => {
-  const { isMenuOpen, isDesktopNewsMenuOpen } = useSelector(
-    (state: RootState) => state.navbar
-  );
+  const { isMenuOpen } = useSelector((state: RootState) => state.navbar);
   const dispatch = useDispatch();
 
   return (
     <div
       role="button"
       onClick={() => dispatch(resetNavbar())}
-      className={`backdrop ${
-        isMenuOpen || isDesktopNewsMenuOpen ? "active" : ""
-      }`}
+      className={isMenuOpen ? "backdrop active" : "backdrop"}
     ></div>
   );
 };

@@ -1,13 +1,9 @@
 import { PremiumIcon, SearchIcon, BookmarkIcon, UserIcon } from "../Icons";
 
-interface MenuItem {
+interface NavMenuItem {
   to: string;
   text: string;
-}
-
-interface DesktopNav extends MenuItem {
-  isDropDown?: boolean;
-  menuType?: string;
+  isExpandable?: boolean;
 }
 
 interface NavAction {
@@ -39,7 +35,7 @@ export const NavActionsList: NavAction[] = [
   },
 ];
 
-export const BrowseMenu: MenuItem[] = [
+export const BrowseMenu: NavMenuItem[] = [
   {
     to: "/",
     text: "popular",
@@ -66,7 +62,7 @@ export const BrowseMenu: MenuItem[] = [
   },
 ];
 
-export const Genres: MenuItem[] = [
+export const Genres: NavMenuItem[] = [
   {
     to: "/",
     text: "Action",
@@ -125,7 +121,7 @@ export const Genres: MenuItem[] = [
   },
 ];
 
-export const ExtraMenu: MenuItem[] = [
+export const ExtraMenu: NavMenuItem[] = [
   {
     to: "/",
     text: "Manga",
@@ -136,7 +132,7 @@ export const ExtraMenu: MenuItem[] = [
   },
 ];
 
-export const News: MenuItem[] = [
+export const News: NavMenuItem[] = [
   {
     to: "/",
     text: "all news",
@@ -155,12 +151,11 @@ export const News: MenuItem[] = [
   },
 ];
 
-export const DesktopNavList: DesktopNav[] = [
+export const DesktopNavList: NavMenuItem[] = [
   {
     to: "/",
     text: "Browse",
-    isDropDown: true,
-    menuType: "browse",
+    isExpandable: true,
   },
   {
     to: "/",
@@ -173,7 +168,6 @@ export const DesktopNavList: DesktopNav[] = [
   {
     to: "/",
     text: "news",
-    isDropDown: true,
-    menuType: "news",
+    isExpandable: true,
   },
 ];
