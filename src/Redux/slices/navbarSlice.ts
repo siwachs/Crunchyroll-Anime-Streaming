@@ -6,7 +6,6 @@ const initialState: NavbarState = {
   isMenuOpen: false,
   isGenresMenuOpen: false,
   isNewsMenuOpen: false,
-  isDesktopMenuOpen: false,
   isDesktopNewsMenuOpen: false,
 };
 
@@ -15,36 +14,31 @@ export const NavbarSlice = createSlice({
   initialState,
   reducers: {
     setIsMenuOpen: (state, action: PayloadAction<boolean | undefined>) => {
+      if (state.isDesktopNewsMenuOpen) {
+        state.isDesktopNewsMenuOpen = false;
+      }
       const payload = action.payload;
-      state.isMenuOpen = payload ? payload : !state.isMenuOpen;
+      state.isMenuOpen = payload ?? !state.isMenuOpen;
     },
     setIsGenreMenuOpen: (state, action: PayloadAction<boolean | undefined>) => {
       const payload = action.payload;
-      state.isGenresMenuOpen = payload ? payload : !state.isGenresMenuOpen;
+      state.isGenresMenuOpen = payload ?? !state.isGenresMenuOpen;
     },
     setIsNewsMenuOpen: (state, action: PayloadAction<boolean | undefined>) => {
       const payload = action.payload;
-      state.isNewsMenuOpen = payload ? payload : !state.isNewsMenuOpen;
-    },
-    setIsDesktopMenuOpen: (
-      state,
-      action: PayloadAction<boolean | undefined>
-    ) => {
-      const payload = action.payload;
-      state.isDesktopNewsMenuOpen = payload
-        ? payload
-        : !state.isDesktopMenuOpen;
+      state.isNewsMenuOpen = payload ?? !state.isNewsMenuOpen;
     },
     setIsDesktopNewsMenuOpen: (
       state,
       action: PayloadAction<boolean | undefined>
     ) => {
+      if (state.isMenuOpen) {
+        state.isMenuOpen = false;
+      }
       const payload = action.payload;
-      state.isDesktopNewsMenuOpen = payload
-        ? payload
-        : !state.isDesktopNewsMenuOpen;
+      state.isDesktopNewsMenuOpen = payload ?? !state.isDesktopNewsMenuOpen;
     },
-    resetNavbar: (state) => {
+    resetNavbar: () => {
       return initialState;
     },
   },
@@ -54,7 +48,6 @@ export const {
   setIsMenuOpen,
   setIsGenreMenuOpen,
   setIsNewsMenuOpen,
-  setIsDesktopMenuOpen,
   setIsDesktopNewsMenuOpen,
   resetNavbar,
 } = NavbarSlice.actions;

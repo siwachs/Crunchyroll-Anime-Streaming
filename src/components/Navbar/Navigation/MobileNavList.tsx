@@ -31,8 +31,8 @@ const MobileNavList: React.FC<MobileNavListProps> = ({
 
   return (
     <ul>
-      {menuList.map((item, index) => (
-        <li key={index} className={styles.list_item}>
+      {menuList.map((item) => (
+        <li key={item.text} className={styles.list_item}>
           <NavLink
             to={item.to}
             className={styles.menu_item}
@@ -62,8 +62,8 @@ const MobileNavList: React.FC<MobileNavListProps> = ({
             toggleState ? styles.active : ""
           }`}
         >
-          {subMenuList.map((item, index) => (
-            <li key={index} className={styles.list_item}>
+          {subMenuList.map((item) => (
+            <li key={item.text} className={styles.list_item}>
               <NavLink
                 to={item.to}
                 className={styles.sub_menu_item}

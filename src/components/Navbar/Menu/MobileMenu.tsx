@@ -18,13 +18,20 @@ import {
 } from "../../../Redux/slices/navbarSlice";
 
 const MobileMenu: React.FC = () => {
-  const { isMenuOpen, isGenresMenuOpen, isNewsMenuOpen } = useSelector(
-    (state: RootState) => state.navbar
-  );
+  const {
+    isMenuOpen,
+    isDesktopNewsMenuOpen,
+    isGenresMenuOpen,
+    isNewsMenuOpen,
+  } = useSelector((state: RootState) => state.navbar);
 
   return (
     <div
-      className={isMenuOpen ? `${styles.menu} ${styles.active}` : styles.menu}
+      className={
+        isMenuOpen || isDesktopNewsMenuOpen
+          ? `${styles.menu} ${styles.active}`
+          : styles.menu
+      }
     >
       <div className={styles.menu_content}>
         <nav>

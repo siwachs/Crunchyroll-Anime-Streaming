@@ -40,9 +40,11 @@
 
 .icon_hover.active {
   background-color: var(--primary-color);
+  color: #fff;
 }
 
 .icon_hover:hover {
   background-color: var(--primary-color);
+  color: #fff;
 }
 /* Icon Hover Effects End */

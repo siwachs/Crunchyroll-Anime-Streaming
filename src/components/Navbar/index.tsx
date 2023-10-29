@@ -15,7 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsMenuOpen } from "../../Redux/slices/navbarSlice";
 
 const Navbar: React.FC = () => {
-  const { isMenuOpen } = useSelector((state: RootState) => state.navbar);
+  const { isMenuOpen, isDesktopNewsMenuOpen } = useSelector(
+    (state: RootState) => state.navbar
+  );
   const dispatch = useDispatch();
 
   return (
@@ -32,8 +34,14 @@ const Navbar: React.FC = () => {
           <DesktopNavList />
 
           <button
-            className={isMenuOpen ? "icon_hover active" : "icon_hover"}
-            onClick={() => dispatch(setIsMenuOpen())}
+            className={
+              isMenuOpen || isDesktopNewsMenuOpen
+                ? "icon_hover active"
+                : "icon_hover"
+            }
+            onClick={() =>
+              dispatch(setIsMenuOpen(!(isMenuOpen || isDesktopNewsMenuOpen)))
+            }
           >
             <img src={MenuIcon} alt="menu" />
           </button>
@@ -41,8 +49,8 @@ const Navbar: React.FC = () => {
 
         <div className={styles.header_actions}>
           <ul>
-            {NavActionsList.map((item, index) => (
-              <li key={index} className="icon_hover">
+            {NavActionsList.map((item) => (
+              <li key={item.alt} className="icon_hover">
                 <div>
                   <NavLink to={item.to} className="align-items-center">
                     <img src={item.icon} alt={item.alt} />

@@ -1,13 +1,9 @@
 import React from "react";
 
+import styles from "./Home.module.css";
+
 const Home: React.FC = () => {
-  return (
-    <>
-      {/* {Array.from({ length: 50 }, (_, index) => (
-        <h1 key={index}>Test</h1>
-      ))} */}
-    </>
-  );
+  return <div className={styles.app_body_wrapper}>sdds</div>;
 };
 
 export default Home;

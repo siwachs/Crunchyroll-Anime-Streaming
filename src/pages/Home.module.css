@@ -1,0 +1,3 @@
+.app_body_wrapper {
+  flex: 1 1 0; /* Grow Shrink Basis */
+}

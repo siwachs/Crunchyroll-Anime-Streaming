@@ -16,6 +16,7 @@
   --container-inline-padding: 4rem;
   --container-icon-width: 1.5rem;
   --container-icon-height: 1.5rem;
+  --container-max-width: 54rem;
 
   --line-height: 1.5rem;
   --min-width: 20rem;
@@ -74,4 +75,11 @@ button {
   outline: none;
   text-decoration: none;
   color: inherit;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    /* Spacings and Sizings */
+    --line-height: 1.125rem;
+  }
 }
