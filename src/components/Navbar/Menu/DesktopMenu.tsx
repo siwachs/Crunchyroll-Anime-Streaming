@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styles from "../Navbar.module.css";
-import { BrowseMenu, Genres } from "../../../assets/data/mobileNavLinksData";
+import { BrowseMenu, Genres } from "../../../assets/data/navLinksData";
 
 // React Redux
 import { RootState } from "../../../Redux/store";

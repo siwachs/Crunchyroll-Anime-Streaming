@@ -8,7 +8,7 @@ import {
   Genres,
   ExtraMenu,
   News,
-} from "../../../assets/data/mobileNavLinksData";
+} from "../../../assets/data/navLinksData";
 
 import { RootState } from "../../../Redux/store";
 import { useSelector } from "react-redux";

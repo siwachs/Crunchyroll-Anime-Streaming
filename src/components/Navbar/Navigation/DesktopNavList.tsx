@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import styles from "../Navbar.module.css";
 import { DesktopIconMore } from "../../../assets/Icons";
-import { DesktopNavList as DesktopNavListArray } from "../../../assets/data/mobileNavLinksData";
+import { DesktopNavList as DesktopNavListArray } from "../../../assets/data/navLinksData";
 
 import DesktopMenu from "../Menu/DesktopMenu";
 import DesktopNewsMenu from "../Menu/DesktopNewsMenu";

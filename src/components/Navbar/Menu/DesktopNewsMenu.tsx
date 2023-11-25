@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styles from "../Navbar.module.css";
-import { News } from "../../../assets/data/mobileNavLinksData";
+import { News } from "../../../assets/data/navLinksData";
 
 import { RootState } from "../../../Redux/store";
 import { useSelector } from "react-redux";

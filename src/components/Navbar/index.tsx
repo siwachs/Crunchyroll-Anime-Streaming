@@ -8,7 +8,7 @@ import Backdrop from "../Backdrop";
 import styles from "./Navbar.module.css";
 import { NavbarLogoMobile, NavbarLogoDesktop } from "../../assets/Logos";
 import { MenuIcon } from "../../assets/Icons";
-import { NavActionsList } from "../../assets/data/mobileNavLinksData";
+import { NavActionsList } from "../../assets/data/navLinksData";
 
 import { RootState } from "../../Redux/store";
 import { useSelector, useDispatch } from "react-redux";
