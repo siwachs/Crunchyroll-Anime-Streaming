@@ -1,0 +1,36 @@
+.hero_carousel_card_wrapper {
+  display: grid;
+  grid-template-areas: "content";
+  position: relative;
+}
+
+.hero_carousel_item {
+  grid-area: content;
+  position: relative;
+}
+
+.hero_carousel_card {
+}
+
+.hero_carousel_card_layout {
+  display: grid;
+  grid-template-columns: minmax(0, auto);
+  grid-template-rows: minmax(0, auto);
+  min-width: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.hero_carousel_layout_grid {
+  align-content: end;
+  align-items: end;
+  aspect-ratio: 1/1.15;
+  column-gap: 0.625rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr auto;
+  height: 100%;
+  padding-left: var(--container-inline-padding);
+  padding-right: var(--container-inline-padding);
+  width: 100%;
+}
