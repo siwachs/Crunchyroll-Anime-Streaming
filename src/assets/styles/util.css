@@ -11,10 +11,19 @@
   align-items: center;
 }
 
-.image-responsive {
+.responsive-image {
   max-width: 100%;
   height: auto;
-  display: block;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.invisible {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* Backdrop */
@@ -36,9 +45,8 @@
   opacity: 1;
   visibility: visible;
 }
-/* Backdrop end */
 
-/* Icon Hover Effects Start */
+/* Icon Hover Effect */
 .icon_hover {
   transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
   color: #fff;
@@ -53,4 +61,3 @@
   background-color: var(--primary-color);
   color: #fff;
 }
-/* Icon Hover Effects End */

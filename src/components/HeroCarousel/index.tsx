@@ -9,13 +9,27 @@ const HeroCarousel: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.hero_carousel_card_wrapper}>
-        <div className={styles.hero_carousel_item}>
-          <div className={styles.hero_carousel_card}>
-            <div className={styles.hero_carousel_layout}>
-              <div className={styles.hero_carousel_layout_grid}></div>
+      <div className={styles.carousel}>
+        <div className={styles.carousel_cards}>
+          {images.map((item, index) => (
+            <div
+              key={item.image}
+              className={styles.carousel_card}
+              active-slide={index === currentIndex ? "" : undefined}
+            >
+              <div className={styles.carousel_card_layout}>
+                <div className={styles.carousel_card_layout_grid}>
+                  <div className={styles.carousel_card_background}>
+                    <img
+                      src={item.image}
+                      alt={item.imageName}
+                      className="responsive-image"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

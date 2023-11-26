@@ -1,18 +1,27 @@
-.hero_carousel_card_wrapper {
+.carousel {
+  background-color: #000;
+  display: block;
+  position: relative;
+}
+
+.carousel_cards {
   display: grid;
   grid-template-areas: "content";
   position: relative;
 }
 
-.hero_carousel_item {
+.carousel_card {
   grid-area: content;
   position: relative;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-.hero_carousel_card {
+.carousel_card[active-slide] {
+  opacity: 1;
 }
 
-.hero_carousel_card_layout {
+.carousel_card_layout {
   display: grid;
   grid-template-columns: minmax(0, auto);
   grid-template-rows: minmax(0, auto);
@@ -21,7 +30,9 @@
   width: 100%;
 }
 
-.hero_carousel_layout_grid {
+.carousel_card_layout_grid {
+  --container-inline-padding: 1.25rem;
+  grid-column-gap: 0.625rem;
   align-content: end;
   align-items: end;
   aspect-ratio: 1/1.15;
@@ -32,5 +43,28 @@
   height: 100%;
   padding-left: var(--container-inline-padding);
   padding-right: var(--container-inline-padding);
+  width: 100%;
+}
+
+.carousel_card_background {
+  background: linear-gradient(180deg, #0000, #0003 20%, #0009 56%, #000);
+}
+
+.carousel_card_background::after,
+.carousel_card_background::before {
+  aspect-ratio: inherit;
+  content: "";
+  inset: 0;
+  display: block;
+  position: absolute;
+}
+
+.carousel_card_background {
+  aspect-ratio: 2/3;
+  left: 0;
+  min-width: 100%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
   width: 100%;
 }
