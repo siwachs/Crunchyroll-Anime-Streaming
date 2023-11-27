@@ -5,6 +5,7 @@ import PremiumIcon from "./premium.svg";
 import UserIcon from "./user.svg";
 import MoreIcon from "./more.svg";
 import DesktopIconMore from "./more-desktop.svg";
+import PlayIcon from "./play.svg";
 
 export {
   MenuIcon,
@@ -14,4 +15,5 @@ export {
   UserIcon,
   MoreIcon,
   DesktopIconMore,
+  PlayIcon,
 };

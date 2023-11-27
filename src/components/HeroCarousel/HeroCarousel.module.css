@@ -68,3 +68,228 @@
   top: 0;
   width: 100%;
 }
+
+.carousel_card_logo {
+  aspect-ratio: 15/8;
+  display: grid;
+  grid-column: 4 / span 6;
+  grid-row: 1;
+  grid-template-areas:
+    ". .         ."
+    ". link-area .";
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
+  grid-template-rows: 1fr minmax(0, auto);
+  max-height: min(20rem, 100%);
+  max-width: 37.5rem;
+  min-height: 0;
+  width: 100%;
+}
+
+.carousel_card_logo_link {
+  grid-area: link-area;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.carousel_card_body {
+  display: grid;
+  grid-column: 1 / span 12;
+  grid-row: 2;
+  grid-template-columns: 1fr;
+  height: 100%;
+  justify-items: stretch;
+  min-height: 0;
+  text-align: center;
+}
+
+.carousel_card_seo_title {
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}
+
+.carousel_card_meta_tags {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  margin-top: 0.75rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-gray);
+  user-select: none;
+}
+
+.carousel_card_meta_tags_text {
+  display: inline;
+  position: relative;
+  --line-height: 1.125rem;
+  font-size: 0.875rem;
+}
+
+.carousel_card_meta_tags_text:not(:first-child)::before {
+  background-color: #a0a0a0;
+  content: "";
+  display: inline-block;
+  height: 0.25rem;
+  line-height: 1;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 0.25rem;
+}
+
+.carousel_card_button_group {
+  display: flex;
+  justify-content: center;
+  margin: -0.3125rem;
+}
+
+.carousel_card_button {
+  --default-shadow: inset 0 0 0 0.125rem currentColor;
+  --initial-shadow: var(--default-shadow);
+  --interaction-shadow: var(--default-shadow);
+  --focus-shadow-color: #fff;
+  --focus-shadow: inset 0 0 0 0.25rem var(--focus-shadow-color);
+  background-color: initial;
+  border: 0;
+  box-shadow: var(--initial-shadow);
+  cursor: pointer;
+  display: inline-flex;
+  height: 2.5rem;
+  justify-content: center;
+  min-width: 7.5rem;
+  padding: 0 1rem;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition-duration: 0.2s;
+  transition-property: color, background-color, box-shadow;
+  transition-timing-function: ease;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 100%;
+  transition: color 0.2s ease;
+}
+
+.carousel_card_button_one {
+  --initial-shadow: none;
+  --interaction-shadow: none;
+  background-color: #f47521;
+  color: #141519;
+}
+
+.carousel_card_button_one:hover {
+  background-color: #ff944d;
+  color: #23252b;
+  box-shadow: var(--interaction-shadow);
+}
+
+.carousel_card_button_one_text {
+  align-items: center;
+  cursor: inherit;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+  transition: none;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  font-weight: 900;
+}
+
+.carousel_card_button_one_text img {
+  width: var(--container-icon-width);
+  height: var(--container-icon-height);
+}
+
+.button_tooltip {
+  display: contents;
+}
+
+.bookmark_button {
+  margin: 0.3125rem;
+  flex: 0 0 auto;
+  min-width: 0;
+  padding: 0 0.5rem;
+  width: auto;
+  aspect-ratio: 1/1;
+  z-index: 1;
+}
+
+.bookmark_button span {
+  align-items: center;
+  cursor: inherit;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+  transition: none;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+}
+
+.bookmark_button img {
+  position: relative;
+  width: var(--container-icon-width);
+  height: var(--container-icon-height);
+}
+
+/* --active-page-color: #ffffff80; */
+
+.carousel_navigation_container {
+  --container-inline-padding: 1.25rem;
+  --container-max-width: 84.375rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  padding-left: var(--container-inline-padding);
+  padding-right: var(--container-inline-padding);
+  width: 100%;
+}
+
+.carousel_navigation {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+  padding-top: 2rem;
+}
+
+.carousel_navigation_wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel_navigation_button {
+  --pill-color: #ffffff80;
+  box-sizing: initial;
+  height: 0.5rem;
+  margin-top: -0.5rem;
+  padding: 0.5rem 0.25rem;
+  position: relative;
+  transform: translateZ(0);
+  transition: width 0.3s ease;
+  width: 1.5rem;
+}
+
+.carousel_navigation_button_pill {
+  background-color: var(--pill-color);
+  border-radius: 0.25rem;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: background-color 0.5s ease;
+  width: 100%;
+}
+
+.carousel_navigation_button_pill span {
+  animation: pageLoadOut--cAooA 0.5s ease;
+  background-color: #f47521;
+  border-radius: 0.25rem;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(-100%);
+  width: 100%;
+}
