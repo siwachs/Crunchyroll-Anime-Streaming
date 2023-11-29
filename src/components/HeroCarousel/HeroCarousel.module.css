@@ -1,16 +1,15 @@
 .carousel {
   background-color: #000;
-  display: block;
   position: relative;
-  transform: translateZ(0); /* hardware acceleration */
-  z-index: 0;
+  transform: translateZ(0);
+  z-index: -4;
 }
 
 .carousel_cards {
   display: grid;
   grid-template-areas: "content";
   position: relative;
-  z-index: -1;
+  z-index: -2;
 }
 
 .carousel_card {
@@ -18,7 +17,7 @@
   position: relative;
   opacity: 0;
   transition: opacity 0.5s ease;
-  z-index: 0;
+  z-index: -1;
 }
 
 .carousel_card[active-slide] {
@@ -27,30 +26,29 @@
 }
 
 .carousel_card_container {
-  --container-inline-padding: 1.25rem;
-  margin-left: auto;
-  margin-right: auto;
   max-width: 100%;
   width: 100%;
+  position: relative;
 }
 
 .carousel_card_layout {
   display: grid;
-  grid-template-columns: minmax(0, auto);
+  grid-template-columns: minmax(0, auto); /* Set row and col size*/
   grid-template-rows: minmax(0, auto);
   min-width: 100%;
   position: relative;
   width: 100%;
-  z-index: 0;
+  z-index: 2;
 }
 
 .carousel_card_layout_grid {
+  --container-inline-padding: 1.25rem;
   grid-column-gap: 0.625rem;
-  align-content: end;
+  align-content: end; /*set content to end to cross Axis*/
   align-items: end;
   aspect-ratio: 1/1.15;
-  column-gap: 0.625rem;
   display: grid;
+  position: relative;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 1fr auto;
   height: 100%;
@@ -75,10 +73,6 @@
   top: 0;
 }
 
-.carousel_card_background::before {
-  background-color: var(--light-black);
-}
-
 .carousel_card_background {
   aspect-ratio: 2/3;
   left: 0;
@@ -87,6 +81,11 @@
   position: absolute;
   top: 0;
   width: 100%;
+}
+
+.carousel_card_background img {
+  width: 100%;
+  height: 100%;
 }
 
 .carousel_card_logo {
