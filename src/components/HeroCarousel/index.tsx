@@ -33,33 +33,36 @@ const HeroCarousel: React.FC = () => {
                       />
                     </div>
 
-                    {/* <div className={styles.carousel_card_logo}>
-                      <Link to="/">
+                    <div className={styles.carousel_card_logo}>
+                      <Link to="/" className={styles.carousel_card_logo_link}>
                         <img
                           loading="eager"
+                          image-ready={
+                            index === currentIndex ? "true" : undefined
+                          }
+                          className={styles.carousel_card_logo_image}
                           src={item.imageName}
                           alt={item.imageName}
-                          className="responsive-image relative"
                         />
                       </Link>
-                    </div> */}
+                    </div>
 
-                    {/* <div className={styles.carousel_card_body}>
+                    <div className={styles.carousel_card_body}>
                       <h2 className={styles.carousel_card_seo_title}>
                         Firefighter Daigo: Rescuer in Orange
                       </h2>
 
                       <div className={styles.carousel_card_meta_tags}>
                         <span className={styles.carousel_card_meta_tags_text}>
-                          Subtitled
+                          Sub | Dub
                         </span>
 
                         <span className={styles.carousel_card_meta_tags_text}>
-                          Drama
+                          Fantasy, Drama
                         </span>
                       </div>
 
-                      <div className={styles.carousel_card_button_group}>
+                      {/* <div className={styles.carousel_card_button_group}>
                         <Link
                           to="/"
                           className={`${styles.carousel_card_button} ${styles.carousel_card_button_one}`}
@@ -82,8 +85,8 @@ const HeroCarousel: React.FC = () => {
                             </span>
                           </div>
                         </div>
-                      </div>
-                    </div> */}
+                      </div> */}
+                    </div>
                   </div>
                 </div>
               </div>
