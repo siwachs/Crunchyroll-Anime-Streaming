@@ -1,23 +1,26 @@
 .carousel {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   background-color: #000;
+  display: block;
   position: relative;
   transform: translateZ(0);
-  z-index: -4;
+  z-index: 0;
 }
 
 .carousel_cards {
   display: grid;
   grid-template-areas: "content";
   position: relative;
-  z-index: -2;
+  z-index: -1;
 }
 
 .carousel_card {
   grid-area: content;
-  position: relative;
   opacity: 0;
+  position: relative;
   transition: opacity 0.5s ease;
-  z-index: -1;
+  z-index: 0;
 }
 
 .carousel_card[active-slide] {
@@ -26,9 +29,10 @@
 }
 
 .carousel_card_container {
+  margin-left: auto;
+  margin-right: auto;
   max-width: 100%;
   width: 100%;
-  position: relative;
 }
 
 .carousel_card_layout {
@@ -38,7 +42,7 @@
   min-width: 100%;
   position: relative;
   width: 100%;
-  z-index: 2;
+  z-index: 0;
 }
 
 .carousel_card_layout_grid {
@@ -57,7 +61,7 @@
   width: 100%;
 }
 
-.carousel_card_background {
+.carousel_card_background::after {
   background: linear-gradient(180deg, #0000, #0003 20%, #0009 56%, #000);
 }
 
@@ -73,6 +77,10 @@
   top: 0;
 }
 
+.carousel_card_background::before {
+  background-color: #23252b;
+}
+
 .carousel_card_background {
   aspect-ratio: 2/3;
   left: 0;
@@ -81,11 +89,13 @@
   position: absolute;
   top: 0;
   width: 100%;
+  z-index: -1;
 }
 
 .carousel_card_background img {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .carousel_card_logo {
