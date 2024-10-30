@@ -1,0 +1,47 @@
+.header {
+  @apply relative flex-[0_0_3.75rem];
+}
+
+.header-items-wrapper {
+  @apply h-15 fixed left-0 right-0 z-10 grid grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
+
+  grid-template-areas: "menu logo actions";
+}
+
+.header-logo {
+  @apply flex;
+
+  grid-area: logo;
+}
+
+.header-logo:hover a svg {
+  @apply fill-white;
+}
+
+.header-logo a {
+  @apply block px-[1.125rem];
+}
+
+.header-logo a svg {
+  @apply block h-full fill-[var(--app-crunchyroll-orange)] transition-[fill] duration-200;
+}
+
+.icon-wrapper {
+  @apply flex h-full items-center px-[1.125rem] text-[var(--app-icon-primary)] transition-colors duration-100 hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
+}
+
+.header-menu {
+  @apply flex;
+
+  grid-area: menu;
+}
+
+.header-actions {
+  @apply flex justify-end;
+
+  grid-area: actions;
+}
+
+.header-actions ul:first-child {
+  @apply flex;
+}

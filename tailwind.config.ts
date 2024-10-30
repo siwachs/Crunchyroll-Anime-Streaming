@@ -8,10 +8,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
+      spacing: { "15": "3.75rem" },
     },
   },
   plugins: [],
