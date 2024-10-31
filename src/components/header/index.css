@@ -2,8 +2,8 @@
   @apply relative flex-[0_0_3.75rem];
 }
 
-.header-items-wrapper {
-  @apply h-15 fixed left-0 right-0 z-10 grid grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
+.header-container {
+  @apply fixed left-0 right-0 z-10 grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
 
   grid-template-areas: "menu logo actions";
 }
@@ -14,20 +14,24 @@
   grid-area: logo;
 }
 
-.header-logo:hover a svg {
-  @apply fill-white;
-}
-
 .header-logo a {
   @apply block px-[1.125rem];
 }
 
 .header-logo a svg {
-  @apply block h-full fill-[var(--app-crunchyroll-orange)] transition-[fill] duration-200;
+  @apply block h-full fill-[var(--app-crunchyroll-orange)];
+
+  transition: fill 0.2s ease;
+}
+
+.header-logo:hover a svg {
+  @apply fill-white;
 }
 
 .icon-wrapper {
-  @apply flex h-full items-center px-[1.125rem] text-[var(--app-icon-primary)] transition-colors duration-100 hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
+  @apply flex h-full items-center px-[1.125rem] text-[var(--app-icon-primary)] hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
+
+  transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
 }
 
 .header-menu {
@@ -36,12 +40,71 @@
   grid-area: menu;
 }
 
+/* Header Menu Dropdown start */
+.menu-dropdown {
+  @apply invisible fixed left-0 top-15 grid h-[calc(100%-3.75rem)] w-full min-w-80 -translate-y-[0.625rem] overflow-y-auto bg-[var(--app-background-primary)] opacity-0;
+
+  grid-template-areas: "content";
+  scrollbar-width: thin;
+  transition:
+    transform 0.1s,
+    opacity 0.1s cubic-bezier(0, 0, 0.25, 1),
+    visibility 0s linear 0.1s;
+}
+
+.menu-dropdown[data-active="true"] {
+  @apply visible translate-y-0 opacity-100;
+
+  transition:
+    transform 0.2s,
+    opacity 0.2s cubic-bezier(0, 0, 0.25, 1),
+    visibility 0s;
+}
+
+.menu-dropdown-content {
+  @apply w-full;
+
+  grid-area: content;
+}
+
+.menu-dropdown-content nav {
+  @apply block;
+}
+
+.menu-dropdown-content nav .menu-section:first-child {
+  @apply border-b border-[var(--app-border-primary)];
+}
+
+.menu-dropdown-content nav .menu-section {
+  @apply py-2.5;
+}
+
+.menu-dropdown-content nav .menu-section .menu-title {
+  @apply relative flex items-center px-5 py-3 text-base leading-6 text-[var(--app-text-secondary)];
+
+  transition: background-color 0.2s ease;
+}
+
+.menu-dropdown-content nav .menu-section .menu-title[data-active="true"] {
+  @apply bg-[var(--app-background-secondary)];
+}
+
+.menu-dropdown-content nav .menu-section .menu-title:hover {
+  @apply bg-[var(--app-background-secondary)];
+}
+
+.menu-dropdown-content nav .menu-section .menu-title .menu-title-icon {
+  transition: transform 0.1s cubic-bezier(0, 0, 0.25, 1);
+}
+
+/* Header Menu Dropdown End */
+
 .header-actions {
   @apply flex justify-end;
 
   grid-area: actions;
 }
 
-.header-actions ul:first-child {
+.header-actions > ul {
   @apply flex;
 }

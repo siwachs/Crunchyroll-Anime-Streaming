@@ -1,11 +1,11 @@
 const NAV_LINKS = [
-  "Popular",
-  "New",
-  "Alphabetical",
-  "Simulcast Season",
-  "Release Calendar",
-  "Music Videos & Concerts",
-  "Genres",
+  { title: "Popular", href: "/", key: "popular" },
+  { title: "New", href: "/", key: "new" },
+  { title: "Alphabetical", href: "/", key: "alphabetical" },
+  { title: "Simulcast Season", href: "/", key: "simulcast-season" },
+  { title: "Release Calendar", href: "/", key: "release-calendar" },
+  { title: "Music Videos & Concerts", href: "/", key: "music-videos" },
+  { title: "Genres", key: "genres" },
 ];
 
 const GENRES = [

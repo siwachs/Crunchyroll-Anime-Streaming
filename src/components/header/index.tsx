@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import HeaderMenuMobileOnly from "./headerMenuMobileOnly";
+import HeaderMenu from "./headerMenu";
 
 import { HiSearch, HiOutlineUser } from "react-icons/hi";
 
@@ -10,7 +10,7 @@ import "./index.css";
 const Header = () => {
   return (
     <header className="header">
-      <div className="header-items-wrapper">
+      <div className="header-container">
         <div className="header-logo">
           <Link href="/">
             <HeaderLogoMobileOnly />
@@ -18,7 +18,7 @@ const Header = () => {
         </div>
 
         <div className="header-menu">
-          <HeaderMenuMobileOnly />
+          <HeaderMenu />
         </div>
 
         <div className="header-actions">
