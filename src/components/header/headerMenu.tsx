@@ -7,7 +7,7 @@ import { triggerCallbackOnClickOrOnKeydown } from "@/lib/utils";
 
 import { HiMiniBars3, HiMiniChevronDown } from "react-icons/hi2";
 
-import { NAV_LINKS } from "@/data/header";
+import { NAV_LINKS, GENRES } from "@/data/header";
 
 const HeaderMenu: React.FC = () => {
   const [headerState, setHeaderState] = useState<
@@ -20,12 +20,20 @@ const HeaderMenu: React.FC = () => {
     );
   }
 
-  function toogleGenresList(e: KeyboardEvent | MouseEvent) {}
+  function toogleGenresList(e: KeyboardEvent | MouseEvent) {
+    triggerCallbackOnClickOrOnKeydown(e, () =>
+      setHeaderState((prev) =>
+        prev === "genresListExpanded" ? "open" : "genresListExpanded",
+      ),
+    );
+  }
 
   return (
     <div>
       <div
-        data-active={headerState === "open"}
+        data-active={
+          headerState === "open" || headerState === "genresListExpanded"
+        }
         onClick={toogleMenu}
         onKeyDown={toogleMenu}
         tabIndex={0}
@@ -35,7 +43,12 @@ const HeaderMenu: React.FC = () => {
         <HiMiniBars3 className="size-6" />
       </div>
 
-      <div data-active={headerState === "open"} className="menu-dropdown">
+      <div
+        data-active={
+          headerState === "open" || headerState === "genresListExpanded"
+        }
+        className="menu-dropdown"
+      >
         <div className="menu-dropdown-content">
           <nav>
             <div className="menu-section">
@@ -45,24 +58,49 @@ const HeaderMenu: React.FC = () => {
 
               <ul>
                 {NAV_LINKS.map((link) => (
-                  <li key={link.key} className="select-none">
+                  <li key={link.title} className="select-none">
                     {link.href ? (
-                      <Link href={link.href} className="menu-title">
+                      <Link
+                        href={link.href}
+                        className="menu-title menu-title-transition"
+                      >
                         <span>{link.title}</span>
                       </Link>
                     ) : (
-                      <div
-                        data-active={headerState === "genresListExpanded"}
-                        tabIndex={0}
-                        role="button"
-                        className="menu-title"
-                      >
-                        <span>{link.title}</span>
+                      <>
+                        <div
+                          data-active={headerState === "genresListExpanded"}
+                          onClick={toogleGenresList}
+                          onKeyDown={toogleGenresList}
+                          tabIndex={0}
+                          role="button"
+                          className="menu-title menu-title-transition"
+                        >
+                          <span>{link.title}</span>
 
-                        <span className="menu-title-icon absolute left-[calc(100vw-13%)] top-1/2 -translate-y-1/2">
-                          <HiMiniChevronDown className="size-6" />
-                        </span>
-                      </div>
+                          <span className="menu-title-icon absolute left-[calc(100vw-13%)] top-1/2 -translate-y-1/2">
+                            <HiMiniChevronDown className="size-6" />
+                          </span>
+                        </div>
+
+                        <ul
+                          data-active={headerState === "genresListExpanded"}
+                          className="hidden data-[active=true]:block data-[active=true]:bg-[var(--app-background-tertiary)]"
+                        >
+                          {GENRES.map((genre) => (
+                            <li key={genre.title}>
+                              <Link
+                                href={genre.href}
+                                className="submenu-title-transition relative block p-[0.875rem_2.375rem] text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)]"
+                              >
+                                <h5 className="text-sm font-medium leading-[1.125rem]">
+                                  {genre.title}
+                                </h5>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
                     )}
                   </li>
                 ))}

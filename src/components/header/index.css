@@ -19,7 +19,7 @@
 }
 
 .header-logo a svg {
-  @apply block h-full fill-[var(--app-crunchyroll-orange)];
+  @apply block h-full fill-[var(--app-background-crunchyroll-orange)];
 
   transition: fill 0.2s ease;
 }
@@ -79,10 +79,13 @@
   @apply py-2.5;
 }
 
+.menu-title-transition,
+.submenu-title-transition {
+  transition: background-color 0.2s ease;
+}
+
 .menu-dropdown-content nav .menu-section .menu-title {
   @apply relative flex items-center px-5 py-3 text-base leading-6 text-[var(--app-text-secondary)];
-
-  transition: background-color 0.2s ease;
 }
 
 .menu-dropdown-content nav .menu-section .menu-title[data-active="true"] {
@@ -97,6 +100,17 @@
   transition: transform 0.1s cubic-bezier(0, 0, 0.25, 1);
 }
 
+.submenu-title-active {
+  @apply border-l-2 border-[var(--app-background-crunchyroll-orange)] pl-9 text-[var(--app-text-crunchyroll-orange)];
+}
+
+.menu-dropdown-content
+  nav
+  .menu-section
+  .menu-title[data-active="true"]
+  .menu-title-icon {
+  @apply -rotate-180;
+}
 /* Header Menu Dropdown End */
 
 .header-actions {
