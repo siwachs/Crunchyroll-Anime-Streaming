@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       spacing: { "15": "3.75rem" },
+      screens: { sm: "568px" },
     },
   },
   plugins: [],

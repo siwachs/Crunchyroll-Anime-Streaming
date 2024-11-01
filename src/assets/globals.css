@@ -30,3 +30,11 @@ body {
   color: var(--app-text-primary);
   background-color: var(--app-background-primary);
 }
+
+.page-overlay {
+  @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0;
+}
+
+.page-overlay[data-active="true"] {
+  @apply visible opacity-100;
+}

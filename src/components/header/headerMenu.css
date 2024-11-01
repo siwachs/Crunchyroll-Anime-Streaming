@@ -1,0 +1,65 @@
+.menu-dropdown {
+  @apply invisible fixed left-0 top-15 grid h-[calc(100%-3.75rem)] w-full -translate-y-[0.625rem] overflow-y-auto bg-[var(--app-background-primary)] opacity-0 sm:w-[18.75rem];
+
+  grid-template-areas: "content";
+  scrollbar-width: thin;
+  transition:
+    transform 0.1s,
+    opacity 0.1s cubic-bezier(0, 0, 0.25, 1),
+    visibility 0s linear 0.1s;
+}
+
+.menu-dropdown[data-active="true"] {
+  @apply visible translate-y-0 opacity-100;
+
+  transition:
+    transform 0.2s,
+    opacity 0.2s cubic-bezier(0, 0, 0.25, 1),
+    visibility 0s;
+}
+
+.menu-dropdown-content {
+  @apply block w-full;
+
+  grid-area: content;
+}
+
+.menu-section:first-child {
+  @apply border-b border-[var(--app-border-primary)];
+}
+
+.menu-section {
+  @apply py-2.5;
+}
+
+.menu-title {
+  @apply relative flex items-center px-5 py-3 text-base leading-6 text-[var(--app-text-secondary)];
+
+  transition: background-color 0.2s ease;
+}
+
+.menu-title[data-active="true"] {
+  @apply bg-[var(--app-background-secondary)];
+}
+
+.menu-title:hover {
+  @apply bg-[var(--app-background-secondary)];
+}
+
+.menu-title-icon {
+  transition: transform 0.1s cubic-bezier(0, 0, 0.25, 1);
+}
+
+.menu-title[data-active="true"] .menu-title-icon {
+  @apply -rotate-180;
+}
+
+.submenu-title {
+  @apply relative block p-[0.875rem_2.375rem] text-sm font-medium leading-[1.125rem] text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)];
+
+  transition: background-color 0.2s ease;
+}
+
+.submenu-title-active {
+  @apply border-l-2 border-[var(--app-background-crunchyroll-orange)] pl-9 text-[var(--app-text-crunchyroll-orange)];
+}
