@@ -6,6 +6,7 @@ import { triggerCallbackOnClickOrOnKeydown } from "@/lib/utils";
 import { HeaderState } from "./types";
 
 import { HiMiniBars3, HiMiniChevronDown } from "react-icons/hi2";
+import { FaCaretDown } from "react-icons/fa";
 
 import { NAV_LINKS, GENRES } from "@/data/header";
 import "./headerMenu.css";
@@ -40,7 +41,9 @@ const HeaderMenu: React.FC<{
         role="button"
         className="icon-wrapper"
       >
-        <HiMiniBars3 className="size-6" />
+        <span className="hidden select-none lg:flex">Browse</span>
+        <HiMiniBars3 className="size-6 lg:hidden" />
+        <FaCaretDown className="mx-1.5 hidden size-4 lg:flex" />
       </div>
 
       <div
@@ -50,10 +53,8 @@ const HeaderMenu: React.FC<{
         className="menu-dropdown"
       >
         <nav className="menu-dropdown-content">
-          <div className="menu-section">
-            <small className="block select-none px-5 py-2.5 text-xs font-semibold uppercase leading-4 text-[#a0a0a0]">
-              Browse
-            </small>
+          <section className="menu-section">
+            <small className="small-title lg:hidden">Browse</small>
 
             <ul>
               {NAV_LINKS.map((link) => (
@@ -63,7 +64,7 @@ const HeaderMenu: React.FC<{
                       <span>{link.title}</span>
                     </Link>
                   ) : (
-                    <>
+                    <div className="lg:hidden">
                       <div
                         data-active={headerState === "genresListExpanded"}
                         onClick={toogleGenresList}
@@ -91,14 +92,28 @@ const HeaderMenu: React.FC<{
                           </li>
                         ))}
                       </ul>
-                    </>
+                    </div>
                   )}
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          <div className="menu-section">
+          <section className="menu-section hidden lg:block">
+            <small className="small-title">Genres</small>
+
+            <ul className="genres-section">
+              {GENRES.map((genre) => (
+                <li key={genre.title}>
+                  <Link href={genre.href} className="submenu-title">
+                    <h5>{genre.title}</h5>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="menu-section lg:hidden">
             <ul>
               <li className="select-none">
                 <div className="menu-title">
@@ -110,7 +125,7 @@ const HeaderMenu: React.FC<{
                 <div className="menu-title">News (Currently Not Available)</div>
               </li>
             </ul>
-          </div>
+          </section>
         </nav>
       </div>
     </div>

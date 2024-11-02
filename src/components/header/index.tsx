@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, KeyboardEvent, MouseEvent } from "react";
 import Link from "next/link";
+
+import { triggerCallbackOnClickOrOnKeydown } from "@/lib/utils";
 
 import HeaderMenu from "./headerMenu";
 
@@ -15,8 +17,8 @@ import "./index.css";
 const Header = () => {
   const [headerState, setHeaderState] = useState<HeaderState>("close");
 
-  function closeHeader() {
-    setHeaderState("close");
+  function closeHeader(e: KeyboardEvent | MouseEvent) {
+    triggerCallbackOnClickOrOnKeydown(e, () => setHeaderState("close"));
   }
 
   return (
@@ -37,7 +39,7 @@ const Header = () => {
         </div>
 
         <div className="header-actions">
-          <ul>
+          <ul className="flex">
             <li>
               <div tabIndex={0} role="button" className="icon-wrapper">
                 <HiSearch className="size-6" />
@@ -67,6 +69,7 @@ const Header = () => {
         }
         className="page-overlay"
         onClick={closeHeader}
+        onKeyDown={closeHeader}
         aria-label="Close Menu"
       />
     </header>

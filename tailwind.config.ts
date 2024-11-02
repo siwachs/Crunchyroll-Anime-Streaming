@@ -8,8 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      spacing: { "15": "3.75rem" },
+      spacing: { "15": "3.75rem", "4.5": "1.125rem" },
       screens: { sm: "568px" },
+      lineHeight: { "leading-4.5": "1.125rem" },
     },
   },
   plugins: [],

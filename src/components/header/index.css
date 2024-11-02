@@ -8,6 +8,17 @@
   grid-template-areas: "menu logo actions";
 }
 
+@media screen and (min-width: 1024px) {
+  .header-container {
+    --container-inline-padding: 4rem;
+    grid-template-areas: "- logo menu actions --";
+    grid-template-columns: minmax(0, var(--container-inline-padding)) auto 1fr auto minmax(
+        0,
+        var(--container-inline-padding)
+      );
+  }
+}
+
 .header-logo {
   @apply flex;
 
@@ -25,7 +36,7 @@
 }
 
 .icon-wrapper {
-  @apply flex h-full items-center px-[1.125rem] text-[var(--app-icon-primary)] hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
+  @apply px-4.5 flex h-full items-center text-[var(--app-icon-primary)] hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
 
   transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
 }
@@ -37,11 +48,7 @@
 }
 
 .header-actions {
-  @apply flex justify-end;
+  @apply flex;
 
   grid-area: actions;
-}
-
-.header-actions > ul {
-  @apply flex;
 }

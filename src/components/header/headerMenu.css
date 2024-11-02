@@ -1,5 +1,5 @@
 .menu-dropdown {
-  @apply invisible fixed left-0 top-15 grid h-[calc(100%-3.75rem)] w-full -translate-y-[0.625rem] overflow-y-auto bg-[var(--app-background-primary)] opacity-0 sm:w-[18.75rem];
+  @apply invisible fixed left-0 top-15 grid h-[calc(100%-3.75rem)] w-full -translate-y-2.5 overflow-y-auto bg-[var(--app-background-primary)] opacity-0 sm:w-[18.75rem] lg:left-auto lg:h-auto lg:w-auto lg:py-2.5;
 
   grid-template-areas: "content";
   scrollbar-width: thin;
@@ -19,21 +19,33 @@
 }
 
 .menu-dropdown-content {
-  @apply block w-full;
+  @apply block w-full lg:grid lg:grid-cols-[13.75rem_1fr];
 
   grid-area: content;
 }
 
+.small-title {
+  @apply block select-none px-5 py-2.5 text-xs font-semibold uppercase text-[#a0a0a0] lg:p-[0.8125rem_1rem];
+}
+
 .menu-section:first-child {
-  @apply border-b border-[var(--app-border-primary)];
+  @apply border-b-2 border-[var(--app-border-primary)] lg:border-none;
+}
+
+.menu-section:nth-child(2) {
+  @apply border-l-2 border-[var(--app-border-primary)];
 }
 
 .menu-section {
-  @apply py-2.5;
+  @apply py-2.5 lg:py-0;
+}
+
+.menu-section .genres-section {
+  @apply grid w-full auto-cols-[minmax(0,12.5rem)] grid-flow-col grid-rows-[repeat(5,1fr)] gap-x-5;
 }
 
 .menu-title {
-  @apply relative flex items-center px-5 py-3 text-base leading-6 text-[var(--app-text-secondary)];
+  @apply px-4.5 lg:text-sm/leading-4.5 relative flex items-center py-3 text-base font-medium text-[var(--app-text-secondary)] lg:px-4;
 
   transition: background-color 0.2s ease;
 }
@@ -55,7 +67,7 @@
 }
 
 .submenu-title {
-  @apply relative block p-[0.875rem_2.375rem] text-sm font-medium leading-[1.125rem] text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)];
+  @apply text-sm/leading-4.5 block p-[0.875rem_2.375rem] font-medium text-[var(--app-icon-primary)] hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem];
 
   transition: background-color 0.2s ease;
 }
