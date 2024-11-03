@@ -1,0 +1,21 @@
+.carousel-cards {
+  @apply relative grid;
+
+  grid-template-areas: "content";
+}
+
+.carousel-card {
+  @apply relative z-0 hidden opacity-0;
+
+  transition: opacity 0.5s ease;
+}
+
+.carousel-card[data-active="true"] {
+  @apply z-10 grid opacity-100;
+
+  grid-area: content;
+}
+
+.carousel-card-container {
+  @apply grid;
+}

@@ -3,7 +3,7 @@
 }
 
 .header-container {
-  @apply fixed left-0 right-0 z-10 grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
+  @apply fixed left-0 right-0 z-50 grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
 
   grid-template-areas: "menu logo actions";
 }
@@ -36,7 +36,7 @@
 }
 
 .icon-wrapper {
-  @apply px-4.5 flex h-full items-center text-[var(--app-icon-primary)] hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
+  @apply flex h-full items-center px-4.5 text-[var(--app-icon-primary)] hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
 
   transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
 }

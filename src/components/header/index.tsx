@@ -24,14 +24,14 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="header-logo">
+        <div title="Company Logo" className="header-logo">
           <Link href="/" className="block px-[1.125rem]">
             <HeaderLogoMobileOnly className="sm:hidden" />
             <HeaderLogoLarge className="hidden sm:block" />
           </Link>
         </div>
 
-        <div className="header-menu">
+        <div title="Menu" className="header-menu">
           <HeaderMenu
             headerState={headerState}
             setHeaderState={setHeaderState}
@@ -41,19 +41,34 @@ const Header = () => {
         <div className="header-actions">
           <ul className="flex">
             <li>
-              <div tabIndex={0} role="button" className="icon-wrapper">
+              <div
+                title="Search"
+                tabIndex={0}
+                role="button"
+                className="icon-wrapper"
+              >
                 <HiSearch className="size-6" />
               </div>
             </li>
 
             <li>
-              <div tabIndex={0} role="button" className="icon-wrapper">
+              <div
+                title="Watchlist"
+                tabIndex={0}
+                role="button"
+                className="icon-wrapper"
+              >
                 <HiOutlineBookmark className="size-6" />
               </div>
             </li>
 
             <li>
-              <div tabIndex={0} role="button" className="icon-wrapper">
+              <div
+                title="Account Menu"
+                tabIndex={0}
+                role="button"
+                className="icon-wrapper"
+              >
                 <HiOutlineUser className="size-6" />
               </div>
             </li>
