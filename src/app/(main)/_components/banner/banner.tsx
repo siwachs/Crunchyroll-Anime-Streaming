@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 
 import images from "@/assets/banner";
@@ -19,7 +20,38 @@ const Banner = () => {
             className="carousel-card"
           >
             <div className="carousel-card-container">
-              <Image src={image.image} alt={`card-${index + 1}`} />
+              <div className="carousel-card-container-grid">
+                <div className="carousel-card-container-bg">
+                  <div className="carousel-card-container-image">
+                    <Image
+                      fill
+                      src={image.image}
+                      alt={`card-image-${index}`}
+                      className="block h-full w-full object-cover object-[center_top]"
+                    />
+                  </div>
+
+                  <div className="carousel-card-container-name">
+                    <Link
+                      href="/"
+                      className="carousel-card-container-name-image"
+                    >
+                      <Image
+                        fill
+                        src={image.imageName}
+                        alt={`card-name-${index}`}
+                      />
+                    </Link>
+                  </div>
+
+                  <div className="carousel-card-container-body">
+                    <h2 className="sr-only">[No RU] Blue Exorcist S4</h2>
+                    <div className="mb-5 mt-3 inline-block overflow-hidden text-ellipsis whitespace-nowrap"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="carousel-card-container-sizer" />
             </div>
           </div>
         ))}
