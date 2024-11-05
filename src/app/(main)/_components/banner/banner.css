@@ -91,3 +91,11 @@
   min-height: 0;
   text-align: center;
 }
+
+.rhombus::before {
+  --meta-color: #a0a0a0;
+  @apply mx-1 inline-block size-1 bg-[var(--meta-color)];
+
+  content: "";
+  transform: translateY(-50%) rotate(45deg);
+}

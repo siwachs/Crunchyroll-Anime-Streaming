@@ -46,7 +46,16 @@ const Banner = () => {
 
                   <div className="carousel-card-container-body">
                     <h2 className="sr-only">[No RU] Blue Exorcist S4</h2>
-                    <div className="mb-5 mt-3 inline-block overflow-hidden text-ellipsis whitespace-nowrap"></div>
+
+                    <div className="mb-5 mt-3 inline-block select-none overflow-hidden text-ellipsis whitespace-nowrap text-[#a0a0a0]">
+                      <span className="mb-5 mt-3 inline-block">14+</span>
+                      <span className="rhombus relative inline text-sm/leading-4.5">
+                        Sub | Dub
+                      </span>
+                      <span className="rhombus relative inline text-sm/leading-4.5">
+                        Action, Adventure, Comedy, Fantasy, Supernatural
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
