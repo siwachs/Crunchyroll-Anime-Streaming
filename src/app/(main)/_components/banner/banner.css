@@ -56,13 +56,13 @@
   grid-row: 1/1;
 }
 
-.carousel-card-title a {
+.carousel-card-title a:first-child {
   @apply h-full w-full;
 
   grid-area: logo;
 }
 
-.carousel-card-title a img {
+.carousel-card-title a:first-child img:first-child {
   @apply block h-full w-full object-contain object-[bottom_center] opacity-0;
 
   transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1);
@@ -86,4 +86,66 @@
 
 .rhombus::before {
   @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
+}
+
+.carausel-card-description {
+  @apply hidden;
+}
+
+.carausel-card-button-group {
+  @apply relative flex justify-center;
+}
+
+.carausel-card-watch-button {
+  @apply m-[0.3125rem] inline-flex h-10 min-w-[7.5rem] flex-1 select-none justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[#ff7b2e] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)];
+
+  transition-duration: 0.2s;
+  transition-property: color, background-color, box-shadow;
+  transition-timing-function: ease;
+}
+
+.carausel-card-watch-button span:first-child {
+  @apply flex items-center gap-1 text-sm/leading-4.5 font-black;
+}
+
+.carausel-card-add-to-watchlist-button {
+  @apply m-[0.3125rem] aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)];
+}
+
+.carausel-card-add-to-watchlist-button span:first-child {
+  @apply flex items-center justify-center gap-1;
+}
+
+.navigation-button {
+  @apply ease-quick relative h-2 w-6 px-2 py-1 transition-[width] duration-300;
+
+  transform: translateZ(0);
+}
+
+.navigation-button div:first-child {
+  @apply flex size-full overflow-hidden rounded bg-[var(--pill-color)];
+
+  transform: translateZ(0);
+  transition: background-color 0.5s ease;
+}
+
+.navigation-button span:first-child {
+  animation: pageLoadOut--cAooA 0.5s ease;
+  background-color: #ff640a;
+  border-radius: 0.25rem;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(-100%);
+  width: 100%;
+}
+
+@keyframes pageLoadOut--cAooA {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
 }

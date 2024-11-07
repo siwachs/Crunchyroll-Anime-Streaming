@@ -4,6 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+import { HiOutlinePlay } from "react-icons/hi2";
+import { HiOutlineBookmark } from "react-icons/hi";
+
 import images from "@/assets/banner";
 import "./banner.css";
 
@@ -12,6 +15,8 @@ const Banner = () => {
 
   return (
     <div className="relative">
+      <div className="hidden"></div>
+
       <div className="carousel-cards relative grid">
         {images.map((image, index) => (
           <div
@@ -22,19 +27,24 @@ const Banner = () => {
             <div className="carousel-card-container">
               <div className="carousel-card-grid">
                 <div className="carousel-card-bg">
-                  <Image
-                    fill
-                    sizes="100vw"
-                    src={image.image}
-                    alt={`card-image-${index}`}
-                    className="block h-full w-full object-cover object-[center_top]"
-                  />
+                  <picture>
+                    <Image
+                      sizes="(max-width: 568px) 90vw, 100vw"
+                      fill
+                      priority={activeCard === index}
+                      src={image.image}
+                      alt={`card-image-${index}`}
+                      className="block h-full w-full object-cover object-[center_top]"
+                    />
+                  </picture>
                 </div>
 
                 <div className="carousel-card-title">
                   <Link href="/">
                     <Image
+                      sizes="(max-width: 568px) 90vw, 100vw"
                       fill
+                      priority={activeCard === index}
                       src={image.imageName}
                       alt={`card-name-${index}`}
                     />
@@ -55,6 +65,23 @@ const Banner = () => {
                       Action, Adventure, Comedy, Fantasy, Supernatural
                     </span>
                   </div>
+
+                  <p className="carausel-card-description"></p>
+
+                  <div className="carausel-card-button-group">
+                    <Link href="/" className="carausel-card-watch-button">
+                      <span>
+                        <HiOutlinePlay strokeWidth={2} className="size-6" />
+                        Start Watching S1 E1
+                      </span>
+                    </Link>
+
+                    <button className="carausel-card-add-to-watchlist-button tooltip">
+                      <span>
+                        <HiOutlineBookmark className="size-6" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -64,7 +91,23 @@ const Banner = () => {
         ))}
       </div>
 
-      {/* Pagination Nav Buttons */}
+      <div className="hidden"></div>
+
+      <div className="mx-auto w-full max-w-full px-5 pt-8">
+        <div className="flex justify-center">
+          {images.map((image, index) => (
+            <button
+              key={image.key}
+              aria-current={activeCard === index}
+              className="navigation-button"
+            >
+              <div>
+                <span />
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
