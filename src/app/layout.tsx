@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Embark on an anime adventure with Crunchyroll, your ultimate destination for watching a vast collection of anime series and movies. Delve into the captivating worlds of hit titles such as One Piece, Jujutsu Kaisen, Chainsaw Man, and Attack on Titan. Start your free trial today and immerse yourself in the thrilling world of anime with Crunchyroll!",
 };
 
-const font = Lato({ subsets: ["latin"], weight: ["400", "900"] });
+const font = Lato({ subsets: ["latin"], weight: ["400"] });
 
 export default function RootLayout({
   children,
