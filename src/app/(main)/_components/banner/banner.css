@@ -87,11 +87,11 @@
 }
 
 .carausel-card-meta-tags {
-  @apply mb-5 mt-3 inline-block select-none truncate text-[var(--meta-color)];
+  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)];
 }
 
 .carausel-card-meta-tags > span {
-  @apply inline text-sm/leading-4.5;
+  @apply inline text-sm/leading-4.5 font-medium;
 }
 
 .rhombus {
@@ -100,6 +100,10 @@
 
 .rhombus::before {
   @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
+}
+
+.carausel-card-description {
+  @apply hidden font-sans text-sm/leading-4.5 font-medium;
 }
 
 .carausel-card-button {
@@ -113,7 +117,7 @@
 }
 
 .carausel-card-watch-button span:first-child {
-  @apply flex items-center gap-1 font-sans text-sm/leading-4.5 font-black;
+  @apply flex items-center gap-1 text-sm/leading-4.5 font-black;
 }
 
 .carausel-card-watchlist-button {

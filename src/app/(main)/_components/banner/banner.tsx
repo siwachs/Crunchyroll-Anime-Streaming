@@ -70,9 +70,17 @@ const Banner = () => {
                   </span>
                 </div>
 
-                <p className="hidden"></p>
+                <p className="carausel-card-description">
+                  Tsunehiro’s life isn’t easy. After a doctor gives him two
+                  years to live and debt collectors come knocking, he falls from
+                  a bridge. In the knick of time, Hana and her crew spot
+                  Tsunehiro and pull him to safety. Before returning, they
+                  anchor offshore to fish and Tsunehiro catches a huge sea bass
+                  in a bout of beginner’s luck. As his apartment building
+                  crumbles, Tsunehiro’s new life begins to unfold!
+                </p>
 
-                <div className="relative flex justify-center">
+                <div className="relative flex justify-center gap-x-3">
                   <Link
                     href="/"
                     className="carausel-card-watch-button carausel-card-button"
