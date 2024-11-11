@@ -1,5 +1,5 @@
 .carousel-cards {
-  @apply relative -z-10 grid;
+  @apply relative -z-[1] grid;
 
   grid-template-areas: "content";
 }
@@ -9,7 +9,7 @@
 }
 
 .carousel-card[aria-current="true"] {
-  @apply z-10 grid w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch opacity-100;
+  @apply z-[1] grid w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch opacity-100;
 
   grid-template-areas: "carousel-card";
 }
@@ -30,7 +30,7 @@
 }
 
 .carousel-card-bg {
-  @apply pointer-events-none absolute left-0 top-0 -z-10 aspect-[auto_2/3] w-full;
+  @apply pointer-events-none absolute left-0 top-0 -z-[1] aspect-[auto_2/3] w-full;
 }
 
 .carousel-card-bg::before,

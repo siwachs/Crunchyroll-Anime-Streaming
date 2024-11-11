@@ -23,7 +23,7 @@ const Banner = () => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative z-0">
       <div className="hidden"></div>
 
       <div className="carousel-cards">
@@ -58,6 +58,7 @@ const Banner = () => {
                 <div className="carousel-card-label" />
                 <Link href="/" className="carousel-card-logo">
                   <Image
+                    fill
                     priority={currentActiveCard === index}
                     sizes="(max-width: 960px) 320px, (max-width: 1260px) 480px, 600px"
                     src={image.imageName}
@@ -116,7 +117,7 @@ const Banner = () => {
 
       <div className="hidden"></div>
 
-      <div className="relative z-10 flex w-full justify-center px-5 pt-6 text-white">
+      <div className="relative flex w-full justify-center px-5 pt-6 text-white">
         {images.map((image, index) => (
           <button
             key={image.key}
