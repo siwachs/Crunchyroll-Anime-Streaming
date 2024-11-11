@@ -1,15 +1,16 @@
 .carousel-cards {
+  @apply relative -z-10 grid;
+
   grid-template-areas: "content";
 }
 
 .carousel-card {
-  @apply transition-opacity duration-500 ease-quick;
+  @apply relative z-[0] hidden opacity-0 transition-opacity duration-500 ease-quick;
 }
 
 .carousel-card[aria-current="true"] {
   @apply z-10 grid w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch opacity-100;
 
-  grid-area: content;
   grid-template-areas: "carousel-card";
 }
 
@@ -82,15 +83,15 @@
   grid-row: 2;
 }
 
-.carausel-card-seo-title {
+.carousel-card-seo-title {
   @apply pointer-events-none absolute size-0 overflow-hidden;
 }
 
-.carausel-card-meta-tags {
+.carousel-card-meta-tags {
   @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)];
 }
 
-.carausel-card-meta-tags > span {
+.carousel-card-meta-tags > span {
   @apply inline text-sm/leading-4.5 font-medium;
 }
 
@@ -102,48 +103,60 @@
   @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
 }
 
-.carausel-card-description {
+.carousel-card-description {
   @apply hidden font-sans text-sm/leading-4.5 font-medium;
 }
 
-.carausel-card-button {
-  --carausel-card-hover-color: #ff7b2e;
+.carousel-card-button {
+  --carousel-card-hover-color: #ff7b2e;
 
   @apply select-none transition-[color,background-color,box-shadow] duration-200 ease-quick;
 }
 
-.carausel-card-watch-button {
-  @apply inline-flex h-10 w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[var(--carausel-card-hover-color)] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)];
+.carousel-card-watch-button {
+  @apply inline-flex h-10 w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[var(--carousel-card-hover-color)] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)];
 }
 
-.carausel-card-watch-button span:first-child {
+.carousel-card-watch-button span:first-child {
   @apply flex items-center gap-1 text-sm/leading-4.5 font-black;
 }
 
-.carausel-card-watchlist-button {
-  @apply aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--carausel-card-hover-color)] hover:text-[var(--carausel-card-hover-color)];
+.carousel-card-watchlist-button {
+  @apply aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--carousel-card-hover-color)] hover:text-[var(--carousel-card-hover-color)];
 }
 
-.carausel-card-watchlist-button span:first-child {
-  @apply flex h-full items-center justify-center gap-1;
+.carousel-card-watchlist-button span:first-child {
+  @apply flex items-center justify-center gap-1;
 }
 
-.navigation-button {
+.navigatin-button {
+  --pill-color: #ffffff80;
+
+  @apply relative h-2 w-6 px-1 py-2 transition-[width] duration-300 ease-quick;
+
   box-sizing: initial;
+  transform: translateZ(0);
+}
 
-  @apply relative z-50 h-2 w-6 px-2 py-1 transition-[width] duration-300 ease-quick;
+.navigatin-button[aria-current="true"] {
+  @apply w-12;
+}
+
+.navigatin-button[aria-current="true"]:hover {
+  --pill-color: var(--app-background-crunchyroll-orange);
+}
+
+.navigatin-button:hover {
+  --pill-color: #ff640ab3;
+}
+
+.navigatin-button div:first-child {
+  @apply flex h-full w-full overflow-hidden rounded bg-[var(--pill-color)] transition-colors duration-500 ease-quick;
 
   transform: translateZ(0);
 }
 
-.navigation-button div:first-child {
-  @apply flex size-full overflow-hidden rounded bg-[var(--pill-color)];
-
-  transform: translateZ(0);
-  transition: background-color 0.5s ease;
-}
-
-.navigation-button span:first-child {
+.navigatin-button span:first-child {
   animation: pageLoadOut--cAooA 0.5s ease;
   background-color: #ff640a;
   border-radius: 0.25rem;
