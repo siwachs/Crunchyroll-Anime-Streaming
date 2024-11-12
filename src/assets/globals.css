@@ -29,6 +29,10 @@ body {
 }
 
 body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-anchor: none; /* Disable Auto Scroll from dynamically loaded content */
+
   color: var(--app-text-primary);
   background-color: var(--app-background-primary);
 }

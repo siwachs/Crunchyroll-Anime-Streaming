@@ -11,7 +11,7 @@ import images from "@/assets/banner";
 import "./banner.css";
 
 const Banner = () => {
-  const [currentActiveCard, setCurrentActiveCard] = useState(6);
+  const [currentActiveCard, setCurrentActiveCard] = useState(5);
 
   function changeCurrentActiveCard(e: MouseEvent) {
     const { target } = e;
@@ -90,7 +90,7 @@ const Banner = () => {
                   crumbles, Tsunehiro’s new life begins to unfold!
                 </p>
 
-                <div className="relative flex justify-center gap-x-3">
+                <div className="relative flex justify-center gap-x-3 sm:inline-flex">
                   <Link
                     href="/"
                     className="carousel-card-watch-button carousel-card-button"
@@ -117,7 +117,7 @@ const Banner = () => {
 
       <div className="hidden"></div>
 
-      <div className="relative flex w-full justify-center px-5 pt-6 text-white">
+      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px]">
         {images.map((image, index) => (
           <button
             key={image.key}
