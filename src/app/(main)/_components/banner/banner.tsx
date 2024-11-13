@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import { HiOutlinePlay } from "react-icons/hi2";
 import { HiOutlineBookmark } from "react-icons/hi";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import images from "@/assets/banner";
 import "./banner.css";
@@ -24,7 +25,15 @@ const Banner = () => {
 
   return (
     <div className="relative z-0">
-      <div className="hidden"></div>
+      <div className="carousel-navigation-arrow left-0">
+        <button
+          aria-label="Prev slide"
+          data-index={(currentActiveCard - 1 + images.length) % images.length}
+          onClick={changeCurrentActiveCard}
+        >
+          <FaChevronLeft />
+        </button>
+      </div>
 
       <div className="carousel-cards">
         {images.map((image, index) => (
@@ -50,7 +59,7 @@ const Banner = () => {
                   sizes="(max-width: 960px) 960px, (max-width: 1350px) 1350px, (max-width: 1920) 1920px, (max-width: 3840) 3840px, 100vw"
                   src={image.desktopImage}
                   alt="Negative Positive Angler"
-                  className="hidden size-full object-cover object-[center_top] md:block"
+                  className="hidden size-full object-cover object-right-top md:block"
                 />
               </div>
 
@@ -81,13 +90,13 @@ const Banner = () => {
                 </div>
 
                 <p className="carousel-card-description">
-                  Tsunehiro’s life isn’t easy. After a doctor gives him two
-                  years to live and debt collectors come knocking, he falls from
-                  a bridge. In the knick of time, Hana and her crew spot
-                  Tsunehiro and pull him to safety. Before returning, they
-                  anchor offshore to fish and Tsunehiro catches a huge sea bass
-                  in a bout of beginner’s luck. As his apartment building
-                  crumbles, Tsunehiro’s new life begins to unfold!
+                  Jill breaks out of prison the night before she’s set to be
+                  executed by her fiancé, Crown Prince Gerald. She’s struck by
+                  an arrow while escaping, but instead of dying, she’s
+                  transported six years into the past—to the night she and
+                  Gerald met. Desperate to alter fate, she instead proposes to
+                  the first man she sees, Hadis Teos Rave, her enemy in the
+                  future. This is her last chance to get it right!
                 </p>
 
                 <div className="relative flex justify-center gap-x-3 sm:inline-flex">
@@ -115,9 +124,17 @@ const Banner = () => {
         ))}
       </div>
 
-      <div className="hidden"></div>
+      <div className="carousel-navigation-arrow right-0">
+        <button
+          aria-label="Next slide"
+          data-index={(currentActiveCard + 1) % images.length}
+          onClick={changeCurrentActiveCard}
+        >
+          <FaChevronRight />
+        </button>
+      </div>
 
-      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px]">
+      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-10">
         {images.map((image, index) => (
           <button
             key={image.key}

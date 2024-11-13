@@ -1,11 +1,26 @@
+.carousel-card {
+  @apply relative z-[0] hidden opacity-0 transition-opacity duration-500 ease-quick;
+}
+
 .carousel-cards {
   @apply relative -z-[1] grid;
 
   grid-template-areas: "content";
 }
 
-.carousel-card {
-  @apply relative z-[0] hidden opacity-0 transition-opacity duration-500 ease-quick;
+.carousel-navigation-arrow {
+  @apply pointer-events-none absolute top-0 hidden h-full w-10 items-center md:flex;
+}
+
+.carousel-navigation-arrow button:first-child {
+  @apply pointer-events-auto grid h-[6.25rem] w-full text-white transition-[color] duration-150 ease-quick;
+}
+
+.carousel-navigation-arrow button:first-child svg:first-child {
+  @apply m-auto size-6 max-w-full;
+
+  stroke: #4a4e5866;
+  stroke-width: 0.0313rem;
 }
 
 .carousel-card[aria-current="true"] {
@@ -15,7 +30,7 @@
 }
 
 .carousel-card-grid {
-  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-5 pt-[60%] sm:px-10;
+  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-5 pt-[60%] sm:px-10 md:gap-x-5 md:pt-10;
 
   align-content: end;
   align-items: end;
@@ -23,14 +38,16 @@
 }
 
 .carousel-card-sizer {
-  @apply aspect-[1/1.15] w-full;
+  --under-hero-whitespace: 18.75rem;
+
+  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)];
 
   align-self: end;
   grid-area: carousel-card;
 }
 
 .carousel-card-bg {
-  @apply pointer-events-none absolute left-0 top-0 -z-[1] aspect-[auto_2/3] w-full;
+  @apply pointer-events-none absolute left-0 top-0 -z-[1] aspect-[auto_2/3] w-full md:aspect-[auto_16/9];
 }
 
 .carousel-card-bg::before,
@@ -40,6 +57,20 @@
 
 .carousel-card-bg::after {
   background: linear-gradient(180deg, #0000 40%, #000000bf 65%, #000 90%);
+}
+
+@media screen and (min-width: 800px) {
+  .carousel-card-bg::after {
+    --cr-end-direction: right;
+
+    background: linear-gradient(to bottom, #0000 50%, #000 100%),
+      linear-gradient(
+        to var(--cr-end-direction),
+        #000000d9 0,
+        #00000080 30%,
+        #0000 55%
+      );
+  }
 }
 
 .carousel-card-title {
@@ -52,10 +83,27 @@
   grid-row: 1/1;
 }
 
+@media screen and (min-width: 800px) {
+  .carousel-card-title {
+    @apply grid-cols-[minmax(0,auto)_1fr];
+
+    grid-column: 1 / span 4;
+    grid-template-areas:
+      "label label"
+      "logo  .    ";
+  }
+}
+
 .carousel-card-label {
-  @apply absolute bottom-0 left-0 mb-2 flex w-full flex-col items-center gap-2 text-center;
+  @apply absolute bottom-0 left-0 mb-2 flex w-full flex-col items-center gap-2 text-center md:text-left;
 
   grid-area: label;
+}
+
+@media screen and (min-width: 800px) {
+  .carousel-card-label {
+    align-items: start;
+  }
 }
 
 .carousel-card-logo {
@@ -65,7 +113,7 @@
 }
 
 .carousel-card-logo img:first-child {
-  @apply block size-full object-contain object-[bottom_center] opacity-0;
+  @apply block size-full object-contain object-[bottom_center] opacity-0 md:object-[bottom_left];
 
   transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1);
 }
@@ -76,10 +124,16 @@
 
 .carousel-card-body {
   --meta-color: #a0a0a0;
-  @apply col-[1/span_12] grid h-full grid-cols-1 justify-stretch text-center sm:col-[3/span_8] sm:justify-items-center;
+  @apply col-[1/span_12] grid h-full grid-cols-1 justify-stretch text-center sm:col-[3/span_8] sm:justify-items-center md:col-[1/span_5] md:justify-items-start;
 
   align-content: end;
   grid-row: 2;
+}
+
+@media screen and (min-width: 800px) {
+  .carousel-card-body {
+    text-align: unset;
+  }
 }
 
 .carousel-card-seo-title {
@@ -87,7 +141,7 @@
 }
 
 .carousel-card-meta-tags {
-  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8;
+  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-5;
 }
 
 .carousel-card-meta-tags > span {
