@@ -40,6 +40,9 @@ const Banner = () => {
           <div
             key={image.key}
             aria-current={currentActiveCard === index}
+            role="group"
+            aria-roledescription="Slide"
+            aria-label={`${index + 1} of ${images.length}`}
             className="carousel-card"
           >
             <div className="carousel-card-grid">
@@ -49,7 +52,7 @@ const Banner = () => {
                   fill
                   sizes="(max-width: 420px) 420px, 100vw"
                   src={image.mobileImage}
-                  alt="Negative Positive Angler"
+                  alt="The Do-Over Damsel Conquers the Dragon Emperor"
                   className="block size-full object-cover object-[center_top] md:hidden"
                 />
 
@@ -58,7 +61,7 @@ const Banner = () => {
                   fill
                   sizes="(max-width: 960px) 960px, (max-width: 1350px) 1350px, (max-width: 1920) 1920px, (max-width: 3840) 3840px, 100vw"
                   src={image.desktopImage}
-                  alt="Negative Positive Angler"
+                  alt="The Do-Over Damsel Conquers the Dragon Emperor"
                   className="hidden size-full object-cover object-right-top md:block"
                 />
               </div>
@@ -71,14 +74,14 @@ const Banner = () => {
                     priority={currentActiveCard === index}
                     sizes="(max-width: 960px) 320px, (max-width: 1260px) 480px, 600px"
                     src={image.imageName}
-                    alt="Negative Positive Angler"
+                    alt="The Do-Over Damsel Conquers the Dragon Emperor"
                   />
                 </Link>
               </div>
 
               <div className="carousel-card-body">
                 <h2 className="carousel-card-seo-title">
-                  Negative Positive Angler
+                  The Do-Over Damsel Conquers the Dragon Emperor
                 </h2>
 
                 <div className="carousel-card-meta-tags">
@@ -99,7 +102,7 @@ const Banner = () => {
                   future. This is her last chance to get it right!
                 </p>
 
-                <div className="relative flex justify-center gap-x-3 sm:inline-flex">
+                <div className="relative flex justify-center gap-x-3 sm:inline-flex md:justify-start">
                   <Link
                     href="/"
                     className="carousel-card-watch-button carousel-card-button"
@@ -134,7 +137,7 @@ const Banner = () => {
         </button>
       </div>
 
-      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-10">
+      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-7">
         {images.map((image, index) => (
           <button
             key={image.key}

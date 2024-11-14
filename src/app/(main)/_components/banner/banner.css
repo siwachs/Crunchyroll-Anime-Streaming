@@ -1,5 +1,28 @@
-.carousel-card {
-  @apply relative z-[0] hidden opacity-0 transition-opacity duration-500 ease-quick;
+:root {
+  --pill-color: #ffffff80;
+  --stroke: #4a4e5866;
+  --meta-color: #a0a0a0;
+}
+
+.carousel-navigation-arrow {
+  @apply pointer-events-none absolute top-0 hidden h-full w-10 items-center md:flex;
+}
+
+.carousel-navigation-arrow button {
+  @apply grid h-[6.25rem] w-full text-white transition-[color] ease-quick;
+
+  pointer-events: all;
+}
+
+.carousel-navigation-arrow button:hover {
+  @apply text-[var(--pill-color)];
+}
+
+.carousel-navigation-arrow button svg {
+  @apply m-auto size-[22px] max-w-full;
+
+  stroke: var(--stroke);
+  stroke-width: 0.0313rem;
 }
 
 .carousel-cards {
@@ -8,19 +31,10 @@
   grid-template-areas: "content";
 }
 
-.carousel-navigation-arrow {
-  @apply pointer-events-none absolute top-0 hidden h-full w-10 items-center md:flex;
-}
+.carousel-card {
+  @apply relative z-[0] hidden opacity-0 transition-opacity duration-500 ease-quick;
 
-.carousel-navigation-arrow button:first-child {
-  @apply pointer-events-auto grid h-[6.25rem] w-full text-white transition-[color] duration-150 ease-quick;
-}
-
-.carousel-navigation-arrow button:first-child svg:first-child {
-  @apply m-auto size-6 max-w-full;
-
-  stroke: #4a4e5866;
-  stroke-width: 0.0313rem;
+  grid-area: content;
 }
 
 .carousel-card[aria-current="true"] {
@@ -74,24 +88,11 @@
 }
 
 .carousel-card-title {
-  @apply absolute grid aspect-[15/8] max-h-[min(20rem,100%)] w-full max-w-[37.5rem] grid-cols-[1fr_minmax(0,auto)_1fr] grid-rows-[1fr_minmax(0,auto)];
+  @apply absolute col-[4/span_6] row-[1/1] grid aspect-[15/8] max-h-[min(20rem,100%)] w-full max-w-[37.5rem] grid-cols-[1fr_minmax(0,auto)_1fr] grid-rows-[1fr_minmax(0,auto)];
 
   grid-template-areas:
     "label label label"
     ".     logo  .    ";
-  grid-column: 4 / span 6;
-  grid-row: 1/1;
-}
-
-@media screen and (min-width: 800px) {
-  .carousel-card-title {
-    @apply grid-cols-[minmax(0,auto)_1fr];
-
-    grid-column: 1 / span 4;
-    grid-template-areas:
-      "label label"
-      "logo  .    ";
-  }
 }
 
 .carousel-card-label {
@@ -101,6 +102,14 @@
 }
 
 @media screen and (min-width: 800px) {
+  .carousel-card-title {
+    @apply col-[1/span_4] grid-cols-[minmax(0,auto)_1fr];
+
+    grid-template-areas:
+      "label label"
+      "logo  .    ";
+  }
+
   .carousel-card-label {
     align-items: start;
   }
@@ -112,18 +121,17 @@
   grid-area: logo;
 }
 
-.carousel-card-logo img:first-child {
+.carousel-card-logo img {
   @apply block size-full object-contain object-[bottom_center] opacity-0 md:object-[bottom_left];
 
   transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1);
 }
 
-.carousel-card[aria-current="true"] .carousel-card-title img:first-child {
+.carousel-card[aria-current="true"] .carousel-card-logo img {
   @apply opacity-100;
 }
 
 .carousel-card-body {
-  --meta-color: #a0a0a0;
   @apply col-[1/span_12] grid h-full grid-cols-1 justify-stretch text-center sm:col-[3/span_8] sm:justify-items-center md:col-[1/span_5] md:justify-items-start;
 
   align-content: end;
@@ -141,7 +149,7 @@
 }
 
 .carousel-card-meta-tags {
-  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-5;
+  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5;
 }
 
 .carousel-card-meta-tags > span {
@@ -183,8 +191,6 @@
 }
 
 .navigatin-button {
-  --pill-color: #ffffff80;
-
   @apply relative h-2 w-6 px-1 py-2 transition-[width] duration-300 ease-quick;
 
   box-sizing: initial;
