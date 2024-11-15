@@ -102,7 +102,7 @@ const Banner = () => {
                   future. This is her last chance to get it right!
                 </p>
 
-                <div className="relative flex justify-center gap-x-3 sm:inline-flex md:justify-start">
+                <div className="relative flex justify-center gap-x-3 sm:inline-flex md:justify-start lg:gap-x-2.5">
                   <Link
                     href="/"
                     className="carousel-card-watch-button carousel-card-button"
@@ -137,7 +137,7 @@ const Banner = () => {
         </button>
       </div>
 
-      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-7">
+      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-7 lg:px-16 lg:pt-[48px]">
         {images.map((image, index) => (
           <button
             key={image.key}

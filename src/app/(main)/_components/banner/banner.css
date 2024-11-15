@@ -5,7 +5,7 @@
 }
 
 .carousel-navigation-arrow {
-  @apply pointer-events-none absolute top-0 hidden h-full w-10 items-center md:flex;
+  @apply pointer-events-none absolute top-0 hidden h-full w-10 items-center md:flex lg:w-16;
 }
 
 .carousel-navigation-arrow button {
@@ -19,7 +19,7 @@
 }
 
 .carousel-navigation-arrow button svg {
-  @apply m-auto size-[22px] max-w-full;
+  @apply m-auto size-[22px] max-w-full lg:size-[26px];
 
   stroke: var(--stroke);
   stroke-width: 0.0313rem;
@@ -44,7 +44,7 @@
 }
 
 .carousel-card-grid {
-  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-5 pt-[60%] sm:px-10 md:gap-x-5 md:pt-10;
+  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-5 pt-[60%] sm:px-10 md:gap-x-5 md:pt-10 lg:gap-x-[1.875rem] lg:px-16;
 
   align-content: end;
   align-items: end;
@@ -54,7 +54,7 @@
 .carousel-card-sizer {
   --under-hero-whitespace: 18.75rem;
 
-  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)];
+  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem];
 
   align-self: end;
   grid-area: carousel-card;
@@ -88,28 +88,28 @@
 }
 
 .carousel-card-title {
-  @apply absolute col-[4/span_6] row-[1/1] grid aspect-[15/8] max-h-[min(20rem,100%)] w-full max-w-[37.5rem] grid-cols-[1fr_minmax(0,auto)_1fr] grid-rows-[1fr_minmax(0,auto)];
+  @apply absolute col-[4/span_6] row-[1/1] grid aspect-[15/8] max-h-[min(20rem,100%)] w-full max-w-[37.5rem] grid-cols-[1fr_minmax(0,auto)_1fr] grid-rows-[1fr_minmax(0,auto)] md:col-[1/span_4] md:grid-cols-[minmax(0,auto)_1fr] lg:col-[1/span_3];
 
   grid-template-areas:
     "label label label"
     ".     logo  .    ";
 }
 
+@media screen and (min-width: 800px) {
+  .carousel-card-title {
+    grid-template-areas:
+      "label label"
+      "logo  .    ";
+  }
+}
+
 .carousel-card-label {
-  @apply absolute bottom-0 left-0 mb-2 flex w-full flex-col items-center gap-2 text-center md:text-left;
+  @apply absolute bottom-0 left-0 mb-2 flex w-full flex-col items-center gap-2 text-center md:text-left lg:mb-3;
 
   grid-area: label;
 }
 
 @media screen and (min-width: 800px) {
-  .carousel-card-title {
-    @apply col-[1/span_4] grid-cols-[minmax(0,auto)_1fr];
-
-    grid-template-areas:
-      "label label"
-      "logo  .    ";
-  }
-
   .carousel-card-label {
     align-items: start;
   }
@@ -132,7 +132,7 @@
 }
 
 .carousel-card-body {
-  @apply col-[1/span_12] grid h-full grid-cols-1 justify-stretch text-center sm:col-[3/span_8] sm:justify-items-center md:col-[1/span_5] md:justify-items-start;
+  @apply col-[1/span_12] grid h-full grid-cols-1 justify-stretch text-center sm:col-[3/span_8] sm:justify-items-center md:col-[1/span_5] md:justify-items-start lg:col-[1/span_4];
 
   align-content: end;
   grid-row: 2;
@@ -149,7 +149,7 @@
 }
 
 .carousel-card-meta-tags {
-  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5;
+  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5 lg:mb-2;
 }
 
 .carousel-card-meta-tags > span {
@@ -165,7 +165,9 @@
 }
 
 .carousel-card-description {
-  @apply hidden font-sans text-sm/leading-4.5 font-medium;
+  @apply mb-8 hidden font-sans text-base font-medium text-[var(--app-icon-primary)] lg:line-clamp-4;
+
+  white-space: unset;
 }
 
 .carousel-card-button {
@@ -179,7 +181,7 @@
 }
 
 .carousel-card-watch-button span:first-child {
-  @apply flex items-center gap-1 text-sm/leading-4.5 font-black;
+  @apply flex items-center gap-1 text-sm/leading-4.5 font-extrabold;
 }
 
 .carousel-card-watchlist-button {
@@ -195,6 +197,10 @@
 
   box-sizing: initial;
   transform: translateZ(0);
+}
+
+.navigatin-button:first-child {
+  @apply md:pl-0;
 }
 
 .navigatin-button[aria-current="true"] {

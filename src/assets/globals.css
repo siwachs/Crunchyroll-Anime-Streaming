@@ -26,6 +26,11 @@ body {
   --app-border-primary: #23252b;
 }
 
+::selection {
+  background-color: var(--app-background-secondary);
+  color: var(--app-background-crunchyroll-orange);
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
