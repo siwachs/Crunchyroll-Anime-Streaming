@@ -54,10 +54,16 @@
 .carousel-card-sizer {
   --under-hero-whitespace: 18.75rem;
 
-  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem];
+  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem];
 
   align-self: end;
   grid-area: carousel-card;
+}
+
+@media screen and (min-width: 1440px) {
+  .carousel-card-sizer {
+    --under-hero-whitespace: min(21.875rem, 40vh);
+  }
 }
 
 .carousel-card-bg {
