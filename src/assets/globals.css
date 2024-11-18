@@ -24,6 +24,8 @@ body {
   --app-icon-primary: #dadada;
 
   --app-border-primary: #23252b;
+
+  --meta-color: #a0a0a0;
 }
 
 ::selection {
@@ -40,10 +42,33 @@ body {
   background-color: var(--app-background-primary);
 }
 
-.page-overlay {
-  @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0;
-}
+@layer components {
+  .container-cmp {
+    --container-inline-padding: 1.25rem;
+    --container-max-width: 84.375rem;
 
-.page-overlay[data-active="true"] {
-  @apply visible opacity-100;
+    @apply mx-auto w-full max-w-full px-[var(--container-inline-padding)];
+  }
+
+  @media screen and (min-width: 568px) {
+    .container-cmp {
+      --container-inline-padding: 2.5rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .container-cmp {
+      --container-inline-padding: 4rem;
+    }
+  }
+
+  @media screen and (min-width: 1720px) {
+    .container-cmp {
+      --container-inline-padding: 5rem;
+    }
+  }
+
+  .page-overlay {
+    @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[1] data-[active=true]:opacity-100;
+  }
 }

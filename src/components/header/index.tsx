@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="header-container">
+      <div className="container-cmp header-container px-0">
         <div title="Company Logo" className="header-logo">
           <Link href="/" className="block px-[1.125rem]">
             <HeaderLogoMobileOnly className="sm:hidden" />

@@ -25,7 +25,7 @@
 }
 
 .small-title {
-  @apply block select-none px-5 py-2.5 text-xs font-semibold uppercase text-[#a0a0a0] lg:p-[0.8125rem_1rem];
+  @apply block select-none px-5 py-2.5 text-xs font-semibold uppercase text-[var(--meta-color)] lg:p-[0.8125rem_1rem];
 }
 
 .menu-section:first-child {
@@ -45,17 +45,7 @@
 }
 
 .menu-title {
-  @apply px-4.5 lg:text-sm/leading-4.5 relative flex items-center py-3 text-base font-medium text-[var(--app-text-secondary)] lg:px-4;
-
-  transition: background-color 0.2s ease;
-}
-
-.menu-title[data-active="true"] {
-  @apply bg-[var(--app-background-secondary)];
-}
-
-.menu-title:hover {
-  @apply bg-[var(--app-background-secondary)];
+  @apply relative flex items-center px-4.5 py-3 text-base font-medium text-[var(--app-text-secondary)] transition-[background-color] duration-200 ease-quick hover:bg-[var(--app-background-secondary)] data-[active=true]:bg-[var(--app-background-secondary)] lg:px-4 lg:text-sm/leading-4.5;
 }
 
 .menu-title-icon {
@@ -67,9 +57,7 @@
 }
 
 .submenu-title {
-  @apply text-sm/leading-4.5 block p-[0.875rem_2.375rem] font-medium text-[var(--app-icon-primary)] hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem];
-
-  transition: background-color 0.2s ease;
+  @apply block p-[0.875rem_2.375rem] text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)] transition-[background-color] duration-200 ease-quick hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem];
 }
 
 .submenu-title-active {

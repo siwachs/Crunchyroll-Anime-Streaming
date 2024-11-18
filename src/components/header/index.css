@@ -10,7 +10,6 @@
 
 @media screen and (min-width: 1024px) {
   .header-container {
-    --container-inline-padding: 4rem;
     grid-template-areas: "- logo menu actions --";
     grid-template-columns: minmax(0, var(--container-inline-padding)) auto 1fr auto minmax(
         0,
@@ -20,15 +19,13 @@
 }
 
 .header-logo {
-  @apply flex;
+  @apply flex w-fit;
 
   grid-area: logo;
 }
 
 .header-logo a svg {
-  @apply h-full fill-[var(--app-background-crunchyroll-orange)];
-
-  transition: fill 0.2s ease;
+  @apply h-full fill-[var(--app-background-crunchyroll-orange)] transition-[fill] duration-200 ease-quick;
 }
 
 .header-logo:hover a svg {

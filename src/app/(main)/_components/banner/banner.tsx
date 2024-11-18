@@ -25,7 +25,7 @@ const Banner = () => {
 
   return (
     <div className="relative z-0">
-      <div className="carousel-navigation-arrow left-0">
+      <div className="container-cmp carousel-navigation-arrow left-0 px-0">
         <button
           aria-label="Prev slide"
           data-index={(currentActiveCard - 1 + images.length) % images.length}
@@ -45,7 +45,7 @@ const Banner = () => {
             aria-label={`${index + 1} of ${images.length}`}
             className="carousel-card"
           >
-            <div className="carousel-card-grid">
+            <div className="container-cmp carousel-card-grid">
               <div className="carousel-card-bg">
                 <Image
                   priority={currentActiveCard === index}
@@ -127,7 +127,7 @@ const Banner = () => {
         ))}
       </div>
 
-      <div className="carousel-navigation-arrow right-0">
+      <div className="container-cmp carousel-navigation-arrow right-0 px-0">
         <button
           aria-label="Next slide"
           data-index={(currentActiveCard + 1) % images.length}
@@ -137,7 +137,7 @@ const Banner = () => {
         </button>
       </div>
 
-      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-7 lg:px-16 lg:pt-[48px]">
+      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-7 lg:px-16 lg:pt-[48px] 2xl:px-20 2xl:pt-[64px]">
         {images.map((image, index) => (
           <button
             key={image.key}

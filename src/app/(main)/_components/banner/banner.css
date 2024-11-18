@@ -1,25 +1,21 @@
 :root {
   --pill-color: #ffffff80;
-  --stroke: #4a4e5866;
-  --meta-color: #a0a0a0;
 }
 
 .carousel-navigation-arrow {
-  @apply pointer-events-none absolute top-0 hidden h-full w-10 items-center md:flex lg:w-16;
+  @apply pointer-events-none absolute top-0 hidden h-full w-[var(--container-inline-padding)] items-center md:flex;
 }
 
 .carousel-navigation-arrow button {
-  @apply grid h-[6.25rem] w-full text-white transition-[color] ease-quick;
+  @apply grid h-[6.25rem] w-full text-white transition-[color] ease-quick hover:text-[var(--pill-color)];
 
   pointer-events: all;
 }
 
-.carousel-navigation-arrow button:hover {
-  @apply text-[var(--pill-color)];
-}
-
 .carousel-navigation-arrow button svg {
-  @apply m-auto size-[22px] max-w-full lg:size-[26px];
+  --stroke: #4a4e5866;
+
+  @apply m-auto size-[22px] max-w-full lg:size-[26px] 2xl:size-[28px];
 
   stroke: var(--stroke);
   stroke-width: 0.0313rem;
@@ -44,7 +40,7 @@
 }
 
 .carousel-card-grid {
-  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-5 pt-[60%] sm:px-10 md:gap-x-5 md:pt-10 lg:gap-x-[1.875rem] lg:px-16;
+  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 pt-[60%] md:gap-x-5 md:pt-10 lg:gap-x-[1.875rem] 2xl:pt-20;
 
   align-content: end;
   align-items: end;
@@ -54,7 +50,7 @@
 .carousel-card-sizer {
   --under-hero-whitespace: 18.75rem;
 
-  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem];
+  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem] 2xl:min-h-[37.5rem];
 
   align-self: end;
   grid-area: carousel-card;
@@ -155,7 +151,7 @@
 }
 
 .carousel-card-meta-tags {
-  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5 lg:mb-2;
+  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5 lg:mb-2 2xl:mt-[28px];
 }
 
 .carousel-card-meta-tags > span {
@@ -171,9 +167,7 @@
 }
 
 .carousel-card-description {
-  @apply mb-8 hidden font-sans text-base font-medium text-[var(--app-icon-primary)] lg:line-clamp-4;
-
-  white-space: unset;
+  @apply mb-8 hidden text-base font-medium text-[var(--app-icon-primary)] lg:line-clamp-4;
 }
 
 .carousel-card-button {
@@ -186,7 +180,7 @@
   @apply inline-flex h-10 w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[var(--carousel-card-hover-color)] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)] sm:w-auto sm:flex-[0_0_auto];
 }
 
-.carousel-card-watch-button span:first-child {
+.carousel-card-watch-button span {
   @apply flex items-center gap-1 text-sm/leading-4.5 font-extrabold;
 }
 
@@ -194,7 +188,7 @@
   @apply aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--carousel-card-hover-color)] hover:text-[var(--carousel-card-hover-color)];
 }
 
-.carousel-card-watchlist-button span:first-child {
+.carousel-card-watchlist-button span {
   @apply flex items-center justify-center gap-1;
 }
 
