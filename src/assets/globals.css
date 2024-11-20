@@ -2,14 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root,
-html,
-body {
-  height: 100%;
-}
-
 :root {
-  --app-background-primary: #141519;
+  --app-background-primary-depricated: #141519;
+  --app-background-primary: #000;
   --app-background-secondary: #23252b;
   --app-background-tertiary: #4a4e5880;
 
@@ -33,12 +28,13 @@ body {
   color: var(--app-background-crunchyroll-orange);
 }
 
+html,
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: var(--app-text-primary);
+  font-weight: 400;
+  height: 100%;
   overflow-anchor: none; /* Disable Auto Scroll from dynamically loaded content */
 
-  color: var(--app-text-primary);
   background-color: var(--app-background-primary);
 }
 
@@ -70,5 +66,9 @@ body {
 
   .page-overlay {
     @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[1] data-[active=true]:opacity-100;
+  }
+
+  .text-rendering-optimized {
+    text-rendering: optimizeLegibility;
   }
 }

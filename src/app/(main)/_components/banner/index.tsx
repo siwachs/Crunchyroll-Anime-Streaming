@@ -9,7 +9,7 @@ import { HiOutlineBookmark } from "react-icons/hi";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import images from "@/assets/banner";
-import "./banner.css";
+import "./index.css";
 
 const Banner = () => {
   const [currentActiveCard, setCurrentActiveCard] = useState(5);
@@ -35,7 +35,7 @@ const Banner = () => {
         </button>
       </div>
 
-      <div className="carousel-cards">
+      <div className="container-cmp carousel-cards px-0">
         {images.map((image, index) => (
           <div
             key={image.key}
@@ -45,7 +45,7 @@ const Banner = () => {
             aria-label={`${index + 1} of ${images.length}`}
             className="carousel-card"
           >
-            <div className="container-cmp carousel-card-grid">
+            <div className="carousel-card-grid">
               <div className="carousel-card-bg">
                 <Image
                   priority={currentActiveCard === index}
@@ -137,7 +137,7 @@ const Banner = () => {
         </button>
       </div>
 
-      <div className="relative flex w-full justify-center px-5 pt-6 text-white sm:px-10 sm:pt-[38px] md:justify-start md:pt-7 lg:px-16 lg:pt-[48px] 2xl:px-20 2xl:pt-[64px]">
+      <div className="container-cmp relative flex w-full justify-center pt-6 text-white sm:pt-[38px] md:justify-start md:pt-7 lg:pt-[48px] 2xl:pt-[64px]">
         {images.map((image, index) => (
           <button
             key={image.key}

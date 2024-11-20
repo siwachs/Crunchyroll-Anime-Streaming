@@ -1,0 +1,8 @@
+.wide-cards-carousel-layout {
+  --wide-cards-carousel-cols: 2;
+  --wide-cards-carousel-rows: 1;
+}
+
+.wide-cards-carousel-container {
+  @apply grid;
+}

@@ -1,4 +1,5 @@
-React and Next JS
+React 
+Next JS
 
 Utils
 

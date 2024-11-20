@@ -1,7 +1,3 @@
-:root {
-  --pill-color: #ffffff80;
-}
-
 .carousel-navigation-arrow {
   @apply pointer-events-none absolute top-0 hidden h-full w-[var(--container-inline-padding)] items-center md:flex;
 }
@@ -34,13 +30,13 @@
 }
 
 .carousel-card[aria-current="true"] {
-  @apply z-[1] grid w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch opacity-100;
+  @apply z-[1] grid w-full min-w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch opacity-100;
 
   grid-template-areas: "carousel-card";
 }
 
 .carousel-card-grid {
-  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 pt-[60%] md:gap-x-5 md:pt-10 lg:gap-x-[1.875rem] 2xl:pt-20;
+  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-[var(--container-inline-padding)] pt-[60%] md:gap-x-5 md:pt-10 lg:gap-x-[1.875rem] 2xl:pt-20;
 
   align-content: end;
   align-items: end;
@@ -63,7 +59,7 @@
 }
 
 .carousel-card-bg {
-  @apply pointer-events-none absolute left-0 top-0 -z-[1] aspect-[auto_2/3] w-full md:aspect-[auto_16/9];
+  @apply pointer-events-none absolute left-0 top-0 -z-[1] aspect-[auto_2/3] w-full min-w-full md:aspect-[auto_16/9];
 }
 
 .carousel-card-bg::before,
@@ -181,7 +177,7 @@
 }
 
 .carousel-card-watch-button span {
-  @apply flex items-center gap-1 text-sm/leading-4.5 font-extrabold;
+  @apply flex items-center gap-1 text-sm/leading-4.5 font-black;
 }
 
 .carousel-card-watchlist-button {
@@ -193,10 +189,11 @@
 }
 
 .navigatin-button {
+  --pill-color: #ffffff80;
+
   @apply relative h-2 w-6 px-1 py-2 transition-[width] duration-300 ease-quick;
 
   box-sizing: initial;
-  transform: translateZ(0);
 }
 
 .navigatin-button:first-child {
@@ -215,29 +212,22 @@
   --pill-color: #ff640ab3;
 }
 
-.navigatin-button div:first-child {
-  @apply flex h-full w-full overflow-hidden rounded bg-[var(--pill-color)] transition-colors duration-500 ease-quick;
-
-  transform: translateZ(0);
+.navigatin-button div {
+  @apply flex size-full overflow-hidden rounded bg-[var(--pill-color)] transition-colors duration-500 ease-quick;
 }
 
-.navigatin-button span:first-child {
-  animation: pageLoadOut--cAooA 0.5s ease;
+.navigatin-button[aria-current="true"] span {
+  animation: onCardLoad 10s ease;
   background-color: #ff640a;
   border-radius: 0.25rem;
   height: 100%;
-  opacity: 0;
-  transform: translateX(-100%);
-  width: 100%;
 }
 
-@keyframes pageLoadOut--cAooA {
+@keyframes onCardLoad {
   0% {
-    opacity: 1;
-    transform: translateX(0);
+    width: 0;
   }
   100% {
-    opacity: 0;
-    transform: translateX(0);
+    width: 100%;
   }
 }
