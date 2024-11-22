@@ -1,8 +1,113 @@
 .wide-cards-carousel-layout {
   --wide-cards-carousel-cols: 2;
   --wide-cards-carousel-rows: 1;
+
+  --carousel-col-gap: 0.625rem;
+  --carousel-row-gap: 0.75rem;
+
+  --carousel-overflow-y-hint: 0.5rem;
+  --carousel-overflow-x-hint: var(--container-inline-padding);
+
+  --scroll-step: var(--wide-cards-carousel-cols);
+
+  @apply relative grid;
+
+  grid-template-areas:
+    "content"
+    "pages";
 }
 
 .wide-cards-carousel-container {
-  @apply grid;
+  @apply grid grid-cols-[minmax(0,auto)];
+
+  grid-area: content;
+  grid-template-areas: "viewbox";
+}
+
+.wide-cards-carousel-frame {
+  grid-area: viewbox;
+}
+
+.carousel-scroller {
+  @apply relative z-[1] overflow-hidden;
+
+  margin: calc(var(--carousel-overflow-y-hint) * -1)
+    calc(var(--carousel-overflow-x-hint) * -1);
+}
+
+.carousel-scroller-wrapper {
+  box-sizing: initial;
+  padding: var(--carousel-overflow-y-hint) var(--carousel-overflow-x-hint);
+}
+
+.carousel-scroller-track {
+  @apply grid snap-x snap-mandatory grid-flow-col overflow-auto;
+
+  --padding-y: max(
+    0rem,
+    calc(var(--carousel-overflow-y-hint) - var(--carousel-row-gap) / 2)
+  );
+  --padding-x: max(
+    0rem,
+    calc(var(--carousel-overflow-x-hint) - var(--carousel-col-gap) / 2)
+  );
+
+  grid-template-rows: repeat(var(--wide-cards-carousel-rows), auto);
+  grid-auto-columns: calc(100% / var(--wide-cards-carousel-cols));
+
+  margin: calc((var(--carousel-row-gap) / 2 + var(--padding-y)) * -1)
+    calc((var(--carousel-col-gap) / 2 + var(--padding-x)) * -1);
+  padding: var(--padding-y) var(--padding-x);
+
+  scroll-padding: 0 var(--padding-x);
+  overscroll-behavior-x: none;
+  scrollbar-width: none;
+}
+
+.carousel-scroller-track::-webkit-scrollbar {
+  @apply hidden;
+}
+
+.carousel-scroller-card {
+  @apply min-w-0 snap-start transition-opacity duration-200 ease-quick;
+
+  padding: calc(var(--carousel-row-gap) / 2) calc(var(--carousel-col-gap) / 2);
+}
+
+.carousel-scroller-card[inert] {
+  @apply opacity-50;
+}
+
+.browse-card {
+  @apply relative;
+}
+
+.browse-card-image {
+  @apply relative size-full;
+}
+
+.browse-card-image-sized {
+  --content-image-ar-priority-width: 1;
+
+  --width: calc(
+    100% * var(--content-image-ar-priority-width) /
+      var(--content-image-ar-priority-width)
+  );
+  --height: calc(
+    100% * var(--content-image-ar-priority-height) /
+      var(--content-image-ar-priority-height)
+  );
+  height: var(--height);
+  width: var(--width);
+}
+
+.browse-card-image-wrapper {
+  @apply flex;
+
+  height: var(--height);
+  width: var(--width);
+}
+
+.browse-card-image-sizer {
+  @apply relative inline-flex size-[inherit];
 }
