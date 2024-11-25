@@ -111,3 +111,25 @@
 .browse-card-image-sizer {
   @apply relative inline-flex size-[inherit];
 }
+
+.browse-card-body {
+  @apply pt-3;
+}
+
+.browse-card-body-title {
+  @apply line-clamp-3 text-sm/leading-4.5 font-medium;
+}
+
+.browse-card-body-metatags {
+  @apply mt-2 inline-flex max-w-full select-none truncate text-sm/leading-4.5 text-[var(--meta-color)];
+}
+
+.browse-card-hover {
+  @apply absolute inset-0 flex opacity-0 transition-opacity duration-150 hover:z-[2] hover:opacity-100;
+}
+
+.browse-card-hover-content {
+  @apply relative flex flex-[0_0_100%] flex-col bg-[var(--app-overlay-secondary)];
+
+  box-shadow: 0 0 0 0.5rem var(--app-overlay-secondary);
+}

@@ -18,7 +18,12 @@ const DataFeedCarousel = () => {
                 {images.map((image) => (
                   <div key={image.key} className="carousel-scroller-card">
                     <div className="browse-card">
-                      <Link href="/" tabIndex={-1} className="relative block">
+                      <Link
+                        href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
+                        prefetch={false}
+                        tabIndex={-1}
+                        className="relative block"
+                      >
                         <div className="browse-card-image browse-card-image-sized">
                           <div className="browse-card-image-wrapper">
                             <div className="browse-card-image-sizer">
@@ -32,11 +37,27 @@ const DataFeedCarousel = () => {
                           </div>
                         </div>
                       </Link>
+
+                      <div className="browse-card-body">
+                        <h4 className="browse-card-body-title">
+                          <Link
+                            href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
+                            prefetch={false}
+                            tabIndex={-1}
+                          >
+                            {image.title}
+                          </Link>
+                        </h4>
+
+                        <div className="browse-card-body-metatags">
+                          <span>Subtitled</span>
+                        </div>
+                      </div>
+
+                      <div className="browse-card-hover">
+                        <div className="browse-card-hover-content"></div>
+                      </div>
                     </div>
-
-                    <div className="browse-card-body"></div>
-
-                    <div className="browse-card-hover"></div>
                   </div>
                 ))}
               </div>
