@@ -82,7 +82,7 @@ const Header = () => {
         data-active={
           headerState === "open" || headerState === "genresListExpanded"
         }
-        className="page-overlay"
+        className="app-overlay"
         onClick={closeHeader}
         onKeyDown={closeHeader}
         aria-label="Close Menu"

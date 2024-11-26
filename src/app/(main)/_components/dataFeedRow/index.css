@@ -82,11 +82,9 @@
   @apply relative;
 }
 
-.browse-card-image {
-  @apply relative size-full;
-}
+.browse-card-poster {
+  @apply relative;
 
-.browse-card-image-sized {
   --content-image-ar-priority-width: 1;
 
   --width: calc(
@@ -97,19 +95,8 @@
     100% * var(--content-image-ar-priority-height) /
       var(--content-image-ar-priority-height)
   );
-  height: var(--height);
-  width: var(--width);
-}
 
-.browse-card-image-wrapper {
-  @apply flex;
-
-  height: var(--height);
-  width: var(--width);
-}
-
-.browse-card-image-sizer {
-  @apply relative inline-flex size-[inherit];
+  @apply h-[var(--height)] w-[var(--width)];
 }
 
 .browse-card-body {
@@ -132,4 +119,26 @@
   @apply relative flex flex-[0_0_100%] flex-col bg-[var(--app-overlay-secondary)];
 
   box-shadow: 0 0 0 0.5rem var(--app-overlay-secondary);
+}
+
+.browse-card-hover-poster-wrapper {
+  @apply absolute -inset-2 opacity-5;
+}
+
+.browse-card-hover-body {
+  @apply relative flex-1 p-1;
+}
+
+.browse-card-hover-body-description {
+  --max-lines: 7;
+
+  @apply line-clamp-[var(--max-lines)] max-h-[calc(var(--max-lines)*1.125rem)] break-words text-sm/leading-4.5;
+}
+
+.browse-card-hover-footer {
+  @apply relative z-[2] flex gap-1.5 self-start;
+}
+
+.browse-card-hover-footer-button {
+  @apply flex size-8 items-center justify-center text-[var(--app-background-crunchyroll-orange)];
 }

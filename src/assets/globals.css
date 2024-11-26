@@ -39,6 +39,10 @@ body {
 }
 
 @layer components {
+  .app-text {
+    @apply text-sm/leading-4.5 font-medium;
+  }
+
   .container-cmp {
     --container-inline-padding: 1.25rem;
     --container-max-width: 84.375rem;
@@ -64,7 +68,7 @@ body {
     }
   }
 
-  .page-overlay {
+  .app-overlay {
     @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[1] data-[active=true]:opacity-100;
   }
 
