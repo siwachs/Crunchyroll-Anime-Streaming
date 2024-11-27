@@ -18,10 +18,63 @@
 }
 
 .wide-cards-carousel-container {
-  @apply grid grid-cols-[minmax(0,auto)];
+  @apply grid w-full grid-cols-[minmax(0,auto)];
 
   grid-area: content;
   grid-template-areas: "viewbox";
+}
+
+.wide-card-carousel-arrow-wrapper {
+  --arrow-wrapper-height: 244px;
+  --icon-height: clamp(
+    var(--arrow-wrapper-height),
+    calc((var(--wide-cards-carousel-rows) - 1) * 500vh),
+    100%
+  );
+
+  @apply absolute inset-0 grid h-full;
+
+  grid-area: viewbox;
+}
+
+.wide-card-carousel-arrow {
+  --initial-background-opacity: 1;
+  --arrow-width: max(var(--carousel-overflow-x-hint), 1.5rem);
+
+  @apply relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-[color] duration-150 ease-quick;
+}
+
+.wide-cards-carousel-container:hover .wide-card-carousel-arrow {
+  @apply flex;
+}
+
+.arrow-dir-to-left {
+  --gradient-dir: to left;
+
+  @apply justify-self-start;
+}
+
+.arrow-dir-to-right {
+  --gradient-dir: to right;
+
+  @apply justify-self-end;
+}
+
+.wide-card-carousel-arrow::before {
+  @apply absolute inset-0 -z-[1] block opacity-[var(--initial-background-opacity)] transition-opacity duration-150 ease-quick content-[""];
+
+  background: linear-gradient(
+    var(--gradient-dir),
+    #0000,
+    #00000080 calc(var(--arrow-width) / 2),
+    #000000b3
+  );
+}
+
+.wide-card-carousel-arrow svg {
+  --arrow-size: 1.25rem;
+
+  @apply mx-auto h-[var(--icon-height)] w-[var(--arrow-size)];
 }
 
 .wide-cards-carousel-frame {
@@ -112,7 +165,12 @@
 }
 
 .browse-card-hover {
-  @apply absolute inset-0 flex opacity-0 transition-opacity duration-150 hover:z-[2] hover:opacity-100;
+  @apply absolute inset-0 flex opacity-0 transition-opacity duration-150;
+}
+
+.browse-card-hover:hover,
+.browse-card-hover:focus-within {
+  @apply z-[2] opacity-100;
 }
 
 .browse-card-hover-content {
@@ -123,6 +181,10 @@
 
 .browse-card-hover-poster-wrapper {
   @apply absolute -inset-2 opacity-5;
+}
+
+.browse-card-hover-link {
+  @apply absolute inset-0 z-[2];
 }
 
 .browse-card-hover-body {

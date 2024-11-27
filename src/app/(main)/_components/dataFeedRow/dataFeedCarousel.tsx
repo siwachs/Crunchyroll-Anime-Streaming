@@ -1,26 +1,75 @@
 "use client";
 
+import { MouseEvent, useCallback, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { HiStar } from "react-icons/hi2";
-import { HiOutlinePlay } from "react-icons/hi2";
+import {
+  HiOutlinePlay,
+  HiStar,
+  HiMiniChevronLeft,
+  HiMiniChevronRight,
+} from "react-icons/hi2";
 import { HiOutlineBookmark } from "react-icons/hi";
 
 import images from "@/assets/dataFeed";
 
 const DataFeedCarousel = () => {
+  const layoutRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const scroll = useCallback((e: MouseEvent) => {
+    const { target } = e;
+
+    const element = (target as HTMLElement).closest("button");
+    const dataScroll = element?.getAttribute("data-scroll");
+
+    const layout = layoutRef.current!;
+    const track = trackRef.current!;
+    const card = cardRef.current!;
+
+    const scrollStep = parseInt(
+      getComputedStyle(layout).getPropertyValue("--scroll-step"),
+    );
+    const cardWidth = card.clientWidth;
+
+    track.scrollBy({
+      left:
+        dataScroll === "previous"
+          ? -cardWidth * scrollStep
+          : cardWidth * scrollStep,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
-    <div className="container-cmp wide-cards-carousel-layout px-0">
+    <div
+      ref={layoutRef}
+      className="container-cmp wide-cards-carousel-layout px-0"
+    >
       <div className="container-cmp wide-cards-carousel-container">
-        {/* Nav Left */}
+        <div className="wide-card-carousel-arrow-wrapper">
+          <button
+            className="wide-card-carousel-arrow arrow-dir-to-left"
+            aria-label="Previous"
+            data-scroll="previous"
+            onClick={scroll}
+          >
+            <HiMiniChevronLeft />
+          </button>
+        </div>
 
         <div className="wide-cards-carousel-frame">
           <div className="carousel-scroller">
             <div className="carousel-scroller-wrapper">
-              <div className="carousel-scroller-track">
+              <div ref={trackRef} className="carousel-scroller-track">
                 {images.map((image) => (
-                  <div key={image.key} className="carousel-scroller-card">
+                  <div
+                    key={image.key}
+                    ref={cardRef}
+                    className="carousel-scroller-card"
+                  >
                     <div className="browse-card">
                       <Link
                         href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
@@ -75,7 +124,7 @@ const DataFeedCarousel = () => {
                           <Link
                             href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
                             prefetch={false}
-                            className="absolute inset-0 z-[2]"
+                            className="browse-card-hover-link"
                           />
 
                           <div className="browse-card-hover-body">
@@ -134,7 +183,16 @@ const DataFeedCarousel = () => {
           </div>
         </div>
 
-        {/* Nav Right */}
+        <div className="wide-card-carousel-arrow-wrapper">
+          <button
+            className="wide-card-carousel-arrow arrow-dir-to-right"
+            aria-label="Next"
+            data-scroll="next"
+            onClick={scroll}
+          >
+            <HiMiniChevronRight />
+          </button>
+        </div>
       </div>
     </div>
   );
