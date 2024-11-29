@@ -17,6 +17,40 @@
     "pages";
 }
 
+@media screen and (min-width: 480px) {
+  .wide-cards-carousel-layout {
+    --wide-cards-carousel-cols: 3;
+  }
+}
+
+@media screen and (min-width: 568px) {
+  .wide-cards-carousel-layout {
+    --wide-cards-carousel-cols: 4;
+
+    --carousel-col-gap: 1.25rem;
+
+    --carousel-overflow-y-hint: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .wide-cards-carousel-layout {
+    --wide-cards-carousel-cols: 5;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .wide-cards-carousel-layout {
+    --carousel-col-gap: 1.875rem;
+  }
+}
+
+@media screen and (min-width: 1720px) {
+  .wide-cards-carousel-layout {
+    --wide-cards-carousel-cols: 6;
+  }
+}
+
 .wide-cards-carousel-container {
   @apply grid w-full grid-cols-[minmax(0,auto)];
 
@@ -25,7 +59,7 @@
 }
 
 .wide-card-carousel-arrow-wrapper {
-  --arrow-wrapper-height: 244px;
+  --arrow-wrapper-height: calc(100% - 60px);
   --icon-height: clamp(
     var(--arrow-wrapper-height),
     calc((var(--wide-cards-carousel-rows) - 1) * 500vh),
@@ -41,11 +75,17 @@
   --initial-background-opacity: 1;
   --arrow-width: max(var(--carousel-overflow-x-hint), 1.5rem);
 
-  @apply relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-[color] duration-150 ease-quick;
+  @apply relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-[color] duration-150 ease-quick sm:flex;
 }
 
 .wide-cards-carousel-container:hover .wide-card-carousel-arrow {
   @apply flex;
+}
+
+@media screen and (min-width: 568px) {
+  .wide-card-carousel-arrow {
+    --initial-background-opacity: 0;
+  }
 }
 
 .arrow-dir-to-left {
@@ -75,6 +115,12 @@
   --arrow-size: 1.25rem;
 
   @apply mx-auto h-[var(--icon-height)] w-[var(--arrow-size)];
+}
+
+@media screen and (min-width: 568px) {
+  .wide-card-carousel-arrow svg {
+    --arrow-size: 2.5rem;
+  }
 }
 
 .wide-cards-carousel-frame {
@@ -195,6 +241,18 @@
   --max-lines: 7;
 
   @apply line-clamp-[var(--max-lines)] max-h-[calc(var(--max-lines)*1.125rem)] break-words text-sm/leading-4.5;
+}
+
+@media screen and (min-width: 568px) {
+  .browse-card-hover-body-description {
+    --max-lines: 5;
+  }
+}
+
+@media screen and (min-width: 980px) {
+  .browse-card-hover-body-description {
+    --max-lines: 6;
+  }
 }
 
 .browse-card-hover-footer {

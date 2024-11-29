@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEvent, useCallback, useRef } from "react";
+import { MouseEvent, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -19,7 +19,7 @@ const DataFeedCarousel = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const scroll = useCallback((e: MouseEvent) => {
+  function scroll(e: MouseEvent) {
     const { target } = e;
 
     const element = (target as HTMLElement).closest("button");
@@ -41,6 +41,24 @@ const DataFeedCarousel = () => {
           : cardWidth * scrollStep,
       behavior: "smooth",
     });
+  }
+
+  useEffect(() => {
+    const track = trackRef.current!;
+    const cards = track.querySelectorAll(".carousel-scroller-card");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          (target as HTMLElement).inert = !isIntersecting;
+        });
+      },
+      { root: track, threshold: 0.5 },
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
   }, []);
 
   return (

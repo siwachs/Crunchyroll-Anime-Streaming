@@ -9,7 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       spacing: { "15": "3.75rem", "4.5": "1.125rem" },
-      screens: { sm: "568px", md: "800px", xl: "1440px", "2xl": "1720px" },
+      screens: {
+        sm: "568px",
+        md: "800px",
+        xl: "1440px",
+        "2xl": "1720px",
+      },
       lineHeight: { "leading-4.5": "1.125rem" },
       transitionTimingFunction: { quick: "ease" },
     },
