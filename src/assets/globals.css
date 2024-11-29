@@ -50,6 +50,10 @@ body {
     @apply mx-auto w-full max-w-full px-[var(--container-inline-padding)];
   }
 
+  .container-cmp-has-max-width {
+    @apply max-w-[calc(var(--container-inline-padding)*2+var(--container-max-width))];
+  }
+
   @media screen and (min-width: 568px) {
     .container-cmp {
       --container-inline-padding: 2.5rem;

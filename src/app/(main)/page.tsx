@@ -1,5 +1,6 @@
 import Banner from "./_components/banner";
 import DataFeedRow from "./_components/dataFeedRow";
+import PromotionBanner from "./_components/promotionBanner";
 
 export default function Home() {
   return (
@@ -14,8 +15,9 @@ export default function Home() {
             dataTitle="Free to Watch In India"
             dataSubTitle="Fantastic Free Anime"
           />
+          <PromotionBanner dataId="1" />
           <DataFeedRow
-            dataId="1"
+            dataId="2"
             dataType="personalized-collection-2"
             dataTitle="October 2024 Seasonal Sampler"
             dataSubTitle="Check out the first few episodes of these new shows for free!"

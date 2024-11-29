@@ -14,7 +14,7 @@ import { HiOutlineBookmark } from "react-icons/hi";
 
 import images from "@/assets/dataFeed";
 
-const DataFeedCarousel = () => {
+const DataFeedCarousel: React.FC = () => {
   const layoutRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);

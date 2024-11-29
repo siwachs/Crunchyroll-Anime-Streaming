@@ -11,7 +11,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import images from "@/assets/banner";
 import "./index.css";
 
-const Banner = () => {
+const Banner: React.FC = () => {
   const [currentActiveCard, setCurrentActiveCard] = useState(5);
 
   function changeCurrentActiveCard(e: MouseEvent) {
