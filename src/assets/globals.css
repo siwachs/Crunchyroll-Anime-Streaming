@@ -39,6 +39,10 @@ body {
 }
 
 @layer components {
+  .main {
+    @apply flex-[1_1_0] pb-10;
+  }
+
   .app-text {
     @apply text-sm/leading-4.5 font-medium;
   }
@@ -70,6 +74,13 @@ body {
     .container-cmp {
       --container-inline-padding: 5rem;
     }
+  }
+
+  .content-wrapper {
+    --content-wrapper-inline-padding: 1.25rem;
+    --content-width: 65.625rem;
+
+    @apply mx-auto max-w-[calc(var(--content-width)+var(--content-wrapper-inline-padding)*2)] px-[var(--content-wrapper-inline-padding)];
   }
 
   .app-overlay {

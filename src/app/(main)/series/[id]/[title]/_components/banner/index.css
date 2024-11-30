@@ -1,0 +1,28 @@
+.banner-wrapper {
+  --logo-overlay-fade-drection: 0deg;
+  --logo-overlay-gap: 0.625rem;
+
+  @apply relative z-[1] mb-7 overflow-hidden;
+}
+
+.blurred-wrapper::before {
+  @apply absolute bottom-0 left-0 block h-1/2 w-full opacity-70 content-[""];
+
+  background-image: linear-gradient(180deg, #14151900, #141519cc);
+}
+
+.tall-image {
+  @apply block;
+}
+
+.blurred {
+  @apply absolute left-1/2 top-1/2 -z-[1] h-[calc(100%+1.075rem)] w-[calc(100%+6.25rem)] -translate-x-1/2 -translate-y-1/2 opacity-50 blur-[0.5375rem];
+}
+
+.background-wrapper {
+  @apply relative mx-auto aspect-[2/3] max-h-[calc(100vh-16.25rem)] min-h-60;
+}
+
+.background-image {
+  @apply absolute inset-0;
+}

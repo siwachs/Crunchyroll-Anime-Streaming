@@ -9,11 +9,11 @@ const PromotionBanner: React.FC<{ dataId: string }> = ({ dataId }) => {
     <div data-id={dataId}>
       <div className="container-cmp container-cmp-has-max-width">
         <Link
-          href={`/series/${83290}/${encodeURIComponent("Dragon Ball Z".toLowerCase().replaceAll(" ", "-"))}`}
+          href={`/series/${83290}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
           prefetch={false}
           className="relative block"
         >
-          <div className="h-0 pt-[44.78%]" />
+          <div className="h-0 pt-[44.78%] sm:pt-[33.334%]" />
           <div className="absolute inset-0">
             <Image
               sizes="(max-width: 568px) 1080px, 100vw"

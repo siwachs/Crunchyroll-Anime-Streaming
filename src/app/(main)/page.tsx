@@ -5,7 +5,7 @@ import PromotionBanner from "./_components/promotionBanner";
 export default function Home() {
   return (
     <>
-      <main className="feed relative grid flex-[1_1_0] gap-y-12 pb-10 sm:gap-y-[4.5rem] xl:gap-y-24">
+      <main className="feed main relative grid gap-y-12 sm:gap-y-[4.5rem] xl:gap-y-24">
         <Banner />
 
         <div className="dynamic-feed grid grid-cols-[minmax(0,auto)] gap-y-10">
