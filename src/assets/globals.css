@@ -54,6 +54,13 @@ body {
     @apply mx-auto w-full max-w-full px-[var(--container-inline-padding)];
   }
 
+  .content-wrapper {
+    --content-wrapper-inline-padding: 1.25rem;
+    --content-width: 65.625rem;
+
+    @apply mx-auto max-w-[calc(var(--content-width)+var(--content-wrapper-inline-padding)*2)] px-[var(--content-wrapper-inline-padding)];
+  }
+
   .container-cmp-has-max-width {
     @apply max-w-[calc(var(--container-inline-padding)*2+var(--container-max-width))];
   }
@@ -61,6 +68,10 @@ body {
   @media screen and (min-width: 568px) {
     .container-cmp {
       --container-inline-padding: 2.5rem;
+    }
+
+    .content-wrapper {
+      --content-wrapper-inline-padding: 2.5rem;
     }
   }
 
@@ -74,13 +85,6 @@ body {
     .container-cmp {
       --container-inline-padding: 5rem;
     }
-  }
-
-  .content-wrapper {
-    --content-wrapper-inline-padding: 1.25rem;
-    --content-width: 65.625rem;
-
-    @apply mx-auto max-w-[calc(var(--content-width)+var(--content-wrapper-inline-padding)*2)] px-[var(--content-wrapper-inline-padding)];
   }
 
   .app-overlay {

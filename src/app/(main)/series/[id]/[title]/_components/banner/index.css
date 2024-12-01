@@ -2,7 +2,13 @@
   --logo-overlay-fade-drection: 0deg;
   --logo-overlay-gap: 0.625rem;
 
-  @apply relative z-[1] mb-7 overflow-hidden;
+  @apply relative z-0 mb-7 overflow-hidden sm:mb-[2.125rem];
+}
+
+@media screen and (min-width: 568px) {
+  .banner-wrapper {
+    --logo-overlay-fade-drection: 90deg;
+  }
 }
 
 .blurred-wrapper::before {
@@ -12,7 +18,11 @@
 }
 
 .tall-image {
-  @apply block;
+  @apply sm:hidden;
+}
+
+.wide-image {
+  @apply hidden sm:block;
 }
 
 .blurred {
@@ -20,7 +30,7 @@
 }
 
 .background-wrapper {
-  @apply relative mx-auto aspect-[2/3] max-h-[calc(100vh-16.25rem)] min-h-60;
+  @apply relative mx-auto aspect-[2/3] max-h-[calc(100vh-16.25rem)] min-h-60 sm:aspect-video sm:max-h-[calc(100vh-28.75rem)];
 }
 
 .background-image {
