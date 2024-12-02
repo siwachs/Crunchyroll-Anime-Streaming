@@ -150,16 +150,8 @@
   @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5 lg:mb-2 2xl:mt-[28px];
 }
 
-.carousel-card-meta-tags > span {
+.carousel-card-meta-tags span {
   @apply inline text-sm/leading-4.5 font-medium;
-}
-
-.rhombus {
-  @apply relative;
-}
-
-.rhombus::before {
-  @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
 }
 
 .carousel-card-description {
@@ -167,13 +159,11 @@
 }
 
 .carousel-card-button {
-  --carousel-card-hover-color: #ff7b2e;
-
   @apply select-none transition-[color,background-color,box-shadow] duration-200 ease-quick;
 }
 
 .carousel-card-watch-button {
-  @apply inline-flex h-10 w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[var(--carousel-card-hover-color)] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)] sm:w-auto sm:flex-[0_0_auto];
+  @apply inline-flex h-10 w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)] sm:w-auto sm:flex-[0_0_auto];
 }
 
 .carousel-card-watch-button span {
@@ -181,7 +171,7 @@
 }
 
 .carousel-card-watchlist-button {
-  @apply aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--carousel-card-hover-color)] hover:text-[var(--carousel-card-hover-color)];
+  @apply aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-hover-crunchyroll-orange)];
 }
 
 .carousel-card-watchlist-button span {

@@ -12,6 +12,8 @@ const Banner: React.FC = () => {
           <figure className="absolute inset-0">
             <Image
               fill
+              priority
+              sizes="(max-width: 568px) 568px, 100vw"
               src={tallImage}
               alt="Dragon Ball DAIMA"
               className="block size-full object-cover"
@@ -23,6 +25,8 @@ const Banner: React.FC = () => {
           <figure className="absolute inset-0">
             <Image
               fill
+              priority
+              sizes="(max-width: 1720px) 1720px, 100vw"
               src={wideImage}
               alt="Dragon Ball DAIMA"
               className="block size-full object-cover"
@@ -39,6 +43,7 @@ const Banner: React.FC = () => {
                 <Image
                   fill
                   priority
+                  sizes="(max-width: 568px) 568px, 100vw"
                   src={tallImage}
                   alt="Dragon Ball DAIMA"
                   className="block size-full object-cover"
@@ -51,6 +56,7 @@ const Banner: React.FC = () => {
                 <Image
                   fill
                   priority
+                  sizes="(max-width: 1720px) 1720px, 100vw"
                   src={wideImage}
                   alt="Dragon Ball DAIMA"
                   className="block size-full object-cover"

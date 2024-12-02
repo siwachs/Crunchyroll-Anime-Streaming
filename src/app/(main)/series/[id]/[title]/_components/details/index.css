@@ -1,0 +1,27 @@
+.details-wrapper {
+  @apply relative flex flex-col pb-6;
+}
+
+.body {
+  @apply flex w-full flex-1 flex-col;
+}
+
+.heading-line {
+  @apply mb-2.5 flex items-center;
+}
+
+.heading-line h1 {
+  @apply mr-3 flex-[1_1_auto] text-2xl font-medium;
+}
+
+.tags {
+  @apply mb-3 flex select-none text-[var(--meta-color)];
+}
+
+.tags span {
+  @apply inline text-sm/leading-4.5 font-medium;
+}
+
+.up-next-section {
+  @apply hidden;
+}

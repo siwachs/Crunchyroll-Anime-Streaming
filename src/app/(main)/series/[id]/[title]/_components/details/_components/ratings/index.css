@@ -1,0 +1,29 @@
+.ratings-wrapper {
+  @apply mb-6 mt-3 inline-flex flex-col;
+}
+
+.star-rating-controls {
+  --star-icon-size: 1.75rem;
+
+  @apply flex self-start text-[var(--app-icon-primary)];
+}
+
+.star-rating-controls:hover {
+  @apply text-[var(--app-hover-crunchyroll-orange)];
+}
+
+.star-rating-controls button {
+  @apply block px-1;
+}
+
+.star-rating-controls button:first-child {
+  @apply pl-0;
+}
+
+.star-rating-controls button svg {
+  @apply block size-[var(--star-icon-size)] fill-current;
+}
+
+.star-rating-controls button:hover ~ button svg {
+  @apply fill-transparent;
+}

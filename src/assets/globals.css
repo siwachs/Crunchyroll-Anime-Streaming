@@ -15,6 +15,7 @@
 
   --app-background-crunchyroll-orange: #ff640a;
   --app-text-crunchyroll-orange: #e05200;
+  --app-hover-crunchyroll-orange: #ff7b2e;
 
   --app-icon-primary: #dadada;
 
@@ -41,10 +42,6 @@ body {
 @layer components {
   .main {
     @apply flex-[1_1_0] pb-10;
-  }
-
-  .app-text {
-    @apply text-sm/leading-4.5 font-medium;
   }
 
   .container-cmp {
@@ -89,6 +86,14 @@ body {
 
   .app-overlay {
     @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[1] data-[active=true]:opacity-100;
+  }
+
+  .rhombus {
+    @apply relative;
+  }
+
+  .rhombus::before {
+    @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
   }
 
   .text-rendering-optimized {

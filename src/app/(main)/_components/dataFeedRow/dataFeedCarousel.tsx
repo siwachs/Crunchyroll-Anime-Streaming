@@ -157,16 +157,20 @@ const DataFeedCarousel: React.FC = () => {
                             </h4>
 
                             <div className="mb-1 flex items-center gap-1 text-[var(--app-icon-primary)]">
-                              <p className="app-text">4.7</p>
+                              <p className="text-sm/leading-4.5 font-medium">
+                                4.7
+                              </p>
                               <HiStar className="size-4" />
-                              <p className="app-text uppercase">(43k)</p>
+                              <p className="text-sm/leading-4.5 font-medium uppercase">
+                                (43k)
+                              </p>
                             </div>
 
                             <div className="mb-2 flex flex-col text-[var(--meta-color)]">
-                              <span className="app-text font-semibold">
+                              <span className="text-sm/leading-4.5 font-semibold">
                                 3 Seasons
                               </span>
-                              <span className="app-text font-semibold">
+                              <span className="text-sm/leading-4.5 font-semibold">
                                 329 Episodes
                               </span>
                             </div>
