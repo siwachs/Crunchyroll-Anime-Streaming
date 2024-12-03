@@ -41,7 +41,6 @@ const Details: React.FC = () => {
 
       <div className="sticky-buttons-wrapper">
         <ContentActionButtons
-          className="mb-4"
           watchActionhref="/"
           watchActionText="Start Watching E1"
         />

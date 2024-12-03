@@ -12,7 +12,7 @@ const ContentActionButtons: React.FC<{
 }> = ({ className = "", watchActionhref, watchActionText }) => {
   return (
     <div
-      className={`relative flex justify-center gap-x-3 sm:inline-flex md:justify-start lg:gap-x-2.5 ${className}`}
+      className={`relative flex justify-center gap-x-2.5 sm:inline-flex md:justify-start lg:gap-x-2.5 ${className}`}
     >
       <Link
         href={watchActionhref}
