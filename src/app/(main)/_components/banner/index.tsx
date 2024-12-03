@@ -4,8 +4,8 @@ import { useState, MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { HiOutlinePlay } from "react-icons/hi2";
-import { HiOutlineBookmark } from "react-icons/hi";
+import ContentActionButtons from "@/components/contentActionButtons";
+
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import images from "@/assets/banner";
@@ -102,23 +102,10 @@ const Banner: React.FC = () => {
                   future. This is her last chance to get it right!
                 </p>
 
-                <div className="relative flex justify-center gap-x-3 sm:inline-flex md:justify-start lg:gap-x-2.5">
-                  <Link
-                    href="/"
-                    className="carousel-card-watch-button carousel-card-button"
-                  >
-                    <span>
-                      <HiOutlinePlay strokeWidth={2.08} className="size-6" />
-                      Start Watching E1
-                    </span>
-                  </Link>
-
-                  <button className="carousel-card-watchlist-button carousel-card-button">
-                    <span>
-                      <HiOutlineBookmark className="size-[22px]" />
-                    </span>
-                  </button>
-                </div>
+                <ContentActionButtons
+                  watchActionhref="/"
+                  watchActionText="Start Watching E1"
+                />
               </div>
             </div>
 

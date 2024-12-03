@@ -158,26 +158,6 @@
   @apply mb-8 hidden text-base font-medium text-[var(--app-icon-primary)] lg:line-clamp-4;
 }
 
-.carousel-card-button {
-  @apply select-none transition-[color,background-color,box-shadow] duration-200 ease-quick;
-}
-
-.carousel-card-watch-button {
-  @apply inline-flex h-10 w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 uppercase text-black hover:bg-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-background-secondary)] active:bg-[var(--app-text-crunchyroll-orange)] sm:w-auto sm:flex-[0_0_auto];
-}
-
-.carousel-card-watch-button span {
-  @apply flex items-center gap-1 text-sm/leading-4.5 font-black;
-}
-
-.carousel-card-watchlist-button {
-  @apply aspect-square flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-hover-crunchyroll-orange)];
-}
-
-.carousel-card-watchlist-button span {
-  @apply flex items-center justify-center gap-1;
-}
-
 .navigatin-button {
   --pill-color: #ffffff80;
 

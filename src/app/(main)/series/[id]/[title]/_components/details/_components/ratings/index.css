@@ -27,3 +27,42 @@
 .star-rating-controls button:hover ~ button svg {
   @apply fill-transparent;
 }
+
+.star-rating-average-button {
+  @apply mt-3 flex items-center gap-1 hover:underline;
+}
+
+.star-rating-average-button span {
+  @apply flex-[0_0_auto] text-sm/leading-4.5 font-semibold transition-[color] duration-200 ease-quick;
+}
+
+.star-rating-average-button span:first-child {
+  @apply text-[var(--app-icon-primary)];
+}
+
+.star-rating-average-button span:nth-child(2) {
+  @apply uppercase text-white;
+}
+
+.star-rating-average-button:hover span {
+  @apply text-white;
+}
+
+.star-rating-average-button:focus + .star-rating-average-data {
+  @apply absolute left-0 top-[calc(100%+0.5rem)] z-[98] block;
+}
+
+@keyframes starRatingAverageTooltipAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.star-rating-average-tooltip {
+  @apply w-[18.125rem] bg-[var(--app-background-secondary)] p-5 text-white;
+
+  animation: starRatingAverageTooltipAnimation 0.15s ease forwards;
+}

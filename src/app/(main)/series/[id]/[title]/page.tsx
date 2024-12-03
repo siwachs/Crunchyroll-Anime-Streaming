@@ -8,6 +8,8 @@ export default function Series() {
         <Banner />
         <div className="content-wrapper">
           <Details />
+
+          {/* Navigation */}
         </div>
       </main>
 

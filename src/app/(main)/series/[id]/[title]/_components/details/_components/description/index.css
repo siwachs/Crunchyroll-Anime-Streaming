@@ -1,0 +1,48 @@
+.expandable-section-mask {
+  --fade-size: 2.5rem;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--fade-size)),
+    #0000
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--fade-size)),
+    #0000
+  );
+}
+
+.expandable-section {
+  @apply relative max-h-[4.5rem] overflow-hidden;
+}
+
+.expandable-section.expandable-section-is-expanded {
+  @apply max-h-full;
+}
+
+.expandable-section p {
+  @apply whitespace-pre-line text-sm/leading-4.5 font-normal;
+}
+
+.expandable-section-table {
+  @apply py-3;
+}
+
+.expandable-section-table-row {
+  @apply grid grid-cols-[40%_1fr] items-center py-3;
+
+  box-shadow: inset 0 -0.0625rem 0 0 #4a4e58;
+}
+
+.expandable-section-table-row div:first-child {
+  @apply self-start;
+}
+
+.expandable-section-table-row div:nth-child(2) {
+  @apply text-right;
+}
+
+.expandable-section-table-row h5 {
+  @apply text-sm/leading-4.5 font-semibold;
+}

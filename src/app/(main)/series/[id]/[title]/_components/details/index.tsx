@@ -1,4 +1,6 @@
 import Ratings from "./_components/ratings";
+import ContentActionButtons from "@/components/contentActionButtons";
+import Description from "./_components/description";
 
 import { MdMoreVert } from "react-icons/md";
 
@@ -25,11 +27,25 @@ const Details: React.FC = () => {
         </div>
 
         <Ratings />
+
+        <ContentActionButtons
+          className="mb-4"
+          watchActionhref="/"
+          watchActionText="Start Watching E1"
+        />
+
+        <Description />
       </div>
 
       <div className="up-next-section"></div>
 
-      <div className="sticky-buttons-wrapper"></div>
+      <div className="sticky-buttons-wrapper">
+        <ContentActionButtons
+          className="mb-4"
+          watchActionhref="/"
+          watchActionText="Start Watching E1"
+        />
+      </div>
     </div>
   );
 };
