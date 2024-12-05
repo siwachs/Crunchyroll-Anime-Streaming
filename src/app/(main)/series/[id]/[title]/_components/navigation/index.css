@@ -1,0 +1,111 @@
+.top-controls {
+  @apply mb-3 flex items-center;
+}
+
+.seasons-select {
+  @apply flex min-w-[50%] flex-1 pr-6;
+}
+
+.seasons-select h4 {
+  @apply text-base font-semibold;
+}
+
+.episode-list {
+  --number-of-columns: 1;
+
+  @apply grid gap-3;
+
+  grid-template-columns: repeat(var(--number-of-columns), minmax(0, 1fr));
+}
+
+.playable-card {
+  --hover-shadow-size: 0.5rem;
+
+  @apply relative flex;
+
+  box-shadow: 0 0 0 var(--hover-shadow-size) #0000;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.playable-card-thumbnail-wrapper {
+  @apply relative block h-[5.3125rem] flex-[0_0_auto];
+}
+
+.playable-card-thumbnail {
+  --content-image-ar-priority-height: 1;
+
+  @apply relative;
+
+  width: calc(
+    100% * var(--content-image-ar-priority-width) /
+      var(--content-image-ar-priority-width)
+  );
+  height: calc(
+    100% * var(--content-image-ar-priority-height) /
+      var(--content-image-ar-priority-height)
+  );
+}
+
+.playable-card-duration {
+  @apply absolute bottom-1 right-1 select-none bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/leading-4.5 font-semibold;
+}
+
+.playable-card-hover-info {
+  @apply absolute inset-0 z-[1] opacity-0 transition-opacity duration-200 ease-quick;
+}
+
+.playable-card:hover .playable-card-hover-info {
+  @apply opacity-100;
+}
+
+.playable-card-hover-preview {
+  @apply relative flex size-full bg-[var(--app-overlay-secondary)];
+
+  box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
+}
+
+.playable-card-hover-thumbnail-wrapper::after {
+  @apply absolute inset-0 bg-white opacity-[0.08] content-[""];
+}
+
+.playable-card-hover-body {
+  @apply flex flex-1 flex-col pb-[0.7625rem] pl-3 pt-3;
+}
+
+.playable-card-hover-play {
+  @apply flex items-center gap-1 text-[var(--app-background-crunchyroll-orange)];
+}
+
+.playable-card-hover-play span {
+  @apply inline-block truncate text-sm/leading-4.5 font-black uppercase;
+}
+
+.playable-card-body-aligner {
+  @apply relative flex flex-1 items-center;
+}
+
+.playable-card-body {
+  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3;
+}
+
+.playable-card-small-title {
+  @apply mb-1 self-start;
+}
+
+.playable-card-small-title small {
+  @apply block select-none truncate text-[0.625rem]/[0.875rem] font-black uppercase text-[var(--meta-color)];
+}
+
+.playable-card-title {
+  @apply line-clamp-1 self-start text-sm/leading-4.5 font-semibold;
+}
+
+.playable-card-footer {
+  @apply relative mt-auto flex w-full items-center justify-between text-[var(--meta-color)];
+}
+
+.meta-tags {
+  @apply line-clamp-2 flex-1 text-sm/leading-4.5 font-medium;
+}

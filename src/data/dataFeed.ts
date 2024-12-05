@@ -1,10 +1,10 @@
-import image1 from "./0.avif";
-import image2 from "./1.avif";
-import image3 from "./2.avif";
-import image4 from "./3.avif";
-import image5 from "./4.avif";
-import image6 from "./5.avif";
-import image7 from "./6.avif";
+import image1 from "@/assets/dataFeed/0.avif";
+import image2 from "@/assets/dataFeed/1.avif";
+import image3 from "@/assets/dataFeed/2.avif";
+import image4 from "@/assets/dataFeed/3.avif";
+import image5 from "@/assets/dataFeed/4.avif";
+import image6 from "@/assets/dataFeed/5.avif";
+import image7 from "@/assets/dataFeed/6.avif";
 
 const images = [
   {

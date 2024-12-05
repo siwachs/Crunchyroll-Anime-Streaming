@@ -3,7 +3,7 @@
 }
 
 .carousel-navigation-arrow button {
-  @apply grid h-[6.25rem] w-full text-white transition-[color] ease-quick hover:text-[var(--pill-color)];
+  @apply grid h-[6.25rem] w-full transition-[color] ease-quick hover:text-[var(--pill-color)];
 
   pointer-events: all;
 }

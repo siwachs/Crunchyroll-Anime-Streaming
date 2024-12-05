@@ -8,7 +8,7 @@ import ContentActionButtons from "@/components/contentActionButtons";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-import images from "@/assets/banner";
+import images from "@/data/banner";
 import "./index.css";
 
 const Banner: React.FC = () => {
@@ -124,7 +124,7 @@ const Banner: React.FC = () => {
         </button>
       </div>
 
-      <div className="container-cmp relative flex w-full justify-center pt-6 text-white sm:pt-[38px] md:justify-start md:pt-7 lg:pt-[48px] 2xl:pt-[64px]">
+      <div className="container-cmp relative flex w-full justify-center pt-6 sm:pt-[38px] md:justify-start md:pt-7 lg:pt-[48px] 2xl:pt-[64px]">
         {images.map((image, index) => (
           <button
             key={image.key}

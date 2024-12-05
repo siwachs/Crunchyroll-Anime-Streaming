@@ -13,11 +13,8 @@ const Details: React.FC = () => {
         <div className="heading-line">
           <h1 className="text-rendering-optimized">Dragon Ball DAIMA</h1>
 
-          <button
-            title="More actions"
-            className="block p-2 text-[var(--meta-color)] transition-colors duration-200 ease-quick hover:bg-[var(--app-background-secondary)] hover:text-white"
-          >
-            <MdMoreVert className="size-6" />
+          <button title="More actions" className="series-page-icon p-2">
+            <MdMoreVert className="series-page-icon-size" />
           </button>
         </div>
 

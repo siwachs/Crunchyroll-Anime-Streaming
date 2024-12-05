@@ -12,7 +12,7 @@ import {
 } from "react-icons/hi2";
 import { HiOutlineBookmark } from "react-icons/hi";
 
-import images from "@/assets/dataFeed";
+import images from "@/data/dataFeed";
 
 const DataFeedCarousel: React.FC = () => {
   const layoutRef = useRef<HTMLDivElement>(null);

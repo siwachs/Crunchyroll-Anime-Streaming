@@ -101,8 +101,9 @@
 }
 
 .wide-card-carousel-arrow::before {
-  @apply absolute inset-0 -z-[1] block opacity-[var(--initial-background-opacity)] transition-opacity duration-150 ease-quick content-[""];
+  @apply absolute inset-0 -z-[1] block transition-opacity duration-150 ease-quick content-[""];
 
+  opacity: var(--initial-background-opacity);
   background: linear-gradient(
     var(--gradient-dir),
     #0000,
@@ -114,7 +115,10 @@
 .wide-card-carousel-arrow svg {
   --arrow-size: 1.25rem;
 
-  @apply mx-auto h-[var(--icon-height)] w-[var(--arrow-size)];
+  @apply mx-auto;
+
+  height: var(--icon-height);
+  width: var(--arrow-size);
 }
 
 @media screen and (min-width: 568px) {
@@ -195,7 +199,8 @@
       var(--content-image-ar-priority-height)
   );
 
-  @apply h-[var(--height)] w-[var(--width)];
+  height: var(--height);
+  width: var(--width);
 }
 
 .browse-card-body {
@@ -240,7 +245,9 @@
 .browse-card-hover-body-description {
   --max-lines: 7;
 
-  @apply line-clamp-[var(--max-lines)] max-h-[calc(var(--max-lines)*1.125rem)] break-words text-sm/leading-4.5;
+  @apply line-clamp-[var(--max-lines)] break-words text-sm/leading-4.5;
+
+  max-height: calc(var(--max-lines) * 1.125rem);
 }
 
 @media screen and (min-width: 568px) {
