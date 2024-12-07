@@ -32,7 +32,3 @@
 .background-wrapper {
   @apply relative mx-auto aspect-[2/3] max-h-[calc(100vh-16.25rem)] min-h-60 sm:aspect-video sm:max-h-[calc(100vh-28.75rem)];
 }
-
-.background-image {
-  @apply absolute inset-0;
-}

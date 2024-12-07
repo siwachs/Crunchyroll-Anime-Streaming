@@ -20,7 +20,7 @@ const Ratings: React.FC = () => {
         <button className="star-rating-average-button">
           <span>Average Rating:</span>
           <span>4.8 (36.7k)</span>
-          <FaCaretDown className="size-4" />
+          <FaCaretDown className="ml-1 size-4" />
         </button>
 
         <div className="star-rating-average-data hidden">
@@ -29,6 +29,7 @@ const Ratings: React.FC = () => {
               <span className="text-sm/leading-4.5 font-medium">
                 Average 4.8 out of 5 stars
               </span>
+
               <span className="flex pt-3 text-xs font-semibold">
                 36747 ratings
               </span>

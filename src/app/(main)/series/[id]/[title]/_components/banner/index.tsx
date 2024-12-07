@@ -37,32 +37,30 @@ const Banner: React.FC = () => {
 
       <div className="content-wrapper">
         <div className="background-wrapper">
-          <div className="background-image">
-            <div className="tall-image">
-              <figure className="absolute inset-0">
-                <Image
-                  fill
-                  priority
-                  sizes="(max-width: 568px) 568px, 100vw"
-                  src={tallImage}
-                  alt="Dragon Ball DAIMA"
-                  className="block size-full object-cover"
-                />
-              </figure>
-            </div>
+          <div className="tall-image">
+            <figure className="absolute inset-0">
+              <Image
+                fill
+                priority
+                sizes="(max-width: 568px) 568px, 100vw"
+                src={tallImage}
+                alt="Dragon Ball DAIMA"
+                className="block size-full object-cover"
+              />
+            </figure>
+          </div>
 
-            <div className="wide-image">
-              <figure className="absolute inset-0">
-                <Image
-                  fill
-                  priority
-                  sizes="(max-width: 1720px) 1720px, 100vw"
-                  src={wideImage}
-                  alt="Dragon Ball DAIMA"
-                  className="block size-full object-cover"
-                />
-              </figure>
-            </div>
+          <div className="wide-image">
+            <figure className="absolute inset-0">
+              <Image
+                fill
+                priority
+                sizes="(max-width: 1720px) 1720px, 100vw"
+                src={wideImage}
+                alt="Dragon Ball DAIMA"
+                className="block size-full object-cover"
+              />
+            </figure>
           </div>
         </div>
       </div>

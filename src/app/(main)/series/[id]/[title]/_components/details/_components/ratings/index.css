@@ -1,15 +1,15 @@
 .ratings-wrapper {
-  @apply mb-6 mt-3 inline-flex flex-col;
+  @apply mb-6 mt-3 inline-flex flex-col sm:mt-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2;
 }
 
 .star-rating-controls {
   --star-icon-size: 1.75rem;
 
-  @apply flex self-start text-[var(--app-icon-primary)];
+  @apply flex items-center text-[var(--app-icon-primary)] hover:text-[var(--app-hover-crunchyroll-orange)];
 }
 
-.star-rating-controls:hover {
-  @apply text-[var(--app-hover-crunchyroll-orange)];
+.star-rating-controls::after {
+  @apply ml-2 hidden h-5 w-[0.0625rem] bg-[#4a4e58] content-[""] sm:block;
 }
 
 .star-rating-controls button {
@@ -18,6 +18,10 @@
 
 .star-rating-controls button:first-child {
   @apply pl-0;
+}
+
+.star-rating-controls button:last-child {
+  @apply sm:pr-0;
 }
 
 .star-rating-controls button svg {
@@ -29,23 +33,19 @@
 }
 
 .star-rating-average-button {
-  @apply mt-3 flex items-center gap-1 hover:underline;
+  @apply mt-3 flex items-center gap-1 hover:underline sm:mt-0;
 }
 
 .star-rating-average-button span {
-  @apply flex-[0_0_auto] text-sm/leading-4.5 font-semibold transition-[color] duration-200 ease-quick;
+  @apply flex-[0_0_auto] text-sm/leading-4.5 transition-[color] duration-200 ease-quick hover:text-white;
 }
 
 .star-rating-average-button span:first-child {
-  @apply text-[var(--app-icon-primary)];
+  @apply font-semibold text-[var(--app-icon-primary)];
 }
 
 .star-rating-average-button span:nth-child(2) {
-  @apply uppercase text-white;
-}
-
-.star-rating-average-button:hover span {
-  @apply text-white;
+  @apply font-black uppercase text-white;
 }
 
 .star-rating-average-button:focus + .star-rating-average-data {

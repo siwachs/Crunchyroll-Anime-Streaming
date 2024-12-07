@@ -16,6 +16,7 @@ const ContentActionButtons: React.FC<{
     >
       <Link
         href={watchActionhref}
+        prefetch={false}
         className="action-button watch-action-button"
       >
         <span>

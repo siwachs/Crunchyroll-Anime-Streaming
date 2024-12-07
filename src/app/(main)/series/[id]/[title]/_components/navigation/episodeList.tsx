@@ -104,10 +104,7 @@ const EpisodeList: React.FC = () => {
                   <span>{episode.metaTags}</span>
                 </div>
 
-                <button
-                  title="More actions"
-                  className="series-page-icon series-page-icon-no-hover-bg z-[1] p-0"
-                >
+                <button className="series-page-icon series-page-icon-no-hover-bg z-[1] p-0">
                   <MdMoreVert className="series-page-icon-size" />
                 </button>
               </div>

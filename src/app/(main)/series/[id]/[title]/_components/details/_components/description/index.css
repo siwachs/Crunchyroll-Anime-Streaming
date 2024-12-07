@@ -17,7 +17,7 @@
   @apply relative max-h-[4.5rem] overflow-hidden;
 }
 
-.expandable-section.expandable-section-is-expanded {
+.expandable-section-is-expanded {
   @apply max-h-full;
 }
 

@@ -3,23 +3,19 @@
 }
 
 .body {
-  @apply flex w-full flex-1 flex-col;
+  @apply flex w-full flex-1 flex-col sm:block;
 }
 
 .heading-line {
-  @apply mb-2.5 flex items-center;
+  @apply mb-2.5 flex items-center sm:mb-3;
 }
 
 .heading-line h1 {
-  @apply mr-3 flex-[1_1_auto] text-2xl font-medium;
+  @apply mr-3 flex-[1_1_auto] text-2xl font-medium sm:mr-6 sm:text-[1.75rem]/[2.25rem];
 }
 
 .tags {
-  @apply mb-3 flex select-none text-[var(--meta-color)];
-}
-
-.tags span {
-  @apply inline text-sm/leading-4.5 font-medium;
+  @apply mb-3 flex select-none text-sm/leading-4.5 font-medium text-[var(--meta-color)] sm:mb-5;
 }
 
 .up-next-section {

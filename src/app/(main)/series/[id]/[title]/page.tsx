@@ -9,6 +9,7 @@ export default function Series() {
     <>
       <main className="main">
         <Banner />
+
         <div className="content-wrapper">
           <Details />
           <Navigation />
