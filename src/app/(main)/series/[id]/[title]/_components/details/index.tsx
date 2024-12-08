@@ -29,6 +29,7 @@ const Details: React.FC = () => {
           className="mb-4"
           watchActionhref="/"
           watchActionText="Start Watching E1"
+          enableAddToWatchListActionText
         />
 
         <Description />

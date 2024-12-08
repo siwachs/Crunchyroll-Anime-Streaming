@@ -14,7 +14,7 @@
 }
 
 .expandable-section {
-  @apply relative max-h-[4.5rem] overflow-hidden;
+  @apply relative max-h-[4.5rem] overflow-hidden sm:max-h-24;
 }
 
 .expandable-section-is-expanded {
@@ -22,7 +22,7 @@
 }
 
 .expandable-section p {
-  @apply whitespace-pre-line text-sm/leading-4.5 font-normal;
+  @apply whitespace-pre-line text-sm/leading-4.5 font-medium sm:text-base;
 }
 
 .expandable-section-table {
@@ -43,6 +43,10 @@
   @apply text-right;
 }
 
-.expandable-section-table-row h5 {
-  @apply text-sm/leading-4.5 font-semibold;
+.expandable-section-table-column-name {
+  @apply text-sm/leading-4.5 font-semibold sm:text-base;
+}
+
+.expandable-section-table-column-value {
+  @apply text-sm/leading-4.5 font-medium;
 }

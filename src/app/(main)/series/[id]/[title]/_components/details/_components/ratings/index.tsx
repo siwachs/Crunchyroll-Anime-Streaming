@@ -39,7 +39,9 @@ const Ratings: React.FC = () => {
               <div key={index} className="flex items-center pb-1.5 pt-2">
                 <HiOutlineStar className="mr-2 size-4.5 flex-[0_0_auto] fill-current" />
 
-                <p className="text-sm/leading-4.5 font-medium">{5 - index}</p>
+                <p className="text-sm/leading-4.5 font-medium sm:text-base">
+                  {5 - index}
+                </p>
 
                 <div className="m-2.5 h-2 flex-[1_1_auto] bg-[#0009]">
                   <div
@@ -48,7 +50,7 @@ const Ratings: React.FC = () => {
                   />
                 </div>
 
-                <p className="w-10 text-sm/leading-4.5 font-medium">
+                <p className="w-10 text-sm/leading-4.5 font-medium sm:text-base">
                   {ratingPercentage}%
                 </p>
               </div>

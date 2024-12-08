@@ -32,11 +32,11 @@ const Description: React.FC = () => {
         <div className="expandable-section-table">
           {Object.entries(expandableTableRows).map(([key, value], index) => (
             <div key={index} className="expandable-section-table-row">
-              <div>
+              <div className="expandable-section-table-column-name">
                 <h5>{key}</h5>
               </div>
 
-              <div>
+              <div className="expandable-section-table-column-value">
                 <h5>{value}</h5>
               </div>
             </div>

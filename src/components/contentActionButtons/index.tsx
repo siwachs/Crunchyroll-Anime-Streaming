@@ -9,7 +9,13 @@ const ContentActionButtons: React.FC<{
   className?: string;
   watchActionhref: string;
   watchActionText: string;
-}> = ({ className = "", watchActionhref, watchActionText }) => {
+  enableAddToWatchListActionText?: boolean;
+}> = ({
+  className = "",
+  watchActionhref,
+  watchActionText,
+  enableAddToWatchListActionText,
+}) => {
   return (
     <div
       className={`relative flex justify-center gap-x-2.5 sm:inline-flex md:justify-start lg:gap-x-2.5 ${className}`}
@@ -25,10 +31,19 @@ const ContentActionButtons: React.FC<{
         </span>
       </Link>
 
-      <button className="action-button add-to-watchlist-action-button">
-        <span>
-          <HiOutlineBookmark className="size-[22px]" />
-        </span>
+      <button
+        className={`action-button add-to-watchlist-action-button ${enableAddToWatchListActionText ? "aspect-square sm:aspect-auto sm:px-4" : "aspect-square"}`}
+      >
+        {enableAddToWatchListActionText ? (
+          <span>
+            <HiOutlineBookmark className="size-[22px]" />
+            <span className="hidden sm:inline">Add To Watchlist</span>
+          </span>
+        ) : (
+          <span>
+            <HiOutlineBookmark className="size-[22px]" />
+          </span>
+        )}
       </button>
     </div>
   );
