@@ -3,7 +3,6 @@
   "editor.formatOnSave": true,
   "workbench.iconTheme": "material-icon-theme",
   "workbench.colorTheme": "Visual Studio Dark",
-  "editor.fontSize": 20,
   "editor.wordWrap": "on",
   "editor.fontWeight": "bold",
   "files.associations": {

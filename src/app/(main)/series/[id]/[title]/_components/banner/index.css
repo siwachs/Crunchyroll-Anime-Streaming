@@ -2,7 +2,7 @@
   --logo-overlay-fade-drection: 0deg;
   --logo-overlay-gap: 0.625rem;
 
-  @apply relative z-0 mb-7 overflow-hidden sm:mb-[2.125rem];
+  @apply relative z-0 mb-7 overflow-hidden sm:mb-[2.125rem] md:mb-10;
 }
 
 @media screen and (min-width: 568px) {

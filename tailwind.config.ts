@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      spacing: { "15": "3.75rem", "4.5": "1.125rem" },
+      spacing: { "15": "3.75rem", "4.5": "1.125rem", "7.5": "1.875rem" },
       screens: {
         sm: "568px",
         md: "800px",

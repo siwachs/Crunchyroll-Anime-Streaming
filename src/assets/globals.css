@@ -99,4 +99,12 @@ body {
   .text-rendering-optimized {
     text-rendering: optimizeLegibility;
   }
+
+  .action-button {
+    @apply min-h-10 select-none transition-[color,background-color,box-shadow] duration-200 ease-quick;
+  }
+
+  .action-button span:first-child {
+    @apply flex items-center justify-center gap-1 text-sm/leading-4.5 font-black uppercase;
+  }
 }

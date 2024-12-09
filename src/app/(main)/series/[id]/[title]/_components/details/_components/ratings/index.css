@@ -13,7 +13,7 @@
 }
 
 .star-rating-controls button {
-  @apply block px-1;
+  @apply block px-1 md:px-0;
 }
 
 .star-rating-controls button:first-child {

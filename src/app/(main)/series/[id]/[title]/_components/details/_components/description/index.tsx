@@ -29,14 +29,14 @@ const Description: React.FC = () => {
           Majin named Glorio appears before them.
         </p>
 
-        <div className="expandable-section-table">
+        <div className="show-details-table">
           {Object.entries(expandableTableRows).map(([key, value], index) => (
-            <div key={index} className="expandable-section-table-row">
-              <div className="expandable-section-table-column-name">
+            <div key={index} className="show-details-table-row">
+              <div className="show-details-table-column-name">
                 <h5>{key}</h5>
               </div>
 
-              <div className="expandable-section-table-column-value">
+              <div className="show-details-table-column-value">
                 <h5>{value}</h5>
               </div>
             </div>

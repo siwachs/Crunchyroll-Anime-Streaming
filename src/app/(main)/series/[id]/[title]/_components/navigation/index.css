@@ -33,25 +33,6 @@
   @apply relative block h-[5.3125rem] flex-[0_0_auto];
 }
 
-.playable-card-thumbnail {
-  --content-image-ar-priority-height: 1;
-
-  @apply relative;
-
-  width: calc(
-    100% * var(--content-image-ar-priority-width) /
-      var(--content-image-ar-priority-width)
-  );
-  height: calc(
-    100% * var(--content-image-ar-priority-height) /
-      var(--content-image-ar-priority-height)
-  );
-}
-
-.playable-card-duration {
-  @apply absolute bottom-1 right-1 select-none bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/leading-4.5 font-semibold;
-}
-
 .playable-card-hover-info {
   @apply absolute inset-0 z-[1] opacity-0 transition-opacity duration-200 ease-quick;
 }
