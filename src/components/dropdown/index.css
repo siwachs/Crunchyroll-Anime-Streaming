@@ -1,0 +1,12 @@
+.dropdown-trigger {
+  @apply flex items-center text-[var(--meta-color)] transition-colors duration-200 ease-quick;
+}
+
+.dropdown-trigger:hover,
+.dropdown-trigger:focus {
+  @apply bg-[var(--app-background-secondary)] text-white;
+}
+
+.dropdown-trigger:focus + .select-content {
+  @apply absolute left-auto top-full z-[98] block max-h-[28.75rem] bg-[var(--app-background-secondary)];
+}
