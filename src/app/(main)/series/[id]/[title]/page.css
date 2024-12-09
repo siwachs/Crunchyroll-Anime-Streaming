@@ -1,5 +1,10 @@
 .series-page-icon {
-  @apply block text-[var(--meta-color)] transition-colors duration-200 ease-quick hover:bg-[var(--app-background-secondary)] hover:text-white;
+  @apply flex items-center text-[var(--meta-color)] transition-colors duration-200 ease-quick;
+}
+
+.series-page-icon:hover,
+.series-page-icon:focus {
+  @apply bg-[var(--app-background-secondary)] text-white;
 }
 
 .series-page-icon-no-hover-bg {

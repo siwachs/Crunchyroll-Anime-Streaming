@@ -7,7 +7,11 @@
 }
 
 .seasons-select h4 {
-  @apply text-base font-semibold;
+  @apply text-base font-semibold sm:text-lg/[1.625rem];
+}
+
+.episode-sort-select-button:focus + .episode-sort-select-content {
+  @apply absolute left-auto top-full z-[98] block max-h-[28.75rem] bg-[var(--app-background-secondary)];
 }
 
 .episode-list {
