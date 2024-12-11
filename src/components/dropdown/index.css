@@ -3,10 +3,45 @@
 }
 
 .dropdown-trigger:hover,
-.dropdown-trigger:focus {
+.dropdown-trigger.active {
   @apply bg-[var(--app-background-secondary)] text-white;
 }
 
-.dropdown-trigger:focus + .select-content {
-  @apply absolute left-auto top-full z-[98] block max-h-[28.75rem] bg-[var(--app-background-secondary)];
+.dropdown-content {
+  @apply hidden flex-col overflow-hidden bg-[var(--app-background-secondary)];
+
+  animation: dropdownContentAnimation 0.15s cubic-bezier(0, 0, 0.25, 1) forwards;
+}
+
+.dropdown-content.modal {
+  @apply fixed left-0 right-0 top-0 z-[100] flex h-full sm:hidden;
+}
+
+.dropdown-trigger.active + .dropdown-content.dropdown {
+  --dropdown-content-max-width: calc(100vw - 5rem);
+  --dropdown-content-min-width: 12.5rem;
+
+  @apply absolute left-auto right-0 top-full z-[98] h-auto max-h-[28.75rem] min-w-[var(--dropdown-content-min-width)] max-w-[var(--dropdown-content-max-width)] sm:flex;
+
+  animation: dropdownContentAnimation 0.15s cubic-bezier(0, 0, 0.25, 1) forwards;
+}
+
+@keyframes dropdownContentAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dropdown-content-scrollable {
+  @apply flex-1 overflow-y-auto py-3;
+
+  scrollbar-width: thin;
+}
+
+.dropdown-content-scrollable button,
+.dropdown-content-scrollable a {
+  @apply block w-full px-5 py-3 text-left text-sm/leading-4.5 font-medium text-[var(--meta-color)] transition-[color_background-color] duration-200 ease-quick hover:bg-[var(--app-overlay-secondary)] hover:text-white;
 }

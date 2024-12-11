@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
+import DropDownContent from "./dropdownContent";
+
 import "./index.css";
 
 const Dropdown: React.FC<{
@@ -10,19 +12,33 @@ const Dropdown: React.FC<{
   dropdownTriggerClassName?: string;
   Icon: JSX.Element;
   dropdownTriggerTitle?: string;
-}> = ({ title, dropdownTriggerClassName = "", Icon, dropdownTriggerTitle }) => {
+  dropdownContentTitle: string;
+  dropdownContentScrollableList: JSX.Element[];
+}> = ({
+  title,
+  dropdownTriggerClassName = "",
+  Icon,
+  dropdownTriggerTitle,
+  dropdownContentTitle,
+  dropdownContentScrollableList = [],
+}) => {
   const [isDropdownTriggered, setIsDropdownTriggered] = useState(false);
 
   function toogleDropdownTrigger() {
-    setIsDropdownTriggered(true);
+    setIsDropdownTriggered((prev) => !prev);
+  }
+
+  function closeDropDown() {
+    setIsDropdownTriggered(false);
   }
 
   return (
     <div className="relative flex select-none">
       <button
+        autoFocus
         title={title}
         onClick={toogleDropdownTrigger}
-        className={`dropdown-trigger ${dropdownTriggerClassName}`}
+        className={`dropdown-trigger ${isDropdownTriggered ? "active" : ""} ${dropdownTriggerClassName}`}
       >
         {Icon}
         {dropdownTriggerTitle && (
@@ -32,7 +48,23 @@ const Dropdown: React.FC<{
         )}
       </button>
 
-      <div className="select-content hidden"></div>
+      {isDropdownTriggered &&
+        createPortal(
+          <DropDownContent
+            dropdownType="modal"
+            closeDropDown={closeDropDown}
+            title={dropdownContentTitle}
+            dropdownContentScrollableList={dropdownContentScrollableList}
+          />,
+          document.body,
+        )}
+
+      <DropDownContent
+        dropdownType="dropdown"
+        closeDropDown={closeDropDown}
+        title={dropdownContentTitle}
+        dropdownContentScrollableList={dropdownContentScrollableList}
+      />
     </div>
   );
 };

@@ -37,6 +37,12 @@
   );
 }
 
+@media screen and (min-width: 568px) {
+  .playable-card-thumbnail {
+    --content-image-ar-priority-height: 0;
+  }
+}
+
 .playable-card-thumbnail-has-width {
   @apply w-[20.625rem];
 }

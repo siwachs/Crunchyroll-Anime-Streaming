@@ -13,15 +13,21 @@
 .episode-list {
   --number-of-columns: 1;
 
-  @apply grid gap-3;
+  @apply grid gap-3 sm:gap-5;
 
   grid-template-columns: repeat(var(--number-of-columns), minmax(0, 1fr));
+}
+
+@media screen and (min-width: 568px) {
+  .episode-list {
+    --number-of-columns: 2;
+  }
 }
 
 .playable-card {
   --hover-shadow-size: 0.5rem;
 
-  @apply relative flex;
+  @apply relative flex sm:block;
 
   box-shadow: 0 0 0 var(--hover-shadow-size) #0000;
   transition:
@@ -30,7 +36,7 @@
 }
 
 .playable-card-thumbnail-wrapper {
-  @apply relative block h-[5.3125rem] flex-[0_0_auto];
+  @apply relative block h-[5.3125rem] flex-[0_0_auto] sm:h-auto;
 }
 
 .playable-card-hover-info {
@@ -68,7 +74,7 @@
 }
 
 .playable-card-body {
-  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3;
+  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pb-0 sm:pl-0 sm:pt-3;
 }
 
 .playable-card-small-title {
@@ -80,7 +86,7 @@
 }
 
 .playable-card-title {
-  @apply line-clamp-1 self-start text-sm/leading-4.5 font-semibold;
+  @apply line-clamp-1 self-start text-sm/leading-4.5 font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
 }
 
 .playable-card-footer {

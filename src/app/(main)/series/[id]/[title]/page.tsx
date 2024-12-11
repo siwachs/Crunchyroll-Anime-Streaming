@@ -2,8 +2,6 @@ import Banner from "./_components/banner";
 import Details from "./_components/details";
 import Navigation from "./_components/navigation";
 
-import "./page.css";
-
 export default function Series() {
   return (
     <>

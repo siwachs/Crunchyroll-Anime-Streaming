@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import Dropdown from "@/components/dropdown";
 import Ratings from "./_components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
 import Description from "./_components/description";
@@ -18,12 +19,16 @@ const Details: React.FC = () => {
         <div className="heading-line">
           <h1 className="text-rendering-optimized">Dragon Ball DAIMA</h1>
 
-          <button
+          <Dropdown
             title="More actions"
-            className="series-page-icon p-2 md:mt-0.5"
-          >
-            <MdMoreVert className="series-page-icon-size" />
-          </button>
+            dropdownTriggerClassName="p-2 md:mt-0.5"
+            Icon={<MdMoreVert className="size-6" />}
+            dropdownContentTitle="Options"
+            dropdownContentScrollableList={[
+              <button key={0}>Mark Series as Watched</button>,
+              <button key={1}>Share</button>,
+            ]}
+          />
         </div>
 
         <div className="tags">
