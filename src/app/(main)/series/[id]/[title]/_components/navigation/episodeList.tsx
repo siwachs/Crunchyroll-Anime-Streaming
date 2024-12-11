@@ -1,10 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import episodeList from "@/data/episideList";
+import Dropdown from "@/components/dropdown";
 
 import { HiOutlinePlay } from "react-icons/hi2";
 import { MdMoreVert } from "react-icons/md";
+
+import episodeList from "@/data/episideList";
 
 const EpisodeList: React.FC = () => {
   return (
@@ -28,7 +30,7 @@ const EpisodeList: React.FC = () => {
             <div className="playable-card-duration">{episode.duration}</div>
           </Link>
 
-          <div className="playable-card-hover-info">
+          <div className="playable-card-hover-info app-transition-opacity">
             <div className="playable-card-hover-preview">
               <Link
                 href={`#${episode.title}`}
@@ -104,9 +106,15 @@ const EpisodeList: React.FC = () => {
                   <span>{episode.metaTags}</span>
                 </div>
 
-                <button className="series-page-icon series-page-icon-no-hover-bg z-[1] p-0">
-                  <MdMoreVert className="series-page-icon-size" />
-                </button>
+                <Dropdown
+                  dropdownTriggerClassName="z-[1]"
+                  dropdownTriggerResetHoverBg
+                  Icon={<MdMoreVert className="size-6" />}
+                  dropdownContentTitle="Options"
+                  dropdownContentScrollableList={[
+                    <button key={0}>Mark as Watched</button>,
+                  ]}
+                />
               </div>
             </div>
           </div>

@@ -1,10 +1,15 @@
 .dropdown-trigger {
-  @apply flex items-center text-[var(--meta-color)] transition-colors duration-200 ease-quick;
+  @apply flex items-center text-[var(--meta-color)];
 }
 
 .dropdown-trigger:hover,
 .dropdown-trigger.active {
   @apply bg-[var(--app-background-secondary)] text-white;
+}
+
+.dropdown-trigger-reset-hover-bg:hover,
+.dropdown-trigger-reset-hover-bg.active {
+  @apply bg-transparent;
 }
 
 .dropdown-content {

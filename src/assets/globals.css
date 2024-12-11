@@ -84,6 +84,14 @@ body {
     }
   }
 
+  .app-transition-colors {
+    @apply transition-colors duration-200 ease-quick;
+  }
+
+  .app-transition-opacity {
+    @apply transition-opacity duration-200 ease-quick;
+  }
+
   .app-overlay {
     @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[1] data-[active=true]:opacity-100;
   }
@@ -101,7 +109,7 @@ body {
   }
 
   .action-button {
-    @apply min-h-10 select-none transition-[color,background-color,box-shadow] duration-200 ease-quick;
+    @apply app-transition-colors min-h-10 select-none;
   }
 
   .action-button span:first-child {

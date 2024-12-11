@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { createPortal } from "react-dom";
 
 import DropDownContent from "./dropdownContent";
@@ -10,6 +10,7 @@ import "./index.css";
 const Dropdown: React.FC<{
   title?: string;
   dropdownTriggerClassName?: string;
+  dropdownTriggerResetHoverBg?: boolean;
   Icon: JSX.Element;
   dropdownTriggerTitle?: string;
   dropdownContentTitle: string;
@@ -17,6 +18,7 @@ const Dropdown: React.FC<{
 }> = ({
   title,
   dropdownTriggerClassName = "",
+  dropdownTriggerResetHoverBg,
   Icon,
   dropdownTriggerTitle,
   dropdownContentTitle,
@@ -35,10 +37,9 @@ const Dropdown: React.FC<{
   return (
     <div className="relative flex select-none">
       <button
-        autoFocus
         title={title}
         onClick={toogleDropdownTrigger}
-        className={`dropdown-trigger ${isDropdownTriggered ? "active" : ""} ${dropdownTriggerClassName}`}
+        className={`dropdown-trigger app-transition-colors ${isDropdownTriggered ? "active" : ""} ${dropdownTriggerClassName} ${dropdownTriggerResetHoverBg ? "dropdown-trigger-reset-hover-bg" : ""}`}
       >
         {Icon}
         {dropdownTriggerTitle && (
