@@ -6,22 +6,12 @@
   @apply flex min-w-[50%] flex-1 pr-6;
 }
 
-.seasons-select h4 {
-  @apply text-base font-semibold sm:text-lg/[1.625rem];
-}
-
 .episode-list {
   --number-of-columns: 1;
 
   @apply grid gap-3 sm:gap-5;
 
   grid-template-columns: repeat(var(--number-of-columns), minmax(0, 1fr));
-}
-
-@media screen and (min-width: 568px) {
-  .episode-list {
-    --number-of-columns: 2;
-  }
 }
 
 .playable-card {
@@ -33,6 +23,28 @@
   transition:
     background-color 0.2s ease,
     box-shadow 0.2s ease;
+}
+
+@media screen and (min-width: 568px) {
+  .episode-list {
+    --number-of-columns: 2;
+  }
+
+  .playable-card {
+    --hover-shadow-size: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .episode-list {
+    --number-of-columns: 3;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .episode-list {
+    --number-of-columns: 4;
+  }
 }
 
 .playable-card-thumbnail-wrapper {
@@ -53,16 +65,36 @@
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
 }
 
+.playable-card-hover-thumbnail-wrapper {
+  @apply sm:hidden;
+}
+
 .playable-card-hover-thumbnail-wrapper::after {
   @apply absolute inset-0 bg-white opacity-[0.08] content-[""];
 }
 
 .playable-card-hover-body {
-  @apply flex flex-1 flex-col pb-[0.7625rem] pl-3 pt-3;
+  @apply flex flex-1 flex-col pb-[0.7625rem] pl-3 pt-3 sm:p-0;
+}
+
+.playable-card-hover-release {
+  @apply mb-2 hidden items-center text-sm/leading-4.5 font-medium text-[var(--meta-color)] sm:flex;
+}
+
+.playable-card-hover-description-wrapper {
+  @apply mb-2.5 hidden sm:block md:mb-2 lg:mb-3;
+}
+
+.playable-card-hover-description-wrapper p {
+  @apply line-clamp-5 text-sm/leading-4.5 font-semibold;
 }
 
 .playable-card-hover-play {
   @apply flex items-center gap-1 text-[var(--app-background-crunchyroll-orange)];
+}
+
+.playable-card:hover .playable-card-hover-play {
+  @apply text-[var(--app-hover-crunchyroll-orange)];
 }
 
 .playable-card-hover-play span {
@@ -89,10 +121,14 @@
   @apply line-clamp-1 self-start text-sm/leading-4.5 font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
 }
 
+.playable-card-hover-title {
+  @apply sm:mb-0;
+}
+
 .playable-card-footer {
   @apply relative mt-auto flex w-full items-center justify-between text-[var(--meta-color)];
 }
 
 .meta-tags {
-  @apply line-clamp-2 flex-1 text-sm/leading-4.5 font-medium;
+  @apply line-clamp-2 flex-1 text-sm/leading-4.5 font-medium sm:line-clamp-1;
 }

@@ -10,17 +10,21 @@ import "./index.css";
 const Dropdown: React.FC<{
   title?: string;
   dropdownTriggerClassName?: string;
-  dropdownTriggerResetHoverBg?: boolean;
+  dropdownTriggerTransparentHoverBg?: boolean;
+  dropdownTriggerNoHoverBg?: boolean;
   Icon: JSX.Element;
   dropdownTriggerTitle?: string;
+  dropdownTriggerHeader?: string;
   dropdownContentTitle: string;
   dropdownContentScrollableList: JSX.Element[];
 }> = ({
   title,
   dropdownTriggerClassName = "",
-  dropdownTriggerResetHoverBg,
+  dropdownTriggerTransparentHoverBg,
+  dropdownTriggerNoHoverBg,
   Icon,
   dropdownTriggerTitle,
+  dropdownTriggerHeader,
   dropdownContentTitle,
   dropdownContentScrollableList = [],
 }) => {
@@ -39,13 +43,18 @@ const Dropdown: React.FC<{
       <button
         title={title}
         onClick={toogleDropdownTrigger}
-        className={`dropdown-trigger app-transition-colors ${isDropdownTriggered ? "active" : ""} ${dropdownTriggerClassName} ${dropdownTriggerResetHoverBg ? "dropdown-trigger-reset-hover-bg" : ""}`}
+        className={`dropdown-trigger app-transition-colors text-[var(--meta-color)] ${isDropdownTriggered ? "active" : ""} ${dropdownTriggerTransparentHoverBg ? "dropdown-trigger-transparent-hover-bg" : ""} ${dropdownTriggerNoHoverBg ? "dropdown-trigger-no-hover-bg" : ""} ${dropdownTriggerClassName}`}
       >
         {Icon}
         {dropdownTriggerTitle && (
           <span className="ml-2 hidden text-sm/leading-4.5 font-black uppercase sm:inline">
             {dropdownTriggerTitle}
           </span>
+        )}
+        {dropdownTriggerHeader && (
+          <h4 className="ml-2.5 truncate py-2 text-base font-semibold sm:text-lg/[1.625rem]">
+            {dropdownTriggerHeader}
+          </h4>
         )}
       </button>
 
@@ -62,6 +71,7 @@ const Dropdown: React.FC<{
 
       <DropDownContent
         dropdownType="dropdown"
+        dropdownTriggerTransparentHoverBg={dropdownTriggerTransparentHoverBg}
         closeDropDown={closeDropDown}
         title={dropdownContentTitle}
         dropdownContentScrollableList={dropdownContentScrollableList}

@@ -26,7 +26,7 @@
 }
 
 .show-details-table {
-  @apply py-3 md:mt-6;
+  @apply py-3 md:pt-6;
 }
 
 .show-details-table-row {

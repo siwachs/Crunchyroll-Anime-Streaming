@@ -1,12 +1,34 @@
 import Dropdown from "@/components/dropdown";
 
+import { FaCaretDown } from "react-icons/fa";
 import { MdMoreVert, MdSort } from "react-icons/md";
 
 const TopControls: React.FC = () => {
   return (
     <div className="top-controls">
       <div className="seasons-select">
-        <h4>Dragon Ball DAIMA</h4>
+        <Dropdown
+          title="Seasons Select"
+          dropdownTriggerClassName="text-white"
+          Icon={<FaCaretDown className="size-4" />}
+          dropdownTriggerHeader="Dragon Ball DAIMA"
+          dropdownTriggerTransparentHoverBg
+          dropdownContentTitle="Seasons"
+          dropdownContentScrollableList={[
+            <button data-active={true} key={0}>
+              <span>S1: Dragon Ball DAIMA</span>
+              <span>175 Episodes</span>
+            </button>,
+            <button key={1}>
+              <span>S2: Dragon Ball DAIMA</span>
+              <span>230 Episodes</span>
+            </button>,
+            <button key={2}>
+              <span>S3: Dragon Ball DAIMA</span>
+              <span>290 Episodes</span>
+            </button>,
+          ]}
+        />
       </div>
 
       <Dropdown

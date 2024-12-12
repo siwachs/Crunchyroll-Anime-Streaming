@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import Dropdown from "@/components/dropdown";
 
+import { HiOutlineCalendar } from "react-icons/hi";
 import { HiOutlinePlay } from "react-icons/hi2";
 import { MdMoreVert } from "react-icons/md";
 
@@ -62,7 +63,7 @@ const EpisodeList: React.FC = () => {
                   </small>
                 </Link>
 
-                <h4 className="playable-card-title">
+                <h4 className="playable-card-title playable-card-hover-title">
                   <Link
                     href={`/#${episode.title}`}
                     prefetch={false}
@@ -71,6 +72,20 @@ const EpisodeList: React.FC = () => {
                     {episode.title}
                   </Link>
                 </h4>
+
+                <p className="playable-card-hover-release">
+                  <HiOutlineCalendar className="mr-1 size-4" />
+                  <span>10/11/2024</span>
+                </p>
+
+                <div className="playable-card-hover-description-wrapper">
+                  <p>
+                    A giant castle in a mysterious world. Two shady Majin, Gomah
+                    and Degesu, watch a monitor. The monitor shows Goku and the
+                    others having a fierce battle against Majin Buu. Gomah and
+                    Degesu head to Earth to execute a certain conspiracy.
+                  </p>
+                </div>
 
                 <div className="playable-card-footer">
                   <div className="playable-card-hover-play">
@@ -107,9 +122,9 @@ const EpisodeList: React.FC = () => {
                 </div>
 
                 <Dropdown
-                  dropdownTriggerClassName="z-[1]"
-                  dropdownTriggerResetHoverBg
+                  dropdownTriggerClassName="z-[1] hover:text-white"
                   Icon={<MdMoreVert className="size-6" />}
+                  dropdownTriggerNoHoverBg
                   dropdownContentTitle="Options"
                   dropdownContentScrollableList={[
                     <button key={0}>Mark as Watched</button>,
