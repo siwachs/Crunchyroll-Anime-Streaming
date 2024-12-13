@@ -22,6 +22,7 @@ const EpisodeList: React.FC = () => {
           >
             <figure className="playable-card-thumbnail">
               <Image
+                sizes="(max-width: 567px) 30vw, (max-width: 799px) calc(100vw / 2), (max-width: 1023px) calc(100vw / 3), 260px"
                 src={episode.thumbnail}
                 alt={episode.title}
                 className="block size-full object-cover"
@@ -43,6 +44,7 @@ const EpisodeList: React.FC = () => {
               <div className="playable-card-thumbnail-wrapper playable-card-hover-thumbnail-wrapper">
                 <figure className="playable-card-thumbnail">
                   <Image
+                    sizes="(max-width: 568px) 30vw, 568px"
                     src={episode.thumbnail}
                     alt={episode.title}
                     className="block size-full object-cover"
@@ -58,7 +60,7 @@ const EpisodeList: React.FC = () => {
                   prefetch={false}
                   className="playable-card-small-title z-[1]"
                 >
-                  <small className="transition-[color] duration-200 ease-quick hover:text-white hover:underline">
+                  <small className="app-transition-colors hover:text-white hover:underline">
                     Dragon Ball DAIMA
                   </small>
                 </Link>

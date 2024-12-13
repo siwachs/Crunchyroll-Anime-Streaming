@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,6 +16,28 @@ import upNextThumbanil from "@/assets/episodeList/0.avif";
 import "./index.css";
 
 const Details: React.FC = () => {
+  const contentActionButtonsRef = useRef<HTMLDivElement>(null);
+  const [isStickyButtonsVisible, setIsStickyButtonsVisible] = useState(false);
+
+  useEffect(() => {
+    const contentActionButtons = contentActionButtonsRef.current!;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsStickyButtonsVisible(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: "-60px 0px 0px 0px",
+        threshold: 0,
+      },
+    );
+
+    observer.observe(contentActionButtons);
+
+    return () => observer.unobserve(contentActionButtons);
+  }, []);
+
   return (
     <div className="details-wrapper">
       <div className="body">
@@ -39,8 +64,10 @@ const Details: React.FC = () => {
         <Ratings />
 
         <ContentActionButtons
+          ref={contentActionButtonsRef}
           watchActionhref="#watchEpisode"
           watchActionText="Start Watching E1"
+          className="mb-7.5 sm:justify-start"
           enableDetailsPageStyles
         />
 
@@ -67,10 +94,14 @@ const Details: React.FC = () => {
         />
       </div>
 
-      <div className="sticky-buttons-wrapper">
+      <div
+        data-active={isStickyButtonsVisible}
+        className="sticky-buttons-wrapper"
+      >
         <ContentActionButtons
           watchActionhref="#watch"
           watchActionText="Start Watching E1"
+          enableDetailsPageStyles
         />
       </div>
     </div>

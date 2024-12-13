@@ -9,9 +9,7 @@
 .episode-list {
   --number-of-columns: 1;
 
-  @apply grid gap-3 sm:gap-5;
-
-  grid-template-columns: repeat(var(--number-of-columns), minmax(0, 1fr));
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-4;
 }
 
 .playable-card {
@@ -26,24 +24,8 @@
 }
 
 @media screen and (min-width: 568px) {
-  .episode-list {
-    --number-of-columns: 2;
-  }
-
   .playable-card {
     --hover-shadow-size: 0.75rem;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  .episode-list {
-    --number-of-columns: 3;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .episode-list {
-    --number-of-columns: 4;
   }
 }
 

@@ -3,7 +3,7 @@
 }
 
 .body {
-  @apply flex w-full flex-1 flex-col sm:block md:pr-[1.875rem];
+  @apply flex w-full flex-1 flex-col sm:block md:pr-7.5;
 }
 
 .heading-line {
@@ -51,10 +51,25 @@
   @apply absolute bottom-1 right-1 select-none bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/leading-4.5 font-semibold;
 }
 
+.sticky-buttons-wrapper::before {
+  @apply absolute -top-5 left-0 block h-5 w-full content-[""];
+
+  background: linear-gradient(180deg, #0000, #000);
+}
+
 .sticky-buttons-wrapper {
   @apply invisible fixed bottom-0 left-0 z-10 flex w-full translate-y-[120px] flex-col bg-[var(--app-background-primary)] px-5 pb-5 md:hidden;
 
   transition:
     visibility 0s linear 1s,
     transform 0.08s cubic-bezier(0.5, 0, 0.25, 1);
+}
+
+.sticky-buttons-wrapper[data-active="true"] {
+  @apply visible translate-y-0;
+}
+
+.sticky-buttons-wrapper a,
+.sticky-buttons-wrapper button {
+  @apply sm:flex-1;
 }

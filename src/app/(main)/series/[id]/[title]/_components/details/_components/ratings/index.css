@@ -3,8 +3,6 @@
 }
 
 .star-rating-controls {
-  --star-icon-size: 1.75rem;
-
   @apply flex items-center text-[var(--app-icon-primary)] hover:text-[var(--app-hover-crunchyroll-orange)];
 }
 
@@ -25,7 +23,7 @@
 }
 
 .star-rating-controls button svg {
-  @apply block size-[var(--star-icon-size)] fill-current;
+  @apply block size-7 fill-current;
 }
 
 .star-rating-controls button:hover ~ button svg {

@@ -2,8 +2,6 @@ import Link from "next/link";
 
 import { HiOutlinePlay } from "react-icons/hi2";
 
-type Variant = "DetailPage" | "PlayabelCard";
-
 const WatchAction: React.FC<{
   watchActionhref: string;
   watchActionText: string;
