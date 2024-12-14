@@ -15,7 +15,7 @@ const EpisodeList: React.FC = () => {
       {episodeList.map((episode) => (
         <div key={episode.id} className="playable-card">
           <Link
-            href="/#"
+            href={`/watch/${478273928}/${encodeURIComponent(episode.title.toLowerCase().replaceAll(" ", "-"))}`}
             prefetch={false}
             tabIndex={-1}
             className="playable-card-thumbnail-wrapper"
@@ -35,7 +35,7 @@ const EpisodeList: React.FC = () => {
           <div className="playable-card-hover-info app-transition-opacity">
             <div className="playable-card-hover-preview">
               <Link
-                href={`#${episode.title}`}
+                href={`/watch/${478273928}/${encodeURIComponent(episode.title.toLowerCase().replaceAll(" ", "-"))}`}
                 prefetch={false}
                 title={episode.title}
                 className="absolute inset-0 z-[1]"
@@ -56,7 +56,7 @@ const EpisodeList: React.FC = () => {
 
               <div className="playable-card-hover-body">
                 <Link
-                  href={`#Dragon Ball DAIMA`}
+                  href={`/series/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
                   prefetch={false}
                   className="playable-card-small-title z-[1]"
                 >
@@ -67,7 +67,7 @@ const EpisodeList: React.FC = () => {
 
                 <h4 className="playable-card-title playable-card-hover-title">
                   <Link
-                    href={`/#${episode.title}`}
+                    href={`/watch/${478273928}/${encodeURIComponent(episode.title.toLowerCase().replaceAll(" ", "-"))}`}
                     prefetch={false}
                     tabIndex={-1}
                   >
@@ -110,7 +110,7 @@ const EpisodeList: React.FC = () => {
 
               <h4 className="playable-card-title">
                 <Link
-                  href={`/#${episode.title}`}
+                  href={`/watch/${478273928}/${encodeURIComponent(episode.title.toLowerCase().replaceAll(" ", "-"))}`}
                   prefetch={false}
                   tabIndex={-1}
                 >

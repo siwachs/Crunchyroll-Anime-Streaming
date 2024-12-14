@@ -12,7 +12,7 @@ import WatchAction from "@/components/contentActionButtons/watchAction";
 
 import { MdMoreVert } from "react-icons/md";
 
-import upNextThumbanil from "@/assets/episodeList/0.avif";
+import upNextThumbanil from "@/assets/episodeList/1.jpg";
 import "./index.css";
 
 const Details: React.FC = () => {
@@ -65,7 +65,7 @@ const Details: React.FC = () => {
 
         <ContentActionButtons
           ref={contentActionButtonsRef}
-          watchActionhref="#watchEpisode"
+          watchActionhref={`/watch/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
           watchActionText="Start Watching E1"
           className="mb-7.5 sm:justify-start"
           enableDetailsPageStyles
@@ -75,9 +75,14 @@ const Details: React.FC = () => {
       </div>
 
       <div className="up-next-section">
-        <Link href="#watch" prefetch={false} className="relative block">
+        <Link
+          href={`/watch/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
+          prefetch={false}
+          className="relative block"
+        >
           <figure className="playable-card-thumbnail playable-card-thumbnail-has-width mb-3">
             <Image
+              sizes="360px"
               src={upNextThumbanil}
               alt="Dragon Ball DAIMA"
               className="block size-full object-cover"
@@ -99,7 +104,7 @@ const Details: React.FC = () => {
         className="sticky-buttons-wrapper"
       >
         <ContentActionButtons
-          watchActionhref="#watch"
+          watchActionhref={`/watch/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
           watchActionText="Start Watching E1"
           enableDetailsPageStyles
         />
