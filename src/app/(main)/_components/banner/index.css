@@ -146,14 +146,6 @@
   @apply pointer-events-none absolute size-0 overflow-hidden;
 }
 
-.carousel-card-meta-tags {
-  @apply mb-5 mt-2 inline-block select-none truncate text-[var(--meta-color)] sm:mb-8 md:mt-3.5 lg:mb-2 2xl:mt-[28px];
-}
-
-.carousel-card-meta-tags span {
-  @apply inline text-sm/leading-4.5 font-medium;
-}
-
 .carousel-card-description {
   @apply mb-8 hidden text-base font-medium text-[var(--app-icon-primary)] lg:line-clamp-4;
 }

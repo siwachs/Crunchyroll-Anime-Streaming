@@ -1,0 +1,8 @@
+.body {
+  @apply grid grid-cols-[minmax(min-content,54.375rem)_auto] justify-center pt-6;
+
+  display: grid;
+  grid-template-areas:
+    "currentMedia"
+    "videos";
+}

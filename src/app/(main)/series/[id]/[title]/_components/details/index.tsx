@@ -7,7 +7,7 @@ import Image from "next/image";
 import Dropdown from "@/components/dropdown";
 import Ratings from "./_components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
-import Description from "./_components/description";
+import Description from "@/components/description";
 import WatchAction from "@/components/contentActionButtons/watchAction";
 
 import { MdMoreVert } from "react-icons/md";
@@ -56,7 +56,7 @@ const Details: React.FC = () => {
           />
         </div>
 
-        <div className="tags">
+        <div className="meta-tags mb-3 sm:mb-5">
           <span>12</span>
           <span className="rhombus">Sub | Dub</span>
         </div>
@@ -71,7 +71,15 @@ const Details: React.FC = () => {
           enableDetailsPageStyles
         />
 
-        <Description />
+        <Description
+          description="Jinwoo and his party appear to have cleared a low-level dungeon, when a hidden path to an unfamiliar temple is revealed. There they encounter a set of commandments and a group of monsters that cause them absolute despair."
+          expandableTableRows={{
+            Audio:
+              "Japanese, English, Deutsch, Español (América Latina), Español (España), Français, Italiano, Português (Brasil), हिंदी, தமிழ், తెలుగు, 한국어",
+            Subtitles:
+              "English, Bahasa Indonesia, Bahasa Melayu, Deutsch, Español (América Latina), Español (España), Français, Italiano, Português (Brasil), Tiếng Việt, Русский, العربية, ไทย",
+          }}
+        />
       </div>
 
       <div className="up-next-section">

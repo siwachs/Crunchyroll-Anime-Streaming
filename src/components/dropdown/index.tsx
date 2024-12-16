@@ -52,7 +52,7 @@ const Dropdown: React.FC<{
           </span>
         )}
         {dropdownTriggerHeader && (
-          <h4 className="ml-2.5 truncate py-2 text-base font-semibold sm:text-lg/[1.625rem]">
+          <h4 className="sm:text-lg/leading-6.5 ml-2.5 truncate py-2 text-base font-semibold">
             {dropdownTriggerHeader}
           </h4>
         )}

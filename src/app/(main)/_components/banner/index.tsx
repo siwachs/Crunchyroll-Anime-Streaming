@@ -84,7 +84,7 @@ const Banner: React.FC = () => {
                   The Do-Over Damsel Conquers the Dragon Emperor
                 </h2>
 
-                <div className="carousel-card-meta-tags">
+                <div className="meta-tags mb-5 mt-2 inline-block truncate sm:mb-8 md:mt-3.5 lg:mb-2 2xl:mt-[28px]">
                   <span>14+</span>
                   <span className="rhombus">Sub | Dub</span>
                   <span className="rhombus">

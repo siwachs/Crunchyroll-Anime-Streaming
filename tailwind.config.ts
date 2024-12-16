@@ -15,7 +15,7 @@ const config: Config = {
         xl: "1440px",
         "2xl": "1720px",
       },
-      lineHeight: { "leading-4.5": "1.125rem" },
+      lineHeight: { "leading-4.5": "1.125rem", "leading-6.5": "1.625rem" },
       transitionTimingFunction: { quick: "ease" },
     },
   },

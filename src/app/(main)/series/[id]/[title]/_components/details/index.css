@@ -14,10 +14,6 @@
   @apply mr-3 flex-[1_1_auto] text-2xl font-medium sm:mr-6 sm:text-[1.75rem]/[2.25rem] md:text-[2.125rem]/[2.75rem];
 }
 
-.tags {
-  @apply mb-3 flex select-none text-sm/leading-4.5 font-medium text-[var(--meta-color)] sm:mb-5;
-}
-
 .up-next-section {
   @apply hidden md:block;
 }

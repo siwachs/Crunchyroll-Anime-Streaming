@@ -1,0 +1,50 @@
+.current-media {
+  @apply mb-6;
+
+  grid-area: currentMedia;
+  margin-block-end: 1.5rem;
+}
+
+.current-media-info {
+  @apply flex-1;
+}
+
+.current-media-header {
+  @apply mb-3 flex justify-between border-b-2 border-solid border-[var(--app-background-secondary)] pb-3;
+}
+
+.heading {
+  @apply mb-2 text-xl/leading-6.5 font-semibold;
+}
+
+.episode-actions {
+  @apply mb-3 flex items-center justify-between;
+}
+
+.episode-ratings {
+  @apply inline-grid grid-flow-col gap-5;
+}
+
+.episode-rate-action {
+  @apply flex min-w-[3.625rem] items-center text-[var(--app-icon-primary)] hover:text-white;
+}
+
+.episode-rate-action svg {
+  @apply mr-1 hidden size-6 fill-white;
+}
+
+.episode-rate-action svg:first-child {
+  @apply block;
+}
+
+.episode-rate-action:hover svg:first-child {
+  @apply hidden;
+}
+
+.episode-rate-action:hover svg:nth-child(2) {
+  @apply block;
+}
+
+.episode-rate-action span {
+  @apply truncate pr-1 text-xs font-black uppercase;
+}
