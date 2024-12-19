@@ -1,5 +1,9 @@
+import Link from "next/link";
+
+import AverageRating from "@/components/ratings/averageRating";
 import Description from "@/components/description";
 
+import { HiOutlineBookmark } from "react-icons/hi";
 import {
   ThumbUpOutlined,
   ThumbUpFilled,
@@ -10,10 +14,30 @@ import {
 import "./index.css";
 
 const CurrentMedia = () => {
+  const encodedSeriesTitle = encodeURIComponent(
+    "Solo Leveling".toLowerCase().replaceAll(" ", "-"),
+  );
+
   return (
     <div className="current-media">
       <div className="current-media-info">
-        <div className="current-media-header"></div>
+        <div className="current-media-header">
+          <div className="current-media-parent-ref">
+            <Link
+              href={`/watch/3hs728/${encodedSeriesTitle}`}
+              prefetch={false}
+              className="app-transition-colors show-title-link"
+            >
+              <h4 className="text-base font-semibold">Solo Leveling</h4>
+            </Link>
+
+            <AverageRating mode="compact" />
+          </div>
+
+          <button>
+            <HiOutlineBookmark className="app-transition-colors size-10 p-2 hover:fill-white" />
+          </button>
+        </div>
 
         <h1 className="heading text-rendering-optimized">
           E2 - If I Had One More Chance
@@ -23,7 +47,7 @@ const CurrentMedia = () => {
           <span>Sub | Dub</span>
         </div>
 
-        <p className="app-text-is-m mb-3">Released on Jan 13, 2024</p>
+        <p className="app-text-is-m mb-3 sm:mb-2">Released on Jan 13, 2024</p>
 
         <div className="episode-actions">
           <div className="episode-ratings">

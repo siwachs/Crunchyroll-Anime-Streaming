@@ -42,7 +42,7 @@ const Description: React.FC<{
         onClick={toogleDescriptionIsExpanded}
         className="app-text-is-s app-transition-colors mt-5 select-none uppercase text-[var(--app-background-crunchyroll-orange)] hover:text-white"
       >
-        {descriptionIsExpanded ? "Fewer details" : "More details"}
+        {descriptionIsExpanded ? "Show Less" : "Show More"}
       </button>
     </div>
   );

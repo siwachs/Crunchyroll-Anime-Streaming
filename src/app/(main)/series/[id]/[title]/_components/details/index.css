@@ -18,35 +18,6 @@
   @apply hidden md:block;
 }
 
-.playable-card-thumbnail {
-  --content-image-ar-priority-height: 1;
-
-  @apply relative;
-
-  width: calc(
-    100% * var(--content-image-ar-priority-width) /
-      var(--content-image-ar-priority-width)
-  );
-  height: calc(
-    100% * var(--content-image-ar-priority-height) /
-      var(--content-image-ar-priority-height)
-  );
-}
-
-@media screen and (min-width: 568px) {
-  .playable-card-thumbnail {
-    --content-image-ar-priority-height: 0;
-  }
-}
-
-.playable-card-thumbnail-has-width {
-  @apply w-[20.625rem];
-}
-
-.playable-card-duration {
-  @apply absolute bottom-1 right-1 select-none bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/leading-4.5 font-semibold;
-}
-
 .sticky-buttons-wrapper::before {
   @apply absolute -top-5 left-0 block h-5 w-full content-[""];
 

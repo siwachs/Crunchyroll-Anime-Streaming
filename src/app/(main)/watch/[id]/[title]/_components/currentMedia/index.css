@@ -1,8 +1,7 @@
 .current-media {
-  @apply mb-6;
+  @apply mb-6 2sm:mb-10 2md:flex;
 
   grid-area: currentMedia;
-  margin-block-end: 1.5rem;
 }
 
 .current-media-info {
@@ -10,11 +9,23 @@
 }
 
 .current-media-header {
-  @apply mb-3 flex justify-between border-b-2 border-solid border-[var(--app-background-secondary)] pb-3;
+  @apply mb-3 flex justify-between border-b-2 border-solid border-[var(--app-background-secondary)] pb-3 sm:mb-1 sm:border-none sm:pb-0;
+}
+
+.current-media-parent-ref {
+  @apply mr-1 flex flex-[0_1_auto] flex-col sm:flex-row sm:flex-wrap sm:self-center;
+}
+
+.show-title-link {
+  @apply text-[var(--app-background-crunchyroll-orange)] hover:text-white hover:underline sm:flex sm:items-center;
+}
+
+.show-title-link::after {
+  @apply mx-2 hidden h-[84%] w-[0.0625rem] bg-[#4a4e58] content-[""] sm:block;
 }
 
 .heading {
-  @apply mb-2 text-xl/leading-6.5 font-semibold;
+  @apply mb-2 text-xl/leading-6.5 font-semibold sm:mb-3 sm:text-[1.375rem]/[1.75rem] 2md:mb-2;
 }
 
 .episode-actions {

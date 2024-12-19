@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
 
 import Dropdown from "@/components/dropdown";
-import Ratings from "./_components/ratings";
+import Ratings from "@/components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
 import Description from "@/components/description";
-import WatchAction from "@/components/contentActionButtons/watchAction";
+import UpNextSectionPlayable from "@/components/playableCard/upNextSectionPlayable";
 
 import { MdMoreVert } from "react-icons/md";
 
@@ -82,30 +80,13 @@ const Details: React.FC = () => {
         />
       </div>
 
-      <div className="up-next-section">
-        <Link
-          href={`/watch/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
-          prefetch={false}
-          className="relative block"
-        >
-          <figure className="playable-card-thumbnail playable-card-thumbnail-has-width mb-3">
-            <Image
-              sizes="360px"
-              src={upNextThumbanil}
-              alt="Dragon Ball DAIMA"
-              className="block size-full object-cover"
-            />
-          </figure>
-
-          <div className="playable-card-duration">32m</div>
-        </Link>
-
-        <WatchAction
-          watchActionhref="#watchEpisode"
-          watchActionText="Start Watching E1"
-          className="md:w-full"
-        />
-      </div>
+      <UpNextSectionPlayable
+        seriesId="482782"
+        seriesTitle="Dragon Ball DAIMA"
+        upNextThumbnail={upNextThumbanil}
+        duration="32m"
+        watchActionText="Start Watching E1"
+      />
 
       <div
         data-active={isStickyButtonsVisible}

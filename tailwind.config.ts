@@ -11,7 +11,9 @@ const config: Config = {
       spacing: { "15": "3.75rem", "4.5": "1.125rem", "7.5": "1.875rem" },
       screens: {
         sm: "568px",
+        "2sm": "680px",
         md: "800px",
+        "2md": "980px",
         xl: "1440px",
         "2xl": "1720px",
       },
