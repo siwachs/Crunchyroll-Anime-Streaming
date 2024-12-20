@@ -13,15 +13,23 @@ import "./index.css";
 
 const Banner: React.FC = () => {
   const [currentActiveCard, setCurrentActiveCard] = useState(5);
+  const [set, setSet] = useState(5);
 
   function changeCurrentActiveCard(e: MouseEvent) {
     const { target } = e;
 
     const element = (target as HTMLElement).closest("button");
-    const dataIndex = element?.getAttribute("data-index");
+    const dataIndex = parseInt(element?.getAttribute("data-index")!);
 
-    setCurrentActiveCard(parseInt(dataIndex!));
+    setCurrentActiveCard(dataIndex);
+
+    setTimeout(() => {
+      setSet(currentActiveCard);
+    });
   }
+
+  console.log("index=", currentActiveCard);
+  console.log("set=", set);
 
   return (
     <div className="relative z-0">
@@ -30,6 +38,7 @@ const Banner: React.FC = () => {
           aria-label="Prev slide"
           data-index={(currentActiveCard - 1 + images.length) % images.length}
           onClick={changeCurrentActiveCard}
+          className="app-transition-colors"
         >
           <FaChevronLeft />
         </button>
@@ -43,13 +52,13 @@ const Banner: React.FC = () => {
             role="group"
             aria-roledescription="Slide"
             aria-label={`${index + 1} of ${images.length}`}
-            className="carousel-card"
+            className={`carousel-card app-transition-opacity ${set === index ? "opacity-100" : "opacity-0"}`}
           >
             <div className="carousel-card-grid">
               <div className="carousel-card-bg">
                 <Image
-                  priority={currentActiveCard === index}
                   fill
+                  priority
                   sizes="(max-width: 420px) 420px, 100vw"
                   src={image.mobileImage}
                   alt="The Do-Over Damsel Conquers the Dragon Emperor"
@@ -57,8 +66,8 @@ const Banner: React.FC = () => {
                 />
 
                 <Image
-                  priority={currentActiveCard === index}
                   fill
+                  priority
                   sizes="(max-width: 960px) 960px, (max-width: 1350px) 1350px, (max-width: 1920) 1920px, (max-width: 3840) 3840px, 100vw"
                   src={image.desktopImage}
                   alt="The Do-Over Damsel Conquers the Dragon Emperor"
@@ -66,12 +75,12 @@ const Banner: React.FC = () => {
                 />
               </div>
 
-              <div className="carousel-card-title">
+              {/* <div className="carousel-card-title">
                 <div className="carousel-card-label" />
                 <Link href="/" className="carousel-card-logo">
                   <Image
                     fill
-                    priority={currentActiveCard === index}
+                    priority
                     sizes="(max-width: 960px) 320px, (max-width: 1260px) 480px, 600px"
                     src={image.imageName}
                     alt="The Do-Over Damsel Conquers the Dragon Emperor"
@@ -106,7 +115,7 @@ const Banner: React.FC = () => {
                   watchActionhref="/"
                   watchActionText="Start Watching E1"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="carousel-card-sizer" />
@@ -119,6 +128,7 @@ const Banner: React.FC = () => {
           aria-label="Next slide"
           data-index={(currentActiveCard + 1) % images.length}
           onClick={changeCurrentActiveCard}
+          className="app-transition-colors"
         >
           <FaChevronRight />
         </button>
@@ -134,7 +144,7 @@ const Banner: React.FC = () => {
             onClick={changeCurrentActiveCard}
             className="navigatin-button"
           >
-            <div>
+            <div className="app-transition-colors">
               <span />
             </div>
           </button>

@@ -6,6 +6,8 @@ import WatchAction from "./watchAction";
 
 import { HiOutlineBookmark } from "react-icons/hi";
 
+import "./common.css";
+
 const ContentActionButtons = forwardRef<
   HTMLElement,
   {

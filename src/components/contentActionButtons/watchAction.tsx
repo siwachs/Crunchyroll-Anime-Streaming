@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { HiOutlinePlay } from "react-icons/hi2";
 
+import "./common.css";
+
 const WatchAction: React.FC<{
   watchActionhref: string;
   watchActionText: string;

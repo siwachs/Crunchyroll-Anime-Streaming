@@ -3,7 +3,7 @@
 }
 
 .carousel-navigation-arrow button {
-  @apply grid h-[6.25rem] w-full transition-[color] ease-quick hover:text-[var(--pill-color)];
+  @apply grid h-[6.25rem] w-full hover:text-[var(--pill-color)];
 
   pointer-events: all;
 }
@@ -11,7 +11,7 @@
 .carousel-navigation-arrow button svg {
   --stroke: #4a4e5866;
 
-  @apply m-auto size-[22px] max-w-full lg:size-[26px] 2xl:size-[28px];
+  @apply m-auto size-[22px] max-w-full stroke-[var(--stroke)] lg:size-[26px] 2xl:size-[28px];
 
   stroke: var(--stroke);
   stroke-width: 0.0313rem;
@@ -24,13 +24,13 @@
 }
 
 .carousel-card {
-  @apply relative z-[0] hidden opacity-0 transition-opacity duration-500 ease-quick;
+  @apply relative z-[0] hidden duration-500;
 
   grid-area: content;
 }
 
 .carousel-card[aria-current="true"] {
-  @apply z-[1] grid w-full min-w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch opacity-100;
+  @apply z-[1] grid w-full min-w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch;
 
   grid-template-areas: "carousel-card";
 }
@@ -175,14 +175,13 @@
 }
 
 .navigatin-button div {
-  @apply flex size-full overflow-hidden rounded bg-[var(--pill-color)] transition-colors duration-500 ease-quick;
+  @apply flex size-full overflow-hidden rounded bg-[var(--pill-color)] duration-500;
 }
 
 .navigatin-button[aria-current="true"] span {
-  animation: onCardLoad 10s ease;
-  background-color: #ff640a;
-  border-radius: 0.25rem;
-  height: 100%;
+  @apply h-full rounded bg-[var(--app-background-crunchyroll-orange)];
+
+  animation: onCardLoad 10s linear;
 }
 
 @keyframes onCardLoad {

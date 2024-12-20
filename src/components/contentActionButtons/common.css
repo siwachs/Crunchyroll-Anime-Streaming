@@ -1,0 +1,7 @@
+.action-button {
+  @apply app-transition-colors min-h-10 select-none;
+}
+
+.action-button span:first-child {
+  @apply flex items-center justify-center gap-1 text-sm/leading-4.5 font-black uppercase;
+}

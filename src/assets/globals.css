@@ -46,7 +46,6 @@ body {
 
   .container-cmp {
     --container-inline-padding: 1.25rem;
-    --container-max-width: 84.375rem;
 
     @apply mx-auto w-full max-w-full px-[var(--container-inline-padding)];
   }
@@ -110,13 +109,5 @@ body {
 
   .text-rendering-optimized {
     text-rendering: optimizeLegibility;
-  }
-
-  .action-button {
-    @apply app-transition-colors min-h-10 select-none;
-  }
-
-  .action-button span:first-child {
-    @apply flex items-center justify-center gap-1 text-sm/leading-4.5 font-black uppercase;
   }
 }
