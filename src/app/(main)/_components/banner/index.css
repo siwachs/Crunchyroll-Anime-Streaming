@@ -24,13 +24,17 @@
 }
 
 .carousel-card {
-  @apply relative z-[0] hidden duration-500;
+  @apply relative z-[0] opacity-0 duration-500;
 
   grid-area: content;
 }
 
 .carousel-card[aria-current="true"] {
-  @apply z-[1] grid w-full min-w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch;
+  @apply z-[1] opacity-100;
+}
+
+.carousel-card-container {
+  @apply grid w-full min-w-full grid-cols-[minmax(0,auto)] grid-rows-[minmax(0,auto)] items-stretch;
 
   grid-template-areas: "carousel-card";
 }
