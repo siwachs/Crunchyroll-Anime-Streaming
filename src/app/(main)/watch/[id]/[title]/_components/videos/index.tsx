@@ -12,7 +12,7 @@ const Videos: React.FC = () => {
         <div className="prev-next-episodes">
           <div className="prev-next-episode">
             <Link
-              className="app-text-is-m title"
+              className="title text-sm/leading-4.5 font-medium"
               href={`/watch/398489/${encodeURIComponent("Gloria".toLowerCase().replaceAll(" ", "-"))}`}
             >
               <span>Next Episode</span>
@@ -30,7 +30,7 @@ const Videos: React.FC = () => {
 
           <div className="prev-next-episode">
             <Link
-              className="app-text-is-m title"
+              className="title text-sm/leading-4.5 font-medium"
               href={`/watch/398489/${encodeURIComponent("Conspiracy".toLowerCase().replaceAll(" ", "-"))}`}
             >
               <span>Previous Episode</span>

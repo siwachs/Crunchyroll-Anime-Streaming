@@ -7,7 +7,7 @@ import "./page.css";
 export default function Watch() {
   return (
     <>
-      <main className="main">
+      <main>
         <VideoPlayer />
 
         <div className="content-wrapper">

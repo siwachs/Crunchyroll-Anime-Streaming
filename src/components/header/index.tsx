@@ -3,6 +3,7 @@
 import { useState, KeyboardEvent, MouseEvent } from "react";
 import Link from "next/link";
 
+import useBodyOverflow from "@/hooks/useBodyOverflow";
 import { triggerCallbackOnClickOrOnKeydown } from "@/lib/utils";
 
 import HeaderMenu from "./headerMenu";
@@ -17,6 +18,8 @@ import "./index.css";
 const Header = () => {
   const [headerState, setHeaderState] = useState<HeaderState>("close");
 
+  useBodyOverflow(headerState !== "close");
+
   function closeHeader(e: KeyboardEvent | MouseEvent) {
     triggerCallbackOnClickOrOnKeydown(e, () => setHeaderState("close"));
   }
@@ -25,9 +28,9 @@ const Header = () => {
     <header className="header">
       <div className="container-cmp header-container px-0">
         <div title="Company Logo" className="header-logo">
-          <Link href="/" className="block px-4.5">
-            <HeaderLogoMobileOnly className="sm:hidden" />
-            <HeaderLogoLarge className="hidden sm:block" />
+          <Link href="/" prefetch={false} className="block px-4.5">
+            <HeaderLogoMobileOnly className="app-transition-colors sm:hidden" />
+            <HeaderLogoLarge className="app-transition-colors hidden sm:block" />
           </Link>
         </div>
 
@@ -41,36 +44,21 @@ const Header = () => {
         <div className="header-actions">
           <ul className="flex">
             <li>
-              <div
-                title="Search"
-                tabIndex={0}
-                role="button"
-                className="icon-wrapper"
-              >
+              <button title="Search" className="icon-wrapper">
                 <HiSearch className="size-6" />
-              </div>
+              </button>
             </li>
 
             <li>
-              <div
-                title="Watchlist"
-                tabIndex={0}
-                role="button"
-                className="icon-wrapper"
-              >
+              <button title="Watchlist" className="icon-wrapper">
                 <HiOutlineBookmark className="size-6" />
-              </div>
+              </button>
             </li>
 
             <li>
-              <div
-                title="Account Menu"
-                tabIndex={0}
-                role="button"
-                className="icon-wrapper"
-              >
+              <button title="Account Menu" className="icon-wrapper">
                 <HiOutlineUser className="size-6" />
-              </div>
+              </button>
             </li>
           </ul>
         </div>

@@ -19,18 +19,18 @@ const Description: React.FC<{
       <div
         className={`expandable-section ${descriptionIsExpanded ? "expandable-section-is-expanded" : "expandable-section-mask"}`}
       >
-        <p className="app-text-is-m whitespace-pre-line sm:text-base">
+        <p className="whitespace-pre-line text-sm/leading-4.5 font-medium sm:text-base">
           {description}
         </p>
 
         <div className="show-details-table">
           {Object.entries(expandableTableRows).map(([key, value], index) => (
             <div key={index} className="show-details-table-row">
-              <div className="app-text-is-m show-details-table-column-name">
+              <div className="show-details-table-column-name text-sm/leading-4.5 font-medium">
                 <h5>{key}</h5>
               </div>
 
-              <div className="app-text-is-m">
+              <div className="text-sm/leading-4.5 font-medium">
                 <h5>{value}</h5>
               </div>
             </div>
@@ -40,7 +40,7 @@ const Description: React.FC<{
 
       <button
         onClick={toogleDescriptionIsExpanded}
-        className="app-text-is-s app-transition-colors mt-5 select-none uppercase text-[var(--app-background-crunchyroll-orange)] hover:text-white"
+        className="app-transition-colors mt-5 select-none text-xs font-black uppercase text-[var(--app-background-crunchyroll-orange)] hover:text-white"
       >
         {descriptionIsExpanded ? "Show Less" : "Show More"}
       </button>

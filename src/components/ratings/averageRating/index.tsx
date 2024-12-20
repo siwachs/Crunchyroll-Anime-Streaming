@@ -10,9 +10,9 @@ const AverageRating: React.FC<{ mode?: "compact" }> = ({ mode }) => {
     <div className="relative">
       {mode === "compact" ? (
         <button className="star-rating-average-compact-button">
-          <span className="app-text-is-m">4.9</span>
+          <span className="text-sm/leading-4.5 font-medium">4.9</span>
           <HiOutlineStar className="fill-current" />
-          <span className="app-text-is-m">(361.2K)</span>
+          <span className="text-sm/leading-4.5 font-medium">(361.2K)</span>
           <FaCaretDown />
         </button>
       ) : (

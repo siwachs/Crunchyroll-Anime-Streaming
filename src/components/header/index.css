@@ -3,18 +3,16 @@
 }
 
 .header-container {
-  @apply fixed left-0 right-0 z-50 grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
+  @apply fixed left-0 right-0 z-[100] grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
 
   grid-template-areas: "menu logo actions";
 }
 
 @media screen and (min-width: 1024px) {
   .header-container {
+    @apply grid-cols-[minmax(0,var(--container-inline-padding))_auto_1fr_auto_minmax(0,var(--container-inline-padding))];
+
     grid-template-areas: "- logo menu actions --";
-    grid-template-columns: minmax(0, var(--container-inline-padding)) auto 1fr auto minmax(
-        0,
-        var(--container-inline-padding)
-      );
   }
 }
 
@@ -24,16 +22,12 @@
   grid-area: logo;
 }
 
-.header-logo a svg {
-  @apply h-full fill-[var(--app-background-crunchyroll-orange)] transition-[fill] duration-200 ease-quick;
-}
-
-.header-logo:hover a svg {
-  @apply fill-white;
+.header-logo svg {
+  @apply h-full fill-[var(--app-background-crunchyroll-orange)] hover:fill-white;
 }
 
 .icon-wrapper {
-  @apply flex h-full items-center px-4.5 text-[var(--app-icon-primary)] hover:bg-[var(--app-background-primary)] hover:text-white data-[active=true]:bg-[var(--app-background-primary)] data-[active=true]:text-white;
+  @apply flex h-full items-center px-4.5 text-[var(--app-icon-primary)] hover:bg-[var(--app-overlay-secondary)] hover:text-white data-[active=true]:bg-[var(--app-overlay-secondary)] data-[active=true]:text-white;
 
   transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
 }
@@ -48,4 +42,8 @@
   @apply flex;
 
   grid-area: actions;
+}
+
+.app-overlay {
+  @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[98] data-[active=true]:opacity-100;
 }

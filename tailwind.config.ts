@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
@@ -21,6 +22,13 @@ const config: Config = {
       transitionTimingFunction: { quick: "ease" },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents, theme }) {
+      addComponents({
+        ".app-transition-colors": {},
+      });
+    }),
+  ],
 };
+
 export default config;

@@ -5,7 +5,7 @@ import Navigation from "./_components/navigation";
 export default function Series() {
   return (
     <>
-      <main className="main">
+      <main>
         <Banner />
 
         <div className="content-wrapper mb-7.5 md:mb-0">

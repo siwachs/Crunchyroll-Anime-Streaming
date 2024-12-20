@@ -47,7 +47,9 @@ const CurrentMedia = () => {
           <span>Sub | Dub</span>
         </div>
 
-        <p className="app-text-is-m mb-3 sm:mb-2">Released on Jan 13, 2024</p>
+        <p className="mb-3 text-sm/leading-4.5 font-medium sm:mb-2">
+          Released on Jan 13, 2024
+        </p>
 
         <div className="episode-actions">
           <div className="episode-ratings">
