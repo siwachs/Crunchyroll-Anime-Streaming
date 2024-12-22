@@ -1,4 +1,4 @@
-import Banner from "./_components/Banner";
+import Banner from "./_components/banner";
 import DataFeedRow from "./_components/dataFeedRow";
 import PromotionBanner from "./_components/promotionBanner";
 

@@ -39,6 +39,18 @@ body {
   background-color: var(--app-background-primary);
 }
 
+button:focus-visible,
+a:focus-visible {
+  outline: 0.25rem solid var(--meta-color);
+  outline-offset: 0;
+}
+
+.tooltip button:focus-visible,
+.tooltip a:focus-visible {
+  outline: 0.125rem solid var(--meta-color);
+  outline-offset: -0.125rem;
+}
+
 @layer components {
   main {
     @apply flex-[1_1_0] pb-10;
@@ -92,7 +104,7 @@ body {
   }
 
   .meta-tags {
-    @apply select-none text-sm/leading-4.5 font-medium text-[var(--meta-color)];
+    @apply select-none truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)];
   }
 
   .meta-tags span {

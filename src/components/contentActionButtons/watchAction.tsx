@@ -7,16 +7,19 @@ import "./common.css";
 const WatchAction: React.FC<{
   watchActionhref: string;
   watchActionText: string;
+  tabIndex?: number;
   enableDetailsPageStyles?: boolean;
   className?: string;
 }> = ({
   watchActionhref,
   watchActionText,
+  tabIndex = 0,
   enableDetailsPageStyles,
   className = "",
 }) => {
   return (
     <Link
+      tabIndex={tabIndex}
       href={watchActionhref}
       prefetch={false}
       className={`action-button inline-flex w-full min-w-[7.5rem] flex-1 justify-center bg-[var(--app-background-crunchyroll-orange)] px-4 text-black hover:bg-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-background-secondary)] sm:w-auto sm:flex-[0_0_auto] ${enableDetailsPageStyles ? "md:hidden" : ""} ${className}`}
