@@ -22,14 +22,29 @@
   grid-area: logo;
 }
 
+.header-logo a {
+  @apply app-transition-colors text-[var(--app-background-crunchyroll-orange)];
+}
+
+.header-logo a:hover,
+.header-logo a:focus-visible {
+  @apply text-white;
+}
+
 .header-logo svg {
-  @apply h-full fill-[var(--app-background-crunchyroll-orange)] hover:fill-white;
+  @apply h-full w-full fill-current;
 }
 
 .icon-wrapper {
-  @apply flex h-full items-center px-4.5 text-[var(--app-icon-primary)] hover:bg-[var(--app-overlay-secondary)] hover:text-white data-[active=true]:bg-[var(--app-overlay-secondary)] data-[active=true]:text-white;
+  @apply flex h-full items-center px-4.5 text-[var(--app-icon-primary)];
 
   transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
+}
+
+.icon-wrapper[data-active="true"],
+.icon-wrapper:hover,
+.icon-wrapper:focus-visible {
+  @apply bg-[var(--app-overlay-secondary)] text-white;
 }
 
 .header-menu {

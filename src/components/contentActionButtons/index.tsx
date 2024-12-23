@@ -3,8 +3,9 @@
 import { forwardRef, RefObject } from "react";
 
 import WatchAction from "./watchAction";
+import AddToWatchListAction from "./addToWatchListAction";
 
-import { HiOutlineBookmark } from "react-icons/hi";
+import { ButtonType } from "./types";
 
 import "./common.css";
 
@@ -15,7 +16,7 @@ const ContentActionButtons = forwardRef<
     watchActionText: string;
     tabIndex?: number;
     className?: string;
-    enableDetailsPageStyles?: boolean;
+    buttonType?: ButtonType;
   }
 >(
   (
@@ -24,7 +25,7 @@ const ContentActionButtons = forwardRef<
       watchActionText,
       tabIndex = 0,
       className = "",
-      enableDetailsPageStyles,
+      buttonType = "one",
     },
     ref,
   ) => {
@@ -37,24 +38,9 @@ const ContentActionButtons = forwardRef<
           tabIndex={tabIndex}
           watchActionhref={watchActionhref}
           watchActionText={watchActionText}
-          enableDetailsPageStyles={enableDetailsPageStyles}
         />
 
-        <button
-          tabIndex={tabIndex}
-          className={`action-button flex-[0_0_auto] border-2 border-[var(--app-background-crunchyroll-orange)] text-[var(--app-background-crunchyroll-orange)] hover:border-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-hover-crunchyroll-orange)] ${enableDetailsPageStyles ? "aspect-square sm:aspect-auto sm:px-4" : "aspect-square"}`}
-        >
-          {enableDetailsPageStyles ? (
-            <span>
-              <HiOutlineBookmark className="size-[22px]" />
-              <span className="hidden sm:inline">Add To Watchlist</span>
-            </span>
-          ) : (
-            <span>
-              <HiOutlineBookmark className="size-[22px]" />
-            </span>
-          )}
-        </button>
+        <AddToWatchListAction tabIndex={tabIndex} buttonType={buttonType} />
       </div>
     );
   },

@@ -5,7 +5,7 @@
 }
 
 .carousel-navigation-arrow button {
-  @apply grid h-[6.25rem] w-full hover:text-[var(--pill-color)] focus-visible:text-[var(--pill-color)];
+  @apply app-transition-colors grid h-[6.25rem] w-full hover:text-[var(--pill-color)] focus-visible:text-[var(--pill-color)];
 
   pointer-events: all;
 }
@@ -26,7 +26,7 @@
 }
 
 .carousel-card {
-  @apply pointer-events-none relative z-0 opacity-0 duration-500;
+  @apply app-transition-opacity pointer-events-none relative z-0 opacity-0 duration-500;
 
   grid-area: content;
 }
@@ -52,7 +52,7 @@
 .carousel-card-sizer {
   --under-hero-whitespace: 18.75rem;
 
-  @apply 3xl:min-h-[43.75rem] aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem] 2xl:min-h-[37.5rem];
+  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem] 2xl:min-h-[37.5rem] 3xl:min-h-[43.75rem];
 
   align-self: end;
   grid-area: carousel-card;

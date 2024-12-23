@@ -95,14 +95,6 @@ a:focus-visible {
     }
   }
 
-  .app-transition-colors {
-    @apply transition-colors duration-200 ease-quick;
-  }
-
-  .app-transition-opacity {
-    @apply transition-opacity duration-200 ease-quick;
-  }
-
   .meta-tags {
     @apply select-none truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)];
   }
@@ -117,9 +109,5 @@ a:focus-visible {
 
   .rhombus::before {
     @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
-  }
-
-  .text-rendering-optimized {
-    text-rendering: optimizeLegibility;
   }
 }

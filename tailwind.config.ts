@@ -26,7 +26,22 @@ const config: Config = {
   plugins: [
     plugin(function ({ addComponents, theme }) {
       addComponents({
-        ".app-transition-colors": {},
+        ".app-transition-colors": {
+          transitionProperty:
+            "color, background-color, border-color, text-decoration-color, fill, stroke",
+          transitionDuration: theme("transitionDuration.200"),
+          transitionTimingFunction: theme("transitionTimingFunction.quick"),
+        },
+
+        ".app-transition-opacity": {
+          transitionProperty: "opacity",
+          transitionDuration: theme("transitionDuration.200"),
+          transitionTimingFunction: theme("transitionTimingFunction.quick"),
+        },
+
+        ".text-rendering-optimized": {
+          "text-rendering": "optimizeLegibility",
+        },
       });
     }),
   ],

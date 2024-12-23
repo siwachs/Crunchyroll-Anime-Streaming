@@ -28,9 +28,9 @@ const Header = () => {
     <header className="header">
       <div className="container-cmp header-container px-0">
         <div title="Company Logo" className="header-logo">
-          <Link href="/" prefetch={false} className="block px-4.5">
-            <HeaderLogoMobileOnly className="app-transition-colors sm:hidden" />
-            <HeaderLogoLarge className="app-transition-colors hidden sm:block" />
+          <Link href="/" prefetch={false} className="block size-full px-4.5">
+            <HeaderLogoMobileOnly className="sm:hidden" />
+            <HeaderLogoLarge className="hidden sm:block" />
           </Link>
         </div>
 

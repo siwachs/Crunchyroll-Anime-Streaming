@@ -10,6 +10,7 @@ const HeaderLogoMobileOnly: React.FC<{ className?: string }> = ({
       role="img"
       width="24"
       height="24"
+      fill="current"
     >
       <title id="company-logo-only-svg">Company logo</title>
       <path
@@ -32,6 +33,7 @@ const HeaderLogoLarge: React.FC<{ className?: string }> = ({
       role="img"
       width="136"
       height="24"
+      fill="current"
     >
       <title id="company-horizontal-svg">Company logo</title>
       <path

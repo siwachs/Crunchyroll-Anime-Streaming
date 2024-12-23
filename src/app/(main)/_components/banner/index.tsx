@@ -34,7 +34,6 @@ const Banner: React.FC = () => {
           aria-label="Prev slide"
           data-index={(currentActiveCard - 1 + images.length) % images.length}
           onClick={changeCurrentActiveCard}
-          className="app-transition-colors"
         >
           <FaChevronLeft />
         </button>
@@ -52,7 +51,7 @@ const Banner: React.FC = () => {
               role="group"
               aria-roledescription="Slide"
               aria-label={`${index + 1} of ${images.length}`}
-              className="carousel-card app-transition-opacity"
+              className="carousel-card"
             >
               <div className="container-cmp carousel-card-container px-0">
                 <div className="carousel-card-grid">
@@ -116,7 +115,7 @@ const Banner: React.FC = () => {
 
                     <ContentActionButtons
                       tabIndex={tabIndex}
-                      watchActionhref="/"
+                      watchActionhref="/#"
                       watchActionText="Start Watching E1"
                     />
                   </div>
@@ -134,7 +133,6 @@ const Banner: React.FC = () => {
           aria-label="Next slide"
           data-index={(currentActiveCard + 1) % images.length}
           onClick={changeCurrentActiveCard}
-          className="app-transition-colors"
         >
           <FaChevronRight />
         </button>
