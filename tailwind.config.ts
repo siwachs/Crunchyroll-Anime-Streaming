@@ -9,6 +9,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: { "1.5xl": "1.375rem", "2.5xl": "1.75rem" },
       spacing: { "15": "3.75rem", "4.5": "1.125rem", "7.5": "1.875rem" },
       screens: {
         sm: "568px",
@@ -41,6 +42,10 @@ const config: Config = {
 
         ".text-rendering-optimized": {
           "text-rendering": "optimizeLegibility",
+        },
+
+        ".box-initial": {
+          "box-sizing": "initial",
         },
       });
     }),

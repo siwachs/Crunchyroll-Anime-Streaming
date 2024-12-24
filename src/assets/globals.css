@@ -31,12 +31,9 @@
 
 html,
 body {
-  color: var(--app-text-primary);
-  font-weight: 400;
-  height: 100%;
-  overflow-anchor: none; /* Disable Auto Scroll from dynamically loaded content */
+  @apply h-full bg-[var(--app-background-primary)] font-normal text-[var(--app-text-primary)];
 
-  background-color: var(--app-background-primary);
+  overflow-anchor: none; /* Disable Auto Scroll from dynamically loaded content */
 }
 
 button:focus-visible,
@@ -45,8 +42,7 @@ a:focus-visible {
   outline-offset: 0;
 }
 
-.tooltip button:focus-visible,
-.tooltip a:focus-visible {
+.outline-sm:focus-visible {
   outline: 0.125rem solid var(--meta-color);
   outline-offset: -0.125rem;
 }

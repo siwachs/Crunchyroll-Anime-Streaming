@@ -72,20 +72,13 @@
 }
 
 .wide-card-carousel-arrow {
-  --initial-background-opacity: 1;
   --arrow-width: max(var(--carousel-overflow-x-hint), 1.5rem);
 
-  @apply relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-[color] duration-150 ease-quick sm:flex;
+  @apply relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-colors ease-quick sm:flex;
 }
 
 .wide-cards-carousel-container:hover .wide-card-carousel-arrow {
   @apply flex;
-}
-
-@media screen and (min-width: 568px) {
-  .wide-card-carousel-arrow {
-    --initial-background-opacity: 0;
-  }
 }
 
 .arrow-dir-to-left {
@@ -101,9 +94,8 @@
 }
 
 .wide-card-carousel-arrow::before {
-  @apply absolute inset-0 -z-[1] block transition-opacity duration-150 ease-quick content-[""];
+  @apply absolute inset-0 -z-[1] block transition-opacity ease-quick content-[""] sm:opacity-0;
 
-  opacity: var(--initial-background-opacity);
   background: linear-gradient(
     var(--gradient-dir),
     #0000,
@@ -139,8 +131,9 @@
 }
 
 .carousel-scroller-wrapper {
-  box-sizing: initial;
   padding: var(--carousel-overflow-y-hint) var(--carousel-overflow-x-hint);
+
+  @apply box-initial;
 }
 
 .carousel-scroller-track {
@@ -172,7 +165,7 @@
 }
 
 .carousel-scroller-card {
-  @apply min-w-0 snap-start transition-opacity duration-200 ease-quick;
+  @apply app-transition-opacity min-w-0 snap-start;
 
   padding: calc(var(--carousel-row-gap) / 2) calc(var(--carousel-col-gap) / 2);
 }
@@ -186,8 +179,6 @@
 }
 
 .browse-card-poster {
-  @apply relative;
-
   --content-image-ar-priority-width: 1;
 
   --width: calc(
@@ -199,8 +190,7 @@
       var(--content-image-ar-priority-height)
   );
 
-  height: var(--height);
-  width: var(--width);
+  @apply relative h-[var(--height)] w-[var(--width)];
 }
 
 .browse-card-body {
@@ -211,12 +201,8 @@
   @apply line-clamp-3 text-sm/leading-4.5 font-medium;
 }
 
-.browse-card-body-metatags {
-  @apply mt-2 inline-flex max-w-full select-none truncate text-sm/leading-4.5 text-[var(--meta-color)];
-}
-
 .browse-card-hover {
-  @apply absolute inset-0 flex opacity-0 transition-opacity duration-150;
+  @apply absolute inset-0 flex opacity-0 transition-opacity ease-quick;
 }
 
 .browse-card-hover:hover,
@@ -225,9 +211,7 @@
 }
 
 .browse-card-hover-content {
-  @apply relative flex flex-[0_0_100%] flex-col bg-[var(--app-overlay-secondary)];
-
-  box-shadow: 0 0 0 0.5rem var(--app-overlay-secondary);
+  @apply relative flex flex-[0_0_100%] flex-col bg-[var(--app-overlay-secondary)] shadow-[0_0_0_0.5rem_var(--app-overlay-secondary)];
 }
 
 .browse-card-hover-poster-wrapper {

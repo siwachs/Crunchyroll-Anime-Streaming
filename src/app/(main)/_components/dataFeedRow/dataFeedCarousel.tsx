@@ -82,124 +82,128 @@ const DataFeedCarousel: React.FC = () => {
           <div className="carousel-scroller">
             <div className="carousel-scroller-wrapper">
               <div ref={trackRef} className="carousel-scroller-track">
-                {images.map((image) => (
-                  <div
-                    key={image.key}
-                    ref={cardRef}
-                    className="carousel-scroller-card"
-                  >
-                    <div className="browse-card">
-                      <Link
-                        href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
-                        prefetch={false}
-                        tabIndex={-1}
-                        className="relative block"
-                      >
-                        <div className="browse-card-poster">
-                          <Image
-                            sizes="(min-width: 2160px) calc(100vw / 7), (min-width: 1720px) calc(100vw / 6), (min-width: 800px) calc(100vw / 5), (min-width: 568px) calc(100vw / 4), (min-width: 480px) calc(100vw / 3), 50vw"
-                            src={image.image}
-                            alt={image.title}
-                            className="block size-full object-cover"
-                          />
-                        </div>
-                      </Link>
+                {images.map((image) => {
+                  const seriesLink = `/series/j38dj38/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`;
 
-                      <div className="browse-card-body">
-                        <h4 className="browse-card-body-title">
-                          <Link
-                            href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
-                            prefetch={false}
-                            tabIndex={-1}
-                          >
-                            {image.title}
-                          </Link>
-                        </h4>
-
-                        <div className="browse-card-body-metatags">
-                          <span>Subtitled</span>
-                        </div>
-                      </div>
-
-                      <div className="browse-card-hover">
-                        <div className="browse-card-hover-content">
-                          <Link
-                            href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
-                            prefetch={false}
-                            tabIndex={-1}
-                            className="browse-card-hover-poster-wrapper"
-                          >
-                            <div className="relative size-full">
-                              <Image
-                                sizes="(min-width: 2160px) calc(100vw / 7), (min-width: 1720px) calc(100vw / 6), (min-width: 800px) calc(100vw / 5), (min-width: 568px) calc(100vw / 4), (min-width: 480px) calc(100vw / 3), 50vw"
-                                src={image.image}
-                                alt={image.title}
-                                className="block size-full object-cover"
-                              />
-                            </div>
-                          </Link>
-
-                          <Link
-                            href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
-                            prefetch={false}
-                            className="browse-card-hover-link"
-                          />
-
-                          <div className="browse-card-hover-body">
-                            <h4 className="browse-card-body-title mb-3">
-                              <Link
-                                href={`/series/${83290}/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`}
-                                prefetch={false}
-                                tabIndex={-1}
-                              >
-                                {image.title}
-                              </Link>
-                            </h4>
-
-                            <div className="mb-1 flex items-center gap-1 text-[var(--app-icon-primary)]">
-                              <p className="text-sm/leading-4.5 font-medium">
-                                4.7
-                              </p>
-                              <HiStar className="size-4" />
-                              <p className="text-sm/leading-4.5 font-medium uppercase">
-                                (43k)
-                              </p>
-                            </div>
-
-                            <div className="mb-2 flex flex-col text-[var(--meta-color)]">
-                              <span className="text-sm/leading-4.5 font-semibold">
-                                3 Seasons
-                              </span>
-                              <span className="text-sm/leading-4.5 font-semibold">
-                                329 Episodes
-                              </span>
-                            </div>
-
-                            <h4 className="browse-card-hover-body-description">
-                              {image.description}
-                            </h4>
+                  return (
+                    <div
+                      key={image.key}
+                      ref={cardRef}
+                      className="carousel-scroller-card"
+                    >
+                      <div className="browse-card">
+                        <Link
+                          href={seriesLink}
+                          prefetch={false}
+                          tabIndex={-1}
+                          className="relative block"
+                        >
+                          <div className="browse-card-poster">
+                            <Image
+                              sizes="(min-width: 2160px) calc(100vw / 7), (min-width: 1720px) calc(100vw / 6), (min-width: 800px) calc(100vw / 5), (min-width: 568px) calc(100vw / 4), (min-width: 480px) calc(100vw / 3), 50vw"
+                              src={image.image}
+                              alt={image.title}
+                              className="block size-full object-cover"
+                            />
                           </div>
+                        </Link>
 
-                          <div className="browse-card-hover-footer">
-                            <button className="browse-card-hover-footer-button">
-                              <HiOutlinePlay
-                                strokeWidth={2.08}
-                                className="size-7"
-                              />
-                            </button>
+                        <div className="browse-card-body">
+                          <h4 className="browse-card-body-title">
+                            <Link
+                              href={seriesLink}
+                              prefetch={false}
+                              tabIndex={-1}
+                            >
+                              {image.title}
+                            </Link>
+                          </h4>
 
-                            <button className="browse-card-hover-footer-button">
-                              <HiOutlineBookmark
-                                strokeWidth={2.08}
-                                className="size-[22px]"
-                              />
-                            </button>
+                          <div className="meta-tags mt-2 inline-flex">
+                            <span>Subtitled</span>
+                          </div>
+                        </div>
+
+                        <div className="browse-card-hover">
+                          <div className="browse-card-hover-content">
+                            <Link
+                              href={seriesLink}
+                              prefetch={false}
+                              tabIndex={-1}
+                              className="browse-card-hover-poster-wrapper"
+                            >
+                              <div className="relative size-full">
+                                <Image
+                                  sizes="(min-width: 2160px) calc(100vw / 7), (min-width: 1720px) calc(100vw / 6), (min-width: 800px) calc(100vw / 5), (min-width: 568px) calc(100vw / 4), (min-width: 480px) calc(100vw / 3), 50vw"
+                                  src={image.image}
+                                  alt={image.title}
+                                  className="block size-full object-cover"
+                                />
+                              </div>
+                            </Link>
+
+                            <Link
+                              href={seriesLink}
+                              prefetch={false}
+                              className="browse-card-hover-link"
+                            />
+
+                            <div className="browse-card-hover-body">
+                              <h4 className="browse-card-body-title mb-3">
+                                <Link
+                                  href={seriesLink}
+                                  prefetch={false}
+                                  tabIndex={-1}
+                                >
+                                  {image.title}
+                                </Link>
+                              </h4>
+
+                              <div className="mb-1 flex items-center gap-1 text-[var(--app-icon-primary)]">
+                                <p className="text-sm/leading-4.5 font-medium">
+                                  4.7
+                                </p>
+                                <HiStar className="size-4" />
+                                <p className="text-sm/leading-4.5 font-medium uppercase">
+                                  (43k)
+                                </p>
+                              </div>
+
+                              <div className="mb-2 flex flex-col text-[var(--meta-color)]">
+                                <span className="text-sm/leading-4.5 font-semibold">
+                                  3 Seasons
+                                </span>
+                                <span className="text-sm/leading-4.5 font-semibold">
+                                  329 Episodes
+                                </span>
+                              </div>
+
+                              <h4 className="browse-card-hover-body-description">
+                                {image.description}
+                              </h4>
+                            </div>
+
+                            <div className="browse-card-hover-footer">
+                              <button className="outline-sm browse-card-hover-footer-button">
+                                <HiOutlinePlay
+                                  strokeWidth={2.08}
+                                  className="size-7"
+                                />
+                              </button>
+
+                              <button className="outline-sm browse-card-hover-footer-button">
+                                <HiOutlineBookmark
+                                  strokeWidth={2.08}
+                                  className="size-[22px]"
+                                />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
