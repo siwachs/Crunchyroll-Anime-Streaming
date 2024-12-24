@@ -14,20 +14,22 @@ const PromotionBanner: React.FC<{ dataId: string }> = ({ dataId }) => {
           className="relative block"
         >
           <div className="h-0 pt-[44.78%] sm:pt-[33.334%]" />
-          <div className="absolute inset-0">
+          <figure className="absolute inset-0">
             <Image
-              sizes="(max-width: 568px) 1080px, 100vw"
+              fill
+              sizes="580px"
               src={promotionBannerImage}
               alt="promotion-banner"
               className="block size-full object-cover sm:hidden"
             />
             <Image
-              sizes="(max-width: 2700px) 2700px, 100vw"
+              fill
+              sizes="1080px"
               src={promotionBannerImageLarge}
               alt="promotion-banner"
               className="hidden size-full object-cover sm:block"
             />
-          </div>
+          </figure>
         </Link>
       </div>
     </div>
