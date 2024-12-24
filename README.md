@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crunchyroll Anime/Video Streaming Platform
 
-## Getting Started
+An ad-free anime streaming platform inspired by [Crunchyroll](https://www.crunchyroll.com/), designed to deliver an immersive viewing experience with modern web technologies.
 
-First, run the development server:
+## About
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is currently under development and aims to replicate the core functionalities of Crunchyroll, including anime streaming, user-friendly navigation, and a sleek design. Below are the main technologies used:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Next.js 15**: The latest version of the popular React framework, optimized for SEO and performance.
+- **Tailwind CSS**: A utility-first CSS framework for responsive and consistent UI design.
+- **AWS**: Leveraged for cloud hosting and backend support to ensure scalability and reliability.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features (Planned)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Ad-Free Streaming**: Enjoy seamless video playback without interruptions.  
+- **User Profiles**: Personalized watchlists and recommendations.  
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices.  
+- **Rich Library**: Explore and stream your favorite anime titles.  
+- **Secure Authentication**: Sign-up and login with password encryption.  
+- **Server-Side Rendering (SSR)**: Enhances SEO and initial load performance.  
 
-## Learn More
+## Demo  
 
-To learn more about Next.js, take a look at the following resources:
+This project is currently under development. A working demo will be provided soon! Stay tuned.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Reference  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For inspiration, check out the official [Crunchyroll](https://www.crunchyroll.com/) website.
