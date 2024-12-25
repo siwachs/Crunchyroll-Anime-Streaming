@@ -60,6 +60,10 @@ const config: Config = {
         ".box-initial": {
           "box-sizing": "initial",
         },
+
+        ".initial": {
+          display: "initial",
+        },
       });
     }),
   ],

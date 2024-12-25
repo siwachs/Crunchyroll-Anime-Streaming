@@ -71,6 +71,7 @@ const Details: React.FC = () => {
 
         <Description
           description="Jinwoo and his party appear to have cleared a low-level dungeon, when a hidden path to an unfamiliar temple is revealed. There they encounter a set of commandments and a group of monsters that cause them absolute despair."
+          genres={["Action", "Comedy", "Fantasy", "Shonen", "Horror", "Sci-Fi"]}
           expandableTableRows={{
             Audio:
               "Japanese, English, Deutsch, Español (América Latina), Español (España), Français, Italiano, Português (Brasil), हिंदी, தமிழ், తెలుగు, 한국어",

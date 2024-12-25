@@ -22,11 +22,13 @@
   --app-border-primary: #23252b;
 
   --meta-color: #a0a0a0;
+  --meta-color-disabled: #59595b;
+
+  --app-badge: #213944;
 }
 
 ::selection {
-  background-color: var(--app-background-secondary);
-  color: var(--app-background-crunchyroll-orange);
+  @apply bg-[var(--app-background-secondary)] text-[var(--app-background-crunchyroll-orange)];
 }
 
 html,
@@ -43,6 +45,11 @@ a:focus-visible {
 }
 
 .outline-sm:focus-visible {
+  outline: 0.25rem solid var(--meta-color);
+  outline-offset: -0.25rem;
+}
+
+.outline-xs:focus-visible {
   outline: 0.125rem solid var(--meta-color);
   outline-offset: -0.125rem;
 }

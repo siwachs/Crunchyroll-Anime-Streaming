@@ -7,5 +7,21 @@
 }
 
 .episode-list {
-  @apply grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-4;
+  @apply mb-3 grid grid-cols-1 gap-3 sm:mb-5 sm:grid-cols-2 sm:gap-5 md:mb-7.5 md:grid-cols-3 lg:grid-cols-4;
+}
+
+.bottom-controls {
+  @apply mt-6;
+}
+
+.horizontal-rule {
+  @apply box-initial mb-[1.1875rem] h-0.5 border-0 bg-[var(--app-background-secondary)];
+}
+
+.bottom-controls-wrapper {
+  @apply flex justify-between;
+}
+
+.bottom-controls-wrapper button {
+  @apply app-transition-colors flex items-center uppercase text-[var(--meta-color)] duration-300 hover:text-white focus-visible:text-white disabled:text-[var(--meta-color-disabled)];
 }

@@ -8,7 +8,7 @@ export default function Series() {
       <main>
         <Banner />
 
-        <div className="content-wrapper mb-7.5 md:mb-0">
+        <div className="content-wrapper mb-14 md:mb-0">
           <Details />
           <Navigation />
         </div>

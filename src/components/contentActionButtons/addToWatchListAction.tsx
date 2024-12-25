@@ -11,14 +11,14 @@ const AddToWatchListAction: React.FC<{
   return (
     <button
       tabIndex={tabIndex}
-      className={`action-button app-transition-colors flex-[0_0_auto] text-[var(--app-background-crunchyroll-orange)] shadow-[inset_0_0_0_0.125rem_currentColor] hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)] ${buttonType === "one" ? "aspect-square" : "aspect-square sm:aspect-auto sm:px-4"}`}
+      className={`action-button app-transition-colors flex flex-[0_0_auto] text-[var(--app-background-crunchyroll-orange)] shadow-[inset_0_0_0_0.125rem_currentColor] hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)] ${buttonType === "one" ? "aspect-square" : "aspect-square sm:aspect-auto sm:px-4"}`}
     >
       {buttonType === "one" ? (
-        <span>
+        <span className="action-button-child">
           <HiOutlineBookmark className="size-[22px]" />
         </span>
       ) : (
-        <span>
+        <span className="action-button-child">
           <HiOutlineBookmark className="size-[22px]" />
           <span className="hidden sm:inline">Add To Watchlist</span>
         </span>

@@ -184,14 +184,14 @@ const DataFeedCarousel: React.FC = () => {
                             </div>
 
                             <div className="browse-card-hover-footer">
-                              <button className="outline-sm browse-card-hover-footer-button">
+                              <button className="outline-xs browse-card-hover-footer-button">
                                 <HiOutlinePlay
                                   strokeWidth={2.08}
                                   className="size-7"
                                 />
                               </button>
 
-                              <button className="outline-sm browse-card-hover-footer-button">
+                              <button className="outline-xs browse-card-hover-footer-button">
                                 <HiOutlineBookmark
                                   strokeWidth={2.08}
                                   className="size-[22px]"

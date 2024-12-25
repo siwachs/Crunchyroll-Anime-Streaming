@@ -38,7 +38,7 @@ const ContentActionButtons = forwardRef<
           tabIndex={tabIndex}
           watchActionhref={watchActionhref}
           watchActionText={watchActionText}
-          buttonType="two"
+          buttonType={buttonType}
         />
 
         <AddToWatchListAction tabIndex={tabIndex} buttonType={buttonType} />

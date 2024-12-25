@@ -21,6 +21,10 @@
   @apply max-h-full;
 }
 
+.genres-wrapper {
+  @apply mt-6 flex flex-wrap;
+}
+
 .show-details-table {
   @apply py-3 md:pt-6;
 }
