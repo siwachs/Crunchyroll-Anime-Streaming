@@ -1,25 +1,18 @@
+.star-rating-average-compact-button {
+  @apply inline-flex items-center gap-1 text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)] hover:underline sm:self-center;
+}
+
 .star-rating-average-button {
   @apply mt-3 flex items-center gap-1 hover:underline sm:mt-0;
 }
 
 .star-rating-average-button span {
-  @apply flex-[0_0_auto] text-sm/leading-4.5 transition-[color] duration-200 ease-quick hover:text-white;
+  @apply flex-[0_0_auto] text-sm/leading-4.5;
 }
 
-.star-rating-average-button span:first-child {
-  @apply font-semibold text-[var(--app-icon-primary)];
-}
-
-.star-rating-average-button span:nth-child(2) {
-  @apply font-black uppercase text-white;
-}
-
-.star-rating-average-compact-button {
-  @apply inline-flex items-center gap-1 text-[var(--app-icon-primary)] hover:underline sm:self-center;
-}
-
-.star-rating-average-button svg {
-  @apply size-4;
+.star-rating-average-button:hover span:first-child,
+.star-rating-average-button:focus-visible span:first-child {
+  @apply text-white;
 }
 
 .star-rating-average-button:focus + .star-rating-average-data,
@@ -37,7 +30,7 @@
 }
 
 .star-rating-average-tooltip {
-  @apply w-[18.125rem] bg-[var(--app-background-secondary)] p-5 text-white;
+  @apply w-[18.125rem] bg-[var(--app-background-secondary)] p-5;
 
   animation: starRatingAverageTooltipAnimation 0.15s ease forwards;
 }

@@ -1,5 +1,5 @@
 .banner-wrapper {
-  @apply relative z-0 mb-7 overflow-hidden sm:mb-[2.125rem] md:mb-10;
+  @apply sm:mb-8.5 relative z-0 mb-7 overflow-hidden md:mb-10;
 }
 
 .blurred-wrapper::before {

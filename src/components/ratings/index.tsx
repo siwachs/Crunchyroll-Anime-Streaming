@@ -4,7 +4,7 @@ import { HiOutlineStar } from "react-icons/hi2";
 
 import "./index.css";
 
-const Ratings: React.FC<{ compact?: boolean }> = ({ compact }) => {
+const Ratings: React.FC = () => {
   return (
     <div className="ratings-wrapper">
       <div className="star-rating-controls">

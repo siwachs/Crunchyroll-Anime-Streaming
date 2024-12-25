@@ -9,8 +9,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontSize: { "1.5xl": "1.375rem", "2.5xl": "1.75rem" },
-      spacing: { "15": "3.75rem", "4.5": "1.125rem", "7.5": "1.875rem" },
+      fontSize: {
+        "1.5xl": "1.375rem",
+        "2.5xl": "1.75rem",
+        "3.5xl": "2.125rem",
+      },
+      spacing: {
+        "4.5": "1.125rem",
+        "7.5": "1.875rem",
+        "8.5": "2.125rem",
+        "15": "3.75rem",
+      },
       screens: {
         sm: "568px",
         "2sm": "680px",
@@ -20,7 +29,11 @@ const config: Config = {
         "2xl": "1720px",
         "3xl": "2160px",
       },
-      lineHeight: { "leading-4.5": "1.125rem", "leading-6.5": "1.625rem" },
+      lineHeight: {
+        "leading-4.5": "1.125rem",
+        "leading-6.5": "1.625rem",
+        "leading-10.5": "2.75rem",
+      },
       transitionTimingFunction: { quick: "ease" },
     },
   },

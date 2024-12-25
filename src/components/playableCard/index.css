@@ -20,11 +20,7 @@
 }
 
 .playable-card-hover-info {
-  @apply absolute inset-0 z-[1] opacity-0;
-}
-
-.playable-card:hover .playable-card-hover-info {
-  @apply opacity-100;
+  @apply app-transition-opacity absolute inset-0 z-[1] opacity-0 focus-within:opacity-100 hover:opacity-100;
 }
 
 .playable-card-hover-preview {

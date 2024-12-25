@@ -40,7 +40,7 @@ const Details: React.FC = () => {
     <div className="details-wrapper">
       <div className="body">
         <div className="heading-line">
-          <h1 className="text-rendering-optimized">Dragon Ball DAIMA</h1>
+          <h1 className="heading">Dragon Ball DAIMA</h1>
 
           <Dropdown
             title="More actions"
@@ -64,9 +64,9 @@ const Details: React.FC = () => {
         <ContentActionButtons
           ref={contentActionButtonsRef}
           watchActionhref={`/watch/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
-          watchActionText="Start Watching E1"
+          watchActionText="Start Watching S1 E1"
           className="mb-7.5 sm:justify-start"
-          enableDetailsPageStyles
+          buttonType="two"
         />
 
         <Description
@@ -94,8 +94,8 @@ const Details: React.FC = () => {
       >
         <ContentActionButtons
           watchActionhref={`/watch/${478273928}/${encodeURIComponent("Dragon Ball DAIMA".toLowerCase().replaceAll(" ", "-"))}`}
-          watchActionText="Start Watching E1"
-          enableDetailsPageStyles
+          watchActionText="Start Watching S1 E1"
+          buttonType="two"
         />
       </div>
     </div>

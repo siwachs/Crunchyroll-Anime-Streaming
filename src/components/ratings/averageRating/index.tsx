@@ -10,15 +10,17 @@ const AverageRating: React.FC<{ mode?: "compact" }> = ({ mode }) => {
     <div className="relative">
       {mode === "compact" ? (
         <button className="star-rating-average-compact-button">
-          <span className="text-sm/leading-4.5 font-medium">4.9</span>
+          <span>4.9</span>
           <HiOutlineStar className="fill-current" />
-          <span className="text-sm/leading-4.5 font-medium">(361.2K)</span>
+          <span className="uppercase">(361.2K)</span>
           <FaCaretDown />
         </button>
       ) : (
         <button className="star-rating-average-button">
-          <span>Average Rating:</span>
-          <span>4.8 (36.7k)</span>
+          <span className="app-transition-colors font-semibold text-[var(--app-icon-primary)]">
+            Average Rating:
+          </span>
+          <span className="font-black uppercase">4.8 (36.7k)</span>
           <FaCaretDown className="ml-1 size-4" />
         </button>
       )}

@@ -23,7 +23,7 @@ interface Episode {
 }
 
 interface PlayableCardProps extends Episode {
-  playableCardMini?: boolean;
+  cardType?: "default" | "mini";
 }
 
 const PlayableCard: React.FC<PlayableCardProps> = ({
@@ -35,7 +35,7 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
   releaseDate = "",
   description = "",
   metaTags,
-  playableCardMini,
+  cardType = "default",
 }) => {
   const encodedSeriesTitle = encodeURIComponent(
     seriesTitle.toLowerCase().replaceAll(" ", "-"),
@@ -43,13 +43,19 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
   const encodedEpisodeTitle = title.toLowerCase().replaceAll(" ", "-");
   const transformedEpisodeTitle = `E${episodeNumber} - ${title}`;
 
+  const playableCardSeriesLink = `/series/428sj84/${encodedSeriesTitle}`;
+  const playableCardMediaLink = `/watch/47dh3i9/${encodedEpisodeTitle}`;
   const playButtonTitle = `Play E${episodeNumber}`;
 
   return (
-    <div className={playableCardMini ? "playable-card-mini" : "playable-card"}>
-      {playableCardMini && (
+    <div
+      className={
+        cardType === "default" ? "playable-card" : "playable-card-mini"
+      }
+    >
+      {cardType === "mini" && (
         <Link
-          href={`/watch/${478273928}/${encodedEpisodeTitle}`}
+          href={playableCardMediaLink}
           prefetch={false}
           title={transformedEpisodeTitle}
           className="playable-card-mini-link"
@@ -57,27 +63,27 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
       )}
 
       <Link
-        href={`/watch/${478273928}/${encodedEpisodeTitle}`}
+        href={playableCardMediaLink}
         prefetch={false}
         tabIndex={-1}
         className={
-          playableCardMini
-            ? "playable-card-mini-thumbnail-wrapper"
-            : "playable-card-thumbnail-wrapper"
+          cardType === "default"
+            ? "playable-card-thumbnail-wrapper"
+            : "playable-card-mini-thumbnail-wrapper"
         }
       >
         <figure
           className={
-            playableCardMini
-              ? "playable-card-mini-thumbnail"
-              : "playable-card-thumbnail"
+            cardType === "default"
+              ? "playable-card-thumbnail"
+              : "playable-card-mini-thumbnail"
           }
         >
           <Image
             sizes={
-              playableCardMini
-                ? "230px"
-                : "(max-width: 567px) 230px, (max-width: 799px) calc(84.375rem / 2), (max-width: 1023px) calc(84.375rem / 3), 260px"
+              cardType === "default"
+                ? "(max-width: 567px) 230px, (max-width: 799px) calc(84.375rem / 2), (max-width: 1023px) calc(84.375rem / 3), 260px"
+                : "230px"
             }
             src={thumbnail}
             alt={transformedEpisodeTitle}
@@ -88,11 +94,11 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
         <div className="playable-card-duration">{duration}</div>
       </Link>
 
-      {!playableCardMini && (
-        <div className="playable-card-hover-info app-transition-opacity">
+      {cardType === "default" && (
+        <div className="playable-card-hover-info">
           <div className="playable-card-hover-preview">
             <Link
-              href={`/watch/${478273928}/${encodedEpisodeTitle}`}
+              href={playableCardMediaLink}
               prefetch={false}
               title={transformedEpisodeTitle}
               className="absolute inset-0 z-[1]"
@@ -101,7 +107,7 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
             <div className="playable-card-thumbnail-wrapper playable-card-hover-thumbnail-wrapper">
               <figure className="playable-card-thumbnail">
                 <Image
-                  sizes="(max-width: 568px) 30vw, 568px"
+                  sizes="230px"
                   src={thumbnail}
                   alt={transformedEpisodeTitle}
                   className="block size-full object-cover"
@@ -113,7 +119,7 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
 
             <div className="playable-card-hover-body">
               <Link
-                href={`/series/${478273928}/${encodedSeriesTitle}`}
+                href={playableCardSeriesLink}
                 prefetch={false}
                 className="playable-card-small-title z-[1]"
               >
@@ -123,13 +129,7 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
               </Link>
 
               <h4 className="playable-card-title playable-card-hover-title">
-                <Link
-                  href={`/watch/${478273928}/${encodedEpisodeTitle}`}
-                  prefetch={false}
-                  tabIndex={-1}
-                >
-                  {transformedEpisodeTitle}
-                </Link>
+                {transformedEpisodeTitle}
               </h4>
 
               <p className="playable-card-hover-release">
@@ -158,7 +158,9 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
       <div className="playable-card-body-aligner">
         <div
           className={
-            playableCardMini ? "playable-card-mini-body" : "playable-card-body"
+            cardType === "default"
+              ? "playable-card-body"
+              : "playable-card-mini-body"
           }
         >
           {seriesTitle && (
@@ -168,11 +170,7 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
           )}
 
           <h4 className="playable-card-title">
-            <Link
-              href={`/watch/${478273928}/${encodedEpisodeTitle}`}
-              prefetch={false}
-              tabIndex={-1}
-            >
+            <Link href={playableCardMediaLink} prefetch={false} tabIndex={-1}>
               {transformedEpisodeTitle}
             </Link>
           </h4>
@@ -182,7 +180,7 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
               <span>{metaTags}</span>
             </div>
 
-            {!playableCardMini && (
+            {cardType === "default" && (
               <Dropdown
                 dropdownTriggerClassName="z-[1] hover:text-white"
                 Icon={<MdMoreVert className="size-6" />}

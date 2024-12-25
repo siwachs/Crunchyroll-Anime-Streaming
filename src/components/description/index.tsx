@@ -26,11 +26,11 @@ const Description: React.FC<{
         <div className="show-details-table">
           {Object.entries(expandableTableRows).map(([key, value], index) => (
             <div key={index} className="show-details-table-row">
-              <div className="show-details-table-column-name text-sm/leading-4.5 font-medium">
+              <div className="show-details-table-column-name self-start text-sm/leading-4.5 font-medium">
                 <h5>{key}</h5>
               </div>
 
-              <div className="text-sm/leading-4.5 font-medium">
+              <div className="text-right text-sm/leading-4.5 font-medium">
                 <h5>{value}</h5>
               </div>
             </div>
@@ -40,9 +40,9 @@ const Description: React.FC<{
 
       <button
         onClick={toogleDescriptionIsExpanded}
-        className="app-transition-colors mt-5 select-none text-xs font-black uppercase text-[var(--app-background-crunchyroll-orange)] hover:text-white"
+        className="app-transition-colors mt-5 select-none text-xs font-black uppercase text-[var(--app-background-crunchyroll-orange)] hover:text-white focus-visible:text-white"
       >
-        {descriptionIsExpanded ? "Show Less" : "Show More"}
+        {descriptionIsExpanded ? "Fewer details" : "More details"}
       </button>
     </div>
   );

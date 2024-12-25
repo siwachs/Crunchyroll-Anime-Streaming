@@ -17,10 +17,6 @@
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
 }
 
-.playable-card-mini-link {
-  @apply absolute inset-0 z-[2];
-}
-
 .playable-card-mini-thumbnail-wrapper {
   @apply relative block h-[5.3125rem] flex-[0_0_auto];
 }

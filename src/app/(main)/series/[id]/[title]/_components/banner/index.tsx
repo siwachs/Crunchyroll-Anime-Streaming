@@ -13,7 +13,7 @@ const Banner: React.FC = () => {
             <Image
               fill
               priority
-              sizes="(max-width: 568px) 568px, 100vw"
+              sizes="580px"
               src={tallImage}
               alt="Dragon Ball DAIMA"
               className="block size-full object-cover"
@@ -42,7 +42,7 @@ const Banner: React.FC = () => {
               <Image
                 fill
                 priority
-                sizes="(max-width: 568px) 568px, 100vw"
+                sizes="580px"
                 src={tallImage}
                 alt="Dragon Ball DAIMA"
                 className="block size-full object-cover"

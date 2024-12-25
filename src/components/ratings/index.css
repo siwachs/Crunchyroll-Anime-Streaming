@@ -3,7 +3,7 @@
 }
 
 .star-rating-controls {
-  @apply flex items-center text-[var(--app-icon-primary)] hover:text-[var(--app-hover-crunchyroll-orange)];
+  @apply flex items-center text-[var(--app-icon-primary)] focus-within:text-[var(--app-hover-crunchyroll-orange)] hover:text-[var(--app-hover-crunchyroll-orange)];
 }
 
 .star-rating-controls::after {
@@ -26,6 +26,7 @@
   @apply block size-7 fill-current;
 }
 
-.star-rating-controls button:hover ~ button svg {
+.star-rating-controls button:hover ~ button svg,
+.star-rating-controls button:focus-visible ~ button svg {
   @apply fill-transparent;
 }
