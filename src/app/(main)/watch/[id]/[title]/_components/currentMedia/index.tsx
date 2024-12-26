@@ -3,7 +3,10 @@ import Link from "next/link";
 import AverageRating from "@/components/ratings/averageRating";
 import Description from "@/components/description";
 
-import { HiOutlineBookmark } from "react-icons/hi";
+import {
+  AddToWatchListOutlined,
+  AddToWatchListFilled,
+} from "@/assets/addToWatchListIcons";
 import {
   ThumbUpOutlined,
   ThumbUpFilled,
@@ -13,10 +16,11 @@ import {
 
 import "./index.css";
 
-const CurrentMedia = () => {
+const CurrentMedia: React.FC = () => {
   const encodedSeriesTitle = encodeURIComponent(
     "Solo Leveling".toLowerCase().replaceAll(" ", "-"),
   );
+  const seriesLink = `/watch/378snrj/${encodedSeriesTitle}`;
 
   return (
     <div className="current-media">
@@ -24,24 +28,26 @@ const CurrentMedia = () => {
         <div className="current-media-header">
           <div className="current-media-parent-ref">
             <Link
-              href={`/watch/3hs728/${encodedSeriesTitle}`}
+              href={seriesLink}
               prefetch={false}
-              className="app-transition-colors show-title-link"
+              className="show-title-link"
             >
               <h4 className="text-base font-semibold">Solo Leveling</h4>
             </Link>
 
-            <AverageRating mode="compact" />
+            <AverageRating
+              mode="compact"
+              className="sm:-mt-[3px] sm:self-center"
+            />
           </div>
 
-          <button>
-            <HiOutlineBookmark className="app-transition-colors size-10 p-2 hover:fill-white" />
+          <button className="current-media-action-button px-2 pb-2 sm:pt-2">
+            <AddToWatchListOutlined />
+            <AddToWatchListFilled />
           </button>
         </div>
 
-        <h1 className="heading text-rendering-optimized">
-          E2 - If I Had One More Chance
-        </h1>
+        <h1 className="heading">E2 - If I Had One More Chance</h1>
 
         <div className="meta-tags mb-2">
           <span>Sub | Dub</span>
@@ -53,13 +59,13 @@ const CurrentMedia = () => {
 
         <div className="episode-actions">
           <div className="episode-ratings">
-            <button className="episode-rate-action app-transition-colors">
+            <button className="current-media-action-button episode-rate-action">
               <ThumbUpOutlined />
               <ThumbUpFilled />
               <span>128.3K</span>
             </button>
 
-            <button className="episode-rate-action app-transition-colors">
+            <button className="current-media-action-button episode-rate-action">
               <ThumbDownOutlined />
               <ThumbDownFilled />
               <span>400</span>

@@ -9,12 +9,15 @@
     box-shadow 0.2s ease;
 }
 
-.playable-card-mini:focus-within,
-.playable-card-mini:focus,
-.playable-card-mini:hover {
+.playable-card-mini:hover,
+.playable-card-mini:focus-within {
   @apply bg-[var(--app-overlay-secondary)];
 
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
+}
+
+.playable-card-mini-link {
+  @apply absolute inset-0 z-[2];
 }
 
 .playable-card-mini-thumbnail-wrapper {
@@ -25,9 +28,8 @@
   @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-200 ease-quick content-[""];
 }
 
-.playable-card-mini:focus-within .playable-card-mini-thumbnail-wrapper::after,
-.playable-card-mini:focus .playable-card-mini-thumbnail-wrapper::after,
-.playable-card-mini:hover .playable-card-mini-thumbnail-wrapper::after {
+.playable-card-mini:hover .playable-card-mini-thumbnail-wrapper::after,
+.playable-card-mini:focus-within .playable-card-mini-thumbnail-wrapper::after {
   @apply opacity-[0.08];
 }
 

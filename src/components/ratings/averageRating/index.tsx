@@ -5,15 +5,18 @@ import "./index.css";
 
 const ratingPercentages = [92, 3, 2, 1, 4];
 
-const AverageRating: React.FC<{ mode?: "compact" }> = ({ mode }) => {
+const AverageRating: React.FC<{ mode?: "compact"; className?: string }> = ({
+  mode,
+  className = "",
+}) => {
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {mode === "compact" ? (
         <button className="star-rating-average-compact-button">
           <span>4.9</span>
-          <HiOutlineStar className="fill-current" />
+          <HiOutlineStar className="size-4 fill-current" />
           <span className="uppercase">(361.2K)</span>
-          <FaCaretDown />
+          <FaCaretDown className="size-3" />
         </button>
       ) : (
         <button className="star-rating-average-button">

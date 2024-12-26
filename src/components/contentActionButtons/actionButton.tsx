@@ -1,17 +1,36 @@
-import { ButtonType } from "./types";
+import { JSX } from "react";
+import Link from "next/link";
 
 import "./common.css";
 
 const ActionButton: React.FC<{
-  actionButtonText: string;
+  tabIndex?: number;
+  href?: string;
+  Icon?: JSX.Element;
+  text: string;
+  shadow?: "action-button-shadow" | "";
   className?: string;
-  buttonType?: ButtonType;
-}> = ({ actionButtonText, className = "", buttonType = "one" }) => {
-  return (
-    <button
-      className={`action-button w-full min-w-[7.5rem] ${buttonType === "one" ? "bg-[var(--app-badge)] px-4 hover:bg-[#2f5161] focus-visible:bg-[#2f5161]" : ""} ${className}`}
+}> = ({ tabIndex = 0, href, Icon, text, shadow = "", className }) => {
+  return href ? (
+    <Link
+      tabIndex={tabIndex}
+      href={href}
+      prefetch={false}
+      className={`action-button flex w-full min-w-[7.5rem] px-4 sm:w-auto ${shadow} ${className}`}
     >
-      <span className="action-button-child">{actionButtonText}</span>
+      <span className="action-button-child">
+        {Icon}
+        <span>{text}</span>
+      </span>
+    </Link>
+  ) : (
+    <button
+      className={`action-button flex w-full min-w-[7.5rem] px-4 sm:w-auto ${shadow} ${className}`}
+    >
+      <span className="action-button-child">
+        {Icon}
+        <span>{text}</span>
+      </span>
     </button>
   );
 };

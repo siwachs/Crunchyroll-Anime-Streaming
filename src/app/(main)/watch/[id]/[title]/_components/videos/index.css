@@ -9,7 +9,7 @@
 }
 
 .prev-next-episodes {
-  @apply grid auto-rows-fr gap-x-10 gap-y-6 2sm:grid-flow-col;
+  @apply mb-6 grid auto-rows-fr gap-x-10 gap-y-6 2sm:grid-flow-col;
 }
 
 @media screen and (min-width: 980px) {
@@ -22,14 +22,6 @@
   @apply relative;
 }
 
-.prev-next-episode:first-child {
-  @apply 2sm:order-1 2md:order-none;
-}
-
 .prev-next-episode .title {
   @apply mb-3 block font-black uppercase;
-}
-
-.prev-next-episode:first-child .title:first-child {
-  @apply 2sm:text-end 2md:text-start;
 }

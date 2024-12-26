@@ -12,7 +12,10 @@ const Navigation: React.FC = () => {
 
       <EpisodeList />
 
-      <ActionButton actionButtonText="Show More" />
+      <ActionButton
+        text="Show More"
+        className="bg-[var(--app-badge)] hover:bg-[#2f5161] focus-visible:bg-[#2f5161]"
+      />
 
       <BottomControls />
     </div>

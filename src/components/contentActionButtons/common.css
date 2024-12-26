@@ -2,6 +2,10 @@
   @apply app-transition-colors h-10 select-none items-center justify-center;
 }
 
+.action-button-shadow {
+  @apply shadow-[inset_0_0_0_0.125rem_currentColor];
+}
+
 .action-button-child {
-  @apply flex items-center justify-center gap-1 text-sm/leading-4.5 font-black uppercase;
+  @apply flex h-full items-center justify-center gap-1 text-sm/leading-4.5 font-black uppercase;
 }

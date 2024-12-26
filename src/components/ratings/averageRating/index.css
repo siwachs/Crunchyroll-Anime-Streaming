@@ -1,5 +1,10 @@
 .star-rating-average-compact-button {
-  @apply inline-flex items-center gap-1 text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)] hover:underline sm:self-center;
+  @apply flex items-center gap-1 text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)];
+}
+
+.star-rating-average-compact-button:hover,
+.star-rating-average-compact-button:focus-visible {
+  @apply underline;
 }
 
 .star-rating-average-button {

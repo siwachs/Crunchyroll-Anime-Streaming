@@ -17,15 +17,38 @@
 }
 
 .show-title-link {
-  @apply text-[var(--app-background-crunchyroll-orange)] hover:text-white hover:underline sm:flex sm:items-center;
+  @apply app-transition-colors mb-1 text-[var(--app-background-crunchyroll-orange)] sm:flex sm:items-center;
+}
+
+.show-title-link:hover,
+.show-title-link:focus-visible {
+  @apply text-white underline;
 }
 
 .show-title-link::after {
   @apply mx-2 hidden h-[84%] w-[0.0625rem] bg-[#4a4e58] content-[""] sm:block;
 }
 
+.current-media-action-button svg {
+  @apply hidden size-6 fill-current;
+}
+
+.current-media-action-button svg:first-child {
+  @apply block;
+}
+
+.current-media-action-button:hover svg:first-child,
+.current-media-action-button:focus-visible svg:first-child {
+  @apply hidden;
+}
+
+.current-media-action-button:hover svg:nth-child(2),
+.current-media-action-button:focus-visible svg:nth-child(2) {
+  @apply block;
+}
+
 .heading {
-  @apply mb-2 text-xl/leading-6.5 font-semibold sm:mb-3 sm:text-[1.375rem]/[1.75rem] 2md:mb-2;
+  @apply text-rendering-optimized mb-2 text-xl/leading-6.5 font-semibold sm:mb-3 sm:text-[1.375rem]/[1.75rem] 2md:mb-2;
 }
 
 .episode-actions {
@@ -37,23 +60,11 @@
 }
 
 .episode-rate-action {
-  @apply flex min-w-[3.625rem] items-center text-[var(--app-icon-primary)] hover:text-white;
+  @apply app-transition-colors flex min-w-[3.625rem] items-center text-[var(--app-icon-primary)] hover:text-white;
 }
 
 .episode-rate-action svg {
-  @apply mr-1 hidden size-6 fill-white;
-}
-
-.episode-rate-action svg:first-child {
-  @apply block;
-}
-
-.episode-rate-action:hover svg:first-child {
-  @apply hidden;
-}
-
-.episode-rate-action:hover svg:nth-child(2) {
-  @apply block;
+  @apply mr-1;
 }
 
 .episode-rate-action span {
