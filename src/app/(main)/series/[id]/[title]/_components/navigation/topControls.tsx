@@ -8,13 +8,13 @@ const TopControls: React.FC = () => {
     <div className="top-controls">
       <div className="seasons-select">
         <Dropdown
+          position="left"
           title="Seasons Select"
-          dropdownTriggerClassName="text-white"
+          className="text-white"
           Icon={<FaCaretDown className="size-4" />}
-          dropdownTriggerHeader="Dragon Ball DAIMA"
-          dropdownTriggerTransparentHoverBg
-          dropdownContentTitle="Seasons"
-          dropdownContentScrollableList={[
+          triggerHeader="Dragon Ball DAIMA"
+          dropdownTitle="Seasons"
+          dropdownItems={[
             <button data-active={true} key={0}>
               <span>S1: Dragon Ball DAIMA</span>
               <span>175 Episodes</span>
@@ -28,29 +28,34 @@ const TopControls: React.FC = () => {
               <span>290 Episodes</span>
             </button>,
           ]}
+          dropdownTriggerType="two"
         />
       </div>
 
       <Dropdown
         title="Sort"
-        dropdownTriggerClassName="p-2.5"
+        className="p-2.5"
         Icon={<MdSort className="size-6" />}
-        dropdownTriggerTitle="Oldest"
-        dropdownContentTitle="Sort"
-        dropdownContentScrollableList={[
-          <button key={0}>Oldest</button>,
-          <button key={1}>Newest</button>,
+        triggerTitle="Oldest"
+        dropdownTitle="Sort"
+        dropdownItems={[
+          <button key={0} data-active="true">
+            Oldest
+          </button>,
+          <button key={1} data-active="false">
+            Newest
+          </button>,
         ]}
+        dropdownTriggerType="one"
       />
 
       <Dropdown
         title="More actions"
-        dropdownTriggerClassName="p-2.5"
+        className="p-2.5"
         Icon={<MdMoreVert className="size-6" />}
-        dropdownContentTitle="Options"
-        dropdownContentScrollableList={[
-          <button key={0}>Mark Season as Watched</button>,
-        ]}
+        dropdownTitle="Options"
+        dropdownItems={[<button key={0}>Mark Season as Watched</button>]}
+        dropdownTriggerType="one"
       />
     </div>
   );

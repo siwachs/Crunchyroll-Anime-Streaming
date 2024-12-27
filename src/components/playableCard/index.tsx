@@ -182,13 +182,10 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
 
             {cardType === "default" && (
               <Dropdown
-                dropdownTriggerClassName="z-[1] hover:text-white"
+                className="z-[1] hover:text-white"
                 Icon={<MdMoreVert className="size-6" />}
-                dropdownTriggerNoHoverBg
-                dropdownContentTitle="Options"
-                dropdownContentScrollableList={[
-                  <button key={0}>Mark as Watched</button>,
-                ]}
+                dropdownTitle="Options"
+                dropdownItems={[<button key={0}>Mark as Watched</button>]}
               />
             )}
           </div>

@@ -8,7 +8,6 @@ import AddToWatchListAction from "./addToWatchListAction";
 import { ButtonType } from "./types";
 
 import "./common.css";
-import ActionButton from "./actionButton";
 
 const ContentActionButtons = forwardRef<
   HTMLElement,

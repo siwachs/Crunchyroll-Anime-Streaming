@@ -5,28 +5,30 @@ import { createPortal } from "react-dom";
 
 import DropDownContent from "./dropdownContent";
 
+import { DropdownTriggerType, Position } from "./types";
+
 import "./index.css";
 
 const Dropdown: React.FC<{
+  position?: Position;
   title?: string;
-  dropdownTriggerClassName?: string;
-  dropdownTriggerTransparentHoverBg?: boolean;
-  dropdownTriggerNoHoverBg?: boolean;
+  className?: string;
   Icon: JSX.Element;
-  dropdownTriggerTitle?: string;
-  dropdownTriggerHeader?: string;
-  dropdownContentTitle: string;
-  dropdownContentScrollableList: JSX.Element[];
+  triggerTitle?: string;
+  triggerHeader?: string;
+  dropdownTitle: string;
+  dropdownItems: JSX.Element[];
+  dropdownTriggerType?: DropdownTriggerType;
 }> = ({
+  position = "right",
   title,
-  dropdownTriggerClassName = "",
-  dropdownTriggerTransparentHoverBg,
-  dropdownTriggerNoHoverBg,
+  className = "",
   Icon,
-  dropdownTriggerTitle,
-  dropdownTriggerHeader,
-  dropdownContentTitle,
-  dropdownContentScrollableList = [],
+  triggerTitle,
+  triggerHeader,
+  dropdownTitle,
+  dropdownItems,
+  dropdownTriggerType = "",
 }) => {
   const [isDropdownTriggered, setIsDropdownTriggered] = useState(false);
 
@@ -43,17 +45,17 @@ const Dropdown: React.FC<{
       <button
         title={title}
         onClick={toogleDropdownTrigger}
-        className={`dropdown-trigger app-transition-colors text-[var(--meta-color)] ${isDropdownTriggered ? "active" : ""} ${dropdownTriggerTransparentHoverBg ? "dropdown-trigger-transparent-hover-bg" : ""} ${dropdownTriggerNoHoverBg ? "dropdown-trigger-no-hover-bg" : ""} ${dropdownTriggerClassName}`}
+        className={`dropdown-trigger app-transition-colors flex items-center text-[var(--meta-color)] ${dropdownTriggerType} ${isDropdownTriggered ? "active" : ""} ${className}`}
       >
         {Icon}
-        {dropdownTriggerTitle && (
+        {triggerTitle && (
           <span className="ml-2 hidden text-sm/leading-4.5 font-black uppercase sm:inline">
-            {dropdownTriggerTitle}
+            {triggerTitle}
           </span>
         )}
-        {dropdownTriggerHeader && (
-          <h4 className="sm:text-lg/leading-6.5 ml-2.5 truncate py-2 text-base font-semibold">
-            {dropdownTriggerHeader}
+        {triggerHeader && (
+          <h4 className="ml-2.5 truncate py-2 text-base font-semibold sm:text-lg/leading-6.5">
+            {triggerHeader}
           </h4>
         )}
       </button>
@@ -63,18 +65,18 @@ const Dropdown: React.FC<{
           <DropDownContent
             dropdownType="modal"
             closeDropDown={closeDropDown}
-            title={dropdownContentTitle}
-            dropdownContentScrollableList={dropdownContentScrollableList}
+            title={dropdownTitle}
+            dropdownItems={dropdownItems}
           />,
           document.body,
         )}
 
       <DropDownContent
         dropdownType="dropdown"
-        dropdownTriggerTransparentHoverBg={dropdownTriggerTransparentHoverBg}
+        position={position}
         closeDropDown={closeDropDown}
-        title={dropdownContentTitle}
-        dropdownContentScrollableList={dropdownContentScrollableList}
+        title={dropdownTitle}
+        dropdownItems={dropdownItems}
       />
     </div>
   );

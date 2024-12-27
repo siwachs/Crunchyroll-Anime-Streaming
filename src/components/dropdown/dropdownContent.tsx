@@ -1,23 +1,25 @@
 import { JSX } from "react";
 
+import { Position } from "./types";
+
 import { MdClose } from "react-icons/md";
 
 const DropDownContent: React.FC<{
   dropdownType: "modal" | "dropdown";
-  dropdownTriggerTransparentHoverBg?: boolean;
+  position?: Position;
   closeDropDown: () => void;
   title: string;
-  dropdownContentScrollableList: JSX.Element[];
+  dropdownItems: JSX.Element[];
 }> = ({
   dropdownType,
-  dropdownTriggerTransparentHoverBg,
+  position = "right",
   closeDropDown,
   title,
-  dropdownContentScrollableList,
+  dropdownItems,
 }) => {
   return (
     <div
-      className={`dropdown-content ${dropdownType} ${dropdownTriggerTransparentHoverBg ? "dropdown-is-aligned-left" : ""}`}
+      className={`dropdown-content ${dropdownType} ${position === "right" ? "dropdown-is-right-aligned" : "dropdown-is-left-aligned"}`}
     >
       <header className="flex min-h-15 items-center justify-between bg-[var(--app-overlay-secondary)] p-4.5 sm:hidden">
         <h4 className="text-base font-medium">{title}</h4>
@@ -27,10 +29,7 @@ const DropDownContent: React.FC<{
         </button>
       </header>
 
-      <div className="dropdown-content-scrollable">
-        {dropdownContentScrollableList.length > 0 &&
-          dropdownContentScrollableList}
-      </div>
+      <div className="dropdown-items">{dropdownItems}</div>
     </div>
   );
 };

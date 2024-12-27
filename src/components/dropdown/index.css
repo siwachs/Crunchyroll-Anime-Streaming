@@ -1,20 +1,19 @@
-.dropdown-trigger {
-  @apply flex items-center;
-}
-
 .dropdown-trigger:hover,
+.dropdown-trigger:focus-visible,
 .dropdown-trigger.active {
-  @apply bg-[var(--app-background-secondary)] text-white;
+  @apply text-white;
 }
 
-.dropdown-trigger-transparent-hover-bg:hover,
-.dropdown-trigger-transparent-hover-bg.active {
-  @apply bg-transparent text-[#2abdbb];
+.dropdown-trigger.one:hover,
+.dropdown-trigger.one:focus-visible,
+.dropdown-trigger.one.active {
+  @apply bg-[var(--app-background-secondary)];
 }
 
-.dropdown-trigger-no-hover-bg:hover,
-.dropdown-trigger-no-hover-bg.active {
-  @apply bg-transparent;
+.dropdown-trigger.two:hover,
+.dropdown-trigger.two:focus-visible,
+.dropdown-trigger.two.active {
+  @apply text-[#2abdbb];
 }
 
 .dropdown-content {
@@ -28,15 +27,20 @@
 }
 
 .dropdown-trigger.active + .dropdown-content.dropdown {
-  --dropdown-content-max-width: calc(100vw - 5rem);
-  --dropdown-content-min-width: 12.5rem;
-
-  @apply absolute left-auto right-0 top-full z-[98] h-auto max-h-[28.75rem] min-w-[var(--dropdown-content-min-width)] max-w-[var(--dropdown-content-max-width)] sm:flex;
+  @apply absolute top-full z-[98] h-auto max-h-[28.75rem] min-w-[var(--dropdown-content-min-width)] max-w-[var(--dropdown-content-max-width)] sm:flex;
 
   animation: dropdownContentAnimation 0.15s cubic-bezier(0, 0, 0.25, 1) forwards;
 }
 
-.dropdown-trigger.active + .dropdown-content.dropdown-is-aligned-left {
+.dropdown-trigger.active
+  + .dropdown-content.dropdown.dropdown-is-right-aligned {
+  --dropdown-content-max-width: calc(100vw - 5rem);
+  --dropdown-content-min-width: 12.5rem;
+
+  @apply left-auto right-0;
+}
+
+.dropdown-trigger.active + .dropdown-content.dropdown.dropdown-is-left-aligned {
   --dropdown-content-min-width: 20rem;
 
   @apply left-0 right-auto max-h-[16.25rem];
@@ -51,23 +55,35 @@
   }
 }
 
-.dropdown-content-scrollable {
+.dropdown-items {
   @apply flex-1 overflow-y-auto py-3;
 
   scrollbar-width: thin;
 }
 
-.dropdown-content-scrollable button,
-.dropdown-content-scrollable a {
-  @apply flex w-full justify-between px-5 py-3 text-left text-sm/leading-4.5 font-medium text-[var(--meta-color)] transition-[color_background-color] duration-200 ease-quick hover:bg-[var(--app-overlay-secondary)] hover:text-white data-[active=true]:text-white;
+.dropdown-items button,
+.dropdown-items a {
+  @apply flex w-full justify-between px-5 py-3 text-left text-sm/leading-4.5 font-medium text-[var(--meta-color)] transition-colors;
 }
 
-.dropdown-content-scrollable span:nth-child(1),
-.dropdown-content-scrollable a:nth-child(1) {
-  @apply text-base;
+.dropdown-items button span:nth-child(1),
+.dropdown-items a span:nth-child(1) {
+  @apply sm:text-base;
 }
 
-.dropdown-content-scrollable span:nth-child(2),
-.dropdown-content-scrollable a:nth-child(2) {
+.dropdown-items button span:nth-child(2),
+.dropdown-items a span:nth-child(2) {
   @apply text-xs font-semibold;
+}
+
+.dropdown-items button:hover,
+.dropdown-items button:focus-visible,
+.dropdown-items a:hover,
+.dropdown-items a:focus-visible {
+  @apply bg-[var(--app-overlay-secondary)] text-white;
+}
+
+.dropdown-items button[data-active="true"],
+.dropdown-items a[data-active="true"] {
+  @apply text-white;
 }

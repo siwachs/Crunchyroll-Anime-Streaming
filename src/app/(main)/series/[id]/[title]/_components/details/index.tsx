@@ -44,13 +44,14 @@ const Details: React.FC = () => {
 
           <Dropdown
             title="More actions"
-            dropdownTriggerClassName="p-2 md:mt-0.5"
+            className="p-2 md:mt-0.5"
             Icon={<MdMoreVert className="size-6" />}
-            dropdownContentTitle="Options"
-            dropdownContentScrollableList={[
+            dropdownTitle="Options"
+            dropdownItems={[
               <button key={0}>Mark Series as Watched</button>,
               <button key={1}>Share</button>,
             ]}
+            dropdownTriggerType="one"
           />
         </div>
 
