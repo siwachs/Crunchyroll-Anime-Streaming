@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "projects": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "client/build"
+      }
+    }
+  ],
+  "ignore": ["server/**"]
+}
