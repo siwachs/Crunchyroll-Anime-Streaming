@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SeriesModule } from './series/series.module';
 import { GenreModule } from './genre/genre.module';
@@ -9,7 +10,12 @@ import { MetaTagModule } from './meta-tag/meta-tag.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URI),
+    ConfigModule.forRoot({
+      envFilePath: ['.env'],
+    }),
+    MongooseModule.forRoot(process.env.MONGODB_URI, {
+      autoIndex: true,
+    }),
     SeriesModule,
     GenreModule,
     SeasonModule,

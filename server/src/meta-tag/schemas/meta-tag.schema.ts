@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type MetaTagDocument = HydratedDocument<MetaTag>;
 
-@Schema()
+@Schema({ collection: 'MetaTags' })
 export class MetaTag {
   @Prop({ type: String, required: true, unique: true })
   title: string;
