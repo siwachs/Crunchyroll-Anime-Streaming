@@ -1,1 +1,1 @@
-export const DUPLICATE_KEY_ERROR = 'E11000';
+export const DUPLICATE_KEY_ERROR = 11000;

@@ -1,10 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { MetaTag } from './schemas/meta-tag.schema';
 
 import { CreateMetaTagDto, EditMetaTagDto } from './schemas/dto/meta-tag.dto';
+import { DUPLICATE_KEY_ERROR } from '../common/constants/mongoose';
 
 @Injectable()
 export class MetaTagService {
@@ -23,9 +29,19 @@ export class MetaTagService {
   }
 
   async createMetaTag(dto: CreateMetaTagDto): Promise<MetaTag> {
-    const newMetaTag = new this.metaTagModel(dto);
+    try {
+      const newMetaTagDoc = new this.metaTagModel(dto);
 
-    return newMetaTag.save();
+      return await newMetaTagDoc.save();
+    } catch (error) {
+      if (error.code === DUPLICATE_KEY_ERROR)
+        throw new HttpException(
+          'MetaTag with this title already exist.',
+          HttpStatus.CONFLICT,
+        );
+
+      throw error;
+    }
   }
 
   async editMetaTag(id: string, dto: EditMetaTagDto) {
