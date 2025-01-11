@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class SeriesService {}
+export class SeriesService {
+  async createSeries() {}
+}

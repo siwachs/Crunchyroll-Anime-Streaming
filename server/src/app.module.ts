@@ -7,6 +7,7 @@ import { GenreModule } from './genre/genre.module';
 import { SeasonModule } from './season/season.module';
 import { EpisodeModule } from './episode/episode.module';
 import { MetaTagModule } from './meta-tag/meta-tag.module';
+import { ValidatorModule } from './validator/validator.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MetaTagModule } from './meta-tag/meta-tag.module';
     SeasonModule,
     EpisodeModule,
     MetaTagModule,
+    ValidatorModule,
   ],
 })
 export class AppModule {}

@@ -6,6 +6,8 @@ Controller
 
 Services
 
+Pipes
+
 Mongoose
 Schemas
 

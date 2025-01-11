@@ -7,7 +7,7 @@ import { Season } from '../../season/schemas/season.schema';
 
 export type SeriesDocument = HydratedDocument<Series>;
 
-@Schema()
+@Schema({ collection: 'Series' })
 export class Series {
   @Prop({
     type: {
@@ -50,7 +50,6 @@ export class Series {
 
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Season' }],
-    required: true,
   })
   seasons: Season[];
 }
