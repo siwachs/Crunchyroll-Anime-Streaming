@@ -56,6 +56,7 @@ export class SeriesController {
       allowedMimeTypes: ALLOWED_MIME_TYPES,
       maxSize: MAX_FILE_SIZE_IN_MB,
     });
+    console.log(dto);
 
     return this.seriesService.createSeries();
   }

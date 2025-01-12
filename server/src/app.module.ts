@@ -8,11 +8,13 @@ import { SeasonModule } from './season/season.module';
 import { EpisodeModule } from './episode/episode.module';
 import { MetaTagModule } from './meta-tag/meta-tag.module';
 import { ValidatorModule } from './validator/validator.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env'],
+      cache: true,
     }),
     MongooseModule.forRoot(process.env.MONGODB_URI, {
       autoIndex: true,
@@ -23,6 +25,7 @@ import { ValidatorModule } from './validator/validator.module';
     EpisodeModule,
     MetaTagModule,
     ValidatorModule,
+    FirebaseModule,
   ],
 })
 export class AppModule {}
