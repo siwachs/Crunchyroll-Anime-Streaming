@@ -9,13 +9,18 @@ const GOOGLE_APIS_ENDPOINT = 'https://storage.googleapis.com';
 export class FirebaseService implements OnModuleInit {
   onModuleInit() {
     const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY;
-    if (!serviceAccount)
-      throw new Error('Firbase service account private key is missing!');
+    const storageBucket = process.env.FIREBASE_BUCKET_NAME;
+
+    if (!serviceAccount || !storageBucket)
+      throw new Error(
+        'Firbase service account and storage bucket is required!',
+      );
 
     if (!getApps().length) {
       const serviceAccountObject = JSON.parse(serviceAccount);
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccountObject),
+        storageBucket,
       });
     }
   }

@@ -15,6 +15,7 @@ export class Series {
       wide: { type: String, required: true },
     },
     required: true,
+    _id: false,
   })
   image: {
     tall: string;

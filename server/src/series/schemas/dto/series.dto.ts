@@ -43,3 +43,13 @@ export class CreateSeriesFormDto {
   @IsNotEmptyObject()
   details: Record<string, string>;
 }
+
+export class CreateSeriesDto extends CreateSeriesFormDto {
+  @Transform(transformerStringArrayOrObject)
+  @IsObject()
+  @IsNotEmptyObject()
+  image: {
+    tall: string;
+    wide: string;
+  };
+}

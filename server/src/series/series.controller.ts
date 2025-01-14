@@ -10,6 +10,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
 import { SeriesService } from './series.service';
 import { ValidatorService } from '../validator/validator.service';
+import { DataProcessingService } from '../data-processing/data-processing.service';
 
 import { CreateSeriesFormDto } from './schemas/dto/series.dto';
 const ALLOWED_MIME_TYPES = [
@@ -26,6 +27,7 @@ export class SeriesController {
   constructor(
     private readonly seriesService: SeriesService,
     private readonly validatorService: ValidatorService,
+    private readonly dataProcessingService: DataProcessingService,
   ) {}
 
   @Post()
@@ -56,8 +58,19 @@ export class SeriesController {
       allowedMimeTypes: ALLOWED_MIME_TYPES,
       maxSize: MAX_FILE_SIZE_IN_MB,
     });
-    console.log(dto);
 
-    return this.seriesService.createSeries();
+    const renamedTallImage = this.dataProcessingService.renameFile(
+      tallImage,
+      'tall',
+    );
+    const renamedWideImage = this.dataProcessingService.renameFile(
+      wideImage,
+      'wide',
+    );
+
+    return this.seriesService.createSeries(
+      [renamedTallImage, renamedWideImage],
+      dto,
+    );
   }
 }

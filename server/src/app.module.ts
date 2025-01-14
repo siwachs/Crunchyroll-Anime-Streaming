@@ -9,6 +9,8 @@ import { EpisodeModule } from './episode/episode.module';
 import { MetaTagModule } from './meta-tag/meta-tag.module';
 import { ValidatorModule } from './validator/validator.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { DataProcessingModule } from './data-processing/data-processing.module';
+import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
   imports: [
@@ -26,6 +28,11 @@ import { FirebaseModule } from './firebase/firebase.module';
     MetaTagModule,
     ValidatorModule,
     FirebaseModule,
+    DataProcessingModule,
+    KafkaModule.register({
+      clientId: process.env.KAFKA_CLIENT_ID,
+      brokers: JSON.parse(process.env.KAFKA_BROKERS),
+    }),
   ],
 })
 export class AppModule {}
