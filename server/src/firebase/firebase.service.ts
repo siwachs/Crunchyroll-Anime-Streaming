@@ -3,6 +3,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import admin from 'firebase-admin';
 import { getApps } from 'firebase-admin/app';
 
+import { File } from 'src/common/types';
 const GOOGLE_APIS_ENDPOINT = 'https://storage.googleapis.com';
 
 @Injectable()
@@ -30,11 +31,11 @@ export class FirebaseService implements OnModuleInit {
   }
 
   async uploadFiles(
-    files: Express.Multer.File[],
+    files: File[],
     storageRef: string,
-  ): Promise<string[]> {
+  ): Promise<Record<string, string>> {
     const bucket = this.getStorageBucket();
-    const uploadedFilesUrls: string[] = [];
+    const uploadedFilesUrls = {};
 
     for (const file of files) {
       try {
@@ -47,7 +48,7 @@ export class FirebaseService implements OnModuleInit {
         await fileUpload.makePublic();
 
         const publicURL = `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${fileName}`;
-        uploadedFilesUrls.push(publicURL);
+        uploadedFilesUrls[file.originalname] = publicURL;
       } catch (error) {
         console.log(`Error while uploading file: ${file.fieldname}`);
         throw error;

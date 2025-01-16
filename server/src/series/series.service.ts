@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
-import { FirebaseService } from '../firebase/firebase.service';
+import { SeriesProducerService } from './series.producer.service';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -13,7 +13,7 @@ import { DUPLICATE_KEY_ERROR } from '../common/constants/mongoose';
 export class SeriesService {
   constructor(
     @InjectModel(Series.name) private readonly seriesModel: Model<Series>,
-    private readonly firebaseService: FirebaseService,
+    private readonly seriesProducerService: SeriesProducerService,
   ) {}
 
   async createSeries(files: Express.Multer.File[], dto: CreateSeriesFormDto) {
@@ -28,6 +28,11 @@ export class SeriesService {
 
       const newSeriesDoc = new this.seriesModel(extendedDto);
       const newSeries = await newSeriesDoc.save();
+
+      await this.seriesProducerService.sendSeriesPosterUploadsMessage(
+        newSeries._id.toString(),
+        files,
+      );
 
       return newSeries;
     } catch (error) {

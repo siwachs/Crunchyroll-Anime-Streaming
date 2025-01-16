@@ -1,65 +1,127 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-
 import {
-  Kafka,
-  Producer,
-  Consumer,
-  ConsumerRunConfig,
-  ConsumerSubscribeTopics,
-} from 'kafkajs';
+  Injectable,
+  Inject,
+  OnModuleInit,
+  OnModuleDestroy,
+} from '@nestjs/common';
+
+import { Kafka, Producer, Consumer, EachMessagePayload } from 'kafkajs';
+
+type Chunk = {
+  messageId: string;
+  chunkIndex: number;
+  totalChunks: number;
+  data: string;
+};
 
 @Injectable()
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
-  private readonly kafka: Kafka;
   private readonly producer: Producer;
-  private readonly consumers: Consumer[];
+  private readonly consumers: Map<string, Consumer> = new Map();
+  private readonly chunkSize: number = 60 * 1024;
 
-  constructor() {
-    const clientId = process.env.KAFKA_CLIENT_ID;
-    const brokers = process.env.KAFKA_BROKERS;
-
-    if (!clientId || !brokers)
-      throw new Error('KAFKA_CLIENT_ID and KAFKA_BROKERS is required!');
-
-    this.kafka = new Kafka({
-      clientId,
-      brokers: JSON.parse(brokers),
-    });
-
-    this.producer = this.kafka.producer();
+  constructor(@Inject('KAFKA_CLIENT') private readonly kafka: Kafka) {
+    this.producer = kafka.producer();
   }
 
   async onModuleInit() {
-    await this.connectProducer();
-  }
-
-  async onModuleDestroy() {
-    await this.disconnectProducer();
-    await Promise.all(this.consumers.map((consumer) => consumer.disconnect()));
-  }
-
-  private async connectProducer() {
     await this.producer.connect();
   }
 
-  private async disconnectProducer() {
+  async onModuleDestroy() {
+    for (const consumer of this.consumers.values()) await consumer.disconnect();
+
     await this.producer.disconnect();
   }
 
-  async sendMessage(topic: string, messages: { key: string; value: string }[]) {
-    await this.producer.send({ topic, messages });
+  private genereateUniqueId() {
+    const timestamp = Date.now().toString(36);
+    const randomNumber = Math.random().toString(36).substring(2, 5);
+    return `${timestamp}-${randomNumber}`;
   }
 
-  async createConsumer(
+  private getMessageChunks(message: Buffer): Chunk[] {
+    const chunks: Chunk[] = [];
+    const totalChunks = Math.ceil(message.length / this.chunkSize);
+    const messageId = this.genereateUniqueId();
+
+    for (let i = 0; i < totalChunks; i++) {
+      const start = i * this.chunkSize;
+      const end = Math.min(start + this.chunkSize, message.length);
+
+      const chunkData = message.subarray(start, end);
+      const chunk = {
+        messageId,
+        chunkIndex: i,
+        totalChunks,
+        data: chunkData.toString('base64'),
+      };
+
+      chunks.push(chunk);
+    }
+
+    return chunks;
+  }
+
+  async sendMessage(topic: string, key: string, message: object) {
+    const messageBuffer = Buffer.from(JSON.stringify(message));
+    const chunks = this.getMessageChunks(messageBuffer);
+
+    for (const chunk of chunks) {
+      await this.producer.send({
+        topic,
+        messages: [{ key, value: JSON.stringify(chunk) }],
+      });
+    }
+  }
+
+  async addConsumer(
+    topic: string,
     groupId: string,
-    topic: ConsumerSubscribeTopics,
-    config: ConsumerRunConfig,
+    messageHandler: (message: EachMessagePayload) => Promise<void>,
   ) {
+    if (this.consumers.has(topic))
+      return console.warn(
+        `Consumer for topic: ${topic} is already registered.`,
+      );
+
     const consumer = this.kafka.consumer({ groupId });
     await consumer.connect();
-    await consumer.subscribe(topic);
-    await consumer.run(config);
+    await consumer.subscribe({ topic });
 
-    this.consumers.push(consumer);
+    const messagesBufferMap: Map<string, Buffer[]> = new Map();
+
+    consumer.run({
+      eachMessage: async ({ message, topic }) => {
+        const chunk: Chunk = JSON.parse(message.value.toString());
+        const chunkData = Buffer.from(chunk.data, 'base64');
+
+        if (!messagesBufferMap.has(chunk.messageId))
+          messagesBufferMap.set(
+            chunk.messageId,
+            new Array(chunk.totalChunks).fill(undefined),
+          );
+
+        const buffers = messagesBufferMap.get(chunk.messageId);
+        buffers[chunk.chunkIndex] = chunkData;
+
+        if (buffers.length === chunk.totalChunks && buffers.every(Boolean)) {
+          const fullMessageBuffer = Buffer.concat(buffers);
+          const fullMessage = JSON.parse(fullMessageBuffer.toString());
+
+          try {
+            await messageHandler(fullMessage);
+          } catch (error) {
+            console.error(
+              `Error in message handler for topic: ${topic}`,
+              error,
+            );
+          }
+          messagesBufferMap.delete(chunk.messageId);
+        }
+      },
+    });
+
+    this.consumers.set(topic, consumer);
   }
 }

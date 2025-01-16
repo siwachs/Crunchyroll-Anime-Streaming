@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -11,6 +11,11 @@ import { ValidatorModule } from './validator/validator.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { DataProcessingModule } from './data-processing/data-processing.module';
 import { KafkaModule } from './kafka/kafka.module';
+
+import { KafkaService } from './kafka/kafka.service';
+import { SeriesConsumerService } from './series/series.consumer.service';
+
+import { SERIES_POSTER_UPLOADS } from './common/constants/kafkaTopics';
 
 @Module({
   imports: [
@@ -35,4 +40,19 @@ import { KafkaModule } from './kafka/kafka.module';
     }),
   ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(
+    private readonly kafkaService: KafkaService,
+    private readonly seriesConsumerService: SeriesConsumerService,
+  ) {}
+
+  async onModuleInit() {
+    await this.kafkaService.addConsumer(
+      SERIES_POSTER_UPLOADS,
+      `${SERIES_POSTER_UPLOADS}-group`,
+      this.seriesConsumerService.uploadSeriesPoster.bind(
+        this.seriesConsumerService,
+      ),
+    );
+  }
+}
