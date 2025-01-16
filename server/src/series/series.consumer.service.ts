@@ -32,8 +32,10 @@ export class SeriesConsumerService {
 
     const { tall, wide } = uploadedFilesURLs;
 
-    await this.seriesModel.findByIdAndUpdate(docId, {
-      image: { tall, wide },
-    });
+    await this.seriesModel
+      .findByIdAndUpdate(docId, {
+        image: { tall, wide },
+      })
+      .exec();
   }
 }

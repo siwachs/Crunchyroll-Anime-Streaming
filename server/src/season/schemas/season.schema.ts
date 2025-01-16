@@ -5,7 +5,7 @@ import { Episode } from '../../episode/schemas/episode.schema';
 
 export type SeasonDocument = HydratedDocument<Season>;
 
-@Schema()
+@Schema({ collection: 'Seasons' })
 export class Season {
   @Prop({ required: true })
   title: string;
