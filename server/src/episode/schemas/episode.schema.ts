@@ -1,19 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-import { MetaTag } from '../../meta-tag/schemas/meta-tag.schema';
+import { MetaTag } from 'src/meta-tag/schemas/meta-tag.schema';
 
 export type EpisodeDocument = HydratedDocument<Episode>;
 
-@Schema()
+@Schema({ collection: 'Episodes' })
 export class Episode {
-  @Prop({ required: true })
-  poster: string;
+  @Prop({ type: String, required: true })
+  thumbnail: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   duration: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   title: string;
 
   @Prop({
@@ -22,7 +22,22 @@ export class Episode {
   })
   metaTags: MetaTag[];
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
+  releaseDate: Date;
+
+  @Prop({ type: Number, default: 0 })
+  likes: number;
+
+  @Prop({ type: Number, default: 0 })
+  dislikes: number;
+
+  @Prop({ type: String, required: true })
+  description: string;
+
+  @Prop({ type: Object, required: true })
+  details: Record<string, string>;
+
+  @Prop({ type: String, required: true })
   media: string;
 }
 

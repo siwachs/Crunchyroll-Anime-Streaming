@@ -14,8 +14,12 @@ import { KafkaModule } from './kafka/kafka.module';
 
 import { KafkaService } from './kafka/kafka.service';
 import { SeriesConsumerService } from './series/series.consumer.service';
+import { EpisodeConsumerService } from './episode/episode.consumer.service';
 
-import { SERIES_POSTER_UPLOADS } from './common/constants/kafkaTopics';
+import {
+  SERIES_POSTER_UPLOADS,
+  SEASON_EPISODE_UPLOADS,
+} from './common/constants/kafkaTopics';
 
 @Module({
   imports: [
@@ -44,6 +48,7 @@ export class AppModule implements OnModuleInit {
   constructor(
     private readonly kafkaService: KafkaService,
     private readonly seriesConsumerService: SeriesConsumerService,
+    private readonly episodeConsumerService: EpisodeConsumerService,
   ) {}
 
   async onModuleInit() {
@@ -52,6 +57,14 @@ export class AppModule implements OnModuleInit {
       `${SERIES_POSTER_UPLOADS}-group`,
       this.seriesConsumerService.uploadSeriesPoster.bind(
         this.seriesConsumerService,
+      ),
+    );
+
+    await this.kafkaService.addConsumer(
+      SEASON_EPISODE_UPLOADS,
+      `${SEASON_EPISODE_UPLOADS}-group`,
+      this.episodeConsumerService.uploadEpisodeThumbnail.bind(
+        this.episodeConsumerService,
       ),
     );
   }

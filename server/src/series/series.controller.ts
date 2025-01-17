@@ -13,13 +13,7 @@ import { ValidatorService } from '../validator/validator.service';
 import { DataProcessingService } from '../data-processing/data-processing.service';
 
 import { CreateSeriesFormDto } from './schemas/dto/series.dto';
-const ALLOWED_MIME_TYPES = [
-  'image/jpg',
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/gif',
-];
+import { ALLOWED_MIME_TYPES } from 'src/common/constants/file';
 const MAX_FILE_SIZE_IN_MB = 6;
 
 @Controller('series')

@@ -21,8 +21,8 @@ export class SeriesService {
       const extendedDto: CreateSeriesDto = {
         ...dto,
         image: {
-          tall: 'Image is being uploading...',
-          wide: 'Image is being uploading...',
+          tall: 'Uploading...',
+          wide: 'Uploading...',
         },
       };
 

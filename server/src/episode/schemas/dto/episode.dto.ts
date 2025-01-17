@@ -1,16 +1,21 @@
 import {
-  IsObject,
-  IsNotEmptyObject,
-  IsString,
   IsNotEmpty,
+  IsString,
   IsArray,
   ArrayNotEmpty,
+  IsDate,
+  IsObject,
+  IsNotEmptyObject,
 } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 import { transformerStringArrayOrObject } from 'src/common/transformer';
 
-export class CreateSeriesFormDto {
+export class CreateEpisodeFormDto {
+  @IsNotEmpty()
+  @IsString()
+  duration: string;
+
   @IsNotEmpty()
   @IsString()
   title: string;
@@ -22,16 +27,13 @@ export class CreateSeriesFormDto {
   @IsNotEmpty({ each: true })
   metaTags: string[];
 
-  @IsString()
-  @IsNotEmpty()
-  description: string;
+  @Type(() => Date)
+  @IsDate()
+  releaseDate: Date;
 
-  @Transform(transformerStringArrayOrObject)
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsString({ each: true })
-  @IsNotEmpty({ each: true })
-  genres: string[];
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 
   @Transform(transformerStringArrayOrObject)
   @IsObject()
@@ -39,12 +41,12 @@ export class CreateSeriesFormDto {
   details: Record<string, string>;
 }
 
-export class CreateSeriesDto extends CreateSeriesFormDto {
-  @Transform(transformerStringArrayOrObject)
-  @IsObject()
-  @IsNotEmptyObject()
-  image: {
-    tall: string;
-    wide: string;
-  };
+export class CreateEpisodeDto extends CreateEpisodeFormDto {
+  @IsNotEmpty()
+  @IsString()
+  thumbnail: string;
+
+  @IsNotEmpty()
+  @IsString()
+  media: string;
 }
