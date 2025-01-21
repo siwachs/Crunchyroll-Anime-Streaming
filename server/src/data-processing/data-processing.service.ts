@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import * as path from 'path';
+import { extname } from 'path';
 
 import { File } from 'src/common/types';
 
@@ -11,7 +11,7 @@ export class DataProcessingService {
     newName: string,
     withExtension = false,
   ): Express.Multer.File {
-    const newFileName = `${newName}${withExtension ? path.extname(file.originalname) : ''}`;
+    const newFileName = `${newName}${withExtension ? extname(file.originalname) : ''}`;
 
     return { ...file, originalname: newFileName };
   }

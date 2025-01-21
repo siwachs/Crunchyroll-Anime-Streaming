@@ -13,8 +13,10 @@ import { ValidatorService } from '../validator/validator.service';
 import { DataProcessingService } from '../data-processing/data-processing.service';
 
 import { CreateSeriesFormDto } from './schemas/dto/series.dto';
-import { ALLOWED_MIME_TYPES } from 'src/common/constants/file';
-const MAX_FILE_SIZE_IN_MB = 6;
+import {
+  IMAGE_ALLOWED_MIME_TYPES,
+  IMAGE_MAX_SIZE_IN_MB,
+} from 'src/common/constants/file';
 
 @Controller('series')
 export class SeriesController {
@@ -45,12 +47,12 @@ export class SeriesController {
       throw new BadRequestException('The tall and wide image are required.');
 
     this.validatorService.validateFile(tallImage, {
-      allowedMimeTypes: ALLOWED_MIME_TYPES,
-      maxSize: MAX_FILE_SIZE_IN_MB,
+      allowedMimeTypes: IMAGE_ALLOWED_MIME_TYPES,
+      maxSize: IMAGE_MAX_SIZE_IN_MB,
     });
     this.validatorService.validateFile(wideImage, {
-      allowedMimeTypes: ALLOWED_MIME_TYPES,
-      maxSize: MAX_FILE_SIZE_IN_MB,
+      allowedMimeTypes: IMAGE_ALLOWED_MIME_TYPES,
+      maxSize: IMAGE_MAX_SIZE_IN_MB,
     });
 
     const renamedTallImage = this.dataProcessingService.renameFile(

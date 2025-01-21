@@ -11,6 +11,7 @@ import { ValidatorModule } from './validator/validator.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { DataProcessingModule } from './data-processing/data-processing.module';
 import { KafkaModule } from './kafka/kafka.module';
+import { HlsModule } from './hls/hls.module';
 
 import { KafkaService } from './kafka/kafka.service';
 import { SeriesConsumerService } from './series/series.consumer.service';
@@ -18,7 +19,8 @@ import { EpisodeConsumerService } from './episode/episode.consumer.service';
 
 import {
   SERIES_POSTER_UPLOADS,
-  SEASON_EPISODE_UPLOADS,
+  SEASON_EPISODE_THUMBNAIL_UPLOADS,
+  MEDIA_UPLOADS_TRANSCODE_TO_HLS,
 } from './common/constants/kafkaTopics';
 
 @Module({
@@ -42,6 +44,7 @@ import {
       clientId: process.env.KAFKA_CLIENT_ID,
       brokers: JSON.parse(process.env.KAFKA_BROKERS),
     }),
+    HlsModule,
   ],
 })
 export class AppModule implements OnModuleInit {
@@ -61,9 +64,17 @@ export class AppModule implements OnModuleInit {
     );
 
     await this.kafkaService.addConsumer(
-      SEASON_EPISODE_UPLOADS,
-      `${SEASON_EPISODE_UPLOADS}-group`,
+      SEASON_EPISODE_THUMBNAIL_UPLOADS,
+      `${SEASON_EPISODE_THUMBNAIL_UPLOADS}-group`,
       this.episodeConsumerService.uploadEpisodeThumbnail.bind(
+        this.episodeConsumerService,
+      ),
+    );
+
+    await this.kafkaService.addConsumer(
+      MEDIA_UPLOADS_TRANSCODE_TO_HLS,
+      `${MEDIA_UPLOADS_TRANSCODE_TO_HLS}-group`,
+      this.episodeConsumerService.transcodeUploadedMediaToHLS.bind(
         this.episodeConsumerService,
       ),
     );

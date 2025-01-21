@@ -1,4 +1,6 @@
 firebaseServiceAccount.json
+uploads
+transcodes
 
 # compiled output
 /dist
