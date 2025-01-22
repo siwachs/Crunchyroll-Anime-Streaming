@@ -55,7 +55,7 @@ export class EpisodeService {
       })
       .exec();
 
-    await this.episodeProducerService.sendEpisodeThumbnailUploadsMessage(
+    await this.episodeProducerService.sendThumbnailUploadsMessage(
       seriesId,
       seasonId,
       newEpisode._id.toString(),
@@ -71,17 +71,15 @@ export class EpisodeService {
     episodeId: string,
     media: Express.Multer.File,
   ) {
-    await this.episodeProducerService.sendEpisodeMediaUploadsMessage(
+    await this.episodeProducerService.sendMediaUploadsTranscodeMessage(
       seriesId,
       seasonId,
       episodeId,
-      media,
+      media.path,
     );
 
     return {
-      message: 'Media file uploaded successfully.',
-      filename: media.filename,
-      path: media.path,
+      media: 'Uploading...',
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 
 import { EpisodeController } from './episode.controller';
 
@@ -11,6 +11,7 @@ import { Series, SeriesSchema } from 'src/series/schemas/series.schema';
 import { Season, SeasonSchema } from 'src/season/schemas/season.schema';
 import { Episode, EpisodeSchema } from './schemas/episode.schema';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -21,6 +22,6 @@ import { Episode, EpisodeSchema } from './schemas/episode.schema';
   ],
   controllers: [EpisodeController],
   providers: [EpisodeService, EpisodeProducerService, EpisodeConsumerService],
-  exports: [EpisodeConsumerService],
+  exports: [EpisodeProducerService, EpisodeConsumerService],
 })
 export class EpisodeModule {}

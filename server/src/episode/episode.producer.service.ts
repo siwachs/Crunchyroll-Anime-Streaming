@@ -6,6 +6,7 @@ import { KafkaService } from 'src/kafka/kafka.service';
 import {
   SEASON_EPISODE_THUMBNAIL_UPLOADS,
   MEDIA_UPLOADS_TRANSCODE_TO_HLS,
+  TRANSCODED_MEDIA_UPLOADS,
 } from 'src/common/constants/kafkaTopics';
 
 @Injectable()
@@ -15,7 +16,7 @@ export class EpisodeProducerService {
     private readonly kafkaService: KafkaService,
   ) {}
 
-  async sendEpisodeThumbnailUploadsMessage(
+  async sendThumbnailUploadsMessage(
     seriesId: string,
     seasonId: string,
     episodeId: string,
@@ -37,17 +38,41 @@ export class EpisodeProducerService {
     );
   }
 
-  async sendEpisodeMediaUploadsMessage(
+  async sendMediaUploadsTranscodeMessage(
     seriesId: string,
     seasonId: string,
     episodeId: string,
-    media: Express.Multer.File,
+    mediaPath: string,
   ) {
-    const message = { seriesId, seasonId, episodeId, mediaPath: media.path };
+    const message = { seriesId, seasonId, episodeId, mediaPath };
 
     await this.kafkaService.sendMessage(
       MEDIA_UPLOADS_TRANSCODE_TO_HLS,
-      media.originalname,
+      mediaPath,
+      message,
+    );
+  }
+
+  async sendTranscodedMediaUploadsMessage(
+    masterFileDir: string,
+    masterFileName: string,
+    seriesId: string,
+    seasonId: string,
+    episodeId: string,
+    transcodedMediaDir: string,
+  ) {
+    const message = {
+      masterFileDir,
+      masterFileName,
+      seriesId,
+      seasonId,
+      episodeId,
+      transcodedMediaDir,
+    };
+
+    await this.kafkaService.sendMessage(
+      TRANSCODED_MEDIA_UPLOADS,
+      transcodedMediaDir,
       message,
     );
   }

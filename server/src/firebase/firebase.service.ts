@@ -1,3 +1,6 @@
+import { promises as fs } from 'fs';
+import { join } from 'path';
+import * as mime from 'mime-types';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 
 import admin from 'firebase-admin';
@@ -56,5 +59,29 @@ export class FirebaseService implements OnModuleInit {
     }
 
     return uploadedFilesUrls;
+  }
+
+  async uploadDir(dirPath: string, storageRef: string) {
+    const bucket = this.getStorageBucket();
+
+    try {
+      const files = await fs.readdir(dirPath);
+
+      for (const fileName of files) {
+        const filePath = join(dirPath, fileName);
+        const fileUpload = bucket.file(`${storageRef}/${fileName}`);
+        const contentType = mime.lookup(filePath) || undefined;
+
+        await fileUpload.save(await fs.readFile(filePath), {
+          metadata: { contentType },
+        });
+        await fileUpload.makePublic();
+      }
+    } catch (error) {
+      console.error(`Error while uploading directory: ${dirPath}`);
+      throw error;
+    }
+
+    return `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${storageRef}/master.m3u8`;
   }
 }

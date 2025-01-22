@@ -1,7 +1,8 @@
 import { existsSync, mkdirSync, writeFileSync, unlinkSync } from 'fs';
 import { basename, extname, join } from 'path';
-
 import { Injectable } from '@nestjs/common';
+
+import { EpisodeProducerService } from 'src/episode/episode.producer.service';
 
 import * as ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
@@ -17,11 +18,19 @@ export class HlsService {
     { width: 1920, height: 1080, bitrate: '8000k', label: '1080p' },
   ];
 
+  constructor(
+    private readonly episodeProducerService: EpisodeProducerService,
+  ) {}
+
   async transcodeToHLS(
+    seriesId: string,
+    seasonId: string,
+    episodeId: string,
     inputFilePath: string,
     outputDir = './transcodes',
   ): Promise<void> {
     const fileName = basename(inputFilePath, extname(inputFilePath));
+    const fileNameWithExt = basename(inputFilePath);
     const fileOutputDir = join(outputDir, fileName);
 
     if (!existsSync(fileOutputDir))
@@ -36,7 +45,9 @@ export class HlsService {
       const outputFilePath = join(fileOutputDir, outputFileName);
       const outputSegmentPath = join(fileOutputDir, segmentFileName);
 
-      console.log(`Start HLS conversion for ${label}`);
+      console.log(
+        `Starting HLS conversion for : ${fileNameWithExt}, and format: ${label}.`,
+      );
 
       await new Promise<void>((resolve, reject) => {
         ffmpeg(inputFilePath)
@@ -60,12 +71,14 @@ export class HlsService {
           ])
           .output(outputFilePath)
           .on('end', () => {
-            console.log(`Completed HLS conversion for ${label}`);
+            console.log(
+              `Completed HLS conversion for : ${fileNameWithExt}, and format: ${label}.`,
+            );
             resolve();
           })
-          .on('error', (err: Error) => {
+          .on('error', (err) => {
             console.error(
-              `Error during HLS conversion for ${label}: ${err.message}`,
+              `Error during HLS conversion for : ${fileNameWithExt}, and format: ${label}. ${err.message}.`,
             );
             reject(err);
           })
@@ -75,21 +88,28 @@ export class HlsService {
       variantPlaylists.push({ label, fileName: outputFileName });
     }
 
-    await this.createMasterPlaylist(
-      inputFilePath,
-      fileName,
+    await this.createMasterPlaylist(fileOutputDir, variantPlaylists);
+    console.log(`Master Playlist created for ${fileNameWithExt}.`);
+
+    console.log('Deleting Input File...');
+    unlinkSync(inputFilePath);
+
+    console.log(`Uploading ${fileNameWithExt} transcoded media to firebase...`);
+    await this.episodeProducerService.sendTranscodedMediaUploadsMessage(
       fileOutputDir,
-      variantPlaylists,
+      fileNameWithExt,
+      seriesId,
+      seasonId,
+      episodeId,
+      fileOutputDir,
     );
   }
 
   private async createMasterPlaylist(
-    inputFilePath: string,
-    basename: string,
     outputDir: string,
     variants: { label: string; fileName: string }[],
   ): Promise<void> {
-    const masterPlaylistPath = join(outputDir, `${basename}_master.m3u8`);
+    const masterPlaylistPath = join(outputDir, 'master.m3u8');
     const masterPlaylistContent = ['#EXTM3U'];
 
     for (const { label, fileName } of variants) {
@@ -105,7 +125,5 @@ export class HlsService {
 
     writeFileSync(masterPlaylistPath, masterPlaylistContent.join('\n'));
     console.log('Master playlist created successfully');
-
-    unlinkSync(inputFilePath);
   }
 }

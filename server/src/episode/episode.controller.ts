@@ -62,7 +62,7 @@ export class EpisodeController {
     );
   }
 
-  @Post(':seriesId/:seasonId/:edpisodeId')
+  @Post(':seriesId/:seasonId/:episodeId')
   @UseInterceptors(
     FileInterceptor('media', {
       storage: diskStorage({

@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs';
 import { Injectable } from '@nestjs/common';
 
 import { DataProcessingService } from 'src/data-processing/data-processing.service';
@@ -48,6 +49,44 @@ export class EpisodeConsumerService {
     mediaPath: string;
   }) {
     const { seriesId, seasonId, episodeId, mediaPath } = message;
-    await this.hlsSerive.transcodeToHLS(mediaPath);
+
+    await this.hlsSerive.transcodeToHLS(
+      seriesId,
+      seasonId,
+      episodeId,
+      mediaPath,
+    );
+  }
+
+  async uploadTransodedMedia(message: {
+    masterFileDir: string;
+    masterFileName: string;
+    seriesId: string;
+    seasonId: string;
+    episodeId: string;
+    transcodedMediaDir: string;
+  }) {
+    const {
+      masterFileDir,
+      masterFileName,
+      seriesId,
+      seasonId,
+      episodeId,
+      transcodedMediaDir,
+    } = message;
+
+    const uploadedMediaMasterURL = await this.firebaseService.uploadDir(
+      transcodedMediaDir,
+      `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/${episodeId}/media`,
+    );
+
+    await this.episodeModel
+      .findByIdAndUpdate(episodeId, { media: uploadedMediaMasterURL })
+      .exec();
+
+    console.log(uploadedMediaMasterURL);
+    console.log(`${masterFileName} is uploaded`);
+
+    await fs.rm(masterFileDir, { recursive: true, force: true });
   }
 }

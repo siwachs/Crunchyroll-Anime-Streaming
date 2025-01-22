@@ -21,6 +21,7 @@ import {
   SERIES_POSTER_UPLOADS,
   SEASON_EPISODE_THUMBNAIL_UPLOADS,
   MEDIA_UPLOADS_TRANSCODE_TO_HLS,
+  TRANSCODED_MEDIA_UPLOADS,
 } from './common/constants/kafkaTopics';
 
 @Module({
@@ -75,6 +76,14 @@ export class AppModule implements OnModuleInit {
       MEDIA_UPLOADS_TRANSCODE_TO_HLS,
       `${MEDIA_UPLOADS_TRANSCODE_TO_HLS}-group`,
       this.episodeConsumerService.transcodeUploadedMediaToHLS.bind(
+        this.episodeConsumerService,
+      ),
+    );
+
+    await this.kafkaService.addConsumer(
+      TRANSCODED_MEDIA_UPLOADS,
+      `${TRANSCODED_MEDIA_UPLOADS}-group`,
+      this.episodeConsumerService.uploadTransodedMedia.bind(
         this.episodeConsumerService,
       ),
     );
