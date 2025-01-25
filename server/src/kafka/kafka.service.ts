@@ -18,7 +18,7 @@ type Chunk = {
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
   private readonly producer: Producer;
   private readonly consumers: Map<string, Consumer> = new Map();
-  private readonly chunkSize: number = 60 * 1024;
+  private readonly chunkSize: number = 6 * 1024 * 1024;
 
   constructor(@Inject('KAFKA_CLIENT') private readonly kafka: Kafka) {
     this.producer = kafka.producer();

@@ -71,7 +71,7 @@ export class EpisodeService {
     episodeId: string,
     media: Express.Multer.File,
   ) {
-    await this.episodeProducerService.sendMediaUploadsTranscodeMessage(
+    this.episodeProducerService.sendMediaUploadsTranscodeMessage(
       seriesId,
       seasonId,
       episodeId,

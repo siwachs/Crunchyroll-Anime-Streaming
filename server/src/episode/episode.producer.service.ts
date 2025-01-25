@@ -38,7 +38,7 @@ export class EpisodeProducerService {
     );
   }
 
-  async sendMediaUploadsTranscodeMessage(
+  sendMediaUploadsTranscodeMessage(
     seriesId: string,
     seasonId: string,
     episodeId: string,
@@ -46,14 +46,14 @@ export class EpisodeProducerService {
   ) {
     const message = { seriesId, seasonId, episodeId, mediaPath };
 
-    await this.kafkaService.sendMessage(
+    this.kafkaService.sendMessage(
       MEDIA_UPLOADS_TRANSCODE_TO_HLS,
       mediaPath,
       message,
     );
   }
 
-  async sendTranscodedMediaUploadsMessage(
+  sendTranscodedMediaUploadsMessage(
     masterFileDir: string,
     masterFileName: string,
     seriesId: string,
@@ -70,7 +70,7 @@ export class EpisodeProducerService {
       transcodedMediaDir,
     };
 
-    await this.kafkaService.sendMessage(
+    this.kafkaService.sendMessage(
       TRANSCODED_MEDIA_UPLOADS,
       transcodedMediaDir,
       message,

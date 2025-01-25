@@ -61,13 +61,17 @@ export class FirebaseService implements OnModuleInit {
     return uploadedFilesUrls;
   }
 
-  async uploadDir(dirPath: string, storageRef: string) {
+  async uploadDir(
+    dirPath: string,
+    storageRef: string,
+    maxConcurrentUploads = 3,
+  ) {
     const bucket = this.getStorageBucket();
 
     try {
       const files = await fs.readdir(dirPath);
 
-      for (const fileName of files) {
+      const uploadFile = async (fileName: string) => {
         const filePath = join(dirPath, fileName);
         const fileUpload = bucket.file(`${storageRef}/${fileName}`);
         const contentType = mime.lookup(filePath) || undefined;
@@ -76,12 +80,36 @@ export class FirebaseService implements OnModuleInit {
           metadata: { contentType },
         });
         await fileUpload.makePublic();
+      };
+
+      // Process Files in Batch
+      const queue = [...files];
+      const activeUploads: Promise<void>[] = [];
+
+      while (queue.length > 0) {
+        if (activeUploads.length < maxConcurrentUploads) {
+          const fileName = queue.shift();
+          const uploadPromise = uploadFile(fileName);
+
+          activeUploads.push(uploadPromise);
+
+          uploadPromise.finally(() => {
+            const activeUploadIndex = activeUploads.indexOf(uploadPromise);
+            if (activeUploadIndex !== -1)
+              activeUploads.splice(activeUploadIndex, 1);
+          });
+        }
+
+        if (activeUploads.length >= maxConcurrentUploads)
+          await Promise.race(activeUploads);
       }
+
+      await Promise.all(activeUploads);
     } catch (error) {
       console.error(`Error while uploading directory: ${dirPath}`);
       throw error;
     }
 
-    return `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${storageRef}/master.m3u8`;
+    return `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${storageRef}`;
   }
 }

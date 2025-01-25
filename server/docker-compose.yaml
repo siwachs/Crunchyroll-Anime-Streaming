@@ -33,6 +33,8 @@ services:
       - KAFKA_CFG_MESSAGE_MAX_BYTES=6291456 # Max message size: 6MB
       - KAFKA_CFG_REPLICA_FETCH_MAX_BYTES=6291456 # Max message fetch size: 6MB
       - KAFKA_OPTS=-Djava.awt.headless=true
+    depends_on:
+      - zookeeper
     volumes:
       - kafka_data:/bitnami/kafka
     networks:

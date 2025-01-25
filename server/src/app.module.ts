@@ -83,7 +83,7 @@ export class AppModule implements OnModuleInit {
     await this.kafkaService.addConsumer(
       TRANSCODED_MEDIA_UPLOADS,
       `${TRANSCODED_MEDIA_UPLOADS}-group`,
-      this.episodeConsumerService.uploadTransodedMedia.bind(
+      this.episodeConsumerService.uploadTranscodedMedia.bind(
         this.episodeConsumerService,
       ),
     );

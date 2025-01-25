@@ -12,10 +12,10 @@ ffmpeg.setFfmpegPath(ffmpegStatic || '/usr/bin/ffmpeg');
 @Injectable()
 export class HlsService {
   private readonly resolutions = [
-    { width: 640, height: 360, bitrate: '1000k', label: '360p' },
-    { width: 854, height: 480, bitrate: '2500k', label: '480p' },
-    { width: 1280, height: 720, bitrate: '5000k', label: '720p' },
-    { width: 1920, height: 1080, bitrate: '8000k', label: '1080p' },
+    { width: 640, height: 360, label: '360p', audioBitrate: '96k' },
+    { width: 854, height: 480, label: '480p', audioBitrate: '128k' },
+    { width: 1280, height: 720, label: '720p', audioBitrate: '192k' },
+    { width: 1920, height: 1080, label: '1080p', audioBitrate: '256k' },
   ];
 
   constructor(
@@ -38,71 +38,80 @@ export class HlsService {
 
     const variantPlaylists = [];
 
-    for (const { width, height, bitrate, label } of this.resolutions) {
-      const outputFileName = `${label}.m3u8`;
-      const segmentFileName = `${label}_%03d.ts`;
+    const transcodeStartsOn = Date.now();
+    await Promise.all(
+      this.resolutions.map(async ({ width, height, label, audioBitrate }) => {
+        const outputFileName = `${label}.m3u8`;
+        const segmentFileName = `${label}_%03d.ts`;
 
-      const outputFilePath = join(fileOutputDir, outputFileName);
-      const outputSegmentPath = join(fileOutputDir, segmentFileName);
+        const outputFilePath = join(fileOutputDir, outputFileName);
+        const outputSegmentPath = join(fileOutputDir, segmentFileName);
 
-      console.log(
-        `Starting HLS conversion for : ${fileNameWithExt}, and format: ${label}.`,
-      );
+        console.log(
+          `Starting HLS conversion for : ${fileNameWithExt}, with format: ${label}.`,
+        );
 
-      await new Promise<void>((resolve, reject) => {
-        ffmpeg(inputFilePath)
-          .outputOptions([
-            '-c:v',
-            'libx264',
-            '-b:v',
-            bitrate,
-            '-vf',
-            `scale=${width}:${height}`,
-            '-c:a',
-            'aac',
-            '-b:a',
-            '128k',
-            '-hls_time',
-            '10',
-            '-hls_playlist_type',
-            'vod',
-            '-hls_segment_filename',
-            outputSegmentPath,
-          ])
-          .output(outputFilePath)
-          .on('end', () => {
-            console.log(
-              `Completed HLS conversion for : ${fileNameWithExt}, and format: ${label}.`,
-            );
-            resolve();
-          })
-          .on('error', (err) => {
-            console.error(
-              `Error during HLS conversion for : ${fileNameWithExt}, and format: ${label}. ${err.message}.`,
-            );
-            reject(err);
-          })
-          .run();
-      });
+        await new Promise<void>((resolve, reject) => {
+          ffmpeg(inputFilePath)
+            .outputOptions([
+              '-c:v',
+              'libx264',
+              '-crf',
+              '23', // Adjust this value between 18 and 22 for desired quality (Best 20)
+              '-preset',
+              'slow', // Use 'veryslow' for better compression at the cost of encoding time or slow
+              '-vf',
+              `scale=${width}:${height}`,
+              '-c:a',
+              'aac',
+              '-b:a',
+              audioBitrate,
+              '-hls_time',
+              '10',
+              '-hls_playlist_type',
+              'vod',
+              '-hls_segment_filename',
+              outputSegmentPath,
+            ])
+            .output(outputFilePath)
+            .on('end', () => {
+              console.log(
+                `Completed HLS conversion for : ${fileNameWithExt}, with format: ${label}.`,
+              );
+              resolve();
+            })
+            .on('error', (err) => {
+              console.error(
+                `Error during HLS conversion for : ${fileNameWithExt}, with format: ${label}. ${err.message}.`,
+              );
+              reject(err);
+            })
+            .run();
+        });
 
-      variantPlaylists.push({ label, fileName: outputFileName });
-    }
+        variantPlaylists.push({ label, fileName: outputFileName });
+      }),
+    );
 
     await this.createMasterPlaylist(fileOutputDir, variantPlaylists);
-    console.log(`Master Playlist created for ${fileNameWithExt}.`);
+
+    const transcodeEndOn = Date.now();
+    console.log(
+      `Master Playlist created for ${fileNameWithExt} in ${((transcodeEndOn - transcodeStartsOn) / 60000).toFixed(2)}Minutes.`,
+    );
 
     console.log('Deleting Input File...');
     unlinkSync(inputFilePath);
 
-    console.log(`Uploading ${fileNameWithExt} transcoded media to firebase...`);
-    await this.episodeProducerService.sendTranscodedMediaUploadsMessage(
-      fileOutputDir,
-      fileNameWithExt,
-      seriesId,
-      seasonId,
-      episodeId,
-      fileOutputDir,
-    );
+    // console.log(`Uploading ${fileNameWithExt} transcoded media to firebase...`);
+    // this.episodeProducerService.sendTranscodedMediaUploadsMessage(
+    //   fileOutputDir,
+    //   fileNameWithExt,
+    //   seriesId,
+    //   seasonId,
+    //   episodeId,
+    //   fileOutputDir,
+    // );
   }
 
   private async createMasterPlaylist(
@@ -115,7 +124,10 @@ export class HlsService {
     for (const { label, fileName } of variants) {
       const resolution = this.resolutions.find((res) => res.label === label);
       if (resolution) {
-        const bandwidth = parseInt(resolution.bitrate) * 1000;
+        const bandwidth = this.estimateBandwidth(
+          resolution.width,
+          resolution.height,
+        );
         masterPlaylistContent.push(
           `#EXT-X-STREAM-INF:BANDWIDTH=${bandwidth},RESOLUTION=${resolution.width}x${resolution.height}`,
           fileName,
@@ -124,6 +136,13 @@ export class HlsService {
     }
 
     writeFileSync(masterPlaylistPath, masterPlaylistContent.join('\n'));
-    console.log('Master playlist created successfully');
+  }
+
+  private estimateBandwidth(width: number, height: number): number {
+    if (width === 1920 && height === 1080) return 5000000; // 5 Mbps
+    if (width === 1280 && height === 720) return 2800000; // 2.8 Mbps
+    if (width === 854 && height === 480) return 1400000; // 1.4 Mbps
+    if (width === 640 && height === 360) return 800000;
+    return 1000000; // Default to 1 Mbps
   }
 }

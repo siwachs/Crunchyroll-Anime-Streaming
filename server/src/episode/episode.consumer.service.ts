@@ -42,7 +42,7 @@ export class EpisodeConsumerService {
     await this.episodeModel.findByIdAndUpdate(episodeId, { thumbnail }).exec();
   }
 
-  async transcodeUploadedMediaToHLS(message: {
+  transcodeUploadedMediaToHLS(message: {
     seriesId: string;
     seasonId: string;
     episodeId: string;
@@ -50,15 +50,10 @@ export class EpisodeConsumerService {
   }) {
     const { seriesId, seasonId, episodeId, mediaPath } = message;
 
-    await this.hlsSerive.transcodeToHLS(
-      seriesId,
-      seasonId,
-      episodeId,
-      mediaPath,
-    );
+    this.hlsSerive.transcodeToHLS(seriesId, seasonId, episodeId, mediaPath);
   }
 
-  async uploadTransodedMedia(message: {
+  async uploadTranscodedMedia(message: {
     masterFileDir: string;
     masterFileName: string;
     seriesId: string;
@@ -75,16 +70,18 @@ export class EpisodeConsumerService {
       transcodedMediaDir,
     } = message;
 
-    const uploadedMediaMasterURL = await this.firebaseService.uploadDir(
+    const uploadedMediaDirURL = await this.firebaseService.uploadDir(
       transcodedMediaDir,
       `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/${episodeId}/media`,
     );
 
     await this.episodeModel
-      .findByIdAndUpdate(episodeId, { media: uploadedMediaMasterURL })
+      .findByIdAndUpdate(episodeId, {
+        media: `${uploadedMediaDirURL}/master.m3u8`,
+      })
       .exec();
 
-    console.log(uploadedMediaMasterURL);
+    console.log(uploadedMediaDirURL);
     console.log(`${masterFileName} is uploaded`);
 
     await fs.rm(masterFileDir, { recursive: true, force: true });
