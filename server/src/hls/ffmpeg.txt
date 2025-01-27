@@ -1,0 +1,8 @@
+mpv --geometry=25%x50%+0+0 --input-ipc-server=/tmp/mpv1 --pause original.mp4 & \
+mpv --geometry=25%x50%+25%+0 --input-ipc-server=/tmp/mpv2 --pause reconstructed_360p.mp4 & \
+mpv --geometry=25%x50%+50%+0 --input-ipc-server=/tmp/mpv3 --pause reconstructed_480p.mp4 & \
+mpv --geometry=25%x50%+75%+0 --input-ipc-server=/tmp/mpv4 --pause reconstructed_720p.mp4 & \
+mpv --geometry=25%x50%+75%+0 --input-ipc-server=/tmp/mpv5 --pause reconstructed_1080p.mp4
+
+
+ffmpeg -i 360p.m3u8 -c copy reconstructed_360p.mp4

@@ -14,8 +14,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { EpisodeService } from './episode.service';
-import { ValidatorService } from 'src/validator/validator.service';
-import { DataProcessingService } from 'src/data-processing/data-processing.service';
+import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
 
 import { CreateEpisodeFormDto } from './schemas/dto/episode.dto';
 
@@ -30,8 +29,7 @@ import {
 export class EpisodeController {
   constructor(
     private readonly episodeService: EpisodeService,
-    private readonly validatorService: ValidatorService,
-    private readonly dataProcessingService: DataProcessingService,
+    private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
   ) {}
 
   @Post(':seriesId/:seasonId')
@@ -44,12 +42,15 @@ export class EpisodeController {
   ) {
     if (!thumbnail) throw new BadRequestException('Thumbnail is requied.');
 
-    this.validatorService.validateFile(thumbnail, {
-      allowedMimeTypes: IMAGE_ALLOWED_MIME_TYPES,
-      maxSize: THUMBNAIL_MAX_SIZE_IN_MB,
-    });
+    this.validatorAndDataProcessingService.validateFileMimeTypeAndSize(
+      thumbnail,
+      {
+        allowedMimeTypes: IMAGE_ALLOWED_MIME_TYPES,
+        maxSize: THUMBNAIL_MAX_SIZE_IN_MB,
+      },
+    );
 
-    const renamedThumbnail = this.dataProcessingService.renameFile(
+    const renamedThumbnail = this.validatorAndDataProcessingService.renameFile(
       thumbnail,
       'thumbnail',
     );

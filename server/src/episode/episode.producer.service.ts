@@ -16,7 +16,7 @@ export class EpisodeProducerService {
     private readonly kafkaService: KafkaService,
   ) {}
 
-  async sendThumbnailUploadsMessage(
+  sendThumbnailUploadsMessage(
     seriesId: string,
     seasonId: string,
     episodeId: string,
@@ -31,7 +31,7 @@ export class EpisodeProducerService {
 
     const key = `${seriesId}_${seasonId}_${episodeId}`;
 
-    await this.kafkaService.sendMessage(
+    this.kafkaService.sendMessage(
       SEASON_EPISODE_THUMBNAIL_UPLOADS,
       key,
       message,

@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { Injectable } from '@nestjs/common';
 
-import { DataProcessingService } from 'src/data-processing/data-processing.service';
+import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { HlsService } from 'src/hls/hls.service';
 
@@ -15,13 +15,13 @@ import { SERIES_BASE_STORAGE_REF } from 'src/common/constants/firebase';
 @Injectable()
 export class EpisodeConsumerService {
   constructor(
-    private readonly dataProcessingService: DataProcessingService,
+    private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
     @InjectModel(Episode.name) private readonly episodeModel: Model<Episode>,
     private readonly firebaseService: FirebaseService,
     private readonly hlsSerive: HlsService,
   ) {}
 
-  async uploadEpisodeThumbnail(message: {
+  async uploadThumbnail(message: {
     seriesId: string;
     seasonId: string;
     episodeId: string;
@@ -30,7 +30,7 @@ export class EpisodeConsumerService {
     const { seriesId, seasonId, episodeId, file } = message;
 
     const bufferFile =
-      this.dataProcessingService.base64StringToFileBuffer(file);
+      this.validatorAndDataProcessingService.base64StringToFileBuffer(file);
 
     const uploadedFilesURLs = await this.firebaseService.uploadFiles(
       [bufferFile],
@@ -39,7 +39,7 @@ export class EpisodeConsumerService {
 
     const { thumbnail } = uploadedFilesURLs;
 
-    await this.episodeModel.findByIdAndUpdate(episodeId, { thumbnail }).exec();
+    this.episodeModel.findByIdAndUpdate(episodeId, { thumbnail }).exec();
   }
 
   transcodeUploadedMediaToHLS(message: {
@@ -81,7 +81,6 @@ export class EpisodeConsumerService {
       })
       .exec();
 
-    console.log(uploadedMediaDirURL);
     console.log(`${masterFileName} is uploaded`);
 
     await fs.rm(masterFileDir, { recursive: true, force: true });

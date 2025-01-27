@@ -33,6 +33,27 @@ export class FirebaseService implements OnModuleInit {
     return admin.storage().bucket();
   }
 
+  private async retryUpload(
+    uploadFn: Function,
+    retries: number = 5,
+    delay: number = 1000,
+  ) {
+    let attempts = 0;
+
+    while (attempts < retries) {
+      try {
+        return await uploadFn();
+      } catch (error) {
+        attempts++;
+        console.log(`Upload Failed try again in ${delay}ms`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        delay *= 2;
+
+        if (attempts >= retries) throw error;
+      }
+    }
+  }
+
   async uploadFiles(
     files: File[],
     storageRef: string,
@@ -45,10 +66,12 @@ export class FirebaseService implements OnModuleInit {
         const fileName = `${storageRef}/${file.originalname}`;
         const fileUpload = bucket.file(fileName);
 
-        await fileUpload.save(file.buffer, {
-          metadata: { contentType: file.mimetype },
+        await this.retryUpload(async () => {
+          await fileUpload.save(file.buffer, {
+            metadata: { contentType: file.mimetype },
+          });
+          await fileUpload.makePublic();
         });
-        await fileUpload.makePublic();
 
         const publicURL = `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${fileName}`;
         uploadedFilesUrls[file.originalname] = publicURL;
@@ -64,7 +87,7 @@ export class FirebaseService implements OnModuleInit {
   async uploadDir(
     dirPath: string,
     storageRef: string,
-    maxConcurrentUploads = 3,
+    maxConcurrentUploads: number = 3,
   ) {
     const bucket = this.getStorageBucket();
 
@@ -76,10 +99,12 @@ export class FirebaseService implements OnModuleInit {
         const fileUpload = bucket.file(`${storageRef}/${fileName}`);
         const contentType = mime.lookup(filePath) || undefined;
 
-        await fileUpload.save(await fs.readFile(filePath), {
-          metadata: { contentType },
+        await this.retryUpload(async () => {
+          await fileUpload.save(await fs.readFile(filePath), {
+            metadata: { contentType },
+          });
+          await fileUpload.makePublic();
         });
-        await fileUpload.makePublic();
       };
 
       // Process Files in Batch

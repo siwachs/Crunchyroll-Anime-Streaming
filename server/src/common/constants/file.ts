@@ -22,4 +22,4 @@ export const MEDIA_ALLOWED_MIME_TYPES = [
   'video/ogg', // OGG, open format used in some web environments.
 ];
 
-export const MEDIA_MAX_SIZE_IN_MB = 1843.2;
+export const MEDIA_MAX_SIZE_IN_MB = 3686.4; // ie 3.6GB

@@ -23,6 +23,7 @@ import {
   MEDIA_UPLOADS_TRANSCODE_TO_HLS,
   TRANSCODED_MEDIA_UPLOADS,
 } from './common/constants/kafkaTopics';
+import { ValidatorAndDataProcessingModule } from './validator-and-data-processing/validator-and-data-processing.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import {
       brokers: JSON.parse(process.env.KAFKA_BROKERS),
     }),
     HlsModule,
+    ValidatorAndDataProcessingModule,
   ],
 })
 export class AppModule implements OnModuleInit {
@@ -67,7 +69,7 @@ export class AppModule implements OnModuleInit {
     await this.kafkaService.addConsumer(
       SEASON_EPISODE_THUMBNAIL_UPLOADS,
       `${SEASON_EPISODE_THUMBNAIL_UPLOADS}-group`,
-      this.episodeConsumerService.uploadEpisodeThumbnail.bind(
+      this.episodeConsumerService.uploadThumbnail.bind(
         this.episodeConsumerService,
       ),
     );

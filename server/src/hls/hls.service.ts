@@ -12,10 +12,34 @@ ffmpeg.setFfmpegPath(ffmpegStatic || '/usr/bin/ffmpeg');
 @Injectable()
 export class HlsService {
   private readonly resolutions = [
-    { width: 640, height: 360, label: '360p', audioBitrate: '96k' },
-    { width: 854, height: 480, label: '480p', audioBitrate: '128k' },
-    { width: 1280, height: 720, label: '720p', audioBitrate: '192k' },
-    { width: 1920, height: 1080, label: '1080p', audioBitrate: '256k' },
+    {
+      width: 640,
+      height: 360,
+      label: '360p',
+      videoBitrate: '800k',
+      audioBitrate: '96k',
+    },
+    {
+      width: 854,
+      height: 480,
+      label: '480p',
+      videoBitrate: '1400k',
+      audioBitrate: '128k',
+    },
+    {
+      width: 1280,
+      height: 720,
+      label: '720p',
+      videoBitrate: '2800k',
+      audioBitrate: '192k',
+    },
+    {
+      width: 1920,
+      height: 1080,
+      label: '1080p',
+      videoBitrate: '5000k',
+      audioBitrate: '256k',
+    },
   ];
 
   constructor(
@@ -36,11 +60,25 @@ export class HlsService {
     if (!existsSync(fileOutputDir))
       mkdirSync(fileOutputDir, { recursive: true });
 
+    const inputFileResolution =
+      await this.getInputVideoResolution(inputFilePath);
+    const targetResolutions = this.resolutions.filter(
+      (res) =>
+        res.width <= inputFileResolution.width &&
+        res.height <= inputFileResolution.height,
+    );
+
+    if (targetResolutions.length === 0) {
+      return console.warn(
+        `${fileNameWithExt}'s resolution is lower than the defined resolutions. Skipping transcoding.`,
+      );
+    }
+
     const variantPlaylists = [];
 
     const transcodeStartsOn = Date.now();
     await Promise.all(
-      this.resolutions.map(async ({ width, height, label, audioBitrate }) => {
+      targetResolutions.map(async ({ width, height, label, audioBitrate }) => {
         const outputFileName = `${label}.m3u8`;
         const segmentFileName = `${label}_%03d.ts`;
 
@@ -55,9 +93,9 @@ export class HlsService {
           ffmpeg(inputFilePath)
             .outputOptions([
               '-c:v',
-              'libx264',
+              'libx264', // libx264, libx256 (Slow)
               '-crf',
-              '23', // Adjust this value between 18 and 22 for desired quality (Best 20)
+              '23', // Adjust this value between 18 and 22 for desired quality (Best 20) Current: 23
               '-preset',
               'slow', // Use 'veryslow' for better compression at the cost of encoding time or slow
               '-vf',
@@ -103,15 +141,31 @@ export class HlsService {
     console.log('Deleting Input File...');
     unlinkSync(inputFilePath);
 
-    // console.log(`Uploading ${fileNameWithExt} transcoded media to firebase...`);
-    // this.episodeProducerService.sendTranscodedMediaUploadsMessage(
-    //   fileOutputDir,
-    //   fileNameWithExt,
-    //   seriesId,
-    //   seasonId,
-    //   episodeId,
-    //   fileOutputDir,
-    // );
+    console.log(`Uploading ${fileNameWithExt} transcoded media to firebase...`);
+    this.episodeProducerService.sendTranscodedMediaUploadsMessage(
+      fileOutputDir,
+      fileNameWithExt,
+      seriesId,
+      seasonId,
+      episodeId,
+      fileOutputDir,
+    );
+  }
+
+  private async getInputVideoResolution(
+    inputFilePath: string,
+  ): Promise<{ width: number; height: number }> {
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(inputFilePath, (err, metadata) => {
+        if (err) {
+          console.error(`Error retrieving video metadata: ${err.message}`);
+          return reject(err as Error);
+        }
+
+        const { width, height } = metadata.streams[0];
+        resolve({ width, height });
+      });
+    });
   }
 
   private async createMasterPlaylist(
@@ -139,10 +193,10 @@ export class HlsService {
   }
 
   private estimateBandwidth(width: number, height: number): number {
-    if (width === 1920 && height === 1080) return 5000000; // 5 Mbps
-    if (width === 1280 && height === 720) return 2800000; // 2.8 Mbps
-    if (width === 854 && height === 480) return 1400000; // 1.4 Mbps
+    if (width === 1920 && height === 1080) return 5000000;
+    if (width === 1280 && height === 720) return 2800000;
+    if (width === 854 && height === 480) return 1400000;
     if (width === 640 && height === 360) return 800000;
-    return 1000000; // Default to 1 Mbps
+    return 1000000; // Default bandwidth
   }
 }

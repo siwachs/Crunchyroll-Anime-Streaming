@@ -55,7 +55,7 @@ export class EpisodeService {
       })
       .exec();
 
-    await this.episodeProducerService.sendThumbnailUploadsMessage(
+    this.episodeProducerService.sendThumbnailUploadsMessage(
       seriesId,
       seasonId,
       newEpisode._id.toString(),
@@ -65,7 +65,7 @@ export class EpisodeService {
     return newEpisode;
   }
 
-  async uploadMedia(
+  uploadMedia(
     seriesId: string,
     seasonId: string,
     episodeId: string,
