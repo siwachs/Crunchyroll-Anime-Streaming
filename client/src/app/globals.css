@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --app-background-primary: #000;
@@ -97,7 +99,7 @@ main {
 }
 
 .meta-tags {
-  @apply truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)] select-none;
+  @apply select-none truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)];
 }
 
 .meta-tags span {
