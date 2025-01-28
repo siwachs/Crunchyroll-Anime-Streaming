@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-import { Episode } from '../../episode/schemas/episode.schema';
+import { Episode } from 'src/episode/schemas/episode.schema';
 
 export type SeasonDocument = HydratedDocument<Season>;
 

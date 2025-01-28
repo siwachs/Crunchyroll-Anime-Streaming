@@ -5,7 +5,7 @@ import { MetaTag } from 'src/meta-tag/schemas/meta-tag.schema';
 
 export type EpisodeDocument = HydratedDocument<Episode>;
 
-@Schema({ collection: 'Episodes' })
+@Schema({ collection: 'Episodes', timestamps: true })
 export class Episode {
   @Prop({ type: String, required: true })
   thumbnail: string;

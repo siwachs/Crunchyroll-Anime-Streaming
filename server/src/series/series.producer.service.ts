@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
 
-import { DataProcessingService } from 'src/data-processing/data-processing.service';
+import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
 import { KafkaService } from 'src/kafka/kafka.service';
 
-import { SERIES_POSTER_UPLOADS } from 'src/common/constants/kafkaTopics';
+import { SERIES_IMAGES_UPLOADS } from 'src/common/constants/kafkaTopics';
 
 @Injectable()
 export class SeriesProducerService {
   constructor(
-    private readonly dataProcessingService: DataProcessingService,
+    private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
     private readonly kafkaService: KafkaService,
   ) {}
 
-  async sendSeriesPosterUploadsMessage(
+  sendImagesUploadsMessage(
     docId: string,
-    files: Express.Multer.File[],
+    files: Record<string, Express.Multer.File | null>,
   ) {
     const message = {
       docId,
-      files: files.map(this.dataProcessingService.fileBufferToBase64String),
+      files: Object.keys(files).reduce((acc, key) => {
+        acc[key] =
+          files[key] === null
+            ? files[key]
+            : this.validatorAndDataProcessingService.fileBufferToBase64String(
+                files[key],
+              );
+
+        return acc;
+      }, {}),
     };
 
-    await this.kafkaService.sendMessage(SERIES_POSTER_UPLOADS, docId, message);
+    this.kafkaService.sendMessage(SERIES_IMAGES_UPLOADS, docId, message);
   }
 }

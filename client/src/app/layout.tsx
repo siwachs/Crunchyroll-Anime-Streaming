@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Header from "@/components/header";
 
 import lato from "@/assets/fonts";
-import "@/assets/globals.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Crunchyroll: Watch Popular Anime, Play Games & Shop Online",

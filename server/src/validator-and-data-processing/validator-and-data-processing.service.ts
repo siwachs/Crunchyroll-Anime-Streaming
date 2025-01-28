@@ -1,11 +1,29 @@
-import { Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
-
 import { extname } from 'path';
+import { createHash } from 'crypto';
+import {
+  Injectable,
+  UnsupportedMediaTypeException,
+  BadRequestException,
+} from '@nestjs/common';
 
 import { File } from 'src/common/types';
 
 @Injectable()
 export class ValidatorAndDataProcessingService {
+  compareFiles(file1: Express.Multer.File, file2: Express.Multer.File) {
+    if (file1.mimetype !== file2.mimetype) return;
+
+    if (file1.size !== file2.size) return;
+
+    const file1Hash = createHash('sha256').update(file1.buffer).digest('hex');
+    const file2Hash = createHash('sha256').update(file2.buffer).digest('hex');
+
+    if (file1Hash === file2Hash)
+      throw new BadRequestException(
+        `File: ${file1.originalname} and File: ${file2.originalname} are same files.`,
+      );
+  }
+
   validateFileMimeTypeAndSize(
     file: Express.Multer.File,
     options: { allowedMimeTypes: string[]; maxSize: number },

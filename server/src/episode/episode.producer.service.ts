@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { DataProcessingService } from 'src/data-processing/data-processing.service';
+import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
 import { KafkaService } from 'src/kafka/kafka.service';
 
 import {
@@ -12,7 +12,7 @@ import {
 @Injectable()
 export class EpisodeProducerService {
   constructor(
-    private readonly dataProcessingService: DataProcessingService,
+    private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
     private readonly kafkaService: KafkaService,
   ) {}
 
@@ -26,7 +26,9 @@ export class EpisodeProducerService {
       seriesId,
       seasonId,
       episodeId,
-      file: this.dataProcessingService.fileBufferToBase64String(thumbnail),
+      file: this.validatorAndDataProcessingService.fileBufferToBase64String(
+        thumbnail,
+      ),
     };
 
     const key = `${seriesId}_${seasonId}_${episodeId}`;

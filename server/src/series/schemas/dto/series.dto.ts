@@ -37,13 +37,26 @@ export class CreateSeriesFormDto {
   @IsObject()
   @IsNotEmptyObject()
   details: Record<string, string>;
+
+  @IsString()
+  @IsNotEmpty()
+  licence: string;
 }
 
 export class CreateSeriesDto extends CreateSeriesFormDto {
   @Transform(transformerStringArrayOrObject)
   @IsObject()
   @IsNotEmptyObject()
-  image: {
+  banner: {
+    name: string;
+    tall: string;
+    wide: string;
+  };
+
+  @Transform(transformerStringArrayOrObject)
+  @IsObject()
+  @IsNotEmptyObject()
+  poster: {
     tall: string;
     wide: string;
   };

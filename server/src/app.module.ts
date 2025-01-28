@@ -7,23 +7,21 @@ import { GenreModule } from './genre/genre.module';
 import { SeasonModule } from './season/season.module';
 import { EpisodeModule } from './episode/episode.module';
 import { MetaTagModule } from './meta-tag/meta-tag.module';
-import { ValidatorModule } from './validator/validator.module';
 import { FirebaseModule } from './firebase/firebase.module';
-import { DataProcessingModule } from './data-processing/data-processing.module';
 import { KafkaModule } from './kafka/kafka.module';
 import { HlsModule } from './hls/hls.module';
+import { ValidatorAndDataProcessingModule } from './validator-and-data-processing/validator-and-data-processing.module';
 
 import { KafkaService } from './kafka/kafka.service';
 import { SeriesConsumerService } from './series/series.consumer.service';
 import { EpisodeConsumerService } from './episode/episode.consumer.service';
 
 import {
-  SERIES_POSTER_UPLOADS,
+  SERIES_IMAGES_UPLOADS,
   SEASON_EPISODE_THUMBNAIL_UPLOADS,
   MEDIA_UPLOADS_TRANSCODE_TO_HLS,
   TRANSCODED_MEDIA_UPLOADS,
 } from './common/constants/kafkaTopics';
-import { ValidatorAndDataProcessingModule } from './validator-and-data-processing/validator-and-data-processing.module';
 
 @Module({
   imports: [
@@ -39,15 +37,13 @@ import { ValidatorAndDataProcessingModule } from './validator-and-data-processin
     SeasonModule,
     EpisodeModule,
     MetaTagModule,
-    ValidatorModule,
     FirebaseModule,
-    DataProcessingModule,
+    ValidatorAndDataProcessingModule,
     KafkaModule.register({
       clientId: process.env.KAFKA_CLIENT_ID,
       brokers: JSON.parse(process.env.KAFKA_BROKERS),
     }),
     HlsModule,
-    ValidatorAndDataProcessingModule,
   ],
 })
 export class AppModule implements OnModuleInit {
@@ -59,11 +55,9 @@ export class AppModule implements OnModuleInit {
 
   async onModuleInit() {
     await this.kafkaService.addConsumer(
-      SERIES_POSTER_UPLOADS,
-      `${SERIES_POSTER_UPLOADS}-group`,
-      this.seriesConsumerService.uploadSeriesPoster.bind(
-        this.seriesConsumerService,
-      ),
+      SERIES_IMAGES_UPLOADS,
+      `${SERIES_IMAGES_UPLOADS}-group`,
+      this.seriesConsumerService.uploadImages.bind(this.seriesConsumerService),
     );
 
     await this.kafkaService.addConsumer(

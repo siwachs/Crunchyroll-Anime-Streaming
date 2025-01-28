@@ -52,7 +52,7 @@
 .carousel-card-sizer {
   --under-hero-whitespace: 18.75rem;
 
-  @apply aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem] 2xl:min-h-[37.5rem] 3xl:min-h-[43.75rem];
+  @apply 3xl:min-h-[43.75rem] aspect-[1/1.15] w-full md:aspect-[20/7] md:max-h-[calc(100vh-var(--under-hero-whitespace))] md:min-h-[var(--under-hero-whitespace)] lg:min-h-[22.5rem] xl:min-h-[31.25rem] 2xl:min-h-[37.5rem];
 
   align-self: end;
   grid-area: carousel-card;
@@ -65,7 +65,7 @@
 }
 
 .carousel-card-bg {
-  @apply pointer-events-none absolute left-0 top-0 -z-[1] aspect-[auto_2/3] w-full min-w-full md:aspect-[auto_16/9];
+  @apply pointer-events-none absolute top-0 left-0 -z-[1] aspect-[auto_2/3] w-full min-w-full md:aspect-[auto_16/9];
 }
 
 .carousel-card-bg::before,
@@ -128,7 +128,7 @@
 .navigatin-button {
   --pill-color: #ffffff80;
 
-  @apply relative h-2 w-6 px-1 py-2 transition-[width] duration-300 ease-quick;
+  @apply ease-quick relative h-2 w-6 px-1 py-2 transition-[width] duration-300;
 
   box-sizing: initial;
 }

@@ -1,14 +1,29 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-import { MetaTag } from '../../meta-tag/schemas/meta-tag.schema';
-import { Genre } from '../../genre/schemas/genre.schema';
-import { Season } from '../../season/schemas/season.schema';
+import { Genre } from 'src/genre/schemas/genre.schema';
+import { MetaTag } from 'src/meta-tag/schemas/meta-tag.schema';
+import { Season } from 'src/season/schemas/season.schema';
 
 export type SeriesDocument = HydratedDocument<Series>;
 
-@Schema({ collection: 'Series' })
+@Schema({ collection: 'Series', timestamps: true })
 export class Series {
+  @Prop({
+    type: {
+      name: { type: String, required: true },
+      tall: { type: String, required: true },
+      wide: { type: String, required: true },
+    },
+    required: true,
+    _id: false,
+  })
+  banner: {
+    name: string;
+    tall: string;
+    wide: string;
+  };
+
   @Prop({
     type: {
       tall: { type: String, required: true },
@@ -17,7 +32,7 @@ export class Series {
     required: true,
     _id: false,
   })
-  image: {
+  poster: {
     tall: string;
     wide: string;
   };
@@ -49,10 +64,19 @@ export class Series {
   @Prop({ type: Object, required: true })
   details: Record<string, string>;
 
+  @Prop({ type: String, required: true })
+  licence: string;
+
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Season' }],
   })
   seasons: Season[];
+
+  @Prop({
+    type: Date,
+    default: () => new Date(),
+  })
+  seriesUpdatedOn: Date;
 }
 
 export const SeriesSchema = SchemaFactory.createForClass(Series);

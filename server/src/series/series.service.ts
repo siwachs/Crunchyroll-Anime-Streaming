@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Series } from './schemas/series.schema';
 
 import { CreateSeriesFormDto, CreateSeriesDto } from './schemas/dto/series.dto';
-import { DUPLICATE_KEY_ERROR } from '../common/constants/mongoose';
+import { DUPLICATE_KEY_ERROR } from 'src/common/constants/mongoose';
 
 @Injectable()
 export class SeriesService {
@@ -16,11 +16,19 @@ export class SeriesService {
     private readonly seriesProducerService: SeriesProducerService,
   ) {}
 
-  async createSeries(files: Express.Multer.File[], dto: CreateSeriesFormDto) {
+  async createSeries(
+    images: Record<string, Express.Multer.File | null>,
+    dto: CreateSeriesFormDto,
+  ) {
     try {
       const extendedDto: CreateSeriesDto = {
         ...dto,
-        image: {
+        banner: {
+          name: 'Uploading...',
+          tall: 'Uploading...',
+          wide: 'Uploading...',
+        },
+        poster: {
           tall: 'Uploading...',
           wide: 'Uploading...',
         },
@@ -29,9 +37,9 @@ export class SeriesService {
       const newSeriesDoc = new this.seriesModel(extendedDto);
       const newSeries = await newSeriesDoc.save();
 
-      await this.seriesProducerService.sendSeriesPosterUploadsMessage(
+      this.seriesProducerService.sendImagesUploadsMessage(
         newSeries._id.toString(),
-        files,
+        images,
       );
 
       return newSeries;

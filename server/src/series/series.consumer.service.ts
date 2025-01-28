@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { DataProcessingService } from 'src/data-processing/data-processing.service';
+import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
 import { FirebaseService } from '../firebase/firebase.service';
 
 import { Model } from 'mongoose';
@@ -13,29 +13,59 @@ import { SERIES_BASE_STORAGE_REF } from 'src/common/constants/firebase';
 @Injectable()
 export class SeriesConsumerService {
   constructor(
-    private readonly dataProcessingService: DataProcessingService,
+    private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
     @InjectModel(Series.name) private readonly seriesModel: Model<Series>,
     private readonly firebaseService: FirebaseService,
   ) {}
 
-  async uploadSeriesPoster(message: { docId: string; files: File[] }) {
+  async uploadImages(message: {
+    docId: string;
+    files: Record<string, File | null>;
+  }) {
     const { docId, files } = message;
+    console.log(`Uploading ${docId}'s images to firebase...`);
 
-    const bufferFiles = files.map(
-      this.dataProcessingService.base64StringToFileBuffer,
+    const bannerImages = [
+      files['banner.name'],
+      files['banner.tall'],
+      files['banner.wide'],
+    ].map((file) =>
+      file === null
+        ? file
+        : this.validatorAndDataProcessingService.base64StringToFileBuffer(file),
+    );
+    const posterImages = [files['poster.tall'], files['poster.wide']].map(
+      (file) =>
+        file === null
+          ? file
+          : this.validatorAndDataProcessingService.base64StringToFileBuffer(
+              file,
+            ),
     );
 
-    const uploadedFilesURLs = await this.firebaseService.uploadFiles(
-      bufferFiles,
-      `${SERIES_BASE_STORAGE_REF}/${docId}`,
+    const uploadedBannerURLs = await this.firebaseService.uploadFiles(
+      bannerImages.filter((file) => file !== null),
+      `${SERIES_BASE_STORAGE_REF}/${docId}/banner`,
     );
-
-    const { tall, wide } = uploadedFilesURLs;
+    const uploadedPosterURLs = await this.firebaseService.uploadFiles(
+      posterImages.filter((file) => file !== null),
+      `${SERIES_BASE_STORAGE_REF}/${docId}/poster`,
+    );
 
     await this.seriesModel
       .findByIdAndUpdate(docId, {
-        image: { tall, wide },
+        banner: {
+          name: uploadedBannerURLs['name'],
+          tall: uploadedBannerURLs['tall'] || uploadedPosterURLs['tall'],
+          wide: uploadedBannerURLs['wide'] || uploadedPosterURLs['wide'],
+        },
+        poster: {
+          tall: uploadedPosterURLs['tall'] || uploadedBannerURLs['tall'],
+          wide: uploadedPosterURLs['wide'] || uploadedBannerURLs['wide'],
+        },
       })
       .exec();
+
+    console.log(`${docId}'s images are uploaded`);
   }
 }
