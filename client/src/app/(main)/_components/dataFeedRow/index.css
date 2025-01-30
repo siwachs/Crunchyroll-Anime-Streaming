@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .wide-cards-carousel-layout {
   --wide-cards-carousel-cols: 2;
   --wide-cards-carousel-rows: 1;
@@ -74,7 +78,7 @@
 .wide-card-carousel-arrow {
   --arrow-width: max(var(--carousel-overflow-x-hint), 1.5rem);
 
-  @apply relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-colors ease-quick sm:flex;
+  @apply ease-quick relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-colors sm:flex;
 }
 
 .wide-cards-carousel-container:hover .wide-card-carousel-arrow {
@@ -94,7 +98,7 @@
 }
 
 .wide-card-carousel-arrow::before {
-  @apply absolute inset-0 -z-[1] block transition-opacity ease-quick content-[""] sm:opacity-0;
+  @apply ease-quick absolute inset-0 -z-[1] block transition-opacity content-[""] sm:opacity-0;
 
   background: linear-gradient(
     var(--gradient-dir),
@@ -202,7 +206,7 @@
 }
 
 .browse-card-hover {
-  @apply absolute inset-0 flex opacity-0 transition-opacity ease-quick;
+  @apply ease-quick absolute inset-0 flex opacity-0 transition-opacity;
 }
 
 .browse-card-hover:hover,
@@ -229,7 +233,7 @@
 .browse-card-hover-body-description {
   --max-lines: 7;
 
-  @apply line-clamp-[var(--max-lines)] break-words text-sm/leading-4.5;
+  @apply line-clamp-[var(--max-lines)] text-sm/leading-4.5 break-words;
 
   max-height: calc(var(--max-lines) * 1.125rem);
 }

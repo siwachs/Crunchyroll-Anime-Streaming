@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Header from "@/components/header";
 
 import lato from "@/assets/fonts";
-import "./globals.css";
+import "@/assets/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Crunchyroll: Watch Popular Anime, Play Games & Shop Online",
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={lato.className}>
-        <div className="h-full min-w-80">
+        <div className="h-full min-w-xs">
           <div className="flex flex-col">
             <Header />
             {children}

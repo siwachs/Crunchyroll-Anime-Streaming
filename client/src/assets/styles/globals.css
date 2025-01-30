@@ -1,5 +1,5 @@
-@config "../../tailwind.config.js";
 @import "tailwindcss";
+@import "./theme.css";
 
 :root {
   --app-background-primary: #000;
@@ -37,6 +37,10 @@ body {
   overflow-anchor: none; /* Disable Auto Scroll from dynamically loaded content */
 }
 
+button {
+  @apply cursor-pointer;
+}
+
 button:focus-visible,
 a:focus-visible {
   outline: 0.25rem solid var(--meta-color);
@@ -62,6 +66,10 @@ main {
   --container-max-width: 84.375rem;
 
   @apply mx-auto w-full max-w-full px-[var(--container-inline-padding)];
+}
+
+.container-cmp.has-no-gutters {
+  @apply px-0;
 }
 
 .container-cmp-has-max-width {
@@ -98,7 +106,7 @@ main {
 }
 
 .meta-tags {
-  @apply select-none truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)];
+  @apply truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)] select-none;
 }
 
 .meta-tags span {

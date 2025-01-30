@@ -11,3 +11,5 @@ Types
 Icons
 
 Assets
+
+CONSTANTS

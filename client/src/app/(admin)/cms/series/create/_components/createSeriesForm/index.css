@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
+.input-label {
+  @apply mb-1 block text-lg font-semibold select-none;
+}
+
+.input {
+  @apply app-transition-colors mt-2 block w-full rounded-md border border-gray-300 bg-[var(--app-background-primary)] px-4 py-2 text-lg outline-none focus:border-[var(--app-background-crunchyroll-orange)];
+}
+
+.select,
+.text-area {
+  @apply scrollbar-thin min-h-60;
+}

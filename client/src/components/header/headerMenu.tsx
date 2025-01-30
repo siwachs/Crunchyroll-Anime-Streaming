@@ -9,7 +9,7 @@ import { HiMiniBars3, HiMiniChevronDown } from "react-icons/hi2";
 import { FaCaretDown } from "react-icons/fa";
 
 import { NAV_LINKS, GENRES } from "@/data/header";
-import "./headerMenu.css";
+import "./header-menu.css";
 
 const HeaderMenu: React.FC<{
   headerState: HeaderState;
@@ -49,7 +49,7 @@ const HeaderMenu: React.FC<{
       >
         <nav className="menu-dropdown-content">
           <section className="menu-section border-b-2 border-[var(--app-border-primary)] lg:border-none">
-            <small className="small-title lg:hidden">Browse</small>
+            <small className="small-title">Browse</small>
 
             <ul>
               {NAV_LINKS.map((link) => (
@@ -57,15 +57,16 @@ const HeaderMenu: React.FC<{
                   {link?.children ? (
                     <div className="lg:hidden">
                       <div
+                        data-active={headerState === "genresListExpanded"}
                         onClick={toogleGenresList}
                         onKeyDown={toogleGenresList}
                         tabIndex={0}
                         role="button"
-                        className="menu-title app-transition-colors"
+                        className="menu-title"
                       >
                         <span>{link.title}</span>
 
-                        <span className="menu-title-icon absolute left-[calc(100vw-13%)] top-1/2 -translate-y-1/2 sm:left-[15.75rem]">
+                        <span className="menu-title-icon">
                           <HiMiniChevronDown className="size-6" />
                         </span>
                       </div>
@@ -79,7 +80,7 @@ const HeaderMenu: React.FC<{
                             <Link
                               href={child.href}
                               prefetch={false}
-                              className="submenu-title app-transition-colors"
+                              className="submenu-title"
                             >
                               <h5>{child.title}</h5>
                             </Link>
@@ -91,7 +92,7 @@ const HeaderMenu: React.FC<{
                     <Link
                       href={link.href}
                       prefetch={false}
-                      className="menu-title app-transition-colors"
+                      className="menu-title"
                     >
                       <span>{link.title}</span>
                     </Link>

@@ -29,7 +29,7 @@ const Banner: React.FC = () => {
 
   return (
     <div className="relative z-0">
-      <div className="container-cmp carousel-navigation-arrow left-0 px-0">
+      <div className="container-cmp carousel-navigation-arrow has-no-gutters left-0">
         <button
           aria-label="Prev slide"
           data-index={(currentActiveCard - 1 + images.length) % images.length}
@@ -53,7 +53,7 @@ const Banner: React.FC = () => {
               aria-label={`${index + 1} of ${images.length}`}
               className="carousel-card"
             >
-              <div className="container-cmp carousel-card-container px-0">
+              <div className="container-cmp carousel-card-container has-no-gutters">
                 <div className="carousel-card-grid">
                   <div className="carousel-card-bg">
                     <Image
@@ -99,7 +99,7 @@ const Banner: React.FC = () => {
                   </div>
 
                   <div className="carousel-card-body">
-                    <div className="meta-tags mb-5 mt-3.5 sm:mb-8 md:mt-5 lg:mb-2 2xl:mt-8">
+                    <div className="meta-tags mt-3.5 mb-5 sm:mb-8 md:mt-5 lg:mb-2 2xl:mt-8">
                       <span>14+</span>
                       <span className="rhombus">Sub | Dub</span>
                       <span className="rhombus">Action, Adventure</span>
@@ -128,7 +128,7 @@ const Banner: React.FC = () => {
         })}
       </div>
 
-      <div className="container-cmp carousel-navigation-arrow right-0 px-0">
+      <div className="container-cmp carousel-navigation-arrow has-no-gutters right-0">
         <button
           aria-label="Next slide"
           data-index={(currentActiveCard + 1) % images.length}

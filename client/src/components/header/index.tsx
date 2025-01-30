@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="container-cmp header-container px-0">
+      <div className="container-cmp header-container has-no-gutters">
         <div title="Company Logo" className="header-logo">
           <Link href="/" prefetch={false} className="block size-full px-4.5">
             <HeaderLogoMobileOnly className="sm:hidden" />

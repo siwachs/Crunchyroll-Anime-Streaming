@@ -1,5 +1,9 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .menu-dropdown {
-  @apply invisible fixed left-0 top-15 grid h-[calc(100%-3.75rem)] w-full -translate-y-2.5 overflow-y-auto bg-[var(--app-overlay-secondary)] opacity-0 sm:w-[18.75rem] lg:left-auto lg:h-auto lg:w-auto lg:py-2.5;
+  @apply invisible fixed top-15 left-0 grid h-[calc(100%-3.75rem)] w-full -translate-y-2.5 overflow-y-auto bg-[var(--app-overlay-secondary)] opacity-0 sm:w-[18.75rem] lg:left-auto lg:h-auto lg:w-auto lg:py-2.5;
 
   grid-template-areas: "content";
   scrollbar-width: thin;
@@ -25,7 +29,7 @@
 }
 
 .small-title {
-  @apply block select-none px-5 py-2.5 text-xs font-semibold uppercase text-[var(--meta-color)] lg:p-[0.8125rem_1rem];
+  @apply block px-5 py-2.5 text-xs font-semibold text-[var(--meta-color)] uppercase select-none lg:hidden;
 }
 
 .menu-section {
@@ -37,10 +41,12 @@
 }
 
 .menu-title {
-  @apply relative flex items-center px-4.5 py-3 text-base font-medium text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)] data-[active=true]:bg-[var(--app-background-secondary)] lg:px-4 lg:text-sm/leading-4.5;
+  @apply app-transition-colors relative flex items-center px-4.5 py-3 text-base font-medium text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)] data-[active=true]:bg-[var(--app-background-secondary)] lg:px-4 lg:text-sm/leading-4.5;
 }
 
 .menu-title-icon {
+  @apply absolute top-1/2 left-[calc(100vw-13%)] -translate-y-1/2 sm:left-[15.75rem];
+
   transition: transform 0.1s cubic-bezier(0, 0, 0.25, 1);
 }
 
@@ -49,7 +55,7 @@
 }
 
 .submenu-title {
-  @apply block p-[0.875rem_2.375rem] text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)] hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem] lg:hover:bg-[var(--app-background-secondary)];
+  @apply app-transition-colors block p-[0.875rem_2.375rem] text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)] hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem] lg:hover:bg-[var(--app-background-secondary)];
 }
 
 .submenu-title-active {

@@ -64,7 +64,7 @@ const DataFeedCarousel: React.FC = () => {
   return (
     <div
       ref={layoutRef}
-      className="container-cmp wide-cards-carousel-layout px-0"
+      className="container-cmp wide-cards-carousel-layout has-no-gutters"
     >
       <div className="container-cmp wide-cards-carousel-container">
         <div className="wide-card-carousel-arrow-wrapper">

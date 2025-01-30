@@ -10,4 +10,15 @@ function triggerCallbackOnClickOrOnKeydown(
   if (keyboardEvent.key === "Enter" || keyboardEvent.key === " ") callback();
 }
 
-export { triggerCallbackOnClickOrOnKeydown };
+function getAttribute(
+  e: MouseEvent,
+  closest: string,
+  attribute: string,
+): string {
+  const { target } = e;
+
+  const element = (target as HTMLAreaElement).closest(closest);
+  return element?.getAttribute(attribute) ?? "";
+}
+
+export { triggerCallbackOnClickOrOnKeydown, getAttribute };

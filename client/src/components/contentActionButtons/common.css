@@ -1,5 +1,9 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .action-button {
-  @apply app-transition-colors h-10 select-none items-center justify-center;
+  @apply app-transition-colors h-10 items-center justify-center select-none;
 }
 
 .action-button-shadow {

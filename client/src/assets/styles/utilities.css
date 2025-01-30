@@ -1,0 +1,28 @@
+@utility app-transition-colors {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+@utility app-transition-opacity {
+  transition-property: opacity;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+@utility text-rendering-optimized {
+  text-rendering: optimizeLegibility;
+}
+
+@utility box-initial {
+  box-sizing: initial;
+}
+
+@utility initial {
+  display: initial;
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}

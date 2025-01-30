@@ -1,9 +1,13 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .header {
   @apply relative flex-[0_0_3.75rem];
 }
 
 .header-container {
-  @apply fixed left-0 right-0 z-[100] grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
+  @apply fixed right-0 left-0 z-[100] grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
 
   grid-template-areas: "menu logo actions";
 }
@@ -23,7 +27,7 @@
 }
 
 .header-logo a {
-  @apply app-transition-colors text-[var(--app-background-crunchyroll-orange)];
+  @apply app-transition-colors flex items-center text-[var(--app-background-crunchyroll-orange)];
 }
 
 .header-logo a:hover,
@@ -32,7 +36,7 @@
 }
 
 .header-logo svg {
-  @apply h-full w-full fill-current;
+  @apply fill-current;
 }
 
 .icon-wrapper {
@@ -60,5 +64,5 @@
 }
 
 .app-overlay {
-  @apply invisible fixed left-0 top-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[98] data-[active=true]:opacity-100;
+  @apply invisible fixed top-0 left-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[98] data-[active=true]:opacity-100;
 }

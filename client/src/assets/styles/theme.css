@@ -1,0 +1,19 @@
+@theme {
+  --text-1_5xl: 1.375rem;
+  --text-2_5xl: 1.75rem;
+  --text-3_5xl: 2.125rem;
+
+  --breakpoint-sm: 568px;
+  --breakpoint-2sm: 680px;
+  --breakpoint-md: 800px;
+  --breakpoint-2md: 980px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1720px;
+  --breakpoint-3xl: 2160px;
+
+  --leading-leading-4_5: 1.125rem;
+  --leading-leading-6_5: 1.625rem;
+  --leading-leading-10_5: 2.75rem;
+
+  --ease-quick: ease;
+}
