@@ -57,11 +57,11 @@ export class SeriesConsumerService {
         banner: {
           name: uploadedBannerURLs['name'],
           tall: uploadedBannerURLs['tall'] || uploadedPosterURLs['tall'],
-          wide: uploadedBannerURLs['wide'] || uploadedPosterURLs['wide'],
+          wide: uploadedBannerURLs['wide'],
         },
         poster: {
           tall: uploadedPosterURLs['tall'] || uploadedBannerURLs['tall'],
-          wide: uploadedPosterURLs['wide'] || uploadedBannerURLs['wide'],
+          wide: uploadedPosterURLs['wide'],
         },
       })
       .exec();

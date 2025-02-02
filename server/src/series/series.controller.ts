@@ -35,8 +35,14 @@ export class SeriesController {
         `Either ${fieldname1} or ${fieldname2} must be provided, or both. Neither can be empty.`,
       );
 
-    if (file1 && file2)
-      this.validatorAndDataProcessingService.compareFiles(file1, file2);
+    if (
+      file1 &&
+      file2 &&
+      this.validatorAndDataProcessingService.compareFiles(file1, file2)
+    )
+      throw new BadRequestException(
+        `File: ${file1.originalname} in ${file1.fieldname} field and File: ${file2.originalname} in ${file2.fieldname} field can not have same files either remove one of them or select different files.`,
+      );
 
     [file1, file2]
       .filter((file) => file !== undefined)
@@ -86,19 +92,20 @@ export class SeriesController {
       return acc;
     }, {});
 
-    if (!images['banner.name'])
-      throw new BadRequestException('banner.name is required.');
+    if (
+      !images['banner.name'] ||
+      !images['banner.wide'] ||
+      !images['poster.wide']
+    )
+      throw new BadRequestException(
+        'banner.name, banner.wide and poster.wide are required.',
+      );
+
     this.validateImagePairs(
       images['banner.tall'],
       'banner.tall',
       images['poster.tall'],
       'poster.tall',
-    );
-    this.validateImagePairs(
-      images['banner.wide'],
-      'banner.wide',
-      images['poster.wide'],
-      'poster.wide',
     );
 
     const renamedImages = Object.keys(images).reduce((acc, key) => {

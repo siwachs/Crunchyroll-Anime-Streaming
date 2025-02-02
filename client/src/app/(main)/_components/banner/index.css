@@ -24,7 +24,7 @@
 }
 
 .carousel-cards {
-  @apply relative -z-[1] grid;
+  @apply relative -z-1 grid;
 
   grid-template-areas: "content";
 }
@@ -155,7 +155,7 @@
 }
 
 .navigatin-button[aria-current="true"] span {
-  @apply h-full rounded bg-[var(--app-background-crunchyroll-orange)];
+  @apply h-full rounded-sm bg-[var(--app-background-crunchyroll-orange)];
 
   animation: onCardLoad 10s linear;
 }

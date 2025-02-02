@@ -1,27 +1,19 @@
+import getMetaTags from "@/lib/mongodb/CRUD/getMetaTags";
+import getGenres from "@/lib/mongodb/CRUD/getGenres";
+
 import CreateSeriesForm from "./_components/createSeriesForm";
 
-import { connectToDb } from "@/lib/mongoDB";
-
 export default async function CreateSeries() {
-  const { db } = await connectToDb();
-
-  const genresArray = await db.collection("Genres").find({}).toArray();
-  const metaTagsArray = await db.collection("MetaTags").find({}).toArray();
-
-  const genres = genresArray.map((genre) => {
-    const { _id, ...restOfgenre } = genre;
-
-    return { id: _id.toString(), ...restOfgenre };
-  });
-  const metaTags = metaTagsArray.map((metaTag) => {
-    const { _id, ...restOfMetaTag } = metaTag;
-
-    return { id: _id.toString(), ...restOfMetaTag };
-  });
+  const metaTags = await getMetaTags();
+  const genres = await getGenres();
 
   return (
     <div className="my-6">
-      <CreateSeriesForm />
+      <CreateSeriesForm
+        cmsURL={process.env.CMS_SERVER as string}
+        metaTags={metaTags}
+        genres={genres}
+      />
     </div>
   );
 }

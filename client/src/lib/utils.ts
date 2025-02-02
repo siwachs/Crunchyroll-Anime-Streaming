@@ -21,4 +21,9 @@ function getAttribute(
   return element?.getAttribute(attribute) ?? "";
 }
 
-export { triggerCallbackOnClickOrOnKeydown, getAttribute };
+function getClientIP(headersList: Headers) {
+  const xForwardedFor = headersList.get("x-forwarded-for");
+  return xForwardedFor ? xForwardedFor.split(",")[0] : "127.0.0.1";
+}
+
+export { triggerCallbackOnClickOrOnKeydown, getAttribute, getClientIP };

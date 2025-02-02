@@ -7,7 +7,7 @@
 }
 
 .header-container {
-  @apply fixed right-0 left-0 z-[100] grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
+  @apply fixed right-0 left-0 z-100 grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
 
   grid-template-areas: "menu logo actions";
 }
@@ -64,5 +64,5 @@
 }
 
 .app-overlay {
-  @apply invisible fixed top-0 left-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-[98] data-[active=true]:opacity-100;
+  @apply invisible fixed top-0 left-0 z-0 h-full w-full bg-[var(--app-overlay-primary)] opacity-0 data-[active=true]:visible data-[active=true]:z-98 data-[active=true]:opacity-100;
 }

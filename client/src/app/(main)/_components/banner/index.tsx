@@ -8,11 +8,11 @@ import ContentActionButtons from "@/components/contentActionButtons";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-import images from "@/data/banner";
+import { BannerItem } from "./index.types";
 import "./index.css";
 
-const Banner: React.FC = () => {
-  const [currentActiveCard, setCurrentActiveCard] = useState(5);
+const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
+  const [currentActiveCard, setCurrentActiveCard] = useState(0);
 
   function changeCurrentActiveCard(e: MouseEvent) {
     const { target } = e;
@@ -24,7 +24,7 @@ const Banner: React.FC = () => {
   }
 
   function nextSlide() {
-    setCurrentActiveCard((prev) => (prev + 1) % images.length);
+    setCurrentActiveCard((prev) => (prev + 1) % bannerItems.length);
   }
 
   return (
@@ -32,7 +32,9 @@ const Banner: React.FC = () => {
       <div className="container-cmp carousel-navigation-arrow has-no-gutters left-0">
         <button
           aria-label="Prev slide"
-          data-index={(currentActiveCard - 1 + images.length) % images.length}
+          data-index={
+            (currentActiveCard - 1 + bannerItems.length) % bannerItems.length
+          }
           onClick={changeCurrentActiveCard}
         >
           <FaChevronLeft />
@@ -40,17 +42,17 @@ const Banner: React.FC = () => {
       </div>
 
       <div className="carousel-cards">
-        {images.map((image, index) => {
+        {bannerItems.map((bannerItem, index) => {
           const ariaCurrent = currentActiveCard === index;
           const tabIndex = currentActiveCard === index ? 0 : -1;
 
           return (
             <div
-              key={image.key}
+              key={bannerItem.id}
               aria-current={ariaCurrent}
               role="group"
               aria-roledescription="Slide"
-              aria-label={`${index + 1} of ${images.length}`}
+              aria-label={`${index + 1} of ${bannerItems.length}`}
               className="carousel-card"
             >
               <div className="container-cmp carousel-card-container has-no-gutters">
@@ -60,8 +62,8 @@ const Banner: React.FC = () => {
                       fill
                       priority
                       sizes="(max-width: 420px) 420px, 820px"
-                      src={image.mobileImage}
-                      alt="The Do-Over Damsel Conquers the Dragon Emperor"
+                      src={bannerItem.banner.tall}
+                      alt={bannerItem.title}
                       className="block size-full object-cover object-[center_top] md:hidden"
                     />
 
@@ -69,8 +71,8 @@ const Banner: React.FC = () => {
                       fill
                       priority
                       sizes="(max-width: 960px) 960px, (max-width: 1350px) 1350px, (max-width: 1920) 1920px, (max-width: 3840) 3840px, 100vw"
-                      src={image.desktopImage}
-                      alt="The Do-Over Damsel Conquers the Dragon Emperor"
+                      src={bannerItem.banner.wide}
+                      alt={bannerItem.title}
                       className="hidden size-full object-cover object-right-top md:block"
                     />
                   </div>
@@ -87,12 +89,12 @@ const Banner: React.FC = () => {
                           fill
                           priority
                           sizes="(max-width: 960px) 320px, (max-width: 1260px) 480px, 600px"
-                          src={image.imageName}
+                          src={bannerItem.banner.name}
                           alt="The Do-Over Damsel Conquers the Dragon Emperor"
                         />
 
                         <figcaption className="carousel-card-seo-title">
-                          The Do-Over Damsel Conquers the Dragon Emperor
+                          {bannerItem.title}
                         </figcaption>
                       </figure>
                     </Link>
@@ -100,17 +102,18 @@ const Banner: React.FC = () => {
 
                   <div className="carousel-card-body">
                     <div className="meta-tags mt-3.5 mb-5 sm:mb-8 md:mt-5 lg:mb-2 2xl:mt-8">
-                      <span>14+</span>
-                      <span className="rhombus">Sub | Dub</span>
-                      <span className="rhombus">Action, Adventure</span>
+                      {bannerItem.metaTags.map((metaTag, index) => (
+                        <span
+                          key={index}
+                          className={index === 0 ? "" : "rhombus"}
+                        >
+                          {metaTag}
+                        </span>
+                      ))}
                     </div>
 
                     <p className="carousel-card-description">
-                      Goku and company were living peaceful lives when they
-                      suddenly turned small due to a conspiracy! When they
-                      discover that the reason for this may lie in a world known
-                      as the "Demon Realm", a mysterious young Majin named
-                      Glorio appears before them.
+                      {bannerItem.description}
                     </p>
 
                     <ContentActionButtons
@@ -131,7 +134,7 @@ const Banner: React.FC = () => {
       <div className="container-cmp carousel-navigation-arrow has-no-gutters right-0">
         <button
           aria-label="Next slide"
-          data-index={(currentActiveCard + 1) % images.length}
+          data-index={(currentActiveCard + 1) % bannerItems.length}
           onClick={changeCurrentActiveCard}
         >
           <FaChevronRight />
@@ -139,16 +142,16 @@ const Banner: React.FC = () => {
       </div>
 
       <div className="container-cmp relative flex w-full justify-center pt-6 sm:pt-[38px] md:justify-start md:pt-7 lg:pt-[48px] 2xl:pt-[64px]">
-        {images.map((image, index) => (
+        {bannerItems.map((bannerItem, index) => (
           <button
-            key={image.key}
+            key={bannerItem.id}
             aria-current={currentActiveCard === index}
-            aria-label={`Show slide ${index + 1} of ${images.length}`}
+            aria-label={`Show slide ${index + 1} of ${bannerItems.length}`}
             data-index={index}
             onClick={changeCurrentActiveCard}
             className="navigatin-button"
           >
-            <div className="app-transition-colors flex size-full overflow-hidden rounded bg-[var(--pill-color)] duration-500">
+            <div className="app-transition-colors flex size-full overflow-hidden rounded-sm bg-[var(--pill-color)] duration-500">
               <span onAnimationEnd={nextSlide} />
             </div>
           </button>

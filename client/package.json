@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.0",
+    "@vercel/functions": "^1.6.0",
+    "geoip-lite": "^1.4.10",
     "mongodb": "^6.12.0",
     "next": "15.1.6",
     "postcss": "^8.5.1",
@@ -20,6 +22,7 @@
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
+    "@types/geoip-lite": "^1.4.4",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^22.12.0",
     "@types/react": "^19.0.8",

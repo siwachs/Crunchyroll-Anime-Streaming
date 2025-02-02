@@ -1,10 +1,18 @@
 "use client";
 
-import { useState, MouseEvent, FormEvent, ChangeEvent, JSX } from "react";
+import {
+  useState,
+  MouseEvent,
+  FormEvent,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 import { getAttribute } from "@/lib/utils";
 
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import "./index.css";
 
@@ -16,7 +24,7 @@ const ImageInput: React.FC<{
   name: string;
   required?: boolean;
   className?: string;
-}> = ({ label, name, required = true, className }) => {
+}> = ({ label, name, required = false, className }) => {
   function validateImage(e: ChangeEvent<HTMLInputElement>) {
     const selectedImage = e.target.files?.[0];
 
@@ -72,49 +80,10 @@ const ImageInput: React.FC<{
   );
 };
 
-const DetailInput: React.FC<{ id: number; button: JSX.Element }> = ({
-  id,
-  button,
-}) => {
-  return (
-    <div
-      key={id}
-      className="relative mb-2.5 grid grid-cols-1 gap-4 rounded-md border border-gray-300 px-4 py-2 md:grid-cols-2"
-    >
-      <div>
-        <label htmlFor={`details-key-${id}`} className="input-label">
-          Key
-        </label>
-        <input
-          id={`details-key-${id}`}
-          name={`details-key-${id}`}
-          type="text"
-          required
-          className="input"
-        />
-      </div>
-
-      <div>
-        <label htmlFor={`details-value-${id}`} className="input-label">
-          Value
-        </label>
-        <input
-          id={`details-value-${id}`}
-          name={`details-value-${id}`}
-          type="text"
-          required
-          className="input"
-        />
-      </div>
-
-      {button}
-    </div>
-  );
-};
-
-const CreateSeriesForm: React.FC = () => {
-  const [detailIds, setDetailIds] = useState<number[]>([]);
-
+const DetailInput: React.FC<{
+  id: number;
+  setDetailIds: Dispatch<SetStateAction<number[]>>;
+}> = ({ id, setDetailIds }) => {
   function addDetailInput() {
     setDetailIds((prev) => [...prev, Date.now()]);
   }
@@ -125,23 +94,160 @@ const CreateSeriesForm: React.FC = () => {
     setDetailIds((prev) => prev.filter((index) => index !== dataId));
   }
 
-  function createSeries(e: FormEvent) {
+  return (
+    <div
+      key={id}
+      className="relative mb-2.5 grid grid-cols-1 gap-4 rounded-md border border-gray-300 px-4 py-2 md:grid-cols-2"
+    >
+      <div>
+        <label htmlFor={`detail-key-${id}`} className="input-label">
+          Key
+        </label>
+        <input
+          id={`detail-key-${id}`}
+          name={`detail-key-${id}`}
+          type="text"
+          required
+          className="input"
+        />
+      </div>
+
+      <div>
+        <label htmlFor={`detail-value-${id}`} className="input-label">
+          Value
+        </label>
+        <input
+          id={`detail-value-${id}`}
+          name={`detail-value-${id}`}
+          type="text"
+          required
+          className="input"
+        />
+      </div>
+
+      {id === 0 ? (
+        <button
+          type="button"
+          onClick={addDetailInput}
+          className="absolute top-1.5 right-1.5 text-indigo-600"
+        >
+          <FaPlus className="size-4.5" />
+        </button>
+      ) : (
+        <button
+          type="button"
+          data-id={id}
+          onClick={removeDetailInput}
+          className="absolute top-1.5 right-1.5 text-red-600"
+        >
+          <FaMinus className="size-4.5" />
+        </button>
+      )}
+    </div>
+  );
+};
+
+const CreateSeriesForm: React.FC<{
+  cmsURL: string;
+  metaTags: { id: string; title: string }[];
+  genres: { id: string; title: string }[];
+}> = ({ cmsURL, metaTags, genres }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [detailIds, setDetailIds] = useState<number[]>([0]);
+
+  async function createSeries(e: FormEvent) {
     e.preventDefault();
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const appendFile = (name: string) => {
+      const file = form[name]?.files?.[0];
+
+      formData.set(name, file);
+    };
+
+    appendFile("banner.name");
+    appendFile("banner.tall");
+    appendFile("banner.wide");
+    appendFile("poster.tall");
+    appendFile("poster.wide");
+
+    formData.set("title", (formData.get("title") as string).trim());
+    formData.set("licence", (formData.get("licence") as string).trim());
+    formData.set("description", (formData.get("description") as string).trim());
+
+    const appendMultiSelect = (name: string) => {
+      const values = formData.getAll(name) as string[];
+
+      formData.delete(name);
+      formData.append(name, JSON.stringify(values));
+    };
+
+    appendMultiSelect("metaTags");
+    appendMultiSelect("genres");
+
+    const details: Record<string, string> = {};
+    detailIds.forEach((detailId) => {
+      const key = `detail-key-${detailId}`;
+      const value = `detail-value-${detailId}`;
+
+      details[(formData.get(key) as string).trim()] = (
+        formData.get(value) as string
+      ).trim();
+
+      formData.delete(key);
+      formData.delete(value);
+    });
+
+    formData.append("details", JSON.stringify(details));
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value); // Log each key-value pair
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(`${cmsURL}/series`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const parsedResponse = await response.json();
+
+        const error = parsedResponse.message || "Failed to create series!";
+        setError(Array.isArray(error) ? error.join(", ") : error);
+      } else {
+        setDetailIds([0]);
+        form.reset();
+      }
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+      else setError("An unknown error occurred!");
+    }
+
+    setLoading(false);
   }
 
   return (
     <form
       onSubmit={createSeries}
-      className="mx-auto w-full max-w-3xl rounded-md bg-[var(--app-overlay-secondary)] p-6"
+      className="mx-auto w-full max-w-4xl rounded-md bg-[var(--app-overlay-secondary)] p-6"
+      autoComplete="on"
     >
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <ImageInput name="banner.name" label="Banner Name" required />
         <ImageInput name="banner.tall" label="Banner Tall" />
-        <ImageInput name="banner.wide" label="Banner Wide" />
+        <ImageInput name="banner.wide" label="Banner Wide" required />
         <ImageInput name="poster.tall" label="Poster Tall" />
         <ImageInput
           name="poster.wide"
           label="Poster Wide"
+          required
           className="md:col-span-2"
         />
 
@@ -155,6 +261,7 @@ const CreateSeriesForm: React.FC = () => {
             type="text"
             required
             className="input"
+            autoComplete="on"
           />
         </div>
 
@@ -168,10 +275,13 @@ const CreateSeriesForm: React.FC = () => {
             multiple
             required
             className="input select"
+            autoComplete="off"
           >
-            <option value="tag1">Tag 1</option>
-            <option value="tag2">Tag 2</option>
-            <option value="tag3">Tag 3</option>
+            {metaTags.map((metaTag) => (
+              <option key={metaTag.id} value={metaTag.id}>
+                {metaTag.title}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -182,8 +292,10 @@ const CreateSeriesForm: React.FC = () => {
           <textarea
             id="description"
             name="description"
-            className="input text-area"
+            spellCheck="true"
             rows={7}
+            className="input text-area"
+            autoComplete="on"
           />
         </div>
 
@@ -197,43 +309,21 @@ const CreateSeriesForm: React.FC = () => {
             multiple
             required
             className="input select"
+            autoComplete="off"
           >
-            <option value="genre1">Genre 1</option>
-            <option value="genre2">Genre 2</option>
-            <option value="genre3">Genre 3</option>
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.title}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="md:col-span-2">
           <span className="input-label">Details</span>
-          <DetailInput
-            id={0}
-            button={
-              <button
-                type="button"
-                onClick={addDetailInput}
-                className="absolute top-1.5 right-1.5 text-indigo-600"
-              >
-                <FaPlus className="size-4.5" />
-              </button>
-            }
-          />
 
           {detailIds.map((id) => (
-            <DetailInput
-              key={id}
-              id={id}
-              button={
-                <button
-                  type="button"
-                  data-id={id}
-                  onClick={removeDetailInput}
-                  className="absolute top-1.5 right-1.5 text-red-600"
-                >
-                  <FaMinus className="size-4.5" />
-                </button>
-              }
-            />
+            <DetailInput key={id} id={id} setDetailIds={setDetailIds} />
           ))}
         </div>
 
@@ -247,18 +337,31 @@ const CreateSeriesForm: React.FC = () => {
             type="text"
             required
             className="input"
+            autoComplete="on"
           />
         </div>
       </div>
 
       <div className="mt-6 flex justify-end">
         <button
+          title={loading ? "Creating..." : "Create"}
           type="submit"
-          className="app-transition-colors rounded-md bg-[var(--app-background-crunchyroll-orange)] px-6 py-2 text-lg hover:bg-[var(--app-hover-crunchyroll-orange)] focus-visible:bg-[var(--app-hover-crunchyroll-orange)]"
+          disabled={loading}
+          className="app-transition-colors flex min-h-11 min-w-28 items-center justify-center rounded-md bg-[var(--app-background-crunchyroll-orange)] text-lg hover:bg-[var(--app-hover-crunchyroll-orange)] focus-visible:bg-[var(--app-hover-crunchyroll-orange)]"
         >
-          Submit
+          {loading ? (
+            <AiOutlineLoading3Quarters className="size-6.5 animate-spin" />
+          ) : (
+            "Create"
+          )}
         </button>
       </div>
+
+      {error && (
+        <p className="mt-2.5 text-right text-sm text-red-600 select-none">
+          {error}
+        </p>
+      )}
     </form>
   );
 };

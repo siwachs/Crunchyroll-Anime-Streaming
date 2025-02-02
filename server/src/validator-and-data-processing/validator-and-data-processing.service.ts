@@ -1,10 +1,6 @@
 import { extname } from 'path';
 import { createHash } from 'crypto';
-import {
-  Injectable,
-  UnsupportedMediaTypeException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 
 import { File } from 'src/common/types';
 
@@ -18,10 +14,9 @@ export class ValidatorAndDataProcessingService {
     const file1Hash = createHash('sha256').update(file1.buffer).digest('hex');
     const file2Hash = createHash('sha256').update(file2.buffer).digest('hex');
 
-    if (file1Hash === file2Hash)
-      throw new BadRequestException(
-        `File: ${file1.originalname} and File: ${file2.originalname} are same files.`,
-      );
+    if (file1Hash === file2Hash) return true;
+
+    return false;
   }
 
   validateFileMimeTypeAndSize(
