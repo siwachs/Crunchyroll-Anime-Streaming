@@ -1,11 +1,17 @@
-import getBannerItems from "@/lib/mongodb/CRUD/getBannerItems";
+import {
+  getBannerItems,
+  getTopPicksForYou,
+  getNewlyAddedSeries,
+} from "@/lib/mongodb/CRUD/getHomePage";
 
 import Banner from "./_components/banner";
 import DataFeedRow from "./_components/dataFeedRow";
-import PromotionBanner from "./_components/promotionBanner";
+import NewEpisodes from "./_components/newEpisodes";
 
 export default async function Home() {
   const bannerItems = await getBannerItems();
+  const topPicksForYou = await getTopPicksForYou();
+  const newlyAddedSeries = await getNewlyAddedSeries();
 
   return (
     <>
@@ -13,19 +19,20 @@ export default async function Home() {
         <Banner bannerItems={bannerItems} />
 
         <div className="dynamic-feed grid grid-cols-[minmax(0,auto)] gap-y-10">
-          {/* <DataFeedRow
-            dataId="0"
-            dataType="personalized-collection-1"
-            dataTitle="Free to Watch In India"
-            dataSubTitle="Fantastic Free Anime"
-          />
-          <PromotionBanner dataId="1" />
           <DataFeedRow
-            dataId="2"
-            dataType="personalized-collection-2"
-            dataTitle="October 2024 Seasonal Sampler"
-            dataSubTitle="Check out the first few episodes of these new shows for free!"
-          /> */}
+            dataTitle="Top Picks for You"
+            dataFeed={topPicksForYou}
+          />
+
+          <DataFeedRow
+            dataTitle="Recently Updated Shows"
+            dataSubTitle="Discover the latest episodes and seasons of these newly updated shows"
+            dataFeed={newlyAddedSeries}
+          />
+
+          <NewEpisodes />
+
+          {/* <PromotionBanner /> */}
         </div>
 
         {/* Show whole Library */}

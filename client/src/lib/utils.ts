@@ -26,4 +26,51 @@ function getClientIP(headersList: Headers) {
   return xForwardedFor ? xForwardedFor.split(",")[0] : "127.0.0.1";
 }
 
-export { triggerCallbackOnClickOrOnKeydown, getAttribute, getClientIP };
+function cleanString(
+  str: string,
+  charsToRepalce: Record<string, string> = { " ": "-", ":": "", "&": "" },
+  toCase: "LOWER" | "UPPER" = "LOWER",
+  encodedURI: boolean = true,
+) {
+  function getStr(str: string) {
+    switch (toCase) {
+      case "LOWER":
+        return str.toLowerCase();
+      case "UPPER":
+        return str.toUpperCase();
+      default:
+        return str;
+    }
+  }
+
+  let result = str;
+  for (const [char, replacement] of Object.entries(charsToRepalce))
+    result = result.split(char).join(replacement);
+
+  return encodedURI ? encodeURIComponent(getStr(result)) : getStr(result);
+}
+
+function getCompactNotation(value: string | number) {
+  if (typeof value === "string") {
+    value = parseInt(value, 10);
+    if (isNaN(value)) {
+      throw new Error(
+        "Invalid number input: Unable to parse string to a valid number",
+      );
+    }
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+    maximumFractionDigits: 1,
+  }).format(value);
+}
+
+export {
+  triggerCallbackOnClickOrOnKeydown,
+  getAttribute,
+  getClientIP,
+  cleanString,
+  getCompactNotation,
+};

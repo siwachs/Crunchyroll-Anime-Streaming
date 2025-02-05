@@ -4,6 +4,8 @@ import { MouseEvent, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+import { cleanString, getCompactNotation } from "@/lib/utils";
+
 import {
   HiOutlinePlay,
   HiStar,
@@ -12,9 +14,11 @@ import {
 } from "react-icons/hi2";
 import { HiOutlineBookmark } from "react-icons/hi";
 
-import images from "@/data/dataFeed";
+import { DataFeedItem } from "./index.types";
 
-const DataFeedCarousel: React.FC = () => {
+const DataFeedCarousel: React.FC<{ dataFeed: DataFeedItem[] }> = ({
+  dataFeed,
+}) => {
   const layoutRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -82,12 +86,16 @@ const DataFeedCarousel: React.FC = () => {
           <div className="carousel-scroller">
             <div className="carousel-scroller-wrapper">
               <div ref={trackRef} className="carousel-scroller-track">
-                {images.map((image) => {
-                  const seriesLink = `/series/j38dj38/${encodeURIComponent(image.title.toLowerCase().replaceAll(" ", "-"))}`;
+                {dataFeed.map((dataFeedItem) => {
+                  const seriesLink = `/series/${dataFeedItem.id}/${cleanString(dataFeedItem.title)}`;
+                  const compactAverageRating = getCompactNotation(
+                    dataFeedItem.averageRating,
+                  );
+                  const episodeLink = `/watch/${dataFeedItem.episodeId}/${cleanString(dataFeedItem.episodeTitle)}`;
 
                   return (
                     <div
-                      key={image.key}
+                      key={dataFeedItem.id}
                       ref={cardRef}
                       className="carousel-scroller-card"
                     >
@@ -100,10 +108,11 @@ const DataFeedCarousel: React.FC = () => {
                         >
                           <div className="browse-card-poster">
                             <Image
+                              fill
                               sizes="(min-width: 2160px) calc(100vw / 7), (min-width: 1720px) calc(100vw / 6), (min-width: 800px) calc(100vw / 5), (min-width: 568px) calc(100vw / 4), (min-width: 480px) calc(100vw / 3), 50vw"
-                              src={image.image}
-                              alt={image.title}
-                              className="block size-full object-cover"
+                              src={dataFeedItem.poster.raw}
+                              alt={dataFeedItem.title}
+                              className="block size-full object-cover object-top"
                             />
                           </div>
                         </Link>
@@ -115,12 +124,19 @@ const DataFeedCarousel: React.FC = () => {
                               prefetch={false}
                               tabIndex={-1}
                             >
-                              {image.title}
+                              {dataFeedItem.title}
                             </Link>
                           </h4>
 
                           <div className="meta-tags mt-2 inline-flex">
-                            <span>Subtitled</span>
+                            {dataFeedItem.metaTags.map((metaTag, index) => (
+                              <span
+                                key={index}
+                                className={index === 0 ? "" : "rhombus"}
+                              >
+                                {metaTag}
+                              </span>
+                            ))}
                           </div>
                         </div>
 
@@ -134,10 +150,11 @@ const DataFeedCarousel: React.FC = () => {
                             >
                               <div className="relative size-full">
                                 <Image
+                                  fill
                                   sizes="(min-width: 2160px) calc(100vw / 7), (min-width: 1720px) calc(100vw / 6), (min-width: 800px) calc(100vw / 5), (min-width: 568px) calc(100vw / 4), (min-width: 480px) calc(100vw / 3), 50vw"
-                                  src={image.image}
-                                  alt={image.title}
-                                  className="block size-full object-cover"
+                                  src={dataFeedItem.poster.raw}
+                                  alt={dataFeedItem.title}
+                                  className="block size-full object-cover object-top"
                                 />
                               </div>
                             </Link>
@@ -155,41 +172,45 @@ const DataFeedCarousel: React.FC = () => {
                                   prefetch={false}
                                   tabIndex={-1}
                                 >
-                                  {image.title}
+                                  {dataFeedItem.title}
                                 </Link>
                               </h4>
 
                               <div className="mb-1 flex items-center gap-1 text-[var(--app-icon-primary)]">
                                 <p className="text-sm/leading-4.5 font-medium">
-                                  4.7
+                                  {dataFeedItem.averageRating}
                                 </p>
                                 <HiStar className="size-4" />
                                 <p className="text-sm/leading-4.5 font-medium uppercase">
-                                  (43k)
+                                  ({compactAverageRating})
                                 </p>
                               </div>
 
                               <div className="mb-2 flex flex-col text-[var(--meta-color)]">
                                 <span className="text-sm/leading-4.5 font-semibold">
-                                  3 Seasons
+                                  {dataFeedItem.totalSeasons} Seasons
                                 </span>
                                 <span className="text-sm/leading-4.5 font-semibold">
-                                  329 Episodes
+                                  {dataFeedItem.totalEpisodes} Episodes
                                 </span>
                               </div>
 
                               <h4 className="browse-card-hover-body-description">
-                                {image.description}
+                                {dataFeedItem.description}
                               </h4>
                             </div>
 
                             <div className="browse-card-hover-footer">
-                              <button className="outline-xs browse-card-hover-footer-button">
+                              <Link
+                                href={episodeLink}
+                                prefetch={false}
+                                className="outline-xs browse-card-hover-footer-button"
+                              >
                                 <HiOutlinePlay
                                   strokeWidth={2.08}
                                   className="size-7"
                                 />
-                              </button>
+                              </Link>
 
                               <button className="outline-xs browse-card-hover-footer-button">
                                 <HiOutlineBookmark

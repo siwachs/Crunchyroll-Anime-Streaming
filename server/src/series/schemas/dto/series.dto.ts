@@ -57,7 +57,12 @@ export class CreateSeriesDto extends CreateSeriesFormDto {
   @IsObject()
   @IsNotEmptyObject()
   poster: {
+    raw: string;
     tall: string;
     wide: string;
   };
+
+  @IsNotEmpty()
+  @IsString()
+  thumbnail: string;
 }

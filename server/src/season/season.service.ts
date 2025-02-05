@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,15 +10,26 @@ import { CreateSeasonDto } from './schemas/dto/season.dto';
 @Injectable()
 export class SeasonService {
   constructor(
-    @InjectModel(Season.name) private readonly seasonSchema: Model<Season>,
-    @InjectModel(Series.name) private readonly seriesSchema: Model<Series>,
+    @InjectModel(Season.name) private readonly seasonModel: Model<Season>,
+    @InjectModel(Series.name) private readonly seriesModel: Model<Series>,
   ) {}
 
   async createSeason(seriesId: string, dto: CreateSeasonDto) {
-    const newSeasonDoc = new this.seasonSchema(dto);
+    const series = await this.seriesModel
+      .findOne({
+        _id: seriesId,
+      })
+      .select('_id')
+      .exec();
+    if (!series)
+      throw new BadRequestException(
+        'The season you are trying to create belongs to a series that does not exist.',
+      );
+
+    const newSeasonDoc = new this.seasonModel(dto);
     const newSeason = await newSeasonDoc.save();
 
-    await this.seriesSchema
+    await this.seriesModel
       .findByIdAndUpdate(seriesId, {
         $push: { seasons: newSeason._id },
       })

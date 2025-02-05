@@ -26,6 +26,7 @@ export class Series {
 
   @Prop({
     type: {
+      raw: { type: String, required: true },
       tall: { type: String, required: true },
       wide: { type: String, required: true },
     },
@@ -33,9 +34,13 @@ export class Series {
     _id: false,
   })
   poster: {
+    raw: string;
     tall: string;
     wide: string;
   };
+
+  @Prop({ type: String, required: true })
+  thumbnail: string;
 
   @Prop({ type: String, required: true, unique: true })
   title: string;

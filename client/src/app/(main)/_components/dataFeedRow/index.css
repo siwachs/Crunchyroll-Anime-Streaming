@@ -169,7 +169,7 @@
 }
 
 .carousel-scroller-card {
-  @apply app-transition-opacity min-w-0 snap-start;
+  @apply app-transition-opacity snap-start;
 
   padding: calc(var(--carousel-row-gap) / 2) calc(var(--carousel-col-gap) / 2);
 }
@@ -194,7 +194,7 @@
       var(--content-image-ar-priority-height)
   );
 
-  @apply relative h-[var(--height)] w-[var(--width)];
+  @apply relative aspect-[3/4.5] h-[var(--height)] w-[var(--width)];
 }
 
 .browse-card-body {

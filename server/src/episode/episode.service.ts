@@ -37,7 +37,7 @@ export class EpisodeService {
       .exec();
     if (!series)
       throw new BadRequestException(
-        'The episode you are creating for the season is not associated with the specified series.',
+        'The episode you are trying to create belongs to a season that is not associated with the specified series.',
       );
 
     const extendedDto: CreateEpisodeDto = {

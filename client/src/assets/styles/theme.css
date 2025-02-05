@@ -3,13 +3,13 @@
   --text-2_5xl: 1.75rem;
   --text-3_5xl: 2.125rem;
 
-  --breakpoint-sm: 568px;
-  --breakpoint-2sm: 680px;
-  --breakpoint-md: 800px;
-  --breakpoint-2md: 980px;
-  --breakpoint-xl: 1440px;
-  --breakpoint-2xl: 1720px;
-  --breakpoint-3xl: 2160px;
+  --breakpoint-sm: 35.5rem; /* 568px */
+  --breakpoint-2sm: 42.5rem; /* 680px */
+  --breakpoint-md: 50rem; /* 800px */
+  --breakpoint-2md: 61.25rem; /* 980px */
+  --breakpoint-xl: 90rem; /* 1440px */
+  --breakpoint-2xl: 107.5rem; /* 1720px */
+  --breakpoint-3xl: 135rem; /* 2160px */
 
   --leading-leading-4_5: 1.125rem;
   --leading-leading-6_5: 1.625rem;

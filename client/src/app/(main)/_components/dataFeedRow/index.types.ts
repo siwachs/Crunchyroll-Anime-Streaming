@@ -1,11 +1,13 @@
-export type BannerItem = {
+export type DataFeedItem = {
   id: string;
   title: string;
-  banner: { name: string; tall: string; wide: string };
+  poster: { raw: string };
   metaTags: string[];
-  genres: string[];
+  averageRating: number;
+  totalRating: number;
   description: string;
   totalSeasons: number;
+  totalEpisodes: number;
   episodeId: string;
   episodeTitle: string;
 };

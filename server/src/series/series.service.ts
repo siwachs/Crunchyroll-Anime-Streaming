@@ -18,31 +18,37 @@ export class SeriesService {
 
   async createSeries(
     images: Record<string, Express.Multer.File | null>,
-    dto: CreateSeriesFormDto,
+    dto: any,
   ) {
     try {
       const extendedDto: CreateSeriesDto = {
         ...dto,
+        thumbnail: 'Uploading...',
         banner: {
           name: 'Uploading...',
           tall: 'Uploading...',
           wide: 'Uploading...',
         },
         poster: {
+          raw: 'Uploading...',
           tall: 'Uploading...',
           wide: 'Uploading...',
         },
       };
+      // const newSeriesDoc = new this.seriesModel(extendedDto);
+      // const newSeries = await newSeriesDoc.save();
 
-      const newSeriesDoc = new this.seriesModel(extendedDto);
-      const newSeries = await newSeriesDoc.save();
+      // this.seriesProducerService.sendImagesUploadsMessage(
+      //   newSeries._id.toString(),
+      //   images,
+      // );
 
-      this.seriesProducerService.sendImagesUploadsMessage(
-        newSeries._id.toString(),
-        images,
-      );
+      // return newSeries;
 
-      return newSeries;
+      this.seriesProducerService.sendImagesUploadsMessage(dto.seriesId, images);
+      return dto.seriesId;
+
+      // return newSeries;
     } catch (error) {
       if (error.code === DUPLICATE_KEY_ERROR)
         throw new HttpException(

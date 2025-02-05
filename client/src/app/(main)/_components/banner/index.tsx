@@ -4,11 +4,14 @@ import { useState, MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+import { cleanString } from "@/lib/utils";
+
 import ContentActionButtons from "@/components/contentActionButtons";
+
+import { BannerItem } from "./index.types";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-import { BannerItem } from "./index.types";
 import "./index.css";
 
 const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
@@ -46,6 +49,9 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
           const ariaCurrent = currentActiveCard === index;
           const tabIndex = currentActiveCard === index ? 0 : -1;
 
+          const seriesLink = `/series/${bannerItem.id}/${cleanString(bannerItem.title)}`;
+          const episodeLink = `/watch/${bannerItem.episodeId}/${cleanString(bannerItem.episodeTitle)}`;
+
           return (
             <div
               key={bannerItem.id}
@@ -80,7 +86,7 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
                   <div className="carousel-card-title">
                     <Link
                       tabIndex={tabIndex}
-                      href="/#"
+                      href={seriesLink}
                       prefetch={false}
                       className="carousel-card-logo"
                     >
@@ -90,7 +96,7 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
                           priority
                           sizes="(max-width: 960px) 320px, (max-width: 1260px) 480px, 600px"
                           src={bannerItem.banner.name}
-                          alt="The Do-Over Damsel Conquers the Dragon Emperor"
+                          alt={bannerItem.title}
                         />
 
                         <figcaption className="carousel-card-seo-title">
@@ -101,13 +107,19 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
                   </div>
 
                   <div className="carousel-card-body">
-                    <div className="meta-tags mt-3.5 mb-5 sm:mb-8 md:mt-5 lg:mb-2 2xl:mt-8">
+                    <div className="meta-tags mt-3.5 mb-5 sm:mb-8 md:mt-[22px] lg:mb-2 2xl:mt-[34px]">
                       {bannerItem.metaTags.map((metaTag, index) => (
                         <span
                           key={index}
                           className={index === 0 ? "" : "rhombus"}
                         >
                           {metaTag}
+                        </span>
+                      ))}
+
+                      {bannerItem.genres.map((genre, index) => (
+                        <span key={index} className="rhombus">
+                          {genre}
                         </span>
                       ))}
                     </div>
@@ -118,8 +130,8 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
 
                     <ContentActionButtons
                       tabIndex={tabIndex}
-                      watchActionhref="/#"
-                      watchActionText="Start Watching E1"
+                      watchActionhref={episodeLink}
+                      watchActionText={`Start Watching ${bannerItem.totalSeasons > 1 ? "S1 E1" : "E1"}`}
                     />
                   </div>
                 </div>
@@ -141,7 +153,7 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
         </button>
       </div>
 
-      <div className="container-cmp relative flex w-full justify-center pt-6 sm:pt-[38px] md:justify-start md:pt-7 lg:pt-[48px] 2xl:pt-[64px]">
+      <div className="container-cmp relative flex w-full justify-center pt-6 sm:pt-[39px] md:justify-start md:pt-7 lg:pt-[48px] 2xl:pt-[64px]">
         {bannerItems.map((bannerItem, index) => (
           <button
             key={bannerItem.id}

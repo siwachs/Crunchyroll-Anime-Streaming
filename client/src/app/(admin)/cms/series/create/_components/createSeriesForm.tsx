@@ -14,7 +14,7 @@ import { getAttribute } from "@/lib/utils";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-import "./index.css";
+import "@/app/(admin)/cms/cms.css";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_IMAGE_SIZE = 6 * 1024 * 1024;
@@ -234,11 +234,7 @@ const CreateSeriesForm: React.FC<{
   }
 
   return (
-    <form
-      onSubmit={createSeries}
-      className="mx-auto w-full max-w-4xl rounded-md bg-[var(--app-overlay-secondary)] p-6"
-      autoComplete="on"
-    >
+    <form onSubmit={createSeries} className="form" autoComplete="on">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <ImageInput name="banner.name" label="Banner Name" required />
         <ImageInput name="banner.tall" label="Banner Tall" />
@@ -347,7 +343,7 @@ const CreateSeriesForm: React.FC<{
           title={loading ? "Creating..." : "Create"}
           type="submit"
           disabled={loading}
-          className="app-transition-colors flex min-h-11 min-w-28 items-center justify-center rounded-md bg-[var(--app-background-crunchyroll-orange)] text-lg hover:bg-[var(--app-hover-crunchyroll-orange)] focus-visible:bg-[var(--app-hover-crunchyroll-orange)]"
+          className="create-button"
         >
           {loading ? (
             <AiOutlineLoading3Quarters className="size-6.5 animate-spin" />
@@ -357,11 +353,7 @@ const CreateSeriesForm: React.FC<{
         </button>
       </div>
 
-      {error && (
-        <p className="mt-2.5 text-right text-sm text-red-600 select-none">
-          {error}
-        </p>
-      )}
+      {error && <p className="error">{error}</p>}
     </form>
   );
 };

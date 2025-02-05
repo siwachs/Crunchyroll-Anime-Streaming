@@ -25,6 +25,7 @@ export class SeriesConsumerService {
     const { docId, files } = message;
     console.log(`Uploading ${docId}'s images to firebase...`);
 
+    const thumbnail = files['thumbnail'];
     const bannerImages = [
       files['banner.name'],
       files['banner.tall'],
@@ -34,35 +35,47 @@ export class SeriesConsumerService {
         ? file
         : this.validatorAndDataProcessingService.base64StringToFileBuffer(file),
     );
-    const posterImages = [files['poster.tall'], files['poster.wide']].map(
-      (file) =>
-        file === null
-          ? file
-          : this.validatorAndDataProcessingService.base64StringToFileBuffer(
-              file,
-            ),
+    const posterImages = [
+      files['poster.raw'],
+      files['poster.tall'],
+      files['poster.wide'],
+    ].map((file) =>
+      file === null
+        ? file
+        : this.validatorAndDataProcessingService.base64StringToFileBuffer(file),
     );
 
-    const uploadedBannerURLs = await this.firebaseService.uploadFiles(
-      bannerImages.filter((file) => file !== null),
-      `${SERIES_BASE_STORAGE_REF}/${docId}/banner`,
+    const thumbnailURL = await this.firebaseService.uploadFiles(
+      [thumbnail],
+      `${SERIES_BASE_STORAGE_REF}/${docId}`,
     );
-    const uploadedPosterURLs = await this.firebaseService.uploadFiles(
-      posterImages.filter((file) => file !== null),
-      `${SERIES_BASE_STORAGE_REF}/${docId}/poster`,
-    );
+    // const uploadedBannerURLs = await this.firebaseService.uploadFiles(
+    //   bannerImages.filter((file) => file !== null),
+    //   `${SERIES_BASE_STORAGE_REF}/${docId}/banner`,
+    // );
+    // const uploadedPosterURLs = await this.firebaseService.uploadFiles(
+    //   posterImages.filter((file) => file !== null),
+    //   `${SERIES_BASE_STORAGE_REF}/${docId}/poster`,
+    // );
 
+    // await this.seriesModel
+    //   .findByIdAndUpdate(docId, {
+    //     thumbnail: thumbnailURL['thumbnail'],
+    //     banner: {
+    //       name: uploadedBannerURLs['name'],
+    //       tall: uploadedBannerURLs['tall'] || uploadedPosterURLs['tall'],
+    //       wide: uploadedBannerURLs['wide'],
+    //     },
+    //     poster: {
+    //       raw: uploadedPosterURLs['raw'],
+    //       tall: uploadedPosterURLs['tall'] || uploadedBannerURLs['tall'],
+    //       wide: uploadedPosterURLs['wide'],
+    //     },
+    //   })
+    //   .exec();
     await this.seriesModel
       .findByIdAndUpdate(docId, {
-        banner: {
-          name: uploadedBannerURLs['name'],
-          tall: uploadedBannerURLs['tall'] || uploadedPosterURLs['tall'],
-          wide: uploadedBannerURLs['wide'],
-        },
-        poster: {
-          tall: uploadedPosterURLs['tall'] || uploadedBannerURLs['tall'],
-          wide: uploadedPosterURLs['wide'],
-        },
+        thumbnail: thumbnailURL['thumbnail'],
       })
       .exec();
 

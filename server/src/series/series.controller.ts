@@ -60,9 +60,11 @@ export class SeriesController {
   @Post()
   @UseInterceptors(
     FileFieldsInterceptor([
+      { name: 'thumbnail', maxCount: 1 },
       { name: 'banner.name', maxCount: 1 },
       { name: 'banner.tall', maxCount: 1 },
       { name: 'banner.wide', maxCount: 1 },
+      { name: 'poster.raw', maxCount: 1 },
       { name: 'poster.tall', maxCount: 1 },
       { name: 'poster.wide', maxCount: 1 },
     ]),
@@ -70,18 +72,22 @@ export class SeriesController {
   createSeries(
     @UploadedFiles()
     files: {
+      thumbnail?: Express.Multer.File[];
       'banner.name'?: Express.Multer.File[];
       'banner.tall'?: Express.Multer.File[];
       'banner.wide'?: Express.Multer.File[];
+      'poster.raw'?: Express.Multer.File[];
       'poster.tall'?: Express.Multer.File[];
       'poster.wide'?: Express.Multer.File[];
     },
-    @Body() dto: CreateSeriesFormDto,
+    @Body() dto: any,
   ) {
     const filesKeys = [
+      'thumbnail',
       'banner.name',
       'banner.tall',
       'banner.wide',
+      'poster.raw',
       'poster.tall',
       'poster.wide',
     ];
@@ -92,27 +98,31 @@ export class SeriesController {
       return acc;
     }, {});
 
-    if (
-      !images['banner.name'] ||
-      !images['banner.wide'] ||
-      !images['poster.wide']
-    )
-      throw new BadRequestException(
-        'banner.name, banner.wide and poster.wide are required.',
-      );
+    // if (
+    //   !images['thumbnail'] ||
+    //   !images['banner.name'] ||
+    //   !images['banner.wide'] ||
+    //   !images['poster.raw'] ||
+    //   !images['poster.wide']
+    // )
+    //   throw new BadRequestException(
+    //     'thumbnail, banner.name, banner.wide, poster.raw and poster.wide are required.',
+    //   );
 
-    this.validateImagePairs(
-      images['banner.tall'],
-      'banner.tall',
-      images['poster.tall'],
-      'poster.tall',
-    );
+    // this.validateImagePairs(
+    //   images['banner.tall'],
+    //   'banner.tall',
+    //   images['poster.tall'],
+    //   'poster.tall',
+    // );
 
     const renamedImages = Object.keys(images).reduce((acc, key) => {
+      const keySplits = key.split('.');
+
       acc[key] = images[key]
         ? this.validatorAndDataProcessingService.renameFile(
             images[key],
-            key.split('.')[1],
+            keySplits[1] || keySplits[0],
           )
         : null;
 
