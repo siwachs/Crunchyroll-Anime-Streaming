@@ -20,7 +20,7 @@
 }
 
 .create-button {
-  @apply app-transition-colors flex min-h-11 min-w-28 items-center justify-center rounded-md bg-[var(--app-background-crunchyroll-orange)] text-lg hover:bg-[var(--app-hover-crunchyroll-orange)] focus-visible:bg-[var(--app-hover-crunchyroll-orange)];
+  @apply app-transition-colors flex min-h-11 min-w-28 cursor-pointer items-center justify-center rounded-md bg-[var(--app-background-crunchyroll-orange)] text-lg hover:bg-[var(--app-hover-crunchyroll-orange)] focus-visible:bg-[var(--app-hover-crunchyroll-orange)];
 }
 
 .error {

@@ -1,3 +1,5 @@
+import { getCompactNotation } from "@/lib/utils";
+
 import { FaCaretDown } from "react-icons/fa";
 import { HiOutlineStar } from "react-icons/hi2";
 
@@ -5,43 +7,35 @@ import "./index.css";
 
 const ratingPercentages = [92, 3, 2, 1, 4];
 
-const AverageRating: React.FC<{ mode?: "compact"; className?: string }> = ({
-  mode,
-  className = "",
-}) => {
+const AverageRating: React.FC<{
+  averageRating: number;
+  totalRating: number;
+  className?: string;
+}> = ({ averageRating, totalRating, className = "" }) => {
+  const compactTotalRating = getCompactNotation(totalRating);
+
   return (
     <div className={`relative ${className}`}>
-      {mode === "compact" ? (
-        <button className="star-rating-average-compact-button">
-          <span>4.9</span>
-          <HiOutlineStar className="size-4 fill-current" />
-          <span className="uppercase">(361.2K)</span>
-          <FaCaretDown className="size-3" />
-        </button>
-      ) : (
-        <button className="star-rating-average-button">
-          <span className="app-transition-colors font-semibold text-[var(--app-icon-primary)]">
-            Average Rating:
-          </span>
-          <span className="font-black uppercase">4.8 (36.7k)</span>
-          <FaCaretDown className="ml-1 size-4" />
-        </button>
-      )}
+      <button className="star-rating-average-button outline-xs">
+        <span>{averageRating}</span>
+        <span>({compactTotalRating})</span>
+        <FaCaretDown className="ml-0.5 size-3.5" />
+      </button>
 
       <div className="star-rating-average-data hidden">
         <div className="star-rating-average-tooltip">
           <div className="mb-3">
             <span className="text-sm/leading-4.5 font-medium">
-              Average 4.8 out of 5 stars
+              Average {averageRating} out of 5 stars
             </span>
 
             <span className="flex pt-3 text-xs font-semibold">
-              36747 ratings
+              {totalRating} ratings
             </span>
           </div>
 
           {ratingPercentages.map((ratingPercentage, index) => (
-            <div key={index} className="flex items-center pb-1.5 pt-2">
+            <div key={index} className="flex items-center pt-2 pb-1.5">
               <HiOutlineStar className="mr-2 size-4.5 flex-[0_0_auto] fill-current" />
 
               <p className="text-sm/leading-4.5 font-medium sm:text-base">

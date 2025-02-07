@@ -3,37 +3,31 @@ import { join } from 'path';
 import * as mime from 'mime-types';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 
-import admin from 'firebase-admin';
-import { getApps } from 'firebase-admin/app';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 import { File } from 'src/common/types';
-const GOOGLE_APIS_ENDPOINT = 'https://storage.googleapis.com';
 
 @Injectable()
-export class FirebaseService implements OnModuleInit {
+export class SupabaseService implements OnModuleInit {
+  private supabaseBucketName: string;
+  private supabase: SupabaseClient;
+
   onModuleInit() {
-    const firebaseIsDepricated = process.env.FIREBASE_IS_DEPRICATED;
-    if (firebaseIsDepricated) return;
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+    const SUPABASE_BUCKET_NAME = process.env.SUPABASE_BUCKET_NAME;
 
-    const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY;
-    const storageBucket = process.env.FIREBASE_BUCKET_NAME;
-
-    if (!serviceAccount || !storageBucket)
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !SUPABASE_BUCKET_NAME)
       throw new Error(
-        'Firbase service account and storage bucket is required!',
+        'Supabase URL, Service Key, and Bucket Name are required!',
       );
 
-    if (!getApps().length) {
-      const serviceAccountObject = JSON.parse(serviceAccount);
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccountObject),
-        storageBucket,
-      });
-    }
+    this.supabaseBucketName = SUPABASE_BUCKET_NAME;
+    this.supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
   }
 
-  private getStorageBucket() {
-    return admin.storage().bucket();
+  private getStorage() {
+    return this.supabase.storage.from(this.supabaseBucketName);
   }
 
   private async retryUpload(
@@ -48,11 +42,14 @@ export class FirebaseService implements OnModuleInit {
         return await uploadFn();
       } catch (error) {
         attempts++;
-        console.log(`Upload Failed try again in ${delay}ms`);
+        console.log(`Upload Failed, retrying in ${delay}ms`);
         await new Promise((resolve) => setTimeout(resolve, delay));
         delay *= 2;
 
-        if (attempts >= retries) throw error;
+        if (attempts >= retries) {
+          console.error('Max retries reached. Upload failed.');
+          throw error;
+        }
       }
     }
   }
@@ -61,25 +58,33 @@ export class FirebaseService implements OnModuleInit {
     files: File[],
     storageRef: string,
   ): Promise<Record<string, string>> {
-    const bucket = this.getStorageBucket();
-    const uploadedFilesUrls = {};
+    const storage = this.getStorage();
+    const uploadedFilesUrls: Record<string, string> = {};
 
     for (const file of files) {
       try {
-        const fileName = `${storageRef}/${file.originalname}`;
-        const fileUpload = bucket.file(fileName);
+        const filePath = `${storageRef}/${file.originalname}`;
+        const contentType = file.mimetype;
 
         await this.retryUpload(async () => {
-          await fileUpload.save(file.buffer, {
-            metadata: { contentType: file.mimetype },
+          const { error } = await storage.upload(filePath, file.buffer, {
+            cacheControl: '3600',
+            upsert: true,
+            contentType,
           });
-          await fileUpload.makePublic();
+
+          if (error) {
+            console.error(`Error uploading file: ${file.originalname}`, error);
+            throw error;
+          }
         });
 
-        const publicURL = `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${fileName}`;
+        const { data: publicData } = storage.getPublicUrl(filePath);
+        const publicURL = publicData.publicUrl;
+
         uploadedFilesUrls[file.originalname] = publicURL;
       } catch (error) {
-        console.log(`Error while uploading file: ${file.fieldname}`);
+        console.log(`Error while uploading file: ${file.originalname}`);
         throw error;
       }
     }
@@ -92,21 +97,26 @@ export class FirebaseService implements OnModuleInit {
     storageRef: string,
     maxConcurrentUploads: number = 3,
   ) {
-    const bucket = this.getStorageBucket();
+    const storage = this.getStorage();
 
     try {
       const files = await fs.readdir(dirPath);
 
       const uploadFile = async (fileName: string) => {
         const filePath = join(dirPath, fileName);
-        const fileUpload = bucket.file(`${storageRef}/${fileName}`);
         const contentType = mime.lookup(filePath) || undefined;
 
         await this.retryUpload(async () => {
-          await fileUpload.save(await fs.readFile(filePath), {
-            metadata: { contentType },
-          });
-          await fileUpload.makePublic();
+          const { error } = await storage.upload(
+            `${storageRef}/${fileName}`,
+            await fs.readFile(filePath),
+            { cacheControl: '3600', upsert: true, contentType },
+          );
+
+          if (error) {
+            console.error(`Error uploading file: ${fileName}`, error);
+            throw error;
+          }
         });
       };
 
@@ -138,6 +148,6 @@ export class FirebaseService implements OnModuleInit {
       throw error;
     }
 
-    return `${GOOGLE_APIS_ENDPOINT}/${bucket.name}/${storageRef}`;
+    return `https://supabase.io/storage/v1/object/public/${storageRef}`;
   }
 }

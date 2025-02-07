@@ -3,8 +3,9 @@ import { unstable_cache } from "next/cache";
 
 import connectToDb from "../connectToDb";
 import {
-  getMetaTagsWithoutNumericTypeTags,
-  getEpisodeIdAndTitle,
+  genres,
+  metaTagsWithoutNumericTypeTags,
+  episodeIdAndTitle,
 } from "../pipelineStages";
 
 import { BannerItem } from "@/app/(main)/_components/banner/index.types";
@@ -40,16 +41,9 @@ async function getBannerItems(size: number = 6): Promise<BannerItem[]> {
         .collection(SERIES)
         .aggregate([
           { $sample: { size } },
-          ...getMetaTagsWithoutNumericTypeTags(),
-          {
-            $lookup: {
-              from: "Genres",
-              localField: "genres",
-              foreignField: "_id",
-              as: "populatedGenres",
-            },
-          },
-          ...getEpisodeIdAndTitle(),
+          ...metaTagsWithoutNumericTypeTags,
+          ...genres,
+          ...episodeIdAndTitle,
           {
             $project: {
               title: 1,
@@ -97,8 +91,8 @@ async function getTopPicksForYou(size: number = 10): Promise<DataFeedItem[]> {
         .collection(SERIES)
         .aggregate([
           { $sample: { size } },
-          ...getMetaTagsWithoutNumericTypeTags(),
-          ...getEpisodeIdAndTitle(),
+          ...metaTagsWithoutNumericTypeTags,
+          ...episodeIdAndTitle,
           {
             $project: {
               title: 1,
@@ -142,10 +136,10 @@ async function getTopPicksForYou(size: number = 10): Promise<DataFeedItem[]> {
   });
 }
 
-async function getNewlyAddedSeries(
+async function getNewlyUpdatedSeries(
   limit: number = 21,
 ): Promise<DataFeedItem[]> {
-  const getCachedNewlyAddedSeries = unstable_cache(async () => {
+  const getCachedNewlyUpdatedSeries = unstable_cache(async () => {
     const { db } = await connectToDb();
 
     return await db
@@ -153,8 +147,8 @@ async function getNewlyAddedSeries(
       .aggregate([
         { $sort: { seriesUpdatedOn: -1 } },
         { $limit: limit },
-        ...getMetaTagsWithoutNumericTypeTags(),
-        ...getEpisodeIdAndTitle(),
+        ...metaTagsWithoutNumericTypeTags,
+        ...episodeIdAndTitle,
         {
           $project: {
             title: 1,
@@ -179,11 +173,11 @@ async function getNewlyAddedSeries(
         },
       ])
       .toArray();
-  }, ["newly-added-series"]);
+  }, ["newly-updated-series"]);
 
-  const cachedTNewlyAddedSeriesArray = await getCachedNewlyAddedSeries();
-  return cachedTNewlyAddedSeriesArray.map((newlyAddedSeriesItem) => {
-    const { _id, episodeId, ...restOfTopPickItem } = newlyAddedSeriesItem;
+  const cachedTNewlyUpdatedSeriesArray = await getCachedNewlyUpdatedSeries();
+  return cachedTNewlyUpdatedSeriesArray.map((newlyUpdatedSeriesItem) => {
+    const { _id, episodeId, ...restOfTopPickItem } = newlyUpdatedSeriesItem;
 
     return {
       id: _id.toString(),
@@ -193,4 +187,4 @@ async function getNewlyAddedSeries(
   });
 }
 
-export { getBannerItems, getTopPicksForYou, getNewlyAddedSeries };
+export { getBannerItems, getTopPicksForYou, getNewlyUpdatedSeries };

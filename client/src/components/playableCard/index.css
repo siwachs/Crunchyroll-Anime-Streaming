@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .playable-card {
   --hover-shadow-size: 0.5rem;
 
@@ -38,7 +42,7 @@
 }
 
 .playable-card-hover-body {
-  @apply flex flex-1 flex-col pb-[0.7625rem] pl-3 pt-3 sm:p-0;
+  @apply flex flex-1 flex-col pt-3 pb-[0.7625rem] pl-3 sm:p-0;
 }
 
 .playable-card-hover-release {
@@ -70,7 +74,7 @@
 }
 
 .playable-card-body {
-  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pb-0 sm:pl-0 sm:pt-3;
+  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pt-3 sm:pb-0 sm:pl-0;
 }
 
 .playable-card-small-title {
@@ -78,7 +82,7 @@
 }
 
 .playable-card-small-title small {
-  @apply block select-none truncate text-[0.625rem]/[0.875rem] font-black uppercase text-[var(--meta-color)];
+  @apply block truncate text-[0.625rem]/[0.875rem] font-black text-[var(--meta-color)] uppercase select-none;
 }
 
 .playable-card-title {

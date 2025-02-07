@@ -62,7 +62,7 @@ const HeaderMenu: React.FC<{
                         onKeyDown={toogleGenresList}
                         tabIndex={0}
                         role="button"
-                        className="menu-title"
+                        className="menu-title cursor-pointer"
                       >
                         <span>{link.title}</span>
 

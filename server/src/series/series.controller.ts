@@ -80,7 +80,7 @@ export class SeriesController {
       'poster.tall'?: Express.Multer.File[];
       'poster.wide'?: Express.Multer.File[];
     },
-    @Body() dto: any,
+    @Body() dto: CreateSeriesFormDto,
   ) {
     const filesKeys = [
       'thumbnail',
@@ -98,23 +98,23 @@ export class SeriesController {
       return acc;
     }, {});
 
-    // if (
-    //   !images['thumbnail'] ||
-    //   !images['banner.name'] ||
-    //   !images['banner.wide'] ||
-    //   !images['poster.raw'] ||
-    //   !images['poster.wide']
-    // )
-    //   throw new BadRequestException(
-    //     'thumbnail, banner.name, banner.wide, poster.raw and poster.wide are required.',
-    //   );
+    if (
+      !images['thumbnail'] ||
+      !images['banner.name'] ||
+      !images['banner.wide'] ||
+      !images['poster.raw'] ||
+      !images['poster.wide']
+    )
+      throw new BadRequestException(
+        'thumbnail, banner.name, banner.wide, poster.raw and poster.wide are required.',
+      );
 
-    // this.validateImagePairs(
-    //   images['banner.tall'],
-    //   'banner.tall',
-    //   images['poster.tall'],
-    //   'poster.tall',
-    // );
+    this.validateImagePairs(
+      images['banner.tall'],
+      'banner.tall',
+      images['poster.tall'],
+      'poster.tall',
+    );
 
     const renamedImages = Object.keys(images).reduce((acc, key) => {
       const keySplits = key.split('.');

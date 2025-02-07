@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .dropdown-trigger:hover,
 .dropdown-trigger:focus-visible,
 .dropdown-trigger.active {
@@ -23,11 +27,11 @@
 }
 
 .dropdown-content.modal {
-  @apply fixed left-0 right-0 top-0 z-[100] flex h-full sm:hidden;
+  @apply fixed top-0 right-0 left-0 z-[100] flex h-full sm:hidden;
 }
 
 .dropdown-trigger.active + .dropdown-content.dropdown {
-  @apply absolute top-full z-[98] h-auto max-h-[28.75rem] min-w-[var(--dropdown-content-min-width)] max-w-[var(--dropdown-content-max-width)] sm:flex;
+  @apply absolute top-full z-[98] h-auto max-h-[28.75rem] max-w-[var(--dropdown-content-max-width)] min-w-[var(--dropdown-content-min-width)] sm:flex;
 
   animation: dropdownContentAnimation 0.15s cubic-bezier(0, 0, 0.25, 1) forwards;
 }
@@ -37,13 +41,13 @@
   --dropdown-content-max-width: calc(100vw - 5rem);
   --dropdown-content-min-width: 12.5rem;
 
-  @apply left-auto right-0;
+  @apply right-0 left-auto;
 }
 
 .dropdown-trigger.active + .dropdown-content.dropdown.dropdown-is-left-aligned {
   --dropdown-content-min-width: 20rem;
 
-  @apply left-0 right-auto max-h-[16.25rem];
+  @apply right-auto left-0 max-h-[16.25rem];
 }
 
 @keyframes dropdownContentAnimation {

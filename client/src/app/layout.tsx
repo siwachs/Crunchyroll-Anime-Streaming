@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={lato.className}>
         <div className="h-full min-w-xs">
-          <div className="flex flex-col">
+          <div className="app-layout">
             <Header />
             {children}
           </div>

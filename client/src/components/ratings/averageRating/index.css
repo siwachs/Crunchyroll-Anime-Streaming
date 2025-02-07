@@ -1,14 +1,14 @@
-.star-rating-average-compact-button {
-  @apply flex items-center gap-1 text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)];
-}
-
-.star-rating-average-compact-button:hover,
-.star-rating-average-compact-button:focus-visible {
-  @apply underline;
-}
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
 
 .star-rating-average-button {
-  @apply mt-3 flex items-center gap-1 hover:underline sm:mt-0;
+  @apply flex cursor-pointer items-center gap-1 text-sm/leading-4.5 font-black;
+}
+
+.star-rating-average-button:hover,
+.star-rating-average-button:focus-visible {
+  @apply underline;
 }
 
 .star-rating-average-button span {
@@ -20,9 +20,8 @@
   @apply text-white;
 }
 
-.star-rating-average-button:focus + .star-rating-average-data,
-.star-rating-average-compact-button:focus + .star-rating-average-data {
-  @apply absolute left-0 top-[calc(100%+0.5rem)] z-[98] block;
+.star-rating-average-button:focus + .star-rating-average-data {
+  @apply absolute top-[calc(100%+0.5rem)] right-0 z-[98] block;
 }
 
 @keyframes starRatingAverageTooltipAnimation {

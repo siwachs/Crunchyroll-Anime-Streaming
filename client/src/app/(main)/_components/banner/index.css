@@ -9,7 +9,7 @@
 }
 
 .carousel-navigation-arrow button {
-  @apply app-transition-colors grid h-[6.25rem] w-full hover:text-[var(--pill-color)] focus-visible:text-[var(--pill-color)];
+  @apply app-transition-colors grid h-[6.25rem] w-full cursor-pointer hover:text-[var(--pill-color)] focus-visible:text-[var(--pill-color)];
 
   pointer-events: all;
 }

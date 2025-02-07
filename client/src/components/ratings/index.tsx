@@ -1,21 +1,41 @@
 import AverageRating from "./averageRating";
 
-import { HiOutlineStar } from "react-icons/hi2";
+import { StarOutlined, StarFull, StarHalf } from "@/assets/ratingIcons";
 
 import "./index.css";
 
-const Ratings: React.FC = () => {
+const Ratings: React.FC<{
+  averageRating: number;
+  totalRating: number;
+}> = ({ averageRating, totalRating }) => {
   return (
-    <div className="ratings-wrapper">
+    <div className="flex items-center">
       <div className="star-rating-controls">
-        {[...new Array(5)].map((_, index) => (
-          <button title="Star Review" key={index}>
-            <HiOutlineStar />
-          </button>
-        ))}
+        {[...new Array(5)].map((_, index) => {
+          let StarIcon = StarOutlined;
+
+          if (averageRating >= index + 1) StarIcon = StarFull;
+          else if (averageRating >= index + 0.5) StarIcon = StarHalf;
+
+          return (
+            <button
+              title="Star Review"
+              key={index}
+              className="star-rating-control outline-xs cursor-pointer px-1 first:pl-0"
+            >
+              <StarFull className="hidden size-7 fill-current" />
+              <StarIcon className="inline-block size-7 fill-current" />
+              <StarOutlined className="hidden size-7 fill-current" />
+            </button>
+          );
+        })}
       </div>
 
-      <AverageRating />
+      <AverageRating
+        averageRating={averageRating}
+        totalRating={totalRating}
+        className="ml-2"
+      />
     </div>
   );
 };

@@ -38,10 +38,6 @@ body {
   overflow-anchor: none; /* Disable Auto Scroll from dynamically loaded content */
 }
 
-button {
-  @apply cursor-pointer;
-}
-
 button:focus-visible,
 a:focus-visible {
   outline: 0.25rem solid var(--meta-color);
@@ -58,8 +54,25 @@ a:focus-visible {
   outline-offset: -0.125rem;
 }
 
+.app-layout {
+  @apply grid min-h-full grid-cols-[minmax(0,auto)_minmax(0,1fr)] grid-rows-[minmax(0,auto)_minmax(0,_1fr)_minmax(0,auto)];
+}
+
+header {
+  @apply relative h-15;
+
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
 main {
-  @apply flex-[1_1_0] pb-10;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+footer {
+  grid-column: 2/-1;
+  grid-row: 3;
 }
 
 .container-cmp {
@@ -106,8 +119,12 @@ main {
   }
 }
 
+.meta-tags-are-light {
+  --meta-color: var(--app-icon-primary);
+}
+
 .meta-tags {
-  @apply truncate text-sm/leading-4.5 font-medium text-[var(--meta-color)] select-none;
+  @apply truncate text-sm font-medium text-[var(--meta-color)] select-none;
 }
 
 .meta-tags span {

@@ -2,10 +2,6 @@
 @import "@styles/theme.css";
 @import "@styles/utilities.css";
 
-.header {
-  @apply relative flex-[0_0_3.75rem];
-}
-
 .header-container {
   @apply fixed right-0 left-0 z-100 grid h-15 grid-cols-[auto_1fr_auto] bg-[var(--app-background-secondary)];
 
@@ -40,7 +36,7 @@
 }
 
 .icon-wrapper {
-  @apply flex h-full items-center px-4.5 text-[var(--app-icon-primary)];
+  @apply flex h-full cursor-pointer items-center px-4.5 text-[var(--app-icon-primary)];
 
   transition: background-color 0.1s cubic-bezier(0, 0, 0.25, 1);
 }

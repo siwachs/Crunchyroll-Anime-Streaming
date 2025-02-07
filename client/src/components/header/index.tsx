@@ -25,7 +25,7 @@ const Header = () => {
   }
 
   return (
-    <header className="header">
+    <header>
       <div className="container-cmp header-container has-no-gutters">
         <div title="Company Logo" className="header-logo">
           <Link href="/" prefetch={false} className="block size-full px-4.5">

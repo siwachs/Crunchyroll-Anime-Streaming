@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
-import { FirebaseService } from '../firebase/firebase.service';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,7 +15,7 @@ export class SeriesConsumerService {
   constructor(
     private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
     @InjectModel(Series.name) private readonly seriesModel: Model<Series>,
-    private readonly firebaseService: FirebaseService,
+    private readonly supabaseService: SupabaseService,
   ) {}
 
   async uploadImages(message: {
@@ -23,9 +23,13 @@ export class SeriesConsumerService {
     files: Record<string, File | null>;
   }) {
     const { docId, files } = message;
-    console.log(`Uploading ${docId}'s images to firebase...`);
+    console.log(`Uploading ${docId}'s images to supabase...`);
 
-    const thumbnail = files['thumbnail'];
+    const thumbnail = [
+      this.validatorAndDataProcessingService.base64StringToFileBuffer(
+        files['thumbnail'],
+      ),
+    ];
     const bannerImages = [
       files['banner.name'],
       files['banner.tall'],
@@ -45,37 +49,32 @@ export class SeriesConsumerService {
         : this.validatorAndDataProcessingService.base64StringToFileBuffer(file),
     );
 
-    const thumbnailURL = await this.firebaseService.uploadFiles(
-      [thumbnail],
+    const thumbnailURL = await this.supabaseService.uploadFiles(
+      thumbnail,
       `${SERIES_BASE_STORAGE_REF}/${docId}`,
     );
-    // const uploadedBannerURLs = await this.firebaseService.uploadFiles(
-    //   bannerImages.filter((file) => file !== null),
-    //   `${SERIES_BASE_STORAGE_REF}/${docId}/banner`,
-    // );
-    // const uploadedPosterURLs = await this.firebaseService.uploadFiles(
-    //   posterImages.filter((file) => file !== null),
-    //   `${SERIES_BASE_STORAGE_REF}/${docId}/poster`,
-    // );
+    const uploadedBannerURLs = await this.supabaseService.uploadFiles(
+      bannerImages.filter((file) => file !== null),
+      `${SERIES_BASE_STORAGE_REF}/${docId}/banner`,
+    );
+    const uploadedPosterURLs = await this.supabaseService.uploadFiles(
+      posterImages.filter((file) => file !== null),
+      `${SERIES_BASE_STORAGE_REF}/${docId}/poster`,
+    );
 
-    // await this.seriesModel
-    //   .findByIdAndUpdate(docId, {
-    //     thumbnail: thumbnailURL['thumbnail'],
-    //     banner: {
-    //       name: uploadedBannerURLs['name'],
-    //       tall: uploadedBannerURLs['tall'] || uploadedPosterURLs['tall'],
-    //       wide: uploadedBannerURLs['wide'],
-    //     },
-    //     poster: {
-    //       raw: uploadedPosterURLs['raw'],
-    //       tall: uploadedPosterURLs['tall'] || uploadedBannerURLs['tall'],
-    //       wide: uploadedPosterURLs['wide'],
-    //     },
-    //   })
-    //   .exec();
     await this.seriesModel
       .findByIdAndUpdate(docId, {
         thumbnail: thumbnailURL['thumbnail'],
+        banner: {
+          name: uploadedBannerURLs['name'],
+          tall: uploadedBannerURLs['tall'] || uploadedPosterURLs['tall'],
+          wide: uploadedBannerURLs['wide'],
+        },
+        poster: {
+          raw: uploadedPosterURLs['raw'],
+          tall: uploadedPosterURLs['tall'] || uploadedBannerURLs['tall'],
+          wide: uploadedPosterURLs['wide'],
+        },
       })
       .exec();
 

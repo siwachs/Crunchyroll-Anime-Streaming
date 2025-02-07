@@ -128,11 +128,15 @@ const DataFeedCarousel: React.FC<{ dataFeed: DataFeedItem[] }> = ({
                             </Link>
                           </h4>
 
-                          <div className="meta-tags mt-2 inline-flex">
+                          <div className="meta-tags mt-2 inline-flex text-[var(--meta-color)]">
                             {dataFeedItem.metaTags.map((metaTag, index) => (
                               <span
                                 key={index}
-                                className={index === 0 ? "" : "rhombus"}
+                                className={
+                                  index === 0
+                                    ? ""
+                                    : "rhombus before:bg-[var(--meta-color)]"
+                                }
                               >
                                 {metaTag}
                               </span>

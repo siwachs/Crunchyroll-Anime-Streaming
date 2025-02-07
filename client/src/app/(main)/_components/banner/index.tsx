@@ -107,18 +107,25 @@ const Banner: React.FC<{ bannerItems: BannerItem[] }> = ({ bannerItems }) => {
                   </div>
 
                   <div className="carousel-card-body">
-                    <div className="meta-tags mt-3.5 mb-5 sm:mb-8 md:mt-[22px] lg:mb-2 2xl:mt-[34px]">
+                    <div className="meta-tags mt-3.5 mb-5 text-[var(--meta-color)] sm:mb-8 md:mt-[22px] lg:mb-2 2xl:mt-[34px]">
                       {bannerItem.metaTags.map((metaTag, index) => (
                         <span
                           key={index}
-                          className={index === 0 ? "" : "rhombus"}
+                          className={
+                            index === 0
+                              ? ""
+                              : "rhombus before:bg-[var(--meta-color)]"
+                          }
                         >
                           {metaTag}
                         </span>
                       ))}
 
                       {bannerItem.genres.map((genre, index) => (
-                        <span key={index} className="rhombus">
+                        <span
+                          key={index}
+                          className="rhombus before:bg-[var(--meta-color)]"
+                        >
                           {genre}
                         </span>
                       ))}

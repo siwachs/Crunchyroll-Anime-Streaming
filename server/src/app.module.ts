@@ -8,6 +8,7 @@ import { SeasonModule } from './season/season.module';
 import { EpisodeModule } from './episode/episode.module';
 import { MetaTagModule } from './meta-tag/meta-tag.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { SupabaseModule } from './supabase/supabase.module';
 import { KafkaModule } from './kafka/kafka.module';
 import { HlsModule } from './hls/hls.module';
 import { ValidatorAndDataProcessingModule } from './validator-and-data-processing/validator-and-data-processing.module';
@@ -38,6 +39,7 @@ import {
     EpisodeModule,
     MetaTagModule,
     FirebaseModule,
+    SupabaseModule,
     ValidatorAndDataProcessingModule,
     KafkaModule.register({
       clientId: process.env.KAFKA_CLIENT_ID,

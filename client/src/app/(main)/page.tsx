@@ -1,17 +1,16 @@
 import {
   getBannerItems,
   getTopPicksForYou,
-  getNewlyAddedSeries,
+  getNewlyUpdatedSeries,
 } from "@/lib/mongodb/CRUD/getHomePage";
 
 import Banner from "./_components/banner";
 import DataFeedRow from "./_components/dataFeedRow";
-import NewEpisodes from "./_components/newEpisodes";
 
 export default async function Home() {
   const bannerItems = await getBannerItems();
   const topPicksForYou = await getTopPicksForYou();
-  const newlyAddedSeries = await getNewlyAddedSeries();
+  const newlyUpdatedSeries = await getNewlyUpdatedSeries();
 
   return (
     <>
@@ -27,10 +26,10 @@ export default async function Home() {
           <DataFeedRow
             dataTitle="Recently Updated Shows"
             dataSubTitle="Discover the latest episodes and seasons of these newly updated shows"
-            dataFeed={newlyAddedSeries}
+            dataFeed={newlyUpdatedSeries}
           />
 
-          <NewEpisodes />
+          {/* <NewEpisodes /> */}
 
           {/* <PromotionBanner /> */}
         </div>

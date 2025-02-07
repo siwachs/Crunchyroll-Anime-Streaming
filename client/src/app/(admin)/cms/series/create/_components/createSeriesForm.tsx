@@ -129,7 +129,7 @@ const DetailInput: React.FC<{
         <button
           type="button"
           onClick={addDetailInput}
-          className="absolute top-1.5 right-1.5 text-indigo-600"
+          className="absolute top-1.5 right-1.5 cursor-pointer text-indigo-600"
         >
           <FaPlus className="size-4.5" />
         </button>
@@ -138,7 +138,7 @@ const DetailInput: React.FC<{
           type="button"
           data-id={id}
           onClick={removeDetailInput}
-          className="absolute top-1.5 right-1.5 text-red-600"
+          className="absolute top-1.5 right-1.5 cursor-pointer text-red-600"
         >
           <FaMinus className="size-4.5" />
         </button>
@@ -169,6 +169,7 @@ const CreateSeriesForm: React.FC<{
       formData.set(name, file);
     };
 
+    appendFile("thumbnail");
     appendFile("banner.name");
     appendFile("banner.tall");
     appendFile("banner.wide");
@@ -236,16 +237,12 @@ const CreateSeriesForm: React.FC<{
   return (
     <form onSubmit={createSeries} className="form" autoComplete="on">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <ImageInput name="thumbnail" label="Thumbnail" required />
         <ImageInput name="banner.name" label="Banner Name" required />
         <ImageInput name="banner.tall" label="Banner Tall" />
         <ImageInput name="banner.wide" label="Banner Wide" required />
         <ImageInput name="poster.tall" label="Poster Tall" />
-        <ImageInput
-          name="poster.wide"
-          label="Poster Wide"
-          required
-          className="md:col-span-2"
-        />
+        <ImageInput name="poster.wide" label="Poster Wide" required />
 
         <div className="md:col-span-2">
           <label htmlFor="title" className="input-label">
