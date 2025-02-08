@@ -3,17 +3,29 @@ import Link from "next/link";
 
 import Ratings from "@/components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
+import Dropdown from "@/components/dropdown";
+
+import { HiOutlineShare } from "react-icons/hi";
 
 import "./index.css";
 
 const Banner: React.FC<{
+  seriesId: string;
   poster: { tall: string; wide: string };
   title: string;
   metaTags: string[];
   genres: string[];
   averageRating: number;
   totalRating: number;
-}> = ({ poster, title, metaTags, genres, averageRating, totalRating }) => {
+}> = ({
+  seriesId,
+  poster,
+  title,
+  metaTags,
+  genres,
+  averageRating,
+  totalRating,
+}) => {
   return (
     <div className="relative">
       <div className="container-cmp has-no-gutters series-banner-container">
@@ -73,13 +85,22 @@ const Banner: React.FC<{
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-1">
               <div className="flex flex-col flex-wrap items-center gap-2.5">
                 <ContentActionButtons
-                  className="w-full"
+                  className="w-full p-[0.3125rem]"
                   watchActionText="Start Watching E1"
                   watchActionhref="#"
                 />
+              </div>
+
+              <div className="flex flex-nowrap items-center justify-center gap-2.5 pt-[0.3125rem]">
+                <button className="app-transition-colors inline-flex h-fit min-w-18 cursor-pointer flex-col items-center justify-center text-[var(--app-background-crunchyroll-orange)] uppercase select-none hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)]">
+                  <HiOutlineShare className="m-2 size-6" />
+                  <span className="text-[0.625rem] font-black">Share</span>
+                </button>
+
+                {/* More Options Hidden */}
               </div>
             </div>
           </div>
@@ -87,6 +108,13 @@ const Banner: React.FC<{
 
         <div className="series-banner-container-sizer" />
       </div>
+
+      <Dropdown
+        position="top"
+        headerTitle="More"
+        triggerTitle="More Actions"
+        seriesId={seriesId}
+      />
     </div>
   );
 };

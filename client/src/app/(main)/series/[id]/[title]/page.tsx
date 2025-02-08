@@ -16,6 +16,7 @@ export default async function Series({
     <>
       <main>
         <Banner
+          seriesId={id}
           poster={series.poster}
           title={series.title}
           metaTags={series.metaTags}
