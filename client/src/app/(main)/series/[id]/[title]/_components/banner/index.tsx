@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import Ratings from "@/components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
-import Dropdown from "@/components/dropdown";
+import Dropdown from "../dropdown";
+import MarkSeriesAsWatched from "../dropdown/menuItems/markSeriesAsWatched";
 
 import { HiOutlineShare } from "react-icons/hi";
 
@@ -42,9 +43,9 @@ const Banner: React.FC<{
           </div>
 
           <div className="series-banner-body">
-            <h2 className="text-rendering-optimized text-2xl font-medium">
+            <h1 className="text-rendering-optimized sm:text-2.5xl/9 text-2xl font-medium">
               {title}
-            </h2>
+            </h1>
 
             <div className="grid grid-flow-row grid-cols-[minmax(0,auto)] gap-2">
               <div className="flex justify-center">
@@ -77,7 +78,7 @@ const Banner: React.FC<{
                 </div>
               </div>
 
-              <div className="flex justify-center">
+              <div className="flex justify-center sm:justify-start">
                 <Ratings
                   averageRating={averageRating}
                   totalRating={totalRating}
@@ -85,10 +86,10 @@ const Banner: React.FC<{
               </div>
             </div>
 
-            <div className="pt-1">
+            <div className="pt-1 sm:pt-3">
               <div className="flex flex-col flex-wrap items-center gap-2.5">
                 <ContentActionButtons
-                  className="w-full p-[0.3125rem]"
+                  className="w-full p-[0.3125rem] sm:p-0"
                   watchActionText="Start Watching E1"
                   watchActionhref="#"
                 />
@@ -111,10 +112,14 @@ const Banner: React.FC<{
 
       <Dropdown
         position="top"
-        headerTitle="More"
+        align="right"
         triggerTitle="More Actions"
-        seriesId={seriesId}
-      />
+        triggerClassName="hover:bg-[var(--app-background-secondary)] p-2"
+        triggerActiveClassName="bg-[var(--app-background-secondary)]"
+        headerTitle="More"
+      >
+        <MarkSeriesAsWatched seriesId={seriesId} />
+      </Dropdown>
     </div>
   );
 };

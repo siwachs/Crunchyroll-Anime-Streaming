@@ -21,8 +21,8 @@ export default async function Series({
           title={series.title}
           metaTags={series.metaTags}
           genres={series.genres}
-          averageRating={series.averageRating}
-          totalRating={series.totalRating}
+          averageRating={4.7}
+          totalRating={47300}
         />
 
         {/* <div className="content-wrapper mb-14 md:mb-0">

@@ -9,25 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.0.0",
-    "@vercel/functions": "^1.6.0",
+    "@tailwindcss/postcss": "^4.0.4",
+    "@vercel/functions": "^2.0.0",
     "geoip-lite": "^1.4.10",
-    "mongodb": "^6.12.0",
+    "mongodb": "^6.13.0",
     "next": "15.1.6",
     "postcss": "^8.5.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-icons": "^5.4.0",
     "sharp": "^0.33.5",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.4"
   },
   "devDependencies": {
     "@types/geoip-lite": "^1.4.4",
     "@types/mongodb": "^4.0.7",
-    "@types/node": "^22.12.0",
+    "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "eslint": "^9.19.0",
+    "eslint": "^9.20.0",
     "eslint-config-next": "15.1.6",
     "postcss-alias": "^2.0.0",
     "postcss-import": "^16.1.0",

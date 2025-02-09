@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-import Dropdown from "@/components/dropdown";
+import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown/menu";
 import Ratings from "@/components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
 import Description from "@/components/description";

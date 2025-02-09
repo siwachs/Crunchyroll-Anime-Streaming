@@ -9,7 +9,7 @@
 }
 
 .series-banner-container-grid {
-  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-[var(--container-inline-padding)] pt-[75%];
+  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-[var(--container-inline-padding)] pt-[75%] sm:gap-x-5;
 
   align-content: end;
   align-items: end;
@@ -39,8 +39,5 @@
 }
 
 .series-banner-body {
-  @apply z-2 grid h-full grid-cols-1 justify-items-stretch gap-3 text-center;
-
-  grid-column: 1 / span 12;
-  grid-row: 2;
+  @apply z-2 col-[1/span_12] row-[2] grid h-full grid-cols-1 justify-items-stretch gap-3 text-center sm:col-[2/-2] sm:justify-items-center sm:gap-5;
 }

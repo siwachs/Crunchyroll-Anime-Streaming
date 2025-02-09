@@ -1,4 +1,4 @@
-import Dropdown from "@/components/dropdown";
+import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown/menu";
 
 import { FaCaretDown } from "react-icons/fa";
 import { MdMoreVert, MdSort } from "react-icons/md";

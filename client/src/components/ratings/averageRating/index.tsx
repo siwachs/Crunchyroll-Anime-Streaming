@@ -17,6 +17,7 @@ const AverageRating: React.FC<{
   return (
     <div className={`relative ${className}`}>
       <button className="star-rating-average-button outline-xs">
+        <span className="text-sm/leading-4.5 2sm:initial hidden font-semibold text-[var(--app-icon-primary)]">{`Average Rating: `}</span>
         <span>{averageRating}</span>
         <span>({compactTotalRating})</span>
         <FaCaretDown className="ml-0.5 size-3.5" />
@@ -49,7 +50,7 @@ const AverageRating: React.FC<{
                 />
               </div>
 
-              <p className="w-10 text-sm/leading-4.5 font-medium sm:text-base">
+              <p className="text-sm/leading-4.5 w-10 font-medium sm:text-base">
                 {ratingPercentage}%
               </p>
             </div>

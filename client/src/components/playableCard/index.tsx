@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 
-import Dropdown from "@/components/dropdown";
+import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown/menu";
 
 import { HiOutlineCalendar } from "react-icons/hi";
 import { HiOutlinePlay } from "react-icons/hi2";
