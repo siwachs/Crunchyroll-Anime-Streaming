@@ -21,7 +21,7 @@ const Ratings: React.FC<{
             <button
               title="Star Review"
               key={index}
-              className="star-rating-control outline-xs cursor-pointer px-1 first:pl-0"
+              className="star-rating-control outline-xs cursor-pointer px-1 first:pl-0 md:p-0"
             >
               <StarFull className="hidden size-7 fill-current" />
               <StarIcon className="inline-block size-7 fill-current" />

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
+import useWindowResolution from "@/hooks/useWindowResolution";
 import useBodyOverflow from "@/hooks/useBodyOverflow";
 
 import Menu from "./menu";
@@ -17,6 +18,7 @@ const Dropdown: React.FC<{
   triggerTitle: string;
   triggerClassName?: string;
   triggerActiveClassName?: string;
+  menuClassName?: string;
   headerTitle: string;
 }> = ({
   children,
@@ -26,11 +28,13 @@ const Dropdown: React.FC<{
   triggerTitle,
   triggerClassName = "",
   triggerActiveClassName = "",
+  menuClassName = "",
   headerTitle,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { width } = useWindowResolution();
 
-  useBodyOverflow(isDropdownOpen);
+  useBodyOverflow(width < 568 && isDropdownOpen);
 
   function toogleDropdown() {
     setIsDropdownOpen((prev) => !prev);
@@ -38,7 +42,7 @@ const Dropdown: React.FC<{
 
   return (
     <div
-      className={`${position === "top" ? "absolute top-2 right-5" : ""} flex select-none ${className}`}
+      className={`${position === "top" ? "absolute top-2 right-5" : "relative"} flex select-none ${className}`}
     >
       <button
         title={triggerTitle}
@@ -53,7 +57,7 @@ const Dropdown: React.FC<{
           align={align}
           headerTitle={headerTitle}
           toogleDropdown={toogleDropdown}
-          className="hidden sm:grid"
+          className={`hidden sm:grid ${menuClassName}`}
         >
           {children}
         </Menu>

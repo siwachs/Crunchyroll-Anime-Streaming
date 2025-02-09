@@ -9,7 +9,7 @@
 }
 
 .series-banner-container-grid {
-  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-[var(--container-inline-padding)] pt-[75%] sm:gap-x-5;
+  @apply relative grid max-h-full w-full grid-cols-12 grid-rows-[1fr_auto] gap-x-2.5 px-[var(--container-inline-padding)] pt-[75%] sm:gap-x-5 md:pt-10;
 
   align-content: end;
   align-items: end;
@@ -17,7 +17,10 @@
 }
 
 .series-banner-container-sizer {
-  @apply hidden;
+  @apply hidden aspect-[800/355] w-full md:block;
+
+  align-self: end;
+  grid-area: series-banner-container;
 }
 
 .series-banner-background::before {
@@ -29,7 +32,16 @@
   --fade-gradients: linear-gradient(var(--deg), #0009 0%, #0000 20%),
     linear-gradient(to bottom, #0000 40%, #000000bf 65%, #000 90%);
 
-  @apply pointer-events-none absolute inset-0 z-0 aspect-[auto_2/3] min-w-full;
+  @apply pointer-events-none absolute inset-0 z-0 aspect-[auto_2/3] min-w-full md:aspect-[auto_16/9];
+}
+
+@media screen and (min-width: 50rem) {
+  .series-banner-background {
+    --deg: 252deg;
+    --fade-gradients: linear-gradient(var(--deg), #0000008c 5%, #0000 25%),
+      linear-gradient(to right, #000000d9 0%, #00000080 30%, #0000 55%),
+      linear-gradient(to bottom, #0000 50.04%, #000 100%);
+  }
 }
 
 .series-banner-background::after {
@@ -39,5 +51,9 @@
 }
 
 .series-banner-body {
-  @apply z-2 col-[1/span_12] row-[2] grid h-full grid-cols-1 justify-items-stretch gap-3 text-center sm:col-[2/-2] sm:justify-items-center sm:gap-5;
+  @apply z-2 col-[1/span_12] row-[2] grid h-full grid-cols-1 justify-items-stretch gap-3 text-center sm:col-[2/-2] sm:justify-items-center sm:gap-5 md:col-[1/span_5] md:justify-items-start md:text-left;
+}
+
+.share-action-button {
+  @apply app-transition-colors inline-flex min-w-18 cursor-pointer flex-col items-center justify-center text-[var(--app-background-crunchyroll-orange)] select-none hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)] md:min-w-auto;
 }

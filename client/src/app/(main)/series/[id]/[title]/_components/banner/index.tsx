@@ -32,23 +32,29 @@ const Banner: React.FC<{
       <div className="container-cmp has-no-gutters series-banner-container">
         <div className="series-banner-container-grid">
           <div className="series-banner-background">
-            <div className="relative size-full">
+            <picture className="relative block size-full">
               <Image
                 fill
                 src={poster.tall}
                 alt={title}
-                className="object-cover object-[center_top]"
+                className="object-cover object-[center_top] md:hidden"
               />
-            </div>
+              <Image
+                fill
+                src={poster.wide}
+                alt={title}
+                className="hidden object-cover object-[left_top] md:block"
+              />
+            </picture>
           </div>
 
           <div className="series-banner-body">
-            <h1 className="text-rendering-optimized sm:text-2.5xl/9 text-2xl font-medium">
+            <h1 className="text-rendering-optimized md:text-3.5xl/leading-10.5 sm:text-2.5xl/9 text-2xl font-medium">
               {title}
             </h1>
 
             <div className="grid grid-flow-row grid-cols-[minmax(0,auto)] gap-2">
-              <div className="flex justify-center">
+              <div className="flex justify-center md:justify-start">
                 <div className="meta-tags meta-tags-are-light">
                   {metaTags.map((metaTag, index) => (
                     <span
@@ -87,21 +93,32 @@ const Banner: React.FC<{
             </div>
 
             <div className="pt-1 sm:pt-3">
-              <div className="flex flex-col flex-wrap items-center gap-2.5">
+              <div className="flex flex-col flex-wrap items-center gap-2.5 md:flex-row">
                 <ContentActionButtons
                   className="w-full p-[0.3125rem] sm:p-0"
                   watchActionText="Start Watching E1"
                   watchActionhref="#"
                 />
-              </div>
 
-              <div className="flex flex-nowrap items-center justify-center gap-2.5 pt-[0.3125rem]">
-                <button className="app-transition-colors inline-flex h-fit min-w-18 cursor-pointer flex-col items-center justify-center text-[var(--app-background-crunchyroll-orange)] uppercase select-none hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)]">
-                  <HiOutlineShare className="m-2 size-6" />
-                  <span className="text-[0.625rem] font-black">Share</span>
-                </button>
+                <div className="flex flex-nowrap items-center justify-center gap-2.5 pt-[0.3125rem] md:justify-start">
+                  <button title="Share" className="share-action-button">
+                    <HiOutlineShare className="m-2 size-6" />
+                    <span className="text-[0.625rem] font-black uppercase md:hidden">
+                      Share
+                    </span>
+                  </button>
 
-                {/* More Options Hidden */}
+                  <Dropdown
+                    align="right"
+                    className="hidden md:block"
+                    triggerTitle="More Options"
+                    triggerClassName="text-[var(--app-background-crunchyroll-orange)] hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)] m-2"
+                    menuClassName="translate-x-[90px]"
+                    headerTitle="More"
+                  >
+                    <MarkSeriesAsWatched seriesId={seriesId} />
+                  </Dropdown>
+                </div>
               </div>
             </div>
           </div>
@@ -113,8 +130,9 @@ const Banner: React.FC<{
       <Dropdown
         position="top"
         align="right"
+        className="md:hidden"
         triggerTitle="More Actions"
-        triggerClassName="hover:bg-[var(--app-background-secondary)] p-2"
+        triggerClassName="hover:bg-[var(--app-background-secondary)] focus-visible:bg-[var(--app-background-secondary)] p-2"
         triggerActiveClassName="bg-[var(--app-background-secondary)]"
         headerTitle="More"
       >
