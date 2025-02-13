@@ -5,12 +5,9 @@
 .playable-card {
   --hover-shadow-size: 0.5rem;
 
-  @apply relative flex sm:block;
+  @apply app-transition-colors relative flex sm:block;
 
   box-shadow: 0 0 0 var(--hover-shadow-size) #0000;
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 @media screen and (min-width: 568px) {
@@ -46,7 +43,7 @@
 }
 
 .playable-card-hover-release {
-  @apply mb-2 hidden items-center text-sm/leading-4.5 font-medium text-[var(--meta-color)] sm:flex;
+  @apply text-sm/leading-4.5 mb-2 hidden items-center font-medium text-[var(--meta-color)] sm:flex;
 }
 
 .playable-card-hover-description-wrapper {
@@ -54,7 +51,7 @@
 }
 
 .playable-card-hover-description-wrapper p {
-  @apply line-clamp-5 text-sm/leading-4.5 font-semibold;
+  @apply text-sm/leading-4.5 line-clamp-5 font-semibold;
 }
 
 .playable-card-hover-play {
@@ -66,7 +63,7 @@
 }
 
 .playable-card-hover-play span {
-  @apply inline-block truncate text-sm/leading-4.5 font-black uppercase;
+  @apply text-sm/leading-4.5 inline-block truncate font-black uppercase;
 }
 
 .playable-card-body-aligner {
@@ -86,7 +83,7 @@
 }
 
 .playable-card-title {
-  @apply line-clamp-1 self-start text-sm/leading-4.5 font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
+  @apply text-sm/leading-4.5 line-clamp-1 self-start font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
 }
 
 .playable-card-hover-title {

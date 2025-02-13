@@ -1,7 +1,0 @@
-@import "tailwindcss";
-@import "@styles/theme.css";
-@import "@styles/utilities.css";
-
-.menu-item {
-  @apply app-transition-colors w-full cursor-pointer px-5 py-3 text-start text-sm text-[var(--meta-color)] hover:bg-[var(--app-overlay-secondary)] hover:text-white;
-}

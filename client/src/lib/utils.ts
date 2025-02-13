@@ -28,7 +28,12 @@ function getClientIP(headersList: Headers) {
 
 function cleanString(
   str: string,
-  charsToRepalce: Record<string, string> = { " ": "-", ":": "", "&": "" },
+  charsToRepalce: Record<string, string> = {
+    " ": "-",
+    ":": "",
+    "&": "",
+    ".": "",
+  },
   toCase: "LOWER" | "UPPER" = "LOWER",
   encodedURI: boolean = true,
 ) {
@@ -67,10 +72,30 @@ function getCompactNotation(value: string | number) {
   }).format(value);
 }
 
+function getTitleWithSeasonNumber(season: number, title: string) {
+  if (season <= 0) return title;
+
+  return `S${season}: ${title}`;
+}
+
+function getTitleWithSeasonAndEpisodeNumber(
+  season: number,
+  episode: string,
+  title: string,
+) {
+  let transformedTitle = "";
+  if (season > 0) transformedTitle += `S${season} `;
+  if (episode) transformedTitle = `${transformedTitle}E${episode} - `;
+
+  return `${transformedTitle}${title}`;
+}
+
 export {
   triggerCallbackOnClickOrOnKeydown,
   getAttribute,
   getClientIP,
   cleanString,
   getCompactNotation,
+  getTitleWithSeasonNumber,
+  getTitleWithSeasonAndEpisodeNumber,
 };

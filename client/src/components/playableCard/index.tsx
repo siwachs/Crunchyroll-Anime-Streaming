@@ -1,7 +1,12 @@
 import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
-import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown/menu";
+import { cleanString, getTitleWithSeasonAndEpisodeNumber } from "@/lib/utils";
+
+import Dropdown from "@/components/dropdown";
+import MarkEpisodeAsWatched from "@/components/dropdown/menuItems/markEpisodeAsWatched";
+
+import { Season, Episode } from "@/types";
 
 import { HiOutlineCalendar } from "react-icons/hi";
 import { HiOutlinePlay } from "react-icons/hi2";
@@ -11,41 +16,91 @@ import "./common.css";
 import "./playableCardMini.css";
 import "./index.css";
 
-interface Episode {
-  episodeNumber: number;
-  thumbnail: StaticImageData | string;
-  duration: string;
-  seriesTitle?: string;
+const PlayableCardHoverInfo: React.FC<{
+  episodeLink: string;
+  episodeTitle: string;
+  episode: Episode;
+  seriesLink: string;
   title: string;
-  releaseDate?: string;
-  description?: string;
-  metaTags: string;
-}
+}> = ({ episodeLink, episodeTitle, episode, seriesLink, title }) => {
+  return (
+    <div className="playable-card-hover-info">
+      <div className="playable-card-hover-preview">
+        <Link
+          href={episodeLink}
+          prefetch={false}
+          title={episodeTitle}
+          className="absolute inset-0 z-[1]"
+        />
 
-interface PlayableCardProps extends Episode {
-  cardType?: "default" | "mini";
-}
+        <div className="playable-card-thumbnail-wrapper playable-card-hover-thumbnail-wrapper">
+          <figure className="playable-card-thumbnail">
+            <Image
+              fill
+              sizes="230px"
+              src={episode.thumbnail}
+              alt={episodeTitle}
+              className="block size-full object-cover"
+            />
+          </figure>
 
-const PlayableCard: React.FC<PlayableCardProps> = ({
-  episodeNumber,
-  thumbnail,
-  duration,
-  seriesTitle = "",
-  title,
-  releaseDate = "",
-  description = "",
-  metaTags,
-  cardType = "default",
-}) => {
-  const encodedSeriesTitle = encodeURIComponent(
-    seriesTitle.toLowerCase().replaceAll(" ", "-"),
+          <div className="playable-card-duration">{episode.duration}</div>
+        </div>
+
+        <div className="playable-card-hover-body">
+          <Link
+            href={seriesLink}
+            prefetch={false}
+            className="playable-card-small-title z-[1]"
+          >
+            <small className="app-transition-colors hover:text-white hover:underline">
+              {title}
+            </small>
+          </Link>
+
+          <h4 className="playable-card-title playable-card-hover-title">
+            {episodeTitle}
+          </h4>
+
+          <p className="playable-card-hover-release">
+            <HiOutlineCalendar className="mr-1 size-4" />
+            <span>{episode.releaseDate}</span>
+          </p>
+
+          <div className="playable-card-hover-description-wrapper">
+            <p>{episode.description}</p>
+          </div>
+
+          <div className="playable-card-footer">
+            <div className="playable-card-hover-play">
+              <HiOutlinePlay
+                strokeWidth={2.08}
+                className="block size-6 flex-[0_0_auto]"
+              />
+              <span>Play</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
-  const encodedEpisodeTitle = title.toLowerCase().replaceAll(" ", "-");
-  const transformedEpisodeTitle = `E${episodeNumber} - ${title}`;
+};
 
-  const playableCardSeriesLink = `/series/428sj84/${encodedSeriesTitle}`;
-  const playableCardMediaLink = `/watch/47dh3i9/${encodedEpisodeTitle}`;
-  const playButtonTitle = `Play E${episodeNumber}`;
+const PlayableCard: React.FC<{
+  seriesId: string;
+  title: string;
+  currentSeason: Season;
+  episode: Episode;
+  cardType?: "default" | "mini";
+}> = ({ seriesId, title, currentSeason, episode, cardType = "default" }) => {
+  const episodeLink = `/watch/${episode.id}/${cleanString(episode.title)}`;
+  const seriesLink = `/series/${seriesId}/${cleanString(title)}`;
+
+  const episodeTitle = getTitleWithSeasonAndEpisodeNumber(
+    currentSeason.season,
+    episode.episode,
+    episode.title,
+  );
 
   return (
     <div
@@ -55,15 +110,15 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
     >
       {cardType === "mini" && (
         <Link
-          href={playableCardMediaLink}
+          href={episodeLink}
           prefetch={false}
-          title={transformedEpisodeTitle}
+          title={episodeTitle}
           className="playable-card-mini-link"
         />
       )}
 
       <Link
-        href={playableCardMediaLink}
+        href={episodeLink}
         prefetch={false}
         tabIndex={-1}
         className={
@@ -80,79 +135,29 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
           }
         >
           <Image
+            fill
             sizes={
               cardType === "default"
                 ? "(max-width: 567px) 230px, (max-width: 799px) calc(84.375rem / 2), (max-width: 1023px) calc(84.375rem / 3), 260px"
                 : "230px"
             }
-            src={thumbnail}
-            alt={transformedEpisodeTitle}
+            src={episode.thumbnail}
+            alt={episodeTitle}
             className="block size-full object-cover"
           />
         </figure>
 
-        <div className="playable-card-duration">{duration}</div>
+        <div className="playable-card-duration">{episode.duration}</div>
       </Link>
 
       {cardType === "default" && (
-        <div className="playable-card-hover-info">
-          <div className="playable-card-hover-preview">
-            <Link
-              href={playableCardMediaLink}
-              prefetch={false}
-              title={transformedEpisodeTitle}
-              className="absolute inset-0 z-[1]"
-            />
-
-            <div className="playable-card-thumbnail-wrapper playable-card-hover-thumbnail-wrapper">
-              <figure className="playable-card-thumbnail">
-                <Image
-                  sizes="230px"
-                  src={thumbnail}
-                  alt={transformedEpisodeTitle}
-                  className="block size-full object-cover"
-                />
-              </figure>
-
-              <div className="playable-card-duration">{duration}</div>
-            </div>
-
-            <div className="playable-card-hover-body">
-              <Link
-                href={playableCardSeriesLink}
-                prefetch={false}
-                className="playable-card-small-title z-[1]"
-              >
-                <small className="app-transition-colors hover:text-white hover:underline">
-                  {seriesTitle}
-                </small>
-              </Link>
-
-              <h4 className="playable-card-title playable-card-hover-title">
-                {transformedEpisodeTitle}
-              </h4>
-
-              <p className="playable-card-hover-release">
-                <HiOutlineCalendar className="mr-1 size-4" />
-                <span>{releaseDate}</span>
-              </p>
-
-              <div className="playable-card-hover-description-wrapper">
-                <p>{description}</p>
-              </div>
-
-              <div className="playable-card-footer">
-                <div className="playable-card-hover-play">
-                  <HiOutlinePlay
-                    strokeWidth={2.08}
-                    className="block size-6 flex-[0_0_auto]"
-                  />
-                  <span>{playButtonTitle}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PlayableCardHoverInfo
+          episodeLink={episodeLink}
+          episodeTitle={episodeTitle}
+          episode={episode}
+          seriesLink={seriesLink}
+          title={title}
+        />
       )}
 
       <div className="playable-card-body-aligner">
@@ -163,30 +168,38 @@ const PlayableCard: React.FC<PlayableCardProps> = ({
               : "playable-card-mini-body"
           }
         >
-          {seriesTitle && (
+          {title && (
             <div className="playable-card-small-title">
-              <small>{seriesTitle}</small>
+              <small>{title}</small>
             </div>
           )}
 
           <h4 className="playable-card-title">
-            <Link href={playableCardMediaLink} prefetch={false} tabIndex={-1}>
-              {transformedEpisodeTitle}
+            <Link href={episodeLink} prefetch={false} tabIndex={-1}>
+              {episodeTitle}
             </Link>
           </h4>
 
           <div className="playable-card-footer">
             <div className="meta-tags line-clamp-2 flex-1 sm:line-clamp-1">
-              <span>{metaTags}</span>
+              {episode.metaTags.map((metaTag, index) => (
+                <span key={index} className={index === 0 ? "" : "rhombus"}>
+                  {metaTag}
+                </span>
+              ))}
             </div>
 
             {cardType === "default" && (
               <Dropdown
-                className="z-[1] hover:text-white"
+                align="right"
+                className="z-1"
+                triggerClassName="hover:text-white focus-visible:text-white"
+                triggerActiveClassName="text-white"
                 Icon={<MdMoreVert className="size-6" />}
-                dropdownTitle="Options"
-                dropdownItems={[<button key={0}>Mark as Watched</button>]}
-              />
+                headerTitle="More Options"
+              >
+                <MarkEpisodeAsWatched />
+              </Dropdown>
             )}
           </div>
         </div>

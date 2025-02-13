@@ -1,6 +1,6 @@
 import Banner from "./_components/banner";
-import Details from "./_components/details";
-import Navigation from "./_components/navigation";
+import Details from "@/components/details";
+import SeasonWithNavigation from "./_components/seasonWithNavigation";
 
 import getSeries from "@/lib/mongodb/CRUD/getSeries";
 
@@ -15,20 +15,35 @@ export default async function Series({
   return (
     <>
       <main>
-        <Banner
-          seriesId={id}
-          poster={series.poster}
-          title={series.title}
-          metaTags={series.metaTags}
-          genres={series.genres}
-          averageRating={4.7}
-          totalRating={47300}
-        />
+        <div className="relative grid grid-cols-1 gap-10 pb-10 sm:gap-15 sm:pb-15">
+          <Banner
+            seriesId={id}
+            poster={series.poster}
+            title={series.title}
+            metaTags={series.metaTags}
+            genres={series.genres}
+            averageRating={series.averageRating}
+            totalRating={series.totalRating}
+            totalSeasons={series.seasons.length}
+            episodeId={series.episodeId}
+            episodeTitle={series.episodeTitle}
+          />
 
-        {/* <div className="content-wrapper mb-14 md:mb-0">
-          <Details />
-          <Navigation />
-        </div> */}
+          <Details
+            description={series.description}
+            details={series.details}
+            genres={series.genres}
+            licence={series.licence}
+          />
+
+          <SeasonWithNavigation
+            seriesId={id}
+            title={series.title}
+            seasons={series.seasons}
+          />
+
+          <div className="mt-40" />
+        </div>
       </main>
 
       <footer></footer>

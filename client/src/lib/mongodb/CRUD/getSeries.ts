@@ -2,7 +2,12 @@ import { notFound } from "next/navigation";
 
 import connectToDb from "../connectToDb";
 import { ObjectId } from "mongodb";
-import { metaTags, genres } from "../pipelineStages";
+import {
+  metaTags,
+  genres,
+  episodeIdAndTitle,
+  seasons,
+} from "../pipelineStages";
 
 import { Series } from "@/app/(main)/series/[id]/[title]/page.types";
 import { SERIES } from "../collectionNames";
@@ -16,14 +21,34 @@ export default async function getSeries(id: string): Promise<Series> {
       { $match: { _id: new ObjectId(id) } },
       ...metaTags,
       ...genres,
+      ...seasons,
+      ...episodeIdAndTitle,
       {
         $project: {
+          _id: 0,
           poster: { tall: 1, wide: 1 },
           title: 1,
           metaTags: "$populatedMetaTags.title",
           genres: "$populatedGenres.title",
           averageRating: 1,
           totalRating: 1,
+          description: 1,
+          details: 1,
+          licence: 1,
+          seasons: {
+            $map: {
+              input: "$populatedSeasons",
+              as: "season",
+              in: {
+                id: { $toString: "$$season._id" },
+                season: "$$season.season",
+                title: "$$season.title",
+                totalEpisodes: { $size: "$$season.episodes" },
+              },
+            },
+          },
+          episodeId: { $toString: "$episodeId" },
+          episodeTitle: 1,
         },
       },
     ])
@@ -33,9 +58,5 @@ export default async function getSeries(id: string): Promise<Series> {
 
   if (!series) throw notFound();
 
-  const { _id, ...restOfSeries } = series;
-
-  return {
-    ...restOfSeries,
-  } as Series;
+  return series as Series;
 }

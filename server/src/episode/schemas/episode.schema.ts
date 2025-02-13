@@ -13,6 +13,9 @@ export class Episode {
   @Prop({ type: String, required: true })
   duration: string;
 
+  @Prop({ type: String, default: '' })
+  episode: string;
+
   @Prop({ type: String, required: true })
   title: string;
 

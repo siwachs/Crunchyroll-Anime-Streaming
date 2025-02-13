@@ -106,4 +106,21 @@ const episodeIdAndTitle = [
   },
 ];
 
-export { metaTags, genres, metaTagsWithoutNumericTypeTags, episodeIdAndTitle };
+const seasons = [
+  {
+    $lookup: {
+      from: "Seasons",
+      localField: "seasons",
+      foreignField: "_id",
+      as: "populatedSeasons",
+    },
+  },
+];
+
+export {
+  metaTags,
+  genres,
+  metaTagsWithoutNumericTypeTags,
+  episodeIdAndTitle,
+  seasons,
+};

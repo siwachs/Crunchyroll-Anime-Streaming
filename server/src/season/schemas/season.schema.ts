@@ -7,7 +7,10 @@ export type SeasonDocument = HydratedDocument<Season>;
 
 @Schema({ collection: 'Seasons', timestamps: true })
 export class Season {
-  @Prop({ required: true })
+  @Prop({ type: Number, default: -1 })
+  season: number;
+
+  @Prop({ type: String, required: true })
   title: string;
 
   @Prop({

@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsArray,
   ArrayNotEmpty,
@@ -15,6 +16,10 @@ export class CreateEpisodeFormDto {
   @IsNotEmpty()
   @IsString()
   duration: string;
+
+  @IsOptional()
+  @IsString()
+  episode: string;
 
   @IsNotEmpty()
   @IsString()

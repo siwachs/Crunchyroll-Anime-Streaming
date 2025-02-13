@@ -1,3 +1,5 @@
+import { Season, Episode } from "@/types";
+
 export type Series = {
   poster: { tall: string; wide: string };
   title: string;
@@ -5,4 +7,20 @@ export type Series = {
   genres: string[];
   averageRating: number;
   totalRating: number;
+  description: string;
+  details: Record<string, string>;
+  licence: string;
+  seasons: Season[];
+  episodeId: string;
+  episodeTitle: string;
+};
+
+export type SortOption = "Oldest" | "Newest";
+
+export type SeasonEpisodesPayload = {
+  episodes: Episode[];
+  totalEpisodes: number;
+  totalPages: number;
+  pageNumber: number;
+  pageSize: number;
 };

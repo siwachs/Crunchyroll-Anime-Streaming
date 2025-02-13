@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { cleanString } from "@/lib/utils";
+
 import Ratings from "@/components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
-import Dropdown from "../dropdown";
-import MarkSeriesAsWatched from "../dropdown/menuItems/markSeriesAsWatched";
+import Dropdown from "@/components/dropdown";
+import MarkSeriesAsWatched from "@/components/dropdown/menuItems/markSeriesAsWatched";
 
-import { HiOutlineShare } from "react-icons/hi";
+import { MdMoreVert } from "react-icons/md";
+import { HiOutlineShare, HiOutlinePlus } from "react-icons/hi";
 
 import "./index.css";
 
@@ -18,6 +21,9 @@ const Banner: React.FC<{
   genres: string[];
   averageRating: number;
   totalRating: number;
+  totalSeasons: number;
+  episodeId: string;
+  episodeTitle: string;
 }> = ({
   seriesId,
   poster,
@@ -26,7 +32,13 @@ const Banner: React.FC<{
   genres,
   averageRating,
   totalRating,
+  totalSeasons,
+  episodeId,
+  episodeTitle,
 }) => {
+  const watchActionText = `Start Watching ${totalSeasons > 1 ? "S1 E1" : "E1"}`;
+  const watchActionhref = `/watch/${episodeId}/${cleanString(episodeTitle)}`;
+
   return (
     <div className="relative">
       <div className="container-cmp has-no-gutters series-banner-container">
@@ -92,16 +104,23 @@ const Banner: React.FC<{
               </div>
             </div>
 
-            <div className="pt-1 sm:pt-3">
-              <div className="flex flex-col flex-wrap items-center gap-2.5 md:flex-row">
+            <div className="pt-1 sm:pt-1.5">
+              <div className="flex flex-col flex-wrap items-center gap-[0.3125rem] md:flex-row md:gap-2.5">
                 <ContentActionButtons
-                  className="w-full p-[0.3125rem] sm:p-0"
-                  watchActionText="Start Watching E1"
-                  watchActionhref="#"
+                  className="w-full p-[0.3125rem] sm:px-0 md:w-auto"
+                  watchActionText={watchActionText}
+                  watchActionhref={watchActionhref}
                 />
 
-                <div className="flex flex-nowrap items-center justify-center gap-2.5 pt-[0.3125rem] md:justify-start">
-                  <button title="Share" className="share-action-button">
+                <div className="flex flex-nowrap items-center justify-center gap-2.5 md:justify-start">
+                  <button title="My List" className="series-action-button">
+                    <HiOutlinePlus className="m-2 size-6" />
+                    <span className="text-[0.625rem] font-black uppercase md:hidden">
+                      My List
+                    </span>
+                  </button>
+
+                  <button title="Share" className="series-action-button">
                     <HiOutlineShare className="m-2 size-6" />
                     <span className="text-[0.625rem] font-black uppercase md:hidden">
                       Share
@@ -113,7 +132,8 @@ const Banner: React.FC<{
                     className="hidden md:block"
                     triggerTitle="More Options"
                     triggerClassName="text-[var(--app-background-crunchyroll-orange)] hover:text-[var(--app-hover-crunchyroll-orange)] focus-visible:text-[var(--app-hover-crunchyroll-orange)] m-2"
-                    menuClassName="translate-x-[90px]"
+                    Icon={<MdMoreVert className="size-6" />}
+                    menuClassName="translate-x-[40px]"
                     headerTitle="More"
                   >
                     <MarkSeriesAsWatched seriesId={seriesId} />
@@ -134,6 +154,7 @@ const Banner: React.FC<{
         triggerTitle="More Actions"
         triggerClassName="hover:bg-[var(--app-background-secondary)] focus-visible:bg-[var(--app-background-secondary)] p-2"
         triggerActiveClassName="bg-[var(--app-background-secondary)]"
+        Icon={<MdMoreVert className="size-6" />}
         headerTitle="More"
       >
         <MarkSeriesAsWatched seriesId={seriesId} />

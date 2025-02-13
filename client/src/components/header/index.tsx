@@ -12,7 +12,7 @@ import { HeaderState } from "./types";
 
 import { HiSearch, HiOutlineUser, HiOutlineBookmark } from "react-icons/hi";
 
-import { HeaderLogoMobileOnly, HeaderLogoLarge } from "@/assets/HeaderLogo";
+import { HeaderLogoMobileOnly, HeaderLogoLarge } from "@/assets/headerLogo";
 import "./index.css";
 
 const Header = () => {

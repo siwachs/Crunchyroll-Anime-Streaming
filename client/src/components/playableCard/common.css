@@ -15,6 +15,8 @@
     100% * var(--content-image-ar-priority-height) /
       var(--content-image-ar-priority-height)
   );
+
+  @apply w-[9.44rem];
 }
 
 @media screen and (min-width: 568px) {
@@ -29,5 +31,5 @@
 }
 
 .playable-card-duration {
-  @apply absolute right-1 bottom-1 bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/leading-4.5 font-semibold select-none;
+  @apply text-sm/leading-4.5 absolute right-1 bottom-1 bg-[#0009] p-[0.1875rem_0.3125rem] font-semibold select-none;
 }

@@ -1,7 +1,11 @@
+import { ReactElement, cloneElement } from "react";
+
 import { MdClose } from "react-icons/md";
 
+import "./menu.css";
+
 const Menu: React.FC<{
-  children: React.ReactNode;
+  children: ReactElement<{ toogleDropdown?: () => void }>;
   align?: "right" | "left";
   headerTitle: string;
   toogleDropdown: () => void;
@@ -9,7 +13,7 @@ const Menu: React.FC<{
 }> = ({ children, align, headerTitle, toogleDropdown, className = "" }) => {
   return (
     <div
-      className={`fixed top-0 right-0 left-0 z-100 grid h-full min-w-[12.5rem] grid-cols-[minmax(0,auto)_minmax(0,1fr)] grid-rows-[minmax(0,auto)_minmax(0,_1fr)_minmax(0,auto)] overflow-hidden bg-[var(--app-background-secondary)] sm:absolute sm:top-full sm:h-auto sm:max-h-[28.75rem] sm:max-w-[calc(100vw-5rem)] ${align === "right" ? "sm:left-auto" : "sm:right-auto"} ${className}`}
+      className={`menu fixed top-0 right-0 left-0 z-100 flex h-full flex-col overflow-hidden bg-[var(--app-background-secondary)] sm:absolute sm:top-full sm:h-auto sm:max-h-[28.75rem] sm:max-w-[calc(100vw-5rem)] sm:min-w-[12.5rem] ${align === "right" ? "sm:left-auto" : "sm:right-auto"} ${className}`}
     >
       <header className="flex items-center justify-between bg-[var(--app-overlay-secondary)] px-5 py-4.5 sm:hidden">
         <h4>{headerTitle}</h4>
@@ -19,7 +23,9 @@ const Menu: React.FC<{
         </button>
       </header>
 
-      <main className="scrollbar-thin overflow-y-auto py-3">{children}</main>
+      <main className="scrollbar-thin flex-1 overflow-y-auto py-3">
+        {cloneElement(children, { toogleDropdown })}
+      </main>
 
       <footer className="sm:hidden"></footer>
     </div>

@@ -5,8 +5,8 @@ export default function useWindowResolution() {
     width: number;
     height: number;
   }>({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0,
   });
 
   useEffect(() => {

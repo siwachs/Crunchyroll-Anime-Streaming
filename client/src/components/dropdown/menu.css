@@ -1,3 +1,25 @@
 @import "tailwindcss";
 @import "@styles/theme.css";
 @import "@styles/utilities.css";
+
+@keyframes dropdownContentFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.menu {
+  animation: dropdownContentFade 0.15s cubic-bezier(0, 0, 0.25, 1) forwards;
+}
+
+.menu-item {
+  @apply app-transition-colors flex min-h-10.5 w-full cursor-pointer items-center justify-between gap-x-5 px-5 py-3 text-start text-sm/4.5 font-medium text-[var(--meta-color)] data-[active=true]:text-white;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  @apply bg-[var(--app-overlay-secondary)] text-white;
+}
