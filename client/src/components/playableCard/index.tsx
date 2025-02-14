@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { cleanString, getTitleWithSeasonAndEpisodeNumber } from "@/lib/utils";
+import {
+  cleanString,
+  getTitleWithSeasonAndEpisodeNumber,
+  getLocaleDate,
+} from "@/lib/utils";
 
 import Dropdown from "@/components/dropdown";
 import MarkEpisodeAsWatched from "@/components/dropdown/menuItems/markEpisodeAsWatched";
@@ -23,9 +27,11 @@ const PlayableCardHoverInfo: React.FC<{
   seriesLink: string;
   title: string;
 }> = ({ episodeLink, episodeTitle, episode, seriesLink, title }) => {
+  const releaseDate = getLocaleDate(episode.releaseDate);
+
   return (
-    <div className="playable-card-hover-info">
-      <div className="playable-card-hover-preview">
+    <div className="playable-card-hover-info app-transition-opacity absolute inset-0 z-[1] opacity-0">
+      <div className="playable-card-hover-preview relative flex size-full bg-[var(--app-overlay-secondary)]">
         <Link
           href={episodeLink}
           prefetch={false}
@@ -33,19 +39,7 @@ const PlayableCardHoverInfo: React.FC<{
           className="absolute inset-0 z-[1]"
         />
 
-        <div className="playable-card-thumbnail-wrapper playable-card-hover-thumbnail-wrapper">
-          <figure className="playable-card-thumbnail">
-            <Image
-              fill
-              sizes="230px"
-              src={episode.thumbnail}
-              alt={episodeTitle}
-              className="block size-full object-cover"
-            />
-          </figure>
-
-          <div className="playable-card-duration">{episode.duration}</div>
-        </div>
+        <div className="playable-card-hover-thumbnail-placeholder relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:hidden" />
 
         <div className="playable-card-hover-body">
           <Link
@@ -64,7 +58,7 @@ const PlayableCardHoverInfo: React.FC<{
 
           <p className="playable-card-hover-release">
             <HiOutlineCalendar className="mr-1 size-4" />
-            <span>{episode.releaseDate}</span>
+            <span>{releaseDate}</span>
           </p>
 
           <div className="playable-card-hover-description-wrapper">
@@ -104,16 +98,14 @@ const PlayableCard: React.FC<{
 
   return (
     <div
-      className={
-        cardType === "default" ? "playable-card" : "playable-card-mini"
-      }
+      className={`app-transition-colors relative flex ${cardType === "default" ? "playable-card sm:block" : "playable-card-mini"}`}
     >
       {cardType === "mini" && (
         <Link
           href={episodeLink}
           prefetch={false}
           title={episodeTitle}
-          className="playable-card-mini-link"
+          className="absolute inset-0 z-[2]"
         />
       )}
 
@@ -123,14 +115,14 @@ const PlayableCard: React.FC<{
         tabIndex={-1}
         className={
           cardType === "default"
-            ? "playable-card-thumbnail-wrapper"
+            ? "playable-card-thumbnail-wrapper relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:h-auto"
             : "playable-card-mini-thumbnail-wrapper"
         }
       >
         <figure
           className={
             cardType === "default"
-              ? "playable-card-thumbnail"
+              ? "playable-card-thumbnail relative size-full"
               : "playable-card-mini-thumbnail"
           }
         >
@@ -160,11 +152,11 @@ const PlayableCard: React.FC<{
         />
       )}
 
-      <div className="playable-card-body-aligner">
+      <div className="relative flex flex-1 items-center">
         <div
           className={
             cardType === "default"
-              ? "playable-card-body"
+              ? "playable-card-body flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pt-3 sm:pb-0 sm:pl-0"
               : "playable-card-mini-body"
           }
         >

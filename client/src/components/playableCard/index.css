@@ -5,8 +5,6 @@
 .playable-card {
   --hover-shadow-size: 0.5rem;
 
-  @apply app-transition-colors relative flex sm:block;
-
   box-shadow: 0 0 0 var(--hover-shadow-size) #0000;
 }
 
@@ -16,25 +14,16 @@
   }
 }
 
-.playable-card-thumbnail-wrapper {
-  @apply relative block h-[5.3125rem] flex-[0_0_auto] sm:h-auto;
-}
-
-.playable-card-hover-info {
-  @apply app-transition-opacity absolute inset-0 z-[1] opacity-0 focus-within:opacity-100 hover:opacity-100;
+.playable-card:hover .playable-card-hover-info,
+.playable-card:focus-within .playable-card-hover-info {
+  @apply opacity-100;
 }
 
 .playable-card-hover-preview {
-  @apply relative flex size-full bg-[var(--app-overlay-secondary)];
-
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
 }
 
-.playable-card-hover-thumbnail-wrapper {
-  @apply sm:hidden;
-}
-
-.playable-card-hover-thumbnail-wrapper::after {
+.playable-card-hover-thumbnail-placeholder::after {
   @apply absolute inset-0 bg-white opacity-[0.08] content-[""];
 }
 
@@ -64,14 +53,6 @@
 
 .playable-card-hover-play span {
   @apply text-sm/leading-4.5 inline-block truncate font-black uppercase;
-}
-
-.playable-card-body-aligner {
-  @apply relative flex flex-1 items-center;
-}
-
-.playable-card-body {
-  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pt-3 sm:pb-0 sm:pl-0;
 }
 
 .playable-card-small-title {

@@ -5,12 +5,7 @@
 .playable-card-mini {
   --hover-shadow-size: 0.375rem;
 
-  @apply relative flex;
-
   box-shadow: 0 0 0 var(--hover-shadow-size) #0000;
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
 .playable-card-mini:hover,
@@ -20,16 +15,12 @@
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
 }
 
-.playable-card-mini-link {
-  @apply absolute inset-0 z-[2];
-}
-
 .playable-card-mini-thumbnail-wrapper {
   @apply relative block h-[5.3125rem] flex-[0_0_auto];
 }
 
 .playable-card-mini-thumbnail-wrapper::after {
-  @apply ease-quick absolute inset-0 bg-white opacity-0 transition-opacity duration-200 content-[""];
+  @apply app-transition-opacity absolute inset-0 bg-white opacity-0 content-[""];
 }
 
 .playable-card-mini:hover .playable-card-mini-thumbnail-wrapper::after,

@@ -13,7 +13,7 @@ const SeasonEpisodes: React.FC<{
 
   return (
     <div className="season-episodes-list mb-3">
-      <div className="grid grid-cols-1 gap-3">
+      <div className="3xl:grid-cols-7 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 md:gap-7.5 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {episodes.map((episode) => (
           <PlayableCard
             key={episode.id}

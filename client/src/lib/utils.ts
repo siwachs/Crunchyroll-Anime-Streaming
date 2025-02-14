@@ -90,6 +90,16 @@ function getTitleWithSeasonAndEpisodeNumber(
   return `${transformedTitle}${title}`;
 }
 
+function getLocaleDate(dateString: string | Date, locale?: string) {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "Invalid Date";
+
+  const resolvedLocale =
+    locale ?? (typeof window !== "undefined" ? navigator.language : "en-US");
+
+  return date.toLocaleDateString(resolvedLocale);
+}
+
 export {
   triggerCallbackOnClickOrOnKeydown,
   getAttribute,
@@ -98,4 +108,5 @@ export {
   getCompactNotation,
   getTitleWithSeasonNumber,
   getTitleWithSeasonAndEpisodeNumber,
+  getLocaleDate,
 };

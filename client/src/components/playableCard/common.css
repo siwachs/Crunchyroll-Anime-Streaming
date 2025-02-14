@@ -3,27 +3,7 @@
 @import "@styles/utilities.css";
 
 .playable-card-thumbnail {
-  --content-image-ar-priority-height: 1;
-
-  @apply relative;
-
-  width: calc(
-    100% * var(--content-image-ar-priority-width) /
-      var(--content-image-ar-priority-width)
-  );
-  height: calc(
-    100% * var(--content-image-ar-priority-height) /
-      var(--content-image-ar-priority-height)
-  );
-
-  @apply w-[9.44rem];
-}
-
-@media screen and (min-width: 568px) {
-  .playable-card-thumbnail {
-    --content-image-ar-priority-width: 1;
-    --content-image-ar-priority-height: 0;
-  }
+  @apply relative size-full;
 }
 
 .playable-card-thumbnail-has-width {
