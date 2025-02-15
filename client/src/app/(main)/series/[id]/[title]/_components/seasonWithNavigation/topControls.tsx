@@ -36,7 +36,9 @@ const TopControls: React.FC<{
     <div className="top-controls flex items-center pb-3">
       <div className="flex min-w-[50%] flex-1 pr-6">
         {seasons.length <= 1 ? (
-          <h4 className="text-base font-semibold">{seasonTitle}</h4>
+          <h4 className="truncate text-base font-semibold sm:text-lg/relaxed">
+            {seasonTitle}
+          </h4>
         ) : (
           <Dropdown
             align="left"

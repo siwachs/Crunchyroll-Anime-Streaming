@@ -202,7 +202,7 @@
 }
 
 .browse-card-body-title {
-  @apply line-clamp-3 text-sm/leading-4.5 font-medium;
+  @apply line-clamp-3 text-sm/4.5 font-medium;
 }
 
 .browse-card-hover {
@@ -233,7 +233,7 @@
 .browse-card-hover-body-description {
   --max-lines: 7;
 
-  @apply line-clamp-[var(--max-lines)] text-sm/leading-4.5 break-words;
+  @apply line-clamp-[var(--max-lines)] text-sm/4.5 break-words;
 
   max-height: calc(var(--max-lines) * 1.125rem);
 }

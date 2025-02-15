@@ -17,7 +17,7 @@ const AverageRating: React.FC<{
   return (
     <div className={`relative ${className}`}>
       <button className="star-rating-average-button outline-xs">
-        <span className="text-sm/leading-4.5 2sm:initial xl:initial hidden font-semibold text-[var(--app-icon-primary)] md:hidden">{`Average Rating: `}</span>
+        <span className="2sm:initial xl:initial hidden text-sm/4.5 font-semibold text-[var(--app-icon-primary)] md:hidden">{`Average Rating: `}</span>
         <span>{averageRating}</span>
         <span>({compactTotalRating})</span>
         <FaCaretDown className="ml-0.5 size-3.5" />
@@ -26,7 +26,7 @@ const AverageRating: React.FC<{
       <div className="star-rating-average-data hidden">
         <div className="star-rating-average-tooltip">
           <div className="mb-3">
-            <span className="text-sm/leading-4.5 font-medium">
+            <span className="text-sm/4.5 font-medium">
               Average {averageRating} out of 5 stars
             </span>
 
@@ -39,7 +39,7 @@ const AverageRating: React.FC<{
             <div key={index} className="flex items-center pt-2 pb-1.5">
               <HiOutlineStar className="mr-2 size-4.5 flex-[0_0_auto] fill-current" />
 
-              <p className="text-sm/leading-4.5 font-medium sm:text-base">
+              <p className="text-sm/4.5 font-medium sm:text-base">
                 {5 - index}
               </p>
 
@@ -50,7 +50,7 @@ const AverageRating: React.FC<{
                 />
               </div>
 
-              <p className="text-sm/leading-4.5 w-10 font-medium sm:text-base">
+              <p className="w-10 text-sm/4.5 font-medium sm:text-base">
                 {ratingPercentage}%
               </p>
             </div>

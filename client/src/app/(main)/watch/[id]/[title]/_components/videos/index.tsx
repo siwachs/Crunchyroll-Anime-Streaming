@@ -18,7 +18,7 @@ const Videos: React.FC = () => {
         <div className="prev-next-episodes">
           <div className="prev-next-episode 2sm:order-1 2md:order-none">
             <Link
-              className="title text-sm/leading-4.5 font-medium 2sm:text-end 2md:text-start"
+              className="title 2sm:text-end 2md:text-start text-sm/4.5 font-medium"
               href={nextEpisodeLink}
             >
               <span>Next Episode</span>
@@ -36,7 +36,7 @@ const Videos: React.FC = () => {
 
           <div className="prev-next-episode">
             <Link
-              className="title text-sm/leading-4.5 font-medium"
+              className="title text-sm/4.5 font-medium"
               href={previousEpisodeLink}
             >
               <span>Previous Episode</span>

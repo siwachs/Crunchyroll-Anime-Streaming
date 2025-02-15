@@ -17,7 +17,7 @@ const DataFeedRow: React.FC<{
         </h2>
 
         {dataSubTitle && (
-          <p className="mt-1 flex-[1_1_100%] text-sm/leading-4.5 font-medium text-[var(--meta-color)] sm:mt-2 sm:text-base">
+          <p className="mt-1 flex-[1_1_100%] text-sm/4.5 font-medium text-[var(--meta-color)] sm:mt-2 sm:text-base">
             {dataSubTitle}
           </p>
         )}

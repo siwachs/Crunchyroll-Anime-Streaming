@@ -3,7 +3,7 @@
 @import "@styles/utilities.css";
 
 .star-rating-average-button {
-  @apply flex cursor-pointer items-center gap-1 text-sm/leading-4.5 font-black;
+  @apply flex cursor-pointer items-center gap-1 text-sm/4.5 font-black;
 }
 
 .star-rating-average-button:hover,
@@ -12,7 +12,7 @@
 }
 
 .star-rating-average-button span {
-  @apply flex-[0_0_auto] text-sm/leading-4.5;
+  @apply flex-[0_0_auto] text-sm/4.5;
 }
 
 .star-rating-average-button:hover span:first-child,

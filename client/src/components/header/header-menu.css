@@ -41,7 +41,7 @@
 }
 
 .menu-title {
-  @apply app-transition-colors relative flex items-center px-4.5 py-3 text-base font-medium text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)] data-[active=true]:bg-[var(--app-background-secondary)] lg:px-4 lg:text-sm/leading-4.5;
+  @apply app-transition-colors relative flex items-center px-4.5 py-3 text-base font-medium text-[var(--app-text-secondary)] hover:bg-[var(--app-background-secondary)] data-[active=true]:bg-[var(--app-background-secondary)] lg:px-4 lg:text-sm/4.5;
 }
 
 .menu-title-icon {
@@ -55,7 +55,7 @@
 }
 
 .submenu-title {
-  @apply app-transition-colors block p-[0.875rem_2.375rem] text-sm/leading-4.5 font-medium text-[var(--app-icon-primary)] hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem] lg:hover:bg-[var(--app-background-secondary)];
+  @apply app-transition-colors block p-[0.875rem_2.375rem] text-sm/4.5 font-medium text-[var(--app-icon-primary)] hover:bg-[var(--app-background-secondary)] lg:p-[0.75rem_1rem] lg:hover:bg-[var(--app-background-secondary)];
 }
 
 .submenu-title-active {

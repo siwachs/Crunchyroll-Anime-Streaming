@@ -39,7 +39,19 @@ const PlayableCardHoverInfo: React.FC<{
           className="absolute inset-0 z-[1]"
         />
 
-        <div className="playable-card-hover-thumbnail-placeholder relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:hidden" />
+        <div className="playable-card-thumbnail-wrapper relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:hidden">
+          <figure className="playable-card-thumbnail relative size-full">
+            <Image
+              fill
+              sizes="230px"
+              src={episode.thumbnail}
+              alt={episodeTitle}
+              className="block size-full object-cover"
+            />
+          </figure>
+
+          <div className="playable-card-duration">{episode.duration}</div>
+        </div>
 
         <div className="playable-card-hover-body">
           <Link

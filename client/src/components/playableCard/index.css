@@ -32,7 +32,7 @@
 }
 
 .playable-card-hover-release {
-  @apply text-sm/leading-4.5 mb-2 hidden items-center font-medium text-[var(--meta-color)] sm:flex;
+  @apply mb-2 hidden items-center text-sm/4.5 font-medium text-[var(--meta-color)] sm:flex;
 }
 
 .playable-card-hover-description-wrapper {
@@ -40,7 +40,7 @@
 }
 
 .playable-card-hover-description-wrapper p {
-  @apply text-sm/leading-4.5 line-clamp-5 font-semibold;
+  @apply line-clamp-5 text-sm/4.5 font-semibold;
 }
 
 .playable-card-hover-play {
@@ -52,7 +52,7 @@
 }
 
 .playable-card-hover-play span {
-  @apply text-sm/leading-4.5 inline-block truncate font-black uppercase;
+  @apply inline-block truncate text-sm/4.5 font-black uppercase;
 }
 
 .playable-card-small-title {
@@ -64,7 +64,7 @@
 }
 
 .playable-card-title {
-  @apply text-sm/leading-4.5 line-clamp-1 self-start font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
+  @apply line-clamp-1 self-start text-sm/4.5 font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
 }
 
 .playable-card-hover-title {

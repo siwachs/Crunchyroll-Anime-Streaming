@@ -181,20 +181,20 @@ const DataFeedCarousel: React.FC<{ dataFeed: DataFeedItem[] }> = ({
                               </h4>
 
                               <div className="mb-1 flex items-center gap-1 text-[var(--app-icon-primary)]">
-                                <p className="text-sm/leading-4.5 font-medium">
+                                <p className="text-sm/4.5 font-medium">
                                   {dataFeedItem.averageRating}
                                 </p>
                                 <HiStar className="size-4" />
-                                <p className="text-sm/leading-4.5 font-medium uppercase">
+                                <p className="text-sm/4.5 font-medium uppercase">
                                   ({compactAverageRating})
                                 </p>
                               </div>
 
                               <div className="mb-2 flex flex-col text-[var(--meta-color)]">
-                                <span className="text-sm/leading-4.5 font-semibold">
+                                <span className="text-sm/4.5 font-semibold">
                                   {dataFeedItem.totalSeasons} Seasons
                                 </span>
-                                <span className="text-sm/leading-4.5 font-semibold">
+                                <span className="text-sm/4.5 font-semibold">
                                   {dataFeedItem.totalEpisodes} Episodes
                                 </span>
                               </div>

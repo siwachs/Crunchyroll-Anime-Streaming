@@ -11,5 +11,5 @@
 }
 
 .action-button-child {
-  @apply flex h-full items-center justify-center gap-1 text-sm/leading-4.5 font-black uppercase;
+  @apply flex h-full items-center justify-center gap-1 text-sm/4.5 font-black uppercase;
 }

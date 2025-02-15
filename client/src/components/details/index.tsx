@@ -9,7 +9,7 @@ const DetailItem: React.FC<{ detailKey?: string; detailValue: string }> = ({
   detailValue,
 }) => {
   return (
-    <div className="text-sm/leading-4.5 font-medium text-[var(--meta-color)]">
+    <div className="text-sm/4.5 font-medium text-[var(--meta-color)]">
       {detailKey ? (
         <>
           <h5 className="inline text-white">{detailKey}: </h5>
@@ -42,7 +42,7 @@ const Details: React.FC<{
         >
           <div className="grid gap-7.5 md:grid-cols-[repeat(12,1fr)]">
             <div className="3xl:col-[1/span_4] whitespace-pre-line md:col-span-6 xl:col-[1/span_6]">
-              <p className="text-sm/leading-4.5 font-medium sm:text-base">
+              <p className="text-sm/4.5 font-medium sm:text-base">
                 {description}
               </p>
             </div>

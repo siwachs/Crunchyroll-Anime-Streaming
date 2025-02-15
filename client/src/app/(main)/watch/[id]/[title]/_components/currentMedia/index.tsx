@@ -53,7 +53,7 @@ const CurrentMedia: React.FC = () => {
           <span>Sub | Dub</span>
         </div>
 
-        <p className="text-sm/leading-4.5 mb-3 font-medium sm:mb-2">
+        <p className="mb-3 text-sm/4.5 font-medium sm:mb-2">
           Released on Jan 13, 2024
         </p>
 
