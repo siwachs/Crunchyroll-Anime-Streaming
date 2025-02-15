@@ -82,10 +82,11 @@ function getTitleWithSeasonAndEpisodeNumber(
   season: number,
   episode: string,
   title: string,
+  join: string = " - ",
 ) {
   let transformedTitle = "";
   if (season > 0) transformedTitle += `S${season} `;
-  if (episode) transformedTitle = `${transformedTitle}E${episode} - `;
+  if (episode) transformedTitle = `${transformedTitle}E${episode}${join}`;
 
   return `${transformedTitle}${title}`;
 }

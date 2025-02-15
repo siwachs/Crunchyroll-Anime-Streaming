@@ -1,3 +1,5 @@
+import { SeasonEpisodesProvider } from "@/providers/seasonEpisodesProvider";
+
 import Banner from "./_components/banner";
 import Details from "@/components/details";
 import SeasonWithNavigation from "./_components/seasonWithNavigation";
@@ -36,11 +38,9 @@ export default async function Series({
             licence={series.licence}
           />
 
-          <SeasonWithNavigation
-            seriesId={id}
-            title={series.title}
-            seasons={series.seasons}
-          />
+          <SeasonEpisodesProvider seriesId={id} seasons={series.seasons}>
+            <SeasonWithNavigation title={series.title} />
+          </SeasonEpisodesProvider>
 
           <div className="mt-40" />
         </div>

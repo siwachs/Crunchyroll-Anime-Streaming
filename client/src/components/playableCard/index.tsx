@@ -23,24 +23,38 @@ import "./index.css";
 const PlayableCardHoverInfo: React.FC<{
   episodeLink: string;
   episodeTitle: string;
+  currentSeason: Season;
   episode: Episode;
   seriesLink: string;
   title: string;
-}> = ({ episodeLink, episodeTitle, episode, seriesLink, title }) => {
+}> = ({
+  episodeLink,
+  episodeTitle,
+  currentSeason,
+  episode,
+  seriesLink,
+  title,
+}) => {
   const releaseDate = getLocaleDate(episode.releaseDate);
+  const playButtonText = getTitleWithSeasonAndEpisodeNumber(
+    currentSeason.season,
+    episode.episode,
+    "",
+    "",
+  );
 
   return (
-    <div className="playable-card-hover-info app-transition-opacity absolute inset-0 z-[1] opacity-0">
+    <div className="playable-card-hover-info app-transition-opacity absolute inset-0 z-1 opacity-0">
       <div className="playable-card-hover-preview relative flex size-full bg-[var(--app-overlay-secondary)]">
         <Link
           href={episodeLink}
           prefetch={false}
           title={episodeTitle}
-          className="absolute inset-0 z-[1]"
+          className="absolute inset-0 z-1"
         />
 
-        <div className="playable-card-thumbnail-wrapper relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:hidden">
-          <figure className="playable-card-thumbnail relative size-full">
+        <div className="playable-card-hover-thumbnail relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:hidden">
+          <figure className="relative size-full">
             <Image
               fill
               sizes="230px"
@@ -53,13 +67,13 @@ const PlayableCardHoverInfo: React.FC<{
           <div className="playable-card-duration">{episode.duration}</div>
         </div>
 
-        <div className="playable-card-hover-body">
+        <div className="flex flex-1 flex-col pt-3 pb-[0.7625rem] pl-3 sm:p-0">
           <Link
             href={seriesLink}
             prefetch={false}
-            className="playable-card-small-title z-[1]"
+            className="playable-card-small-title outline-xs z-1"
           >
-            <small className="app-transition-colors hover:text-white hover:underline">
+            <small className="app-transition-colors hover:text-white hover:underline focus-visible:text-white focus-visible:underline">
               {title}
             </small>
           </Link>
@@ -68,23 +82,31 @@ const PlayableCardHoverInfo: React.FC<{
             {episodeTitle}
           </h4>
 
-          <p className="playable-card-hover-release">
+          <p className="playable-card-hover-release mb-2 hidden items-center text-sm/4.5 font-medium text-[var(--meta-color)] sm:flex">
             <HiOutlineCalendar className="mr-1 size-4" />
             <span>{releaseDate}</span>
           </p>
 
-          <div className="playable-card-hover-description-wrapper">
-            <p>{episode.description}</p>
+          <div className="playable-card-hover-description mb-2.5 hidden sm:block md:mb-2 lg:mb-3">
+            <p className="line-clamp-5 text-sm/4.5 font-semibold">
+              {episode.description}
+            </p>
           </div>
 
           <div className="playable-card-footer">
-            <div className="playable-card-hover-play">
+            <Link
+              href={episodeLink}
+              prefetch={false}
+              className="playable-card-hover-play outline-xs flex items-center gap-1 text-[var(--app-background-crunchyroll-orange)]"
+            >
               <HiOutlinePlay
                 strokeWidth={2.08}
                 className="block size-6 flex-[0_0_auto]"
               />
-              <span>Play</span>
-            </div>
+              <span className="inline-block truncate text-sm/4.5 font-black uppercase">
+                {playButtonText ? `Play ${playButtonText}` : "Play"}
+              </span>
+            </Link>
           </div>
         </div>
       </div>
@@ -110,7 +132,7 @@ const PlayableCard: React.FC<{
 
   return (
     <div
-      className={`app-transition-colors relative flex ${cardType === "default" ? "playable-card sm:block" : "playable-card-mini"}`}
+      className={`${cardType === "default" ? "playable-card sm:block" : "playable-card-mini"} app-transition-colors relative flex`}
     >
       {cardType === "mini" && (
         <Link
@@ -127,17 +149,11 @@ const PlayableCard: React.FC<{
         tabIndex={-1}
         className={
           cardType === "default"
-            ? "playable-card-thumbnail-wrapper relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:h-auto"
+            ? "playable-card-thumbnail relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:h-auto"
             : "playable-card-mini-thumbnail-wrapper"
         }
       >
-        <figure
-          className={
-            cardType === "default"
-              ? "playable-card-thumbnail relative size-full"
-              : "playable-card-mini-thumbnail"
-          }
-        >
+        <figure className="relative size-full">
           <Image
             fill
             sizes={
@@ -158,6 +174,7 @@ const PlayableCard: React.FC<{
         <PlayableCardHoverInfo
           episodeLink={episodeLink}
           episodeTitle={episodeTitle}
+          currentSeason={currentSeason}
           episode={episode}
           seriesLink={seriesLink}
           title={title}
@@ -197,7 +214,7 @@ const PlayableCard: React.FC<{
               <Dropdown
                 align="right"
                 className="z-1"
-                triggerClassName="hover:text-white focus-visible:text-white"
+                triggerClassName="hover:text-white focus-visible:text-white outline-xs"
                 triggerActiveClassName="text-white"
                 Icon={<MdMoreVert className="size-6" />}
                 headerTitle="More Options"

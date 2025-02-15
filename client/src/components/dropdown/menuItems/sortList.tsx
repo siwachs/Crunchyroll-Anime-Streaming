@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
 
-import { SortOption } from "@/app/(main)/series/[id]/[title]/page.types";
+import { SortOption } from "@/providers/types";
 
 const SortList: React.FC<{
-  currentSortOption: SortOption;
-  setCurrentSortOption: Dispatch<SetStateAction<SortOption>>;
   toogleDropdown?: () => void;
-}> = ({ currentSortOption, setCurrentSortOption, toogleDropdown }) => {
+}> = ({ toogleDropdown }) => {
+  const { currentSortOption, setCurrentSortOption } = useSeasonEpisodes();
+
   function changeSortOption(sortOption: SortOption) {
     setCurrentSortOption(sortOption);
 

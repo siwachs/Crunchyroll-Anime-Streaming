@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
 
 import { getTitleWithSeasonNumber } from "@/lib/utils";
 
@@ -7,26 +7,13 @@ import SeasonList from "@/components/dropdown/menuItems/seasonList";
 import SortList from "@/components/dropdown/menuItems/sortList";
 import MarkSeasonAsWatched from "@/components/dropdown/menuItems/markSeasonAsWatched";
 
-import { Season } from "@/types";
-import { SortOption } from "@/app/(main)/series/[id]/[title]/page.types";
-
 import { FaCaretDown } from "react-icons/fa";
 import { Sort } from "@/assets/icons";
 import { MdMoreVert } from "react-icons/md";
 
-const TopControls: React.FC<{
-  seasons: Season[];
-  currentSeason: Season;
-  setCurrentSeason: Dispatch<SetStateAction<Season>>;
-  currentSortOption: SortOption;
-  setCurrentSortOption: Dispatch<SetStateAction<SortOption>>;
-}> = ({
-  seasons,
-  currentSeason,
-  setCurrentSeason,
-  currentSortOption,
-  setCurrentSortOption,
-}) => {
+const TopControls: React.FC = () => {
+  const { seasons, currentSeason, currentSortOption } = useSeasonEpisodes();
+
   const seasonTitle = getTitleWithSeasonNumber(
     currentSeason.season,
     currentSeason.title,
@@ -54,11 +41,7 @@ const TopControls: React.FC<{
             menuClassName="sm:min-w-xs sm:max-h-[16.25rem]"
             headerTitle="Seasons"
           >
-            <SeasonList
-              seasons={seasons}
-              currentSeasonId={currentSeason.id}
-              setCurrentSeason={setCurrentSeason}
-            />
+            <SeasonList />
           </Dropdown>
         )}
       </div>
@@ -76,10 +59,7 @@ const TopControls: React.FC<{
         }
         headerTitle="Sort"
       >
-        <SortList
-          currentSortOption={currentSortOption}
-          setCurrentSortOption={setCurrentSortOption}
-        />
+        <SortList />
       </Dropdown>
 
       <Dropdown

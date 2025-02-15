@@ -2,14 +2,6 @@
 @import "@styles/theme.css";
 @import "@styles/utilities.css";
 
-.playable-card-thumbnail {
-  @apply relative size-full;
-}
-
-.playable-card-thumbnail-has-width {
-  @apply w-[20.625rem];
-}
-
 .playable-card-duration {
   @apply absolute right-1 bottom-1 bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/4.5 font-semibold select-none;
 }

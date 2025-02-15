@@ -23,36 +23,12 @@
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
 }
 
-.playable-card-hover-thumbnail-placeholder::after {
+.playable-card-hover-thumbnail::after {
   @apply absolute inset-0 bg-white opacity-[0.08] content-[""];
-}
-
-.playable-card-hover-body {
-  @apply flex flex-1 flex-col pt-3 pb-[0.7625rem] pl-3 sm:p-0;
-}
-
-.playable-card-hover-release {
-  @apply mb-2 hidden items-center text-sm/4.5 font-medium text-[var(--meta-color)] sm:flex;
-}
-
-.playable-card-hover-description-wrapper {
-  @apply mb-2.5 hidden sm:block md:mb-2 lg:mb-3;
-}
-
-.playable-card-hover-description-wrapper p {
-  @apply line-clamp-5 text-sm/4.5 font-semibold;
-}
-
-.playable-card-hover-play {
-  @apply flex items-center gap-1 text-[var(--app-background-crunchyroll-orange)];
 }
 
 .playable-card:hover .playable-card-hover-play {
   @apply text-[var(--app-hover-crunchyroll-orange)];
-}
-
-.playable-card-hover-play span {
-  @apply inline-block truncate text-sm/4.5 font-black uppercase;
 }
 
 .playable-card-small-title {

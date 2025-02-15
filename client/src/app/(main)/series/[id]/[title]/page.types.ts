@@ -1,4 +1,4 @@
-import { Season, Episode } from "@/types";
+import { Season } from "@/types";
 
 export type Series = {
   poster: { tall: string; wide: string };
@@ -13,14 +13,4 @@ export type Series = {
   seasons: Season[];
   episodeId: string;
   episodeTitle: string;
-};
-
-export type SortOption = "Oldest" | "Newest";
-
-export type SeasonEpisodesPayload = {
-  episodes: Episode[];
-  totalEpisodes: number;
-  totalPages: number;
-  pageNumber: number;
-  pageSize: number;
 };

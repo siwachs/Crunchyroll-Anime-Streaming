@@ -1,15 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
 
 import { getTitleWithSeasonNumber } from "@/lib/utils";
 
-import { Season } from "@/types";
+import { Season } from "@/providers/types";
 
 const SeasonList: React.FC<{
-  seasons: Season[];
-  currentSeasonId: string;
-  setCurrentSeason: Dispatch<SetStateAction<Season>>;
   toogleDropdown?: () => void;
-}> = ({ seasons, currentSeasonId, setCurrentSeason, toogleDropdown }) => {
+}> = ({ toogleDropdown }) => {
+  const { seasons, currentSeason, setCurrentSeason } = useSeasonEpisodes();
+
   function changeSeason(season: Season) {
     setCurrentSeason(season);
 
@@ -20,7 +19,7 @@ const SeasonList: React.FC<{
     <button
       key={season.id}
       className="menu-item"
-      data-active={season.id === currentSeasonId}
+      data-active={season.id === currentSeason.id}
       onClick={changeSeason.bind(null, season)}
     >
       <span className="inline-block max-w-full truncate sm:text-base">
