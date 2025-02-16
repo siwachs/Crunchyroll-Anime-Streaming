@@ -1,12 +1,20 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
+import { Series } from 'src/series/schemas/series.schema';
+import { Season } from 'src/season/schemas/season.schema';
 import { MetaTag } from 'src/meta-tag/schemas/meta-tag.schema';
 
 export type EpisodeDocument = HydratedDocument<Episode>;
 
 @Schema({ collection: 'Episodes', timestamps: true })
 export class Episode {
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
+  seriesId: Series;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
+  season: Season;
+
   @Prop({ type: String, required: true })
   thumbnail: string;
 

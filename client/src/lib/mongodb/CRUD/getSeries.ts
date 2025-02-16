@@ -12,6 +12,18 @@ import {
 import { Series } from "@/app/(main)/series/[id]/[title]/page.types";
 import { SERIES } from "../collectionNames";
 
+export async function getTitle(id: string): Promise<string> {
+  const { db } = await connectToDb();
+
+  const series = await db
+    .collection(SERIES)
+    .findOne({ _id: new ObjectId(id) }, { projection: { title: 1, _id: 0 } });
+
+  if (!series?.title) throw notFound();
+
+  return series.title;
+}
+
 export default async function getSeries(id: string): Promise<Series> {
   const { db } = await connectToDb();
 
@@ -55,8 +67,6 @@ export default async function getSeries(id: string): Promise<Series> {
     .toArray();
 
   const series = seriesArray[0];
-
-  if (!series) throw notFound();
 
   return series as Series;
 }

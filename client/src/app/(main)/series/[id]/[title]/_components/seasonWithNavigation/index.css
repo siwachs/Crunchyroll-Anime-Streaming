@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
+.bottom-controls-pagination-button {
+  @apply app-transition-colors flex cursor-pointer items-center gap-1.5 text-sm/4.5 font-black text-[var(--meta-color)] uppercase duration-300 hover:text-white focus-visible:text-white disabled:cursor-default disabled:text-[var(--meta-color-disabled)];
+}

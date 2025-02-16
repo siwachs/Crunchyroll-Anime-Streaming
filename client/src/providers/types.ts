@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
 
+import { SortOrder } from "@/types";
+
 export type Season = {
   id: string;
   season: number;
   title: string;
   totalEpisodes: number;
 };
-
-export type SortOption = "Oldest" | "Newest";
 
 export type Episode = {
   id: string;
@@ -21,7 +21,10 @@ export type Episode = {
 };
 
 export type SeasonEpisodesPayload = {
+  seasonEpisodesLoading?: boolean;
+  seasonEpisodesShowMoreLoading?: boolean;
   episodes: Episode[];
+  currentSortOrder: SortOrder;
   totalEpisodes: number;
   totalPages: number;
   pageNumber: number;
@@ -29,11 +32,14 @@ export type SeasonEpisodesPayload = {
 };
 
 export type Context = {
+  getEpisodesPayload: (options?: {
+    signal?: AbortSignal;
+    showAll?: boolean;
+  }) => Promise<void>;
+  seriesId: string;
   seasons: Season[];
   currentSeason: Season;
   setCurrentSeason: Dispatch<SetStateAction<Season>>;
-  currentSortOption: SortOption;
-  setCurrentSortOption: Dispatch<SetStateAction<SortOption>>;
   seasonEpisodesPayload: SeasonEpisodesPayload;
   setSeasonEpisodesPayload: Dispatch<SetStateAction<SeasonEpisodesPayload>>;
 };

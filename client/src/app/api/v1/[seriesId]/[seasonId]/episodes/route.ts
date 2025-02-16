@@ -17,7 +17,14 @@ function getSearchParam(value: string | null, defaultValue = 1) {
 
 const getSeriesSeasonEpisodes = async (
   req: NextRequest,
-  { params }: { params: Promise<{ seriesId: string; seasonId: string }> },
+  {
+    params,
+  }: {
+    params: Promise<{
+      seriesId: string;
+      seasonId: string;
+    }>;
+  },
 ) => {
   try {
     const { seriesId, seasonId } = await params;
@@ -28,6 +35,9 @@ const getSeriesSeasonEpisodes = async (
       searchParams.get("pageSize"),
       SEASON_EPISODES_PAGE_SIZE,
     );
+    const sortOrder =
+      searchParams.get("sortOrder") === "Newest" ? "Newest" : "Oldest";
+    const showAll = searchParams.get("showAll") === "true" ? "true" : "false";
 
     const { db } = await connectToDb();
 
@@ -72,13 +82,29 @@ const getSeriesSeasonEpisodes = async (
       },
       {
         $set: {
+          "season.0.episodes": {
+            $sortArray: {
+              input: "$season.0.episodes",
+              sortBy: { releaseDate: sortOrder === "Newest" ? -1 : 1 },
+            },
+          },
+        },
+      },
+      {
+        $set: {
           totalEpisodes: { $size: "$season.0.episodes" },
           "season.0.episodes": {
-            $slice: [
-              "$season.0.episodes",
-              (pageNumber - 1) * pageSize,
-              pageSize,
-            ],
+            $cond: {
+              if: { $eq: [showAll, "true"] },
+              then: "$season.0.episodes",
+              else: {
+                $slice: [
+                  "$season.0.episodes",
+                  (pageNumber - 1) * pageSize,
+                  pageSize,
+                ],
+              },
+            },
           },
         },
       },
@@ -141,7 +167,13 @@ const getSeriesSeasonEpisodes = async (
           _id: 0,
           episodes: "$season.0.episodes",
           totalEpisodes: 1,
-          totalPages: { $ceil: { $divide: ["$totalEpisodes", pageSize] } },
+          totalPages: {
+            $cond: {
+              if: { $eq: [showAll, "true"] },
+              then: 1,
+              else: { $ceil: { $divide: ["$totalEpisodes", pageSize] } },
+            },
+          },
         },
       },
     ];
@@ -151,8 +183,24 @@ const getSeriesSeasonEpisodes = async (
       .aggregate(pipelineStages)
       .toArray();
 
+    const result = seasonEpisodesPayload[0] || {
+      totalEpisodes: 0,
+      episodes: [],
+      totalPages: 0,
+    };
+    if (showAll === "true") {
+      result.pageNumber = 1;
+      result.pageSize = result.totalEpisodes;
+    } else {
+      result.pageNumber = pageNumber;
+      result.pageSize = pageSize;
+    }
+
     return NextResponse.json(
-      { ...seasonEpisodesPayload[0], pageNumber, pageSize },
+      {
+        ...result,
+        currentSortOrder: sortOrder,
+      },
       { status: 200 },
     );
   } catch (error) {

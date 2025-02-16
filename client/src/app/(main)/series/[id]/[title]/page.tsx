@@ -1,16 +1,27 @@
+import type { Metadata, ResolvingMetadata } from "next";
+
 import { SeasonEpisodesProvider } from "@/providers/seasonEpisodesProvider";
 
 import Banner from "./_components/banner";
 import Details from "@/components/details";
 import SeasonWithNavigation from "./_components/seasonWithNavigation";
 
-import getSeries from "@/lib/mongodb/CRUD/getSeries";
+import getSeries, { getTitle } from "@/lib/mongodb/CRUD/getSeries";
 
-export default async function Series({
-  params,
-}: Readonly<{
-  params: Promise<{ id: string; title: string }>;
-}>) {
+type PageProps = { params: Promise<{ id: string; title: string }> };
+
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const id = (await params).id;
+
+  const title = await getTitle(id);
+
+  return { title: `Watch ${title} - Crunchyroll` };
+}
+
+export default async function Series({ params }: Readonly<PageProps>) {
   const { id } = await params;
   const series = await getSeries(id);
 
@@ -41,8 +52,6 @@ export default async function Series({
           <SeasonEpisodesProvider seriesId={id} seasons={series.seasons}>
             <SeasonWithNavigation title={series.title} />
           </SeasonEpisodesProvider>
-
-          <div className="mt-40" />
         </div>
       </main>
 

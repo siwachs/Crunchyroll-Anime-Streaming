@@ -3,7 +3,7 @@
 @import "@styles/utilities.css";
 
 .action-button {
-  @apply app-transition-colors h-10 items-center justify-center select-none;
+  @apply app-transition-colors h-10 cursor-pointer items-center justify-center select-none;
 }
 
 .action-button-shadow {

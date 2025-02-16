@@ -10,7 +10,7 @@ import {
 import Dropdown from "@/components/dropdown";
 import MarkEpisodeAsWatched from "@/components/dropdown/menuItems/markEpisodeAsWatched";
 
-import { Season, Episode } from "@/types";
+import { Season, Episode } from "@/providers/types";
 
 import { HiOutlineCalendar } from "react-icons/hi";
 import { HiOutlinePlay } from "react-icons/hi2";
@@ -214,7 +214,7 @@ const PlayableCard: React.FC<{
               <Dropdown
                 align="right"
                 className="z-1"
-                triggerClassName="hover:text-white focus-visible:text-white outline-xs"
+                triggerClassName="hover:text-white focus-visible:text-white"
                 triggerActiveClassName="text-white"
                 Icon={<MdMoreVert className="size-6" />}
                 headerTitle="More Options"
@@ -223,6 +223,23 @@ const PlayableCard: React.FC<{
               </Dropdown>
             )}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const PlayableCardSkeleton: React.FC<{
+  cardType?: "default" | "mini";
+}> = ({ cardType = "default" }) => {
+  return (
+    <div className="relative flex sm:block">
+      <div className="relative block aspect-video h-[5.3125rem] flex-[0_0_auto] bg-[var(--app-overlay-secondary)] sm:h-auto" />
+
+      <div className="relative flex flex-1 items-center">
+        <div className="flex min-h-[4.3125rem] flex-1 flex-col py-1 pl-3 sm:min-h-[auto] sm:pt-3 sm:pb-0 sm:pl-0">
+          <div className="mb-2.5 h-4.5 w-40 rounded-sm bg-[var(--app-overlay-secondary)]" />
+          <div className="h-4 w-24 rounded-sm bg-[var(--app-overlay-secondary)]" />
         </div>
       </div>
     </div>

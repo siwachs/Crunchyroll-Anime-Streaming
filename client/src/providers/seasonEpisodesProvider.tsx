@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, createContext, useContext } from "react";
 
-import { Context, Season, SortOption, SeasonEpisodesPayload } from "./types";
+import { Context, Season, SeasonEpisodesPayload } from "./types";
 
 import { SEASON_EPISODES_PAGE_SIZE } from "@/constants";
 
@@ -20,63 +20,90 @@ export function useSeasonEpisodes() {
 
 export function SeasonEpisodesProvider({
   children,
-  seasons,
   seriesId,
+  seasons,
 }: Readonly<{
   children: React.ReactNode;
-  seasons: Season[];
   seriesId: string;
+  seasons: Season[];
 }>) {
   const [currentSeason, setCurrentSeason] = useState<Season>(seasons[0]);
-  const [currentSortOption, setCurrentSortOption] =
-    useState<SortOption>("Oldest");
 
   const [seasonEpisodesPayload, setSeasonEpisodesPayload] =
     useState<SeasonEpisodesPayload>({
+      seasonEpisodesLoading: true,
       episodes: [],
+      currentSortOrder: "Oldest",
       pageNumber: 1,
       totalEpisodes: 0,
       pageSize: SEASON_EPISODES_PAGE_SIZE,
-      totalPages: 1,
+      totalPages: 0,
     });
+
+  async function getEpisodesPayload(options?: {
+    signal?: AbortSignal;
+    showAll?: boolean;
+  }) {
+    const { signal = undefined, showAll = false } = options || {};
+
+    try {
+      const baseURL = `/api/${process.env.NEXT_PUBLIC_API_VERSION}/${seriesId}/${currentSeason.id}/episodes`;
+      const queryParams = new URLSearchParams({
+        pageNumber: seasonEpisodesPayload.pageNumber.toString(),
+        pageSize: seasonEpisodesPayload.pageSize.toString(),
+        sortOrder: seasonEpisodesPayload.currentSortOrder,
+        showAll: showAll.toString(),
+      });
+      const fetchEpisodesPaloadURL = `${baseURL}?${queryParams.toString()}`;
+
+      const fetchEpisodesPayloadResponse = await fetch(fetchEpisodesPaloadURL, {
+        signal,
+      });
+
+      if (fetchEpisodesPayloadResponse.ok) {
+        const parsedEpisodesPayloadResponse =
+          await fetchEpisodesPayloadResponse.json();
+        setSeasonEpisodesPayload(parsedEpisodesPayloadResponse);
+      }
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  }
 
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
 
-    async function fetchEpisodesPayload() {
-      try {
-        const fetchEpisodesPayloadResponse = await fetch(
-          `/api/${process.env.NEXT_PUBLIC_API_VERSION}/${seriesId}/${currentSeason.id}?pageNumber=${seasonEpisodesPayload.pageNumber}`,
-          { signal },
-        );
+    async function getInitialEpisodesPayload() {
+      setSeasonEpisodesPayload((prev) => ({
+        ...prev,
+        seasonEpisodesLoading: true,
+      }));
 
-        if (fetchEpisodesPayloadResponse.ok) {
-          const parsedEpisodesPayloadResonse =
-            await fetchEpisodesPayloadResponse.json();
-          setSeasonEpisodesPayload(parsedEpisodesPayloadResonse);
-        }
-      } catch (error) {
-        console.error((error as Error).message);
-      }
+      await getEpisodesPayload({ signal });
+
+      setSeasonEpisodesPayload((prev) => ({
+        ...prev,
+        seasonEpisodesLoading: false,
+      }));
     }
 
-    fetchEpisodesPayload();
+    getInitialEpisodesPayload();
 
     return () => controller.abort();
-  }, [currentSeason.id, seasonEpisodesPayload.pageNumber, currentSeason]);
+  }, [seriesId, currentSeason.id, seasonEpisodesPayload.currentSortOrder]);
 
   const value = useMemo(
     () => ({
+      getEpisodesPayload,
+      seriesId,
       seasons,
       currentSeason,
       setCurrentSeason,
-      currentSortOption,
-      setCurrentSortOption,
       seasonEpisodesPayload,
       setSeasonEpisodesPayload,
     }),
-    [currentSeason, currentSortOption, seasonEpisodesPayload],
+    [seriesId, seasons, currentSeason, seasonEpisodesPayload],
   );
 
   return (

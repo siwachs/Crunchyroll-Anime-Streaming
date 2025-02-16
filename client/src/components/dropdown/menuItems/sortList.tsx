@@ -1,14 +1,22 @@
 import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
 
-import { SortOption } from "@/providers/types";
+import { SortOrder } from "@/types";
 
 const SortList: React.FC<{
   toogleDropdown?: () => void;
 }> = ({ toogleDropdown }) => {
-  const { currentSortOption, setCurrentSortOption } = useSeasonEpisodes();
+  const {
+    seasonEpisodesPayload: { currentSortOrder },
+    setSeasonEpisodesPayload,
+  } = useSeasonEpisodes();
 
-  function changeSortOption(sortOption: SortOption) {
-    setCurrentSortOption(sortOption);
+  function changeSortOption(sortOrder: SortOrder) {
+    if (sortOrder !== currentSortOrder)
+      setSeasonEpisodesPayload((prev) => ({
+        ...prev,
+        pageNumber: 1,
+        currentSortOrder: sortOrder,
+      }));
 
     if (toogleDropdown) toogleDropdown();
   }
@@ -17,7 +25,7 @@ const SortList: React.FC<{
     <>
       <button
         className="menu-item"
-        data-active={currentSortOption === "Oldest"}
+        data-active={currentSortOrder === "Oldest"}
         onClick={changeSortOption.bind(null, "Oldest")}
       >
         Oldest
@@ -25,7 +33,7 @@ const SortList: React.FC<{
 
       <button
         className="menu-item"
-        data-active={currentSortOption === "Newest"}
+        data-active={currentSortOrder === "Newest"}
         onClick={changeSortOption.bind(null, "Newest")}
       >
         Newest

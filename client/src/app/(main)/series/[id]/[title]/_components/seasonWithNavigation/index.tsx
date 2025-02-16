@@ -1,22 +1,26 @@
 "use client";
 
+import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
+
 import TopControls from "./topControls";
 import SeasonEpisodes from "./seasonEpisodes";
+import BottomControls from "./bottomControls";
+
+import "./index.css";
 
 const SeasonWithNavigation: React.FC<{
   title: string;
 }> = ({ title }) => {
+  const { seasons } = useSeasonEpisodes();
+
   return (
     <div className="container-cmp">
       <div className="season-with-navigation">
         <TopControls />
 
-        {/* <SeasonEpisodes
-          seriesId={seriesId}
-          title={title}
-          currentSeason={currentSeason}
-          seasonEpisodesPayload={seasonEpisodesPayload}
-        /> */}
+        <SeasonEpisodes title={title} />
+
+        {seasons.length > 1 && <BottomControls />}
       </div>
     </div>
   );

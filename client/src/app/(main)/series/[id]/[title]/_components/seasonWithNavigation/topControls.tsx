@@ -12,12 +12,13 @@ import { Sort } from "@/assets/icons";
 import { MdMoreVert } from "react-icons/md";
 
 const TopControls: React.FC = () => {
-  const { seasons, currentSeason, currentSortOption } = useSeasonEpisodes();
+  const {
+    seasons,
+    currentSeason: { season, title },
+    seasonEpisodesPayload: { currentSortOrder },
+  } = useSeasonEpisodes();
 
-  const seasonTitle = getTitleWithSeasonNumber(
-    currentSeason.season,
-    currentSeason.title,
-  );
+  const seasonTitle = getTitleWithSeasonNumber(season, title);
 
   return (
     <div className="top-controls flex items-center pb-3">
@@ -54,7 +55,7 @@ const TopControls: React.FC = () => {
         Icon={<Sort className="size-6 fill-current" />}
         triggerLabel={
           <span className="sm:initial ml-2 hidden text-sm/4.5 font-black uppercase">
-            {currentSortOption}
+            {currentSortOrder}
           </span>
         }
         headerTitle="Sort"

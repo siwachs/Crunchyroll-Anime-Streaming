@@ -1,1 +1,1 @@
-export const SEASON_EPISODES_PAGE_SIZE = 28;
+export const SEASON_EPISODES_PAGE_SIZE = 20;

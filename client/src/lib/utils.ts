@@ -86,7 +86,10 @@ function getTitleWithSeasonAndEpisodeNumber(
 ) {
   let transformedTitle = "";
   if (season > 0) transformedTitle += `S${season} `;
-  if (episode) transformedTitle = `${transformedTitle}E${episode}${join}`;
+  if (episode) {
+    episode = isNaN(parseInt(episode)) ? `-${episode}` : episode;
+    transformedTitle = `${transformedTitle}E${episode}${join}`;
+  }
 
   return `${transformedTitle}${title}`;
 }
