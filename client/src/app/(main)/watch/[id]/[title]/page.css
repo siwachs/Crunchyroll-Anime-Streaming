@@ -1,5 +1,9 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .body {
-  @apply grid grid-cols-[minmax(min-content,54.375rem)_auto] justify-center pt-6 2sm:pt-10;
+  @apply 2sm:pt-10 grid grid-cols-[minmax(min-content,54.375rem)_auto] justify-center pt-6;
 
   display: grid;
   grid-template-areas:

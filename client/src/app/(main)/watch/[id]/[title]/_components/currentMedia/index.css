@@ -1,5 +1,9 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .current-media {
-  @apply mb-6 2sm:mb-10 2md:flex;
+  @apply 2sm:mb-10 2md:flex mb-6;
 
   grid-area: currentMedia;
 }
@@ -48,7 +52,7 @@
 }
 
 .heading {
-  @apply text-rendering-optimized mb-2 text-xl/leading-6.5 font-semibold sm:mb-3 sm:text-[1.375rem]/[1.75rem] 2md:mb-2;
+  @apply text-rendering-optimized text-xl/leading-6.5 2md:mb-2 mb-2 font-semibold sm:mb-3 sm:text-[1.375rem]/[1.75rem];
 }
 
 .episode-actions {

@@ -24,14 +24,14 @@ const Videos: React.FC = () => {
               <span>Next Episode</span>
             </Link>
 
-            <PlayableCard
+            {/* <PlayableCard
               episodeNumber={3}
               thumbnail={playableCardMiniWideImage}
               duration="23m"
               title="It's Like a Game"
               metaTags="Sub | Dub"
               cardType="mini"
-            />
+            /> */}
           </div>
 
           <div className="prev-next-episode">
@@ -42,23 +42,23 @@ const Videos: React.FC = () => {
               <span>Previous Episode</span>
             </Link>
 
-            <PlayableCard
+            {/* <PlayableCard
               episodeNumber={1}
               thumbnail={playableCardMiniWideImage}
               duration="23m"
               title="I'm Used to It"
               metaTags="Sub | Dub"
               cardType="mini"
-            />
+            /> */}
           </div>
         </div>
 
-        <ActionButton
+        {/* <ActionButton
           Icon={<HiInboxStack className="size-5" />}
           text="See More Episodes"
           className="action-button-shadow text-[var(--app-icon-primary)] hover:text-white focus-visible:text-white sm:w-auto"
           shadow="action-button-shadow"
-        />
+        /> */}
       </div>
     </div>
   );

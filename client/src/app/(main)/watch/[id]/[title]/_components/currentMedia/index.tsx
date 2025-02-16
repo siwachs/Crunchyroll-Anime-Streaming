@@ -35,10 +35,10 @@ const CurrentMedia: React.FC = () => {
               <h4 className="text-base font-semibold">Solo Leveling</h4>
             </Link>
 
-            <AverageRating
+            {/* <AverageRating
               mode="compact"
               className="sm:-mt-[3px] sm:self-center"
-            />
+            /> */}
           </div>
 
           <button className="current-media-action-button px-2 pb-2 sm:pt-2">
@@ -75,7 +75,7 @@ const CurrentMedia: React.FC = () => {
           {/* Share Button Goes here */}
         </div>
 
-        <Description
+        {/* <Description
           description="Jinwoo and his party appear to have cleared a low-level dungeon, when a hidden path to an unfamiliar temple is revealed. There they encounter a set of commandments and a group of monsters that cause them absolute despair."
           expandableTableRows={{
             Audio:
@@ -83,7 +83,7 @@ const CurrentMedia: React.FC = () => {
             Subtitles:
               "English, Bahasa Indonesia, Bahasa Melayu, Deutsch, Español (América Latina), Español (España), Français, Italiano, Português (Brasil), Tiếng Việt, Русский, العربية, ไทย",
           }}
-        />
+        /> */}
       </div>
     </div>
   );

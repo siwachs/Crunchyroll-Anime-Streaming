@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@import "@styles/theme.css";
+@import "@styles/utilities.css";
+
 .videos-wrapper {
   @apply 2md:w-[22.9375rem] 2md:pl-10;
 
@@ -9,7 +13,7 @@
 }
 
 .prev-next-episodes {
-  @apply mb-6 grid auto-rows-fr gap-x-10 gap-y-6 2sm:grid-flow-col;
+  @apply 2sm:grid-flow-col mb-6 grid auto-rows-fr gap-x-10 gap-y-6;
 }
 
 @media screen and (min-width: 980px) {
