@@ -26,7 +26,7 @@ const Details: React.FC<{
   description: string;
   details: Record<string, string>;
   genres: string[];
-  licence?: string;
+  licence: string;
 }> = ({ description, details, genres, licence }) => {
   const [detailsIsExpanded, setDetailsIsExpanded] = useState(false);
 
@@ -38,7 +38,7 @@ const Details: React.FC<{
     <div className="container-cmp">
       <div className="series-details relative pb-3">
         <div
-          className={`overflow-hidden ${detailsIsExpanded ? "max-h-full" : "series-details-wrapper-is-faded max-h-18 sm:max-h-24"}`}
+          className={`overflow-hidden ${detailsIsExpanded ? "max-h-full" : "details-wrapper-is-faded max-h-18 sm:max-h-24"}`}
         >
           <div className="grid gap-7.5 md:grid-cols-[repeat(12,1fr)]">
             <div className="3xl:col-[1/span_4] whitespace-pre-line md:col-span-6 xl:col-[1/span_6]">
@@ -57,7 +57,7 @@ const Details: React.FC<{
               ))}
 
               <DetailItem detailKey="Genres" detailValue={genres.join(", ")} />
-              {licence && <DetailItem detailValue={licence} />}
+              <DetailItem detailValue={licence} />
             </div>
           </div>
         </div>

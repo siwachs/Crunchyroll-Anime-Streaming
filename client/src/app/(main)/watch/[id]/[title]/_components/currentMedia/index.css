@@ -3,25 +3,7 @@
 @import "@styles/utilities.css";
 
 .current-media {
-  @apply 2sm:mb-10 2md:flex mb-6;
-
   grid-area: currentMedia;
-}
-
-.current-media-info {
-  @apply flex-1;
-}
-
-.current-media-header {
-  @apply mb-3 flex justify-between border-b-2 border-solid border-[var(--app-background-secondary)] pb-3 sm:mb-1 sm:border-none sm:pb-0;
-}
-
-.current-media-parent-ref {
-  @apply mr-1 flex flex-[0_1_auto] flex-col sm:flex-row sm:flex-wrap sm:self-center;
-}
-
-.show-title-link {
-  @apply app-transition-colors mb-1 text-[var(--app-background-crunchyroll-orange)] sm:flex sm:items-center;
 }
 
 .show-title-link:hover,
@@ -31,6 +13,10 @@
 
 .show-title-link::after {
   @apply mx-2 hidden h-[84%] w-[0.0625rem] bg-[#4a4e58] content-[""] sm:block;
+}
+
+.current-media-action-button {
+  @apply cursor-pointer;
 }
 
 .current-media-action-button svg {
@@ -49,18 +35,6 @@
 .current-media-action-button:hover svg:nth-child(2),
 .current-media-action-button:focus-visible svg:nth-child(2) {
   @apply block;
-}
-
-.heading {
-  @apply text-rendering-optimized text-xl/leading-6.5 2md:mb-2 mb-2 font-semibold sm:mb-3 sm:text-[1.375rem]/[1.75rem];
-}
-
-.episode-actions {
-  @apply mb-3 flex items-center justify-between;
-}
-
-.episode-ratings {
-  @apply inline-grid grid-flow-col gap-5;
 }
 
 .episode-rate-action {

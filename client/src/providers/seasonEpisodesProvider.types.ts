@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { SortOrder } from "@/types";
+export type SortOrder = "Oldest" | "Newest";
 
 export type Season = {
   id: string;
@@ -14,7 +14,7 @@ export type Episode = {
   episode: string;
   title: string;
   thumbnail: string;
-  duration: string;
+  duration: string | number;
   metaTags: string[];
   releaseDate: string;
   description: string;

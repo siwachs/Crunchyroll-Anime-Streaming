@@ -11,9 +11,5 @@
   --breakpoint-2xl: 107.5rem; /* 1720px */
   --breakpoint-3xl: 135rem; /* 2160px */
 
-  --leading-leading-4_5: 1.125rem;
-  --leading-leading-6_5: 1.625rem;
-  --leading-leading-10_5: 2.75rem;
-
   --ease-quick: ease;
 }

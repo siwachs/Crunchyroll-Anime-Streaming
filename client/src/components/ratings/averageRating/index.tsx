@@ -8,22 +8,41 @@ import "./index.css";
 const ratingPercentages = [92, 3, 2, 1, 4];
 
 const AverageRating: React.FC<{
+  align?: "right" | "left";
+  mode?: "default" | "compact";
   averageRating: number;
   totalRating: number;
   className?: string;
-}> = ({ averageRating, totalRating, className = "" }) => {
+}> = ({
+  align = "right",
+  mode = "default",
+  averageRating,
+  totalRating,
+  className = "",
+}) => {
   const compactTotalRating = getCompactNotation(totalRating);
 
   return (
     <div className={`relative ${className}`}>
-      <button className="star-rating-average-button outline-xs">
-        <span className="2sm:initial xl:initial hidden text-sm/4.5 font-semibold text-[var(--app-icon-primary)] md:hidden">{`Average Rating: `}</span>
+      <button
+        className={`star-rating-average-button outline-xs flex cursor-pointer items-center gap-1 text-sm/4.5 font-black ${mode === "compact" ? "text-[var(--app-icon-primary)]" : ""}`}
+      >
+        {mode === "default" && (
+          <span className="2sm:initial xl:initial hidden text-sm/4.5 font-semibold text-[var(--app-icon-primary)] md:hidden">{`Average Rating: `}</span>
+        )}
         <span>{averageRating}</span>
+        {mode === "compact" && (
+          <HiOutlineStar className="size-3.5 fill-current" />
+        )}
         <span>({compactTotalRating})</span>
-        <FaCaretDown className="ml-0.5 size-3.5" />
+        <FaCaretDown
+          className={mode === "compact" ? "size-3" : "ml-0.5 size-3.5"}
+        />
       </button>
 
-      <div className="star-rating-average-data hidden">
+      <div
+        className={`star-rating-average-data ${align === "right" ? "right-0" : "left-0"} hidden`}
+      >
         <div className="star-rating-average-tooltip">
           <div className="mb-3">
             <span className="text-sm/4.5 font-medium">

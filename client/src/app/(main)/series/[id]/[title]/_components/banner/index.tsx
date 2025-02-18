@@ -61,7 +61,7 @@ const Banner: React.FC<{
           </div>
 
           <div className="series-banner-body">
-            <h1 className="text-rendering-optimized md:text-3.5xl/leading-10.5 sm:text-2.5xl/9 text-2xl font-medium">
+            <h1 className="text-rendering-optimized md:text-3.5xl/11 sm:text-2.5xl/9 text-2xl font-medium">
               {title}
             </h1>
 

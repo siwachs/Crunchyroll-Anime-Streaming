@@ -2,7 +2,7 @@ import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
 
 import { getTitleWithSeasonNumber } from "@/lib/utils";
 
-import { Season } from "@/providers/types";
+import { Season } from "@/providers/seasonEpisodesProvider.types";
 
 const SeasonList: React.FC<{
   toogleDropdown?: () => void;

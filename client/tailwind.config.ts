@@ -31,8 +31,8 @@ const config: Config = {
       },
       lineHeight: {
         "leading-4.5": "1.125rem",
-        "leading-6.5": "1.625rem",
-        "leading-10.5": "2.75rem",
+        "6.5": "1.625rem",
+        "11": "2.75rem",
       },
       transitionTimingFunction: { quick: "ease" },
     },

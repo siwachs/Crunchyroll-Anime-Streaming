@@ -138,3 +138,17 @@ footer {
 .rhombus::before {
   @apply mx-1 inline-block size-1 -translate-y-1/2 rotate-45 bg-[var(--meta-color)] content-[""];
 }
+
+.details-wrapper-is-faded {
+  --fade-size: 2.5rem;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--fade-size)),
+    #0000
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--fade-size)),
+    #0000
+  );
+}

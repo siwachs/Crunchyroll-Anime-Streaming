@@ -104,6 +104,14 @@ function getLocaleDate(dateString: string | Date, locale?: string) {
   return date.toLocaleDateString(resolvedLocale);
 }
 
+function getReadableDate(dateString: string | Date) {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export {
   triggerCallbackOnClickOrOnKeydown,
   getAttribute,
@@ -113,4 +121,5 @@ export {
   getTitleWithSeasonNumber,
   getTitleWithSeasonAndEpisodeNumber,
   getLocaleDate,
+  getReadableDate,
 };

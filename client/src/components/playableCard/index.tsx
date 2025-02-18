@@ -10,7 +10,7 @@ import {
 import Dropdown from "@/components/dropdown";
 import MarkEpisodeAsWatched from "@/components/dropdown/menuItems/markEpisodeAsWatched";
 
-import { Season, Episode } from "@/providers/types";
+import { Season, Episode } from "@/providers/seasonEpisodesProvider.types";
 
 import { HiOutlineCalendar } from "react-icons/hi";
 import { HiOutlinePlay } from "react-icons/hi2";

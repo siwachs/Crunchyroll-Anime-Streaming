@@ -1,4 +1,4 @@
-import { Season } from "@/types";
+import { Season } from "@/providers/seasonEpisodesProvider.types";
 
 export type Series = {
   poster: { tall: string; wide: string };

@@ -2,7 +2,11 @@
 
 import { useState, useEffect, useMemo, createContext, useContext } from "react";
 
-import { Context, Season, SeasonEpisodesPayload } from "./types";
+import {
+  Context,
+  Season,
+  SeasonEpisodesPayload,
+} from "./seasonEpisodesProvider.types";
 
 import { SEASON_EPISODES_PAGE_SIZE } from "@/constants";
 

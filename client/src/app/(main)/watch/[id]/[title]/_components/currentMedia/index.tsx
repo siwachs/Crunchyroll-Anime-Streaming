@@ -1,7 +1,9 @@
 import Link from "next/link";
 
+import { cleanString, getCompactNotation, getReadableDate } from "@/lib/utils";
+
 import AverageRating from "@/components/ratings/averageRating";
-import Description from "@/components/details";
+import Details from "../details";
 
 import {
   AddToWatchListOutlined,
@@ -16,29 +18,58 @@ import {
 
 import "./index.css";
 
-const CurrentMedia: React.FC = () => {
-  const encodedSeriesTitle = encodeURIComponent(
-    "Solo Leveling".toLowerCase().replaceAll(" ", "-"),
-  );
-  const seriesLink = `/watch/378snrj/${encodedSeriesTitle}`;
+const CurrentMedia: React.FC<{
+  seriesId: string;
+  seriesTitle: string;
+  averageRating: number;
+  totalRating: number;
+  title: string;
+  metaTags: string[];
+  releaseDate: string;
+  likes: number;
+  dislikes: number;
+  description: string;
+  details: Record<string, string>;
+}> = ({
+  seriesId,
+  seriesTitle,
+  averageRating,
+  totalRating,
+  title,
+  metaTags,
+  releaseDate,
+  likes,
+  dislikes,
+  description,
+  details,
+}) => {
+  const seriesLink = `/series/${seriesId}/${cleanString(seriesTitle)}`;
+
+  const compactLikes = getCompactNotation(likes);
+  const compactDislikes = getCompactNotation(dislikes);
+
+  const readableReleaseDate = getReadableDate(releaseDate);
 
   return (
-    <div className="current-media">
-      <div className="current-media-info">
-        <div className="current-media-header">
-          <div className="current-media-parent-ref">
+    <div className="current-media 2sm:mb-10 2md:flex mb-6">
+      <div className="current-media-info flex-1">
+        <div className="current-media-header mb-3 flex justify-between border-b-2 border-solid border-[var(--app-background-secondary)] pb-3 sm:mb-1 sm:border-none sm:pb-0">
+          <div className="current-media-parent-ref mr-1 flex flex-[0_1_auto] flex-col sm:flex-row sm:flex-wrap sm:self-center">
             <Link
               href={seriesLink}
               prefetch={false}
-              className="show-title-link"
+              className="show-title-link app-transition-colors mb-1 text-[var(--app-background-crunchyroll-orange)] sm:flex sm:items-center"
             >
-              <h4 className="text-base font-semibold">Solo Leveling</h4>
+              <h4 className="text-base font-semibold">{seriesTitle}</h4>
             </Link>
 
-            {/* <AverageRating
+            <AverageRating
+              align="left"
               mode="compact"
-              className="sm:-mt-[3px] sm:self-center"
-            /> */}
+              averageRating={averageRating}
+              totalRating={totalRating}
+              className="mb-1 self-center"
+            />
           </div>
 
           <button className="current-media-action-button px-2 pb-2 sm:pt-2">
@@ -47,43 +78,41 @@ const CurrentMedia: React.FC = () => {
           </button>
         </div>
 
-        <h1 className="heading">E2 - If I Had One More Chance</h1>
+        <h1 className="heading text-rendering-optimized 2md:mb-2 mb-2 text-xl/6.5 font-semibold sm:mb-3 sm:text-[1.375rem]/7">
+          {title}
+        </h1>
 
         <div className="meta-tags mb-2">
-          <span>Sub | Dub</span>
+          {metaTags.map((metaTag, index) => (
+            <span key={index} className={index === 0 ? "" : "rhombus"}>
+              {metaTag}
+            </span>
+          ))}
         </div>
 
         <p className="mb-3 text-sm/4.5 font-medium sm:mb-2">
-          Released on Jan 13, 2024
+          Released on {readableReleaseDate}
         </p>
 
-        <div className="episode-actions">
-          <div className="episode-ratings">
+        <div className="episode-actions mb-5.5 flex items-center justify-between">
+          <div className="episode-ratings inline-grid grid-flow-col gap-5">
             <button className="current-media-action-button episode-rate-action">
               <ThumbUpOutlined />
               <ThumbUpFilled />
-              <span>128.3K</span>
+              <span>{compactLikes}</span>
             </button>
 
             <button className="current-media-action-button episode-rate-action">
               <ThumbDownOutlined />
               <ThumbDownFilled />
-              <span>400</span>
+              <span>{compactDislikes}</span>
             </button>
           </div>
 
           {/* Share Button Goes here */}
         </div>
 
-        {/* <Description
-          description="Jinwoo and his party appear to have cleared a low-level dungeon, when a hidden path to an unfamiliar temple is revealed. There they encounter a set of commandments and a group of monsters that cause them absolute despair."
-          expandableTableRows={{
-            Audio:
-              "Japanese, English, Deutsch, Español (América Latina), Español (España), Français, Italiano, Português (Brasil), हिंदी, தமிழ், తెలుగు, 한국어",
-            Subtitles:
-              "English, Bahasa Indonesia, Bahasa Melayu, Deutsch, Español (América Latina), Español (España), Français, Italiano, Português (Brasil), Tiếng Việt, Русский, العربية, ไทย",
-          }}
-        /> */}
+        <Details description={description} details={details} />
       </div>
     </div>
   );

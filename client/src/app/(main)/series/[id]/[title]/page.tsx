@@ -3,7 +3,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { SeasonEpisodesProvider } from "@/providers/seasonEpisodesProvider";
 
 import Banner from "./_components/banner";
-import Details from "@/components/details";
+import Details from "./_components/details";
 import SeasonWithNavigation from "./_components/seasonWithNavigation";
 
 import getSeries, { getTitle } from "@/lib/mongodb/CRUD/getSeries";
