@@ -38,8 +38,8 @@ export default async function Watch({ params }: Readonly<PageProps>) {
             <MediaDetails
               seriesId={series.id}
               seriesTitle={series.title}
-              averageRating={4.8}
-              totalRating={112671}
+              averageRating={series.averageRating}
+              totalRating={series.totalRating}
               title={episode.title}
               metaTags={episode.metaTags}
               releaseDate={episode.releaseDate}

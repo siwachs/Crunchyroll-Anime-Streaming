@@ -75,6 +75,87 @@ export default async function getEpisode(id: string): Promise<Episode> {
           as: "populatedSeasons",
         },
       },
+      { $unwind: "$populatedSeasons" },
+      {
+        $lookup: {
+          from: EPISODES,
+          let: { seasonEpisodeIds: "$populatedSeasons.episodes" },
+          pipeline: [
+            { $match: { $expr: { $in: ["$_id", "$$seasonEpisodeIds"] } } },
+            ...metaTags,
+            { $sort: { releaseDate: 1 } },
+          ],
+          as: "populatedSeasons.populatedEpisodes",
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          episode: { $first: "$episode" },
+          title: { $first: "$title" },
+          thumbnail: { $first: "$thumbnail" },
+          duration: { $first: "$duration" },
+          metaTags: { $first: "$populatedMetaTags.title" },
+          releaseDate: { $first: "$releaseDate" },
+          likes: { $first: "$likes" },
+          dislikes: { $first: "$dislikes" },
+          description: { $first: "$description" },
+          details: { $first: "$details" },
+          series: { $first: "$series" },
+          populatedSeasons: { $push: "$populatedSeasons" },
+        },
+      },
+      {
+        $set: {
+          allEpisodes: {
+            $reduce: {
+              input: "$populatedSeasons",
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this.populatedEpisodes"] },
+            },
+          },
+        },
+      },
+      {
+        $set: {
+          currentEpisodeIndex: {
+            $indexOfArray: ["$allEpisodes._id", new ObjectId(id)],
+          },
+        },
+      },
+      {
+        $set: {
+          prevEpisode: {
+            $cond: {
+              if: { $gt: ["$currentEpisodeIndex", 0] },
+              then: {
+                $arrayElemAt: [
+                  "$allEpisodes",
+                  { $subtract: ["$currentEpisodeIndex", 1] },
+                ],
+              },
+              else: null,
+            },
+          },
+          nextEpisode: {
+            $cond: {
+              if: {
+                $lt: [
+                  "$currentEpisodeIndex",
+                  { $subtract: [{ $size: "$allEpisodes" }, 1] },
+                ],
+              },
+              then: {
+                $arrayElemAt: [
+                  "$allEpisodes",
+                  { $add: ["$currentEpisodeIndex", 1] },
+                ],
+              },
+              else: null,
+            },
+          },
+        },
+      },
       {
         $project: {
           _id: 0,
@@ -82,13 +163,41 @@ export default async function getEpisode(id: string): Promise<Episode> {
           title: 1,
           thumbnail: 1,
           duration: 1,
-          metaTags: "$populatedMetaTags.title",
+          metaTags: 1,
           releaseDate: 1,
           likes: 1,
           dislikes: 1,
           description: 1,
           details: 1,
           series: 1,
+          prevEpisode: {
+            $cond: {
+              if: { $ne: ["$prevEpisode", null] },
+              then: {
+                id: { $toString: "$prevEpisode._id" },
+                episode: "$prevEpisode.episode",
+                title: "$prevEpisode.title",
+                thumbnail: "$prevEpisode.thumbnail",
+                duration: "$prevEpisode.duration",
+                metaTags: "$prevEpisode.populatedMetaTags.title",
+              },
+              else: null,
+            },
+          },
+          nextEpisode: {
+            $cond: {
+              if: { $ne: ["$nextEpisode", null] },
+              then: {
+                id: { $toString: "$nextEpisode._id" },
+                episode: "$nextEpisode.episode",
+                title: "$nextEpisode.title",
+                thumbnail: "$nextEpisode.thumbnail",
+                duration: "$nextEpisode.duration",
+                metaTags: "$nextEpisode.populatedMetaTags.title",
+              },
+              else: null,
+            },
+          },
         },
       },
     ])
