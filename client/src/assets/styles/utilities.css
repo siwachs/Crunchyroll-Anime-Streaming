@@ -34,3 +34,7 @@
 @utility align-self-start {
   align-self: start;
 }
+
+@utility grid-auto-flow-unset {
+  grid-auto-flow: unset;
+}

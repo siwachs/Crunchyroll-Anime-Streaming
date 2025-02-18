@@ -1,3 +1,12 @@
+export type EpisodeCardMini = {
+  id: string;
+  episode: string;
+  thumbnail: string;
+  duration: string | number;
+  title: string;
+  metaTags: string[];
+};
+
 export type Episode = {
   episode: string;
   title: string;
@@ -15,4 +24,6 @@ export type Episode = {
     averageRating: number;
     totalRating: number;
   };
+  prevEpisode: EpisodeCardMini | null;
+  nextEpisode: EpisodeCardMini | null;
 };

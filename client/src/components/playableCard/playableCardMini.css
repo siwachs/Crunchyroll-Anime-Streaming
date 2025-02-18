@@ -15,10 +15,6 @@
   box-shadow: 0 0 0 var(--hover-shadow-size) var(--app-overlay-secondary);
 }
 
-.playable-card-mini-thumbnail-wrapper {
-  @apply relative block h-[5.3125rem] flex-[0_0_auto];
-}
-
 .playable-card-mini-thumbnail-wrapper::after {
   @apply app-transition-opacity absolute inset-0 bg-white opacity-0 content-[""];
 }
@@ -26,23 +22,4 @@
 .playable-card-mini:hover .playable-card-mini-thumbnail-wrapper::after,
 .playable-card-mini:focus-within .playable-card-mini-thumbnail-wrapper::after {
   @apply opacity-[0.08];
-}
-
-.playable-card-mini-thumbnail {
-  --content-image-ar-priority-height: 1;
-
-  @apply relative;
-
-  width: calc(
-    100% * var(--content-image-ar-priority-width) /
-      var(--content-image-ar-priority-width)
-  );
-  height: calc(
-    100% * var(--content-image-ar-priority-height) /
-      var(--content-image-ar-priority-height)
-  );
-}
-
-.playable-card-mini-body {
-  @apply flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3;
 }

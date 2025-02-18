@@ -5,3 +5,11 @@
 .playable-card-duration {
   @apply absolute right-1 bottom-1 bg-[#0009] p-[0.1875rem_0.3125rem] text-sm/4.5 font-semibold select-none;
 }
+
+.playable-card-title {
+  @apply line-clamp-1 self-start text-sm/4.5 font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
+}
+
+.playable-card-footer {
+  @apply relative mt-auto flex w-full items-center justify-between text-[var(--meta-color)];
+}

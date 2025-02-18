@@ -17,7 +17,6 @@ import { HiOutlinePlay } from "react-icons/hi2";
 import { MdMoreVert } from "react-icons/md";
 
 import "./common.css";
-import "./playableCardMini.css";
 import "./index.css";
 
 const PlayableCardHoverInfo: React.FC<{
@@ -119,8 +118,7 @@ const PlayableCard: React.FC<{
   title: string;
   currentSeason: Season;
   episode: Episode;
-  cardType?: "default" | "mini";
-}> = ({ seriesId, title, currentSeason, episode, cardType = "default" }) => {
+}> = ({ seriesId, title, currentSeason, episode }) => {
   const episodeLink = `/watch/${episode.id}/${cleanString(episode.title)}`;
   const seriesLink = `/series/${seriesId}/${cleanString(title)}`;
 
@@ -131,36 +129,17 @@ const PlayableCard: React.FC<{
   );
 
   return (
-    <div
-      className={`${cardType === "default" ? "playable-card sm:block" : "playable-card-mini"} app-transition-colors relative flex`}
-    >
-      {cardType === "mini" && (
-        <Link
-          href={episodeLink}
-          prefetch={false}
-          title={episodeTitle}
-          className="absolute inset-0 z-[2]"
-        />
-      )}
-
+    <div className="playable-card app-transition-colors relative flex sm:block">
       <Link
         href={episodeLink}
         prefetch={false}
         tabIndex={-1}
-        className={
-          cardType === "default"
-            ? "playable-card-thumbnail relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:h-auto"
-            : "playable-card-mini-thumbnail-wrapper"
-        }
+        className="playable-card-thumbnail relative block aspect-video h-[5.3125rem] flex-[0_0_auto] sm:h-auto"
       >
         <figure className="relative size-full">
           <Image
             fill
-            sizes={
-              cardType === "default"
-                ? "(max-width: 567px) 230px, (max-width: 799px) calc(84.375rem / 2), (max-width: 1023px) calc(84.375rem / 3), 260px"
-                : "230px"
-            }
+            sizes="(max-width: 567px) 230px, (max-width: 799px) calc(84.375rem / 2), (max-width: 1023px) calc(84.375rem / 3), 260px"
             src={episode.thumbnail}
             alt={episodeTitle}
             className="block size-full object-cover"
@@ -170,30 +149,20 @@ const PlayableCard: React.FC<{
         <div className="playable-card-duration">{episode.duration}</div>
       </Link>
 
-      {cardType === "default" && (
-        <PlayableCardHoverInfo
-          episodeLink={episodeLink}
-          episodeTitle={episodeTitle}
-          currentSeason={currentSeason}
-          episode={episode}
-          seriesLink={seriesLink}
-          title={title}
-        />
-      )}
+      <PlayableCardHoverInfo
+        episodeLink={episodeLink}
+        episodeTitle={episodeTitle}
+        currentSeason={currentSeason}
+        episode={episode}
+        seriesLink={seriesLink}
+        title={title}
+      />
 
       <div className="relative flex flex-1 items-center">
-        <div
-          className={
-            cardType === "default"
-              ? "playable-card-body flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pt-3 sm:pb-0 sm:pl-0"
-              : "playable-card-mini-body"
-          }
-        >
-          {title && (
-            <div className="playable-card-small-title">
-              <small>{title}</small>
-            </div>
-          )}
+        <div className="playable-card-body flex min-h-[4.3125rem] flex-1 flex-col items-center justify-between py-1 pl-3 sm:min-h-[auto] sm:pt-3 sm:pb-0 sm:pl-0">
+          <div className="playable-card-small-title">
+            <small>{title}</small>
+          </div>
 
           <h4 className="playable-card-title">
             <Link href={episodeLink} prefetch={false} tabIndex={-1}>
@@ -210,18 +179,16 @@ const PlayableCard: React.FC<{
               ))}
             </div>
 
-            {cardType === "default" && (
-              <Dropdown
-                align="right"
-                className="z-1"
-                triggerClassName="hover:text-white focus-visible:text-white"
-                triggerActiveClassName="text-white"
-                Icon={<MdMoreVert className="size-6" />}
-                headerTitle="More Options"
-              >
-                <MarkEpisodeAsWatched />
-              </Dropdown>
-            )}
+            <Dropdown
+              align="right"
+              className="z-1"
+              triggerClassName="hover:text-white focus-visible:text-white"
+              triggerActiveClassName="text-white"
+              Icon={<MdMoreVert className="size-6" />}
+              headerTitle="More Options"
+            >
+              <MarkEpisodeAsWatched />
+            </Dropdown>
           </div>
         </div>
       </div>
@@ -229,9 +196,7 @@ const PlayableCard: React.FC<{
   );
 };
 
-export const PlayableCardSkeleton: React.FC<{
-  cardType?: "default" | "mini";
-}> = ({ cardType = "default" }) => {
+export const PlayableCardSkeleton: React.FC = () => {
   return (
     <div className="relative flex sm:block">
       <div className="relative block aspect-video h-[5.3125rem] flex-[0_0_auto] bg-[var(--app-overlay-secondary)] sm:h-auto" />

@@ -48,7 +48,11 @@ export default async function Watch({ params }: Readonly<PageProps>) {
               description={episode.description}
               details={episode.details}
             />
-            <Videos />
+
+            <Videos
+              prevEpisode={episode.prevEpisode}
+              nextEpisode={episode.nextEpisode}
+            />
           </div>
         </div>
       </main>

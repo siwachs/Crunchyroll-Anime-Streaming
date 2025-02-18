@@ -39,14 +39,6 @@
   @apply block truncate text-[0.625rem]/[0.875rem] font-black text-[var(--meta-color)] uppercase select-none;
 }
 
-.playable-card-title {
-  @apply line-clamp-1 self-start text-sm/4.5 font-semibold sm:mb-3 sm:line-clamp-3 sm:text-base;
-}
-
 .playable-card-hover-title {
   @apply sm:mb-0;
-}
-
-.playable-card-footer {
-  @apply relative mt-auto flex w-full items-center justify-between text-[var(--meta-color)];
 }
