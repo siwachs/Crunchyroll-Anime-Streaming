@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
     const headers = new Headers(request.headers);
     headers.set("x-client-ip", ip ?? getClientIP(headers));
-    headers.set("x-client-geo-country", geo.country ?? "Global");
+    headers.set("x-client-geo-country", geo.country ?? "GLOBAL");
 
     return NextResponse.next({ request: { headers } });
   }

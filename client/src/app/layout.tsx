@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 
-import Header from "@/components/header";
+const Header = dynamic(() => import("@/components/header"), {
+  loading: () => <HeaderSkeleton />,
+});
+import HeaderSkeleton from "@/components/header/index.skeleton";
 
 import lato from "@/assets/fonts";
 import "@/assets/styles/globals.css";

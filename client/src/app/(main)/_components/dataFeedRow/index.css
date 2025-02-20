@@ -78,7 +78,7 @@
 .wide-card-carousel-arrow {
   --arrow-width: max(var(--carousel-overflow-x-hint), 1.5rem);
 
-  @apply ease-quick relative z-[2] hidden h-full w-[var(--arrow-width)] self-center p-0.5 text-[var(--app-text-secondary)] transition-colors sm:flex;
+  @apply ease-quick relative z-2 hidden h-full w-[var(--arrow-width)] cursor-pointer self-center p-0.5 text-[var(--app-text-secondary)] transition-colors sm:flex;
 }
 
 .wide-cards-carousel-container:hover .wide-card-carousel-arrow {
@@ -183,18 +183,7 @@
 }
 
 .browse-card-poster {
-  --content-image-ar-priority-width: 1;
-
-  --width: calc(
-    100% * var(--content-image-ar-priority-width) /
-      var(--content-image-ar-priority-width)
-  );
-  --height: calc(
-    100% * var(--content-image-ar-priority-height) /
-      var(--content-image-ar-priority-height)
-  );
-
-  @apply relative aspect-[3/4.5] h-[var(--height)] w-[var(--width)];
+  @apply relative aspect-[3/4.5];
 }
 
 .browse-card-body {
@@ -251,9 +240,9 @@
 }
 
 .browse-card-hover-footer {
-  @apply relative z-[2] flex gap-1.5 self-start;
+  @apply relative z-2 flex gap-1.5 self-start;
 }
 
 .browse-card-hover-footer-button {
-  @apply flex size-8 items-center justify-center text-[var(--app-background-crunchyroll-orange)];
+  @apply flex size-8 cursor-pointer items-center justify-center text-[var(--app-background-crunchyroll-orange)];
 }

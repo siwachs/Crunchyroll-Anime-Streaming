@@ -12,7 +12,7 @@ import {
   HiMiniChevronLeft,
   HiMiniChevronRight,
 } from "react-icons/hi2";
-import { HiOutlineBookmark } from "react-icons/hi";
+import { AddToWatchListOutlined } from "@/assets/addToWatchListIcons";
 
 import { DataFeedItem } from "./index.types";
 
@@ -217,10 +217,7 @@ const DataFeedCarousel: React.FC<{ dataFeed: DataFeedItem[] }> = ({
                               </Link>
 
                               <button className="outline-xs browse-card-hover-footer-button">
-                                <HiOutlineBookmark
-                                  strokeWidth={2.08}
-                                  className="size-[22px]"
-                                />
+                                <AddToWatchListOutlined className="size-6 fill-current" />
                               </button>
                             </div>
                           </div>

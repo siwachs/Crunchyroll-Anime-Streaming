@@ -7,8 +7,8 @@ import {
   getLocaleDate,
 } from "@/lib/utils";
 
-import Dropdown from "@/components/dropdown";
-import MarkEpisodeAsWatched from "@/components/dropdown/menuItems/markEpisodeAsWatched";
+import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown";
+import MarkEpisodeAsWatched from "@/app/(main)/series/[id]/[title]/_components/dropdown/menuItems/markEpisodeAsWatched";
 
 import { Season, Episode } from "@/providers/seasonEpisodesProvider.types";
 

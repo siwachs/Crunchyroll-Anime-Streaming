@@ -6,6 +6,7 @@ import {
   genres,
   metaTagsWithoutNumericTypeTags,
   episodeIdAndTitle,
+  getSeasons,
 } from "../pipelineStages";
 
 import { BannerItem } from "@/app/(main)/_components/banner/index.types";
@@ -16,6 +17,11 @@ import {
   MIDDLE_EAST_COUNTRIES,
   WEST_COUNTRIES,
 } from "@/constants/countriesCodes";
+import {
+  BANNER_LIST_SIZE,
+  TOP_PICKS_FOR_YOU_SIZE,
+  NEWLY_UPDATED_SERIES_SIZE,
+} from "@/constants";
 import { SERIES } from "../collectionNames";
 
 function getContinent(clientGeoCountry: string) {
@@ -27,7 +33,9 @@ function getContinent(clientGeoCountry: string) {
   return clientGeoCountry;
 }
 
-async function getBannerItems(size: number = 6): Promise<BannerItem[]> {
+async function getBannerItems(
+  size: number = BANNER_LIST_SIZE,
+): Promise<BannerItem[]> {
   const headersList = await headers();
 
   const clientGeoCountry = headersList.get("x-client-geo-country") as string;
@@ -37,7 +45,7 @@ async function getBannerItems(size: number = 6): Promise<BannerItem[]> {
     async () => {
       const { db } = await connectToDb();
 
-      return await db
+      const bannerItems = await db
         .collection(SERIES)
         .aggregate([
           { $sample: { size } },
@@ -58,6 +66,8 @@ async function getBannerItems(size: number = 6): Promise<BannerItem[]> {
           },
         ])
         .toArray();
+
+      return bannerItems;
     },
     ["banner", continent],
     {
@@ -77,7 +87,9 @@ async function getBannerItems(size: number = 6): Promise<BannerItem[]> {
   });
 }
 
-async function getTopPicksForYou(size: number = 10): Promise<DataFeedItem[]> {
+async function getTopPicksForYou(
+  size: number = TOP_PICKS_FOR_YOU_SIZE,
+): Promise<DataFeedItem[]> {
   const headersList = await headers();
 
   const clientGeoCountry = headersList.get("x-client-geo-country") as string;
@@ -93,6 +105,7 @@ async function getTopPicksForYou(size: number = 10): Promise<DataFeedItem[]> {
           { $sample: { size } },
           ...metaTagsWithoutNumericTypeTags,
           ...episodeIdAndTitle,
+          ...getSeasons(),
           {
             $project: {
               title: 1,
@@ -120,7 +133,7 @@ async function getTopPicksForYou(size: number = 10): Promise<DataFeedItem[]> {
     },
     ["top-picks-for-you", continent],
     {
-      revalidate: 8 * 60, // Revalidate every 8 minutes
+      revalidate: 23 * 60, // Revalidate every 23 minutes
     },
   );
 
@@ -137,7 +150,7 @@ async function getTopPicksForYou(size: number = 10): Promise<DataFeedItem[]> {
 }
 
 async function getNewlyUpdatedSeries(
-  limit: number = 21,
+  limit: number = NEWLY_UPDATED_SERIES_SIZE,
 ): Promise<DataFeedItem[]> {
   const getCachedNewlyUpdatedSeries = unstable_cache(async () => {
     const { db } = await connectToDb();
@@ -149,6 +162,7 @@ async function getNewlyUpdatedSeries(
         { $limit: limit },
         ...metaTagsWithoutNumericTypeTags,
         ...episodeIdAndTitle,
+        ...getSeasons(),
         {
           $project: {
             title: 1,

@@ -3,7 +3,7 @@ import Image from "next/image";
 import wideImage from "@/assets/watch/image-wide.jpg";
 import "./index.css";
 
-const VideoPlayer: React.FC = () => {
+const VideoPlayer: React.FC<{ media: string }> = ({ media }) => {
   return (
     <div className="video-player-wrapper">
       <div className="video-player-spacer" />
@@ -22,7 +22,7 @@ const VideoPlayer: React.FC = () => {
           </figure>
         </div>
 
-        <div className="content select-none text-center text-xl">
+        <div className="content text-center text-xl select-none">
           Video Goes Here
         </div>
       </div>

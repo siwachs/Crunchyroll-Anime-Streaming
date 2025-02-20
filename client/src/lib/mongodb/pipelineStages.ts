@@ -1,25 +1,33 @@
-const metaTags = [
-  {
-    $lookup: {
-      from: "MetaTags",
-      localField: "metaTags",
-      foreignField: "_id",
-      as: "populatedMetaTags",
-    },
-  },
-  {
-    $set: {
-      populatedMetaTags: {
-        $sortArray: { input: "$populatedMetaTags", sortBy: { title: 1 } },
+import { METATAGS, GENRES, SEASONS, EPISODES } from "./collectionNames";
+
+function getMetaTags(
+  localField = "metaTags",
+  foreignField = "_id",
+  as = "populatedMetaTags",
+) {
+  return [
+    {
+      $lookup: {
+        from: METATAGS,
+        localField,
+        foreignField,
+        as,
       },
     },
-  },
-];
+    {
+      $set: {
+        populatedMetaTags: {
+          $sortArray: { input: `$${as}`, sortBy: { title: 1 } },
+        },
+      },
+    },
+  ];
+}
 
 const genres = [
   {
     $lookup: {
-      from: "Genres",
+      from: GENRES,
       localField: "genres",
       foreignField: "_id",
       as: "populatedGenres",
@@ -37,7 +45,7 @@ const genres = [
 const metaTagsWithoutNumericTypeTags = [
   {
     $lookup: {
-      from: "MetaTags",
+      from: METATAGS,
       localField: "metaTags",
       foreignField: "_id",
       as: "populatedMetaTags",
@@ -78,7 +86,7 @@ const episodeIdAndTitle = [
   },
   {
     $lookup: {
-      from: "Seasons",
+      from: SEASONS,
       localField: "seasonId",
       foreignField: "_id",
       as: "populatedSeason",
@@ -93,7 +101,7 @@ const episodeIdAndTitle = [
   },
   {
     $lookup: {
-      from: "Episodes",
+      from: EPISODES,
       localField: "episodeId",
       foreignField: "_id",
       as: "populatedEpisode",
@@ -106,21 +114,41 @@ const episodeIdAndTitle = [
   },
 ];
 
-const seasons = [
-  {
-    $lookup: {
-      from: "Seasons",
-      localField: "seasons",
-      foreignField: "_id",
-      as: "populatedSeasons",
+function getSeasons(
+  localField = "seasons",
+  foreignField = "_id",
+  as = "populatedSeasons",
+) {
+  return [
+    {
+      $lookup: {
+        from: SEASONS,
+        localField,
+        foreignField,
+        as,
+      },
     },
-  },
-];
+  ];
+}
+
+function getEpisodes(localField = "episodes", foreignField = "_id") {
+  return [
+    {
+      $lookup: {
+        from: EPISODES,
+        localField,
+        foreignField,
+        as: "populatedEpisodes",
+      },
+    },
+  ];
+}
 
 export {
-  metaTags,
+  getMetaTags,
   genres,
   metaTagsWithoutNumericTypeTags,
   episodeIdAndTitle,
-  seasons,
+  getSeasons,
+  getEpisodes,
 };

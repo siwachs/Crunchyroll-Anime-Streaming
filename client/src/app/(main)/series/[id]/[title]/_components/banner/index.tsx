@@ -5,8 +5,8 @@ import { cleanString } from "@/lib/utils";
 
 import Ratings from "@/components/ratings";
 import ContentActionButtons from "@/components/contentActionButtons";
-import Dropdown from "@/components/dropdown";
-import MarkSeriesAsWatched from "@/components/dropdown/menuItems/markSeriesAsWatched";
+import Dropdown from "../dropdown";
+import MarkSeriesAsWatched from "@/app/(main)/series/[id]/[title]/_components/dropdown/menuItems/markSeriesAsWatched";
 
 import { MdMoreVert } from "react-icons/md";
 import { HiOutlineShare, HiOutlinePlus } from "react-icons/hi";

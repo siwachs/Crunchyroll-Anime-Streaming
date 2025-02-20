@@ -31,7 +31,7 @@ export default async function Watch({ params }: Readonly<PageProps>) {
   return (
     <>
       <main>
-        <VideoPlayer />
+        <VideoPlayer media={episode.media} />
 
         <div className="content-wrapper">
           <div className="content-wrapper-body 2sm:pt-8 grid grid-cols-[minmax(min-content,54.375rem)_auto] justify-center pt-6">

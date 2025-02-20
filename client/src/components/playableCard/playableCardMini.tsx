@@ -14,7 +14,7 @@ const PlayableCardMini: React.FC<{ episode: EpisodeCardMini }> = ({
   const episodeLink = `/watch/${episode.id}/${cleanString(episode.title)}`;
 
   const episodeTitle = getTitleWithSeasonAndEpisodeNumber(
-    -1,
+    episode.season ?? -1,
     episode.episode,
     episode.title,
   );

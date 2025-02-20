@@ -35,7 +35,7 @@ export default async function Home() {
         </div>
 
         {/* Show whole Library */}
-        <div className="container-cmp"></div>
+        {/* <ShowWholeLibrary /> */}
       </main>
 
       <footer></footer>

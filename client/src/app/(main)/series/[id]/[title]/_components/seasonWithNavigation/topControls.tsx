@@ -2,10 +2,10 @@ import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
 
 import { getTitleWithSeasonNumber } from "@/lib/utils";
 
-import Dropdown from "@/components/dropdown";
-import SeasonList from "@/components/dropdown/menuItems/seasonList";
-import SortList from "@/components/dropdown/menuItems/sortList";
-import MarkSeasonAsWatched from "@/components/dropdown/menuItems/markSeasonAsWatched";
+import Dropdown from "../dropdown";
+import SeasonList from "@/app/(main)/series/[id]/[title]/_components/dropdown/menuItems/seasonList";
+import SortList from "@/app/(main)/series/[id]/[title]/_components/dropdown/menuItems/sortList";
+import MarkSeasonAsWatched from "@/app/(main)/series/[id]/[title]/_components/dropdown/menuItems/markSeasonAsWatched";
 
 import { FaCaretDown } from "react-icons/fa";
 import { Sort } from "@/assets/icons";

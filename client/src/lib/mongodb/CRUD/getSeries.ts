@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import connectToDb from "../connectToDb";
 import { ObjectId } from "mongodb";
 import {
-  metaTags,
+  getMetaTags,
   genres,
   episodeIdAndTitle,
-  seasons,
+  getSeasons,
 } from "../pipelineStages";
 
 import { Series } from "@/app/(main)/series/[id]/[title]/page.types";
@@ -31,9 +31,9 @@ export default async function getSeries(id: string): Promise<Series> {
     .collection(SERIES)
     .aggregate([
       { $match: { _id: new ObjectId(id) } },
-      ...metaTags,
+      ...getMetaTags(),
       ...genres,
-      ...seasons,
+      ...getSeasons(),
       ...episodeIdAndTitle,
       {
         $project: {

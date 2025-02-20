@@ -5,6 +5,7 @@ export type EpisodeCardMini = {
   duration: string | number;
   title: string;
   metaTags: string[];
+  season?: number;
 };
 
 export type Episode = {
@@ -18,6 +19,7 @@ export type Episode = {
   dislikes: number;
   description: string;
   details: Record<string, string>;
+  media: string;
   series: {
     id: string;
     title: string;

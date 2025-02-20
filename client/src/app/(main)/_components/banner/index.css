@@ -83,7 +83,8 @@
 
 @media screen and (min-width: 800px) {
   .carousel-card-bg::after {
-    background: linear-gradient(to bottom, #0000 50%, #000 100%),
+    background:
+      linear-gradient(to bottom, #0000 50%, #000 100%),
       linear-gradient(to right, #000000d9 0, #00000080 30%, #0000 55%);
   }
 }
@@ -132,7 +133,7 @@
 .navigatin-button {
   --pill-color: #ffffff80;
 
-  @apply ease-quick relative h-2 w-6 px-1 py-2 transition-[width] duration-300;
+  @apply ease-quick relative h-2 w-6 cursor-pointer px-1 py-2 transition-[width] duration-300;
 
   box-sizing: initial;
 }
