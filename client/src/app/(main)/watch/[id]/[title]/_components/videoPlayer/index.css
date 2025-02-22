@@ -2,40 +2,20 @@
 @import "@styles/theme.css";
 @import "@styles/utilities.css";
 
-.video-player-wrapper {
-  @apply relative grid w-full;
-
+.video-player {
   grid-template-areas: "video-player";
 }
 
-.video-player-wrapper > * {
+.video-player > * {
   grid-area: video-player;
 }
 
-.video-player-spacer {
-  @apply pointer-events-none h-[56.25vw] max-h-40 min-h-[calc(20rem*0.5625)];
-}
-
 @media screen and (min-height: 25rem) {
-  .video-player-spacer {
+  .video-player-sizer {
     @apply max-h-[calc(100vh-15.625rem)];
   }
 }
 
-.image-wrapper {
-  @apply size-full;
-
-  -webkit-mask-image: linear-gradient(180deg, #000000e6, #0000);
-  mask-image: linear-gradient(180deg, #000000e6, #0000);
-}
-
-@media screen and (min-width: 568px) {
-  .image-wrapper {
-    -webkit-mask-image: linear-gradient(270deg, #000000e6, #0000);
-    mask-image: linear-gradient(270deg, #000000e6, #0000);
-  }
-}
-
-.content {
-  @apply absolute top-full -translate-y-full;
+.seek-progress::after {
+  @apply absolute top-1/2 block size-3 -translate-y-1/2 rounded-full bg-[var(--app-background-crunchyroll-orange)] content-[""];
 }
