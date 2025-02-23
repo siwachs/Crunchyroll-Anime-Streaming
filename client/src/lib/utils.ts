@@ -112,6 +112,25 @@ function getReadableDate(dateString: string | Date) {
   });
 }
 
+function timeToFormattedTime(seconds: number): string {
+  if (!seconds || seconds < 0) return "00:00";
+
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  let formattedTime = "";
+
+  if (days > 0) formattedTime += `${days}:`;
+  if (hours > 0 || days > 0)
+    formattedTime += `${String(hours).padStart(2, "0")}:`;
+  formattedTime += `${String(minutes).padStart(2, "0")}:`;
+  formattedTime += `${String(secs).padStart(2, "0")}`;
+
+  return formattedTime;
+}
+
 export {
   triggerCallbackOnClickOrOnKeydown,
   getAttribute,
@@ -122,4 +141,5 @@ export {
   getTitleWithSeasonAndEpisodeNumber,
   getLocaleDate,
   getReadableDate,
+  timeToFormattedTime,
 };
