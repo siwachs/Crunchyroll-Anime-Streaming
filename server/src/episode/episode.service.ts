@@ -25,7 +25,7 @@ export class EpisodeService {
   async createEpisode(
     seriesId: string,
     seasonId: string,
-    thumbnail: Express.Multer.File,
+    media: Express.Multer.File,
     dto: CreateEpisodeFormDto,
   ) {
     const series = await this.seriesModel
@@ -42,8 +42,8 @@ export class EpisodeService {
 
     const extendedDto: CreateEpisodeDto = {
       ...dto,
-      thumbnail: 'Uploading...',
-      media: 'Uploading...',
+      series: seriesId,
+      season: seasonId,
     };
 
     const newEpisodeDoc = new this.episodeModel(extendedDto);
@@ -55,31 +55,13 @@ export class EpisodeService {
       })
       .exec();
 
-    this.episodeProducerService.sendThumbnailUploadsMessage(
-      seriesId,
-      seasonId,
-      newEpisode._id.toString(),
-      thumbnail,
-    );
-
-    return newEpisode;
-  }
-
-  uploadMedia(
-    seriesId: string,
-    seasonId: string,
-    episodeId: string,
-    media: Express.Multer.File,
-  ) {
     this.episodeProducerService.sendMediaUploadsTranscodeMessage(
       seriesId,
       seasonId,
-      episodeId,
+      newEpisode._id.toString(),
       media.path,
     );
 
-    return {
-      media: 'Uploading...',
-    };
+    return newEpisode;
   }
 }

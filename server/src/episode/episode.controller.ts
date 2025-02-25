@@ -19,8 +19,6 @@ import { ValidatorAndDataProcessingService } from 'src/validator-and-data-proces
 import { CreateEpisodeFormDto } from './schemas/dto/episode.dto';
 
 import {
-  IMAGE_ALLOWED_MIME_TYPES,
-  THUMBNAIL_MAX_SIZE_IN_MB,
   MEDIA_ALLOWED_MIME_TYPES,
   MEDIA_MAX_SIZE_IN_MB,
 } from 'src/common/constants/file';
@@ -33,37 +31,6 @@ export class EpisodeController {
   ) {}
 
   @Post(':seriesId/:seasonId')
-  @UseInterceptors(FileInterceptor('thumbnail'))
-  createEdisode(
-    @Param('seriesId') seriesId: string,
-    @Param('seasonId') seasonId: string,
-    @UploadedFile() thumbnail: Express.Multer.File,
-    @Body() dto: CreateEpisodeFormDto,
-  ) {
-    if (!thumbnail) throw new BadRequestException('Thumbnail is requied.');
-
-    this.validatorAndDataProcessingService.validateFileMimeTypeAndSize(
-      thumbnail,
-      {
-        allowedMimeTypes: IMAGE_ALLOWED_MIME_TYPES,
-        maxSize: THUMBNAIL_MAX_SIZE_IN_MB,
-      },
-    );
-
-    const renamedThumbnail = this.validatorAndDataProcessingService.renameFile(
-      thumbnail,
-      'thumbnail',
-    );
-
-    return this.episodeService.createEpisode(
-      seriesId,
-      seasonId,
-      renamedThumbnail,
-      dto,
-    );
-  }
-
-  @Post(':seriesId/:seasonId/:episodeId')
   @UseInterceptors(
     FileInterceptor('media', {
       storage: diskStorage({
@@ -87,19 +54,14 @@ export class EpisodeController {
       limits: { fileSize: MEDIA_MAX_SIZE_IN_MB * 1024 * 1024 },
     }),
   )
-  uploadMedia(
+  createEdisode(
     @Param('seriesId') seriesId: string,
     @Param('seasonId') seasonId: string,
-    @Param('episodeId') episodeId: string,
     @UploadedFile() media: Express.Multer.File,
+    @Body() dto: CreateEpisodeFormDto,
   ) {
     if (!media) throw new BadRequestException('Media is required.');
 
-    return this.episodeService.uploadMedia(
-      seriesId,
-      seasonId,
-      episodeId,
-      media,
-    );
+    return this.episodeService.createEpisode(seriesId, seasonId, media, dto);
   }
 }

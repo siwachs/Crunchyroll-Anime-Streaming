@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync, unlinkSync } from 'fs';
 import { basename, extname, join } from 'path';
+import { PassThrough } from 'stream';
 import { Injectable } from '@nestjs/common';
 
 import { EpisodeProducerService } from 'src/episode/episode.producer.service';
@@ -17,34 +18,148 @@ export class HlsService {
       height: 360,
       label: '360p',
       videoBitrate: '800k',
-      audioBitrate: '96k',
     },
     {
       width: 854,
       height: 480,
       label: '480p',
       videoBitrate: '1400k',
-      audioBitrate: '128k',
     },
     {
       width: 1280,
       height: 720,
       label: '720p',
       videoBitrate: '2800k',
-      audioBitrate: '192k',
     },
     {
       width: 1920,
       height: 1080,
       label: '1080p',
       videoBitrate: '5000k',
-      audioBitrate: '256k',
     },
   ];
 
   constructor(
     private readonly episodeProducerService: EpisodeProducerService,
   ) {}
+
+  private async getInputVideoResolution(
+    inputFilePath: string,
+  ): Promise<{ width: number; height: number }> {
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(inputFilePath, (err, metadata) => {
+        if (err) {
+          console.error(`Error retrieving video metadata: ${err.message}`);
+          return reject(err as Error);
+        }
+
+        const { width, height } = metadata.streams[0];
+        resolve({ width, height });
+      });
+    });
+  }
+
+  private async getDuration(inputFilePath: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(inputFilePath, (err: Error, metadata) => {
+        if (err) return reject(err);
+        resolve(metadata.format.duration || 0);
+      });
+    });
+  }
+
+  private async getThumbnail(
+    inputFilePath: string,
+    duration: number,
+  ): Promise<{
+    buffer: Buffer;
+    originalname: string;
+    mimetype: string;
+  }> {
+    return new Promise((resolve, reject) => {
+      if (duration <= 0) return reject(new Error('Invalid video duration.'));
+
+      const randomTimestamp = (Math.random() * duration).toFixed(2);
+      const passthroughStream = new PassThrough(); // Stream for memory storage
+      const chunks: Buffer[] = [];
+
+      ffmpeg(inputFilePath)
+        .seekInput(randomTimestamp)
+        .frames(1)
+        .format('image2')
+        .outputOptions([
+          '-vf',
+          'scale=1280:720', // Optimize resolution
+          '-q:v',
+          '2', // (lower = better, range 2-5)
+        ])
+        .pipe(passthroughStream, { end: true }) // Stream directly to memory
+        .on('data', (chunk) => chunks.push(chunk)) // Collect data in buffer
+        .on('end', () =>
+          resolve({
+            buffer: Buffer.concat(chunks),
+            originalname: 'thumbnail',
+            mimetype: 'image/jpeg',
+          }),
+        )
+        .on('error', (err: Error) => reject(err));
+    });
+  }
+
+  private async getSubtitles(inputFilePath: string, fileOutputDir: string) {
+    return new Promise<{ fileName: string; language: string }[]>(
+      (resolve, reject) => {
+        ffmpeg.ffprobe(inputFilePath, (err: Error, metadata) => {
+          if (err) return reject(err);
+
+          const subtitleStreams = metadata.streams.filter(
+            (stream) => stream.codec_type === 'subtitle',
+          );
+          if (subtitleStreams.length === 0) return resolve([]);
+
+          const subtitleFiles: { fileName: string; language: string }[] = [];
+
+          let extractionPromises = subtitleStreams.map((stream, index) => {
+            const subtitleIndex = stream.index;
+            const subtitleLang = stream.tags?.language || `Track ${index + 1}`;
+            const subtitleM3U8 = `sub_${subtitleLang}.m3u8`;
+            const subtitleFilePath = join(fileOutputDir, subtitleM3U8);
+            const segmentFilePattern = `sub_${subtitleLang}_%03d.vtt`;
+
+            return new Promise<void>((subResolve, subReject) => {
+              ffmpeg(inputFilePath)
+                .outputOptions([
+                  `-map 0:${subtitleIndex}`,
+                  '-c:s webvtt',
+                  '-f segment',
+                  '-segment_time 10',
+                  '-segment_list',
+                  subtitleFilePath,
+                  '-segment_list_type m3u8',
+                ])
+                .output(join(fileOutputDir, segmentFilePattern))
+                .on('end', () => {
+                  subtitleFiles.push({
+                    fileName: subtitleM3U8,
+                    language: subtitleLang,
+                  });
+                  console.log(
+                    `Extracted segmented subtitle: ${subtitleM3U8} (${subtitleLang})`,
+                  );
+                  subResolve();
+                })
+                .on('error', (err: Error) => subReject(err))
+                .run();
+            });
+          });
+
+          Promise.all(extractionPromises)
+            .then(() => resolve(subtitleFiles))
+            .catch(reject);
+        });
+      },
+    );
+  }
 
   async transcodeToHLS(
     seriesId: string,
@@ -74,11 +189,15 @@ export class HlsService {
       );
     }
 
+    const duration = await this.getDuration(inputFilePath);
+    const thumbnail = await this.getThumbnail(inputFilePath, duration);
+    const subtitles = await this.getSubtitles(inputFilePath, fileOutputDir);
+
     const variantPlaylists = [];
 
     const transcodeStartsOn = Date.now();
     await Promise.all(
-      targetResolutions.map(async ({ width, height, label, audioBitrate }) => {
+      targetResolutions.map(async ({ width, height, label }) => {
         const outputFileName = `${label}.m3u8`;
         const segmentFileName = `${label}_%03d.ts`;
 
@@ -92,6 +211,7 @@ export class HlsService {
         await new Promise<void>((resolve, reject) => {
           ffmpeg(inputFilePath)
             .outputOptions([
+              '-sn', // Disable subtitle processing
               '-c:v',
               'libx264', // libx264, libx256 (Slow)
               '-crf',
@@ -103,7 +223,13 @@ export class HlsService {
               '-c:a',
               'aac',
               '-b:a',
-              audioBitrate,
+              '128k', // Audio bitrate (192K) is Higher
+              '-ar',
+              '48000', // Standard sample rate
+              '-ac',
+              '2', // Stereo audio ie surround feel of (LR)
+              '-af',
+              'loudnorm=I=-16:LRA=11:TP=-1.5',
               '-hls_time',
               '10',
               '-hls_playlist_type',
@@ -118,7 +244,7 @@ export class HlsService {
               );
               resolve();
             })
-            .on('error', (err) => {
+            .on('error', (err: Error) => {
               console.error(
                 `Error during HLS conversion for : ${fileNameWithExt}, with format: ${label}. ${err.message}.`,
               );
@@ -131,7 +257,7 @@ export class HlsService {
       }),
     );
 
-    await this.createMasterPlaylist(fileOutputDir, variantPlaylists);
+    await this.createMasterPlaylist(fileOutputDir, variantPlaylists, subtitles);
 
     const transcodeEndOn = Date.now();
     console.log(
@@ -141,40 +267,43 @@ export class HlsService {
     console.log('Deleting Input File...');
     unlinkSync(inputFilePath);
 
-    console.log(`Uploading ${fileNameWithExt} transcoded media to firebase...`);
+    console.log(`Uploading ${fileNameWithExt} transcoded media to supabase...`);
+
+    this.episodeProducerService.sendThumbnailUploadsMessage(
+      seriesId,
+      seasonId,
+      episodeId,
+      thumbnail as Express.Multer.File,
+    );
     this.episodeProducerService.sendTranscodedMediaUploadsMessage(
       fileOutputDir,
       fileNameWithExt,
       seriesId,
       seasonId,
       episodeId,
-      fileOutputDir,
+      duration,
     );
-  }
-
-  private async getInputVideoResolution(
-    inputFilePath: string,
-  ): Promise<{ width: number; height: number }> {
-    return new Promise((resolve, reject) => {
-      ffmpeg.ffprobe(inputFilePath, (err, metadata) => {
-        if (err) {
-          console.error(`Error retrieving video metadata: ${err.message}`);
-          return reject(err as Error);
-        }
-
-        const { width, height } = metadata.streams[0];
-        resolve({ width, height });
-      });
-    });
   }
 
   private async createMasterPlaylist(
     outputDir: string,
     variants: { label: string; fileName: string }[],
-  ): Promise<void> {
+    subtitles: { fileName: string; language: string }[],
+  ) {
     const masterPlaylistPath = join(outputDir, 'master.m3u8');
-    const masterPlaylistContent = ['#EXTM3U'];
+    const masterPlaylistContent = ['#EXTM3U', '\n'];
 
+    // Add VTT subtitle files
+    subtitles.forEach((subtitle, index) => {
+      const defaultAttr = index === 0 ? ',DEFAULT=YES' : '';
+      masterPlaylistContent.push(
+        `#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",NAME="${subtitle.language.toUpperCase()}",LANGUAGE="${subtitle.language}",AUTOSELECT=YES${defaultAttr},FORCED=NO,URI="${subtitle.fileName}"`,
+      );
+    });
+
+    masterPlaylistContent.push('\n');
+
+    // Add video streams
     for (const { label, fileName } of variants) {
       const resolution = this.resolutions.find((res) => res.label === label);
       if (resolution) {
@@ -183,7 +312,7 @@ export class HlsService {
           resolution.height,
         );
         masterPlaylistContent.push(
-          `#EXT-X-STREAM-INF:BANDWIDTH=${bandwidth},RESOLUTION=${resolution.width}x${resolution.height}`,
+          `#EXT-X-STREAM-INF:BANDWIDTH=${bandwidth},RESOLUTION=${resolution.width}x${resolution.height},SUBTITLES="subs"`,
           fileName,
         );
       }

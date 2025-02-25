@@ -17,7 +17,7 @@
 }
 
 .seek {
-  @apply relative h-[2.5px] w-full cursor-pointer appearance-none bg-[var(--meta-color)] outline-none;
+  @apply relative h-[2.5px] w-full appearance-none bg-[var(--meta-color)] outline-none;
 }
 
 .seek::-webkit-slider-runnable-track,
@@ -27,7 +27,7 @@
 
 .seek::-webkit-slider-thumb,
 .seek::-moz-range-thumb {
-  @apply size-3 cursor-pointer rounded-full border-none bg-[var(--app-background-crunchyroll-orange)] shadow-none;
+  @apply size-3 rounded-full border-none bg-[var(--app-background-crunchyroll-orange)] shadow-none;
 }
 
 .seek::-webkit-slider-thumb {

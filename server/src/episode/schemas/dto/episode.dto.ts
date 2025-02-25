@@ -13,10 +13,6 @@ import { Transform, Type } from 'class-transformer';
 import { transformerStringArrayOrObject } from 'src/common/transformer';
 
 export class CreateEpisodeFormDto {
-  @IsNotEmpty()
-  @IsString()
-  duration: string;
-
   @IsOptional()
   @IsString()
   episode: string;
@@ -49,9 +45,9 @@ export class CreateEpisodeFormDto {
 export class CreateEpisodeDto extends CreateEpisodeFormDto {
   @IsNotEmpty()
   @IsString()
-  thumbnail: string;
+  series: string;
 
   @IsNotEmpty()
   @IsString()
-  media: string;
+  season: string;
 }

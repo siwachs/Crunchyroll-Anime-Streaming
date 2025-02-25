@@ -65,6 +65,33 @@ const VideoPlayer = ({ media }: { media: string }) => {
       setTotalDuration(video.duration);
     }
 
+    function selectDefaultSubtitle() {
+      if (!videoRef.current) return;
+      const video = videoRef.current;
+
+      // Clear existing tracks to prevent duplication
+      const existingTracks = video.querySelectorAll("track");
+      existingTracks.forEach((track) => track.remove());
+
+      const textTracks = video.textTracks;
+      console.log("text tracks are", textTracks);
+
+      if (textTracks.length === 0) {
+        console.warn("No subtitles found in the video.");
+        return;
+      }
+
+      for (let i = 0; i < textTracks.length; i++) {
+        const track = textTracks[i];
+        track.mode = "hidden"; // Hide all tracks initially
+      }
+
+      // Select the first available subtitle track
+      textTracks[0].mode = "showing";
+
+      console.log(`Default subtitle track selected: ${textTracks[0].label}`);
+    }
+
     if (HLS.isSupported()) {
       hls = new HLS();
       hls.loadSource(media);
@@ -72,12 +99,14 @@ const VideoPlayer = ({ media }: { media: string }) => {
 
       hls.on(HLS.Events.MANIFEST_PARSED, tryAutoPlay);
       hls.on(HLS.Events.LEVEL_LOADED, setVideoDuration);
+      // hls.on(HLS.Events.SUBTITLE_TRACKS_UPDATED, selectDefaultSubtitle);
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = media;
 
       video.addEventListener("loadedmetadata", () => {
         tryAutoPlay();
         setVideoDuration();
+        // selectDefaultSubtitle();
       });
     }
 
@@ -110,13 +139,12 @@ const VideoPlayer = ({ media }: { media: string }) => {
     if (!video) return;
 
     function getSeekPecentage() {
-      if (e.target instanceof HTMLInputElement) {
+      if ("target" in e && e.target instanceof HTMLInputElement) {
         return Number(e.target.value);
-      } else if (e instanceof MouseEvent) {
+      } else if ("clientX" in e) {
         const rect = (
           e.currentTarget as HTMLDivElement
         ).getBoundingClientRect();
-
         return ((e.clientX - rect.left) / rect.width) * 100;
       }
 
@@ -163,13 +191,35 @@ const VideoPlayer = ({ media }: { media: string }) => {
     <div className="video-player relative grid w-full">
       <div className="video-player-sizer pointer-events-none h-[56.25vw] max-h-40 min-h-[calc(20rem*0.5625)]" />
 
+      {/* <video controls>
+        <source src="/file_example_MP4_640_3MG.mp4" type="video/mp4" />
+        <track
+          default
+          src="/eng.vtt"
+          kind="subtitles"
+          srcLang="en"
+          label="English"
+        />
+      </video> */}
+
       <div className="relative size-full">
+        {/* <video controls>
+          <source src="/file_example_MP4_640_3MG.mp4" type="video/mp4" />
+          <track
+            default
+            src="/eng.vtt"
+            kind="subtitles"
+            srcLang="en"
+            label="English"
+          />
+        </video> */}
         <video
           ref={videoRef}
           className="video absolute aspect-video size-full"
+          controls
         />
 
-        <div className="controls absolute inset-0">
+        {/* <div className="controls absolute inset-0">
           <div className="relative size-full">
             <div className="absolute top-0 right-0 left-0 flex h-10 justify-between px-1.5">
               <button onClick={toogleAudio} className="player-action-button">
@@ -241,11 +291,11 @@ const VideoPlayer = ({ media }: { media: string }) => {
               </div>
 
               <div
-                role="button"
                 tabIndex={0}
-                onClick={seek}
+                role="button"
                 onKeyDown={undefined}
-                className="flex min-h-6 items-center"
+                className="flex min-h-6 cursor-pointer items-center"
+                onClick={seek}
               >
                 <input
                   type="range"
@@ -258,7 +308,7 @@ const VideoPlayer = ({ media }: { media: string }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

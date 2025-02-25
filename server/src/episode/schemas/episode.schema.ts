@@ -10,16 +10,16 @@ export type EpisodeDocument = HydratedDocument<Episode>;
 @Schema({ collection: 'Episodes', timestamps: true })
 export class Episode {
   @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
-  seriesId: Series;
+  series: Series;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
   season: Season;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, default: 'Uploading...' })
   thumbnail: string;
 
-  @Prop({ type: String, required: true })
-  duration: string;
+  @Prop({ type: Number, default: 0 })
+  duration: number;
 
   @Prop({ type: String, default: '' })
   episode: string;
@@ -48,7 +48,7 @@ export class Episode {
   @Prop({ type: Object, required: true })
   details: Record<string, string>;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, default: 'Uploading...' })
   media: string;
 }
 

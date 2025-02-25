@@ -142,12 +142,12 @@ export class SupabaseService implements OnModuleInit {
           await Promise.race(activeUploads);
       }
 
-      await Promise.all(activeUploads);
+      return await Promise.all(activeUploads).then(
+        () => `https://supabase.io/storage/v1/object/public/${storageRef}`,
+      );
     } catch (error) {
       console.error(`Error while uploading directory: ${dirPath}`);
       throw error;
     }
-
-    return `https://supabase.io/storage/v1/object/public/${storageRef}`;
   }
 }

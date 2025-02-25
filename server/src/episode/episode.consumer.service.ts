@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import { Injectable } from '@nestjs/common';
 
 import { ValidatorAndDataProcessingService } from 'src/validator-and-data-processing/validator-and-data-processing.service';
-import { FirebaseService } from 'src/firebase/firebase.service';
+import { SupabaseService } from 'src/supabase/supabase.service';
 import { HlsService } from 'src/hls/hls.service';
 
 import { Model } from 'mongoose';
@@ -17,7 +17,7 @@ export class EpisodeConsumerService {
   constructor(
     private readonly validatorAndDataProcessingService: ValidatorAndDataProcessingService,
     @InjectModel(Episode.name) private readonly episodeModel: Model<Episode>,
-    private readonly firebaseService: FirebaseService,
+    private readonly supabaseService: SupabaseService,
     private readonly hlsSerive: HlsService,
   ) {}
 
@@ -32,9 +32,9 @@ export class EpisodeConsumerService {
     const bufferFile =
       this.validatorAndDataProcessingService.base64StringToFileBuffer(file);
 
-    const uploadedFilesURLs = await this.firebaseService.uploadFiles(
+    const uploadedFilesURLs = await this.supabaseService.uploadFiles(
       [bufferFile],
-      `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/${episodeId}`,
+      `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/Episodes/${episodeId}`,
     );
 
     const { thumbnail } = uploadedFilesURLs;
@@ -59,7 +59,7 @@ export class EpisodeConsumerService {
     seriesId: string;
     seasonId: string;
     episodeId: string;
-    transcodedMediaDir: string;
+    duration: number;
   }) {
     const {
       masterFileDir,
@@ -67,22 +67,23 @@ export class EpisodeConsumerService {
       seriesId,
       seasonId,
       episodeId,
-      transcodedMediaDir,
+      duration,
     } = message;
 
-    const uploadedMediaDirURL = await this.firebaseService.uploadDir(
-      transcodedMediaDir,
-      `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/${episodeId}/media`,
+    const uploadedMediaDirURL = await this.supabaseService.uploadDir(
+      masterFileDir,
+      `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/Episodes/${episodeId}/media`,
     );
 
     await this.episodeModel
       .findByIdAndUpdate(episodeId, {
         media: `${uploadedMediaDirURL}/master.m3u8`,
+        duration,
       })
       .exec();
 
     console.log(`${masterFileName} is uploaded`);
 
-    await fs.rm(masterFileDir, { recursive: true, force: true });
+    fs.rm(masterFileDir, { recursive: true, force: true });
   }
 }

@@ -61,7 +61,7 @@ export class EpisodeProducerService {
     seriesId: string,
     seasonId: string,
     episodeId: string,
-    transcodedMediaDir: string,
+    duration: number,
   ) {
     const message = {
       masterFileDir,
@@ -69,12 +69,12 @@ export class EpisodeProducerService {
       seriesId,
       seasonId,
       episodeId,
-      transcodedMediaDir,
+      duration,
     };
 
     this.kafkaService.sendMessage(
       TRANSCODED_MEDIA_UPLOADS,
-      transcodedMediaDir,
+      masterFileDir,
       message,
     );
   }
