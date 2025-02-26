@@ -39,7 +39,7 @@ export class EpisodeConsumerService {
 
     const { thumbnail } = uploadedFilesURLs;
 
-    this.episodeModel.findByIdAndUpdate(episodeId, { thumbnail }).exec();
+    // this.episodeModel.findByIdAndUpdate(episodeId, { thumbnail }).exec();
   }
 
   transcodeUploadedMediaToHLS(message: {
@@ -75,15 +75,15 @@ export class EpisodeConsumerService {
       `${SERIES_BASE_STORAGE_REF}/${seriesId}/Seasons/${seasonId}/Episodes/${episodeId}/media`,
     );
 
-    await this.episodeModel
-      .findByIdAndUpdate(episodeId, {
-        media: `${uploadedMediaDirURL}/master.m3u8`,
-        duration,
-      })
-      .exec();
+    // await this.episodeModel
+    //   .findByIdAndUpdate(episodeId, {
+    //     media: `${uploadedMediaDirURL}/master.m3u8`,
+    //     duration,
+    //   })
+    //   .exec();
 
     console.log(`${masterFileName} is uploaded`);
 
-    fs.rm(masterFileDir, { recursive: true, force: true });
+    // fs.rm(masterFileDir, { recursive: true, force: true });
   }
 }

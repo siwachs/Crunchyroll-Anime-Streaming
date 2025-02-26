@@ -28,40 +28,42 @@ export class EpisodeService {
     media: Express.Multer.File,
     dto: CreateEpisodeFormDto,
   ) {
-    const series = await this.seriesModel
-      .findOne({
-        _id: seriesId,
-        seasons: { $in: [seasonId] },
-      })
-      .select('_id')
-      .exec();
-    if (!series)
-      throw new BadRequestException(
-        'The episode you are trying to create belongs to a season that is not associated with the specified series.',
-      );
-
-    const extendedDto: CreateEpisodeDto = {
-      ...dto,
-      series: seriesId,
-      season: seasonId,
-    };
-
-    const newEpisodeDoc = new this.episodeModel(extendedDto);
-    const newEpisode = await newEpisodeDoc.save();
-
-    await this.seasonModel
-      .findByIdAndUpdate(seasonId, {
-        $push: { episodes: newEpisode._id },
-      })
-      .exec();
+    // const series = await this.seriesModel
+    //   .findOne({
+    //     _id: seriesId,
+    //     seasons: { $in: [seasonId] },
+    //   })
+    //   .select('_id')
+    //   .exec();
+    // if (!series)
+    //   throw new BadRequestException(
+    //     'The episode you are trying to create belongs to a season that is not associated with the specified series.',
+    //   );
+    // const extendedDto: CreateEpisodeDto = {
+    //   ...dto,
+    //   series: seriesId,
+    //   season: seasonId,
+    // };
+    // const newEpisodeDoc = new this.episodeModel(extendedDto);
+    // const newEpisode = await newEpisodeDoc.save();
+    // await this.seasonModel
+    //   .findByIdAndUpdate(seasonId, {
+    //     $push: { episodes: newEpisode._id },
+    //   })
+    //   .exec();
+    // this.episodeProducerService.sendMediaUploadsTranscodeMessage(
+    //   seriesId,
+    //   seasonId,
+    //   newEpisode._id.toString(),
+    //   media.path,
+    // );
+    // return newEpisode;
 
     this.episodeProducerService.sendMediaUploadsTranscodeMessage(
       seriesId,
       seasonId,
-      newEpisode._id.toString(),
+      'episodeId',
       media.path,
     );
-
-    return newEpisode;
   }
 }
