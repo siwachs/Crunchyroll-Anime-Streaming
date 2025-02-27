@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, writeFileSync, unlinkSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { readdir, unlink } from 'fs/promises';
 import { basename, extname, join } from 'path';
 import { PassThrough } from 'stream';
@@ -20,24 +20,24 @@ export class HlsService {
       label: '360p',
       videoBitrate: '800k',
     },
-    // {
-    //   width: 854,
-    //   height: 480,
-    //   label: '480p',
-    //   videoBitrate: '1400k',
-    // },
-    // {
-    //   width: 1280,
-    //   height: 720,
-    //   label: '720p',
-    //   videoBitrate: '2800k',
-    // },
-    // {
-    //   width: 1920,
-    //   height: 1080,
-    //   label: '1080p',
-    //   videoBitrate: '5000k',
-    // },
+    {
+      width: 854,
+      height: 480,
+      label: '480p',
+      videoBitrate: '1400k',
+    },
+    {
+      width: 1280,
+      height: 720,
+      label: '720p',
+      videoBitrate: '2800k',
+    },
+    {
+      width: 1920,
+      height: 1080,
+      label: '1080p',
+      videoBitrate: '5000k',
+    },
   ];
 
   constructor(
@@ -144,14 +144,14 @@ export class HlsService {
 
                 const outputSegmentPath = join(
                   fileOutputDir,
-                  `sub_${subtitleFileName}_%03d.ts`,
+                  `sub_${subtitleFileName}_%d.ts`,
                 );
                 const outputPlaylistPath = join(
                   fileOutputDir,
                   `sub_${subtitleFileName}.m3u8`,
                 );
 
-                console.log(`Getting Subtitle ${subtitleTitle}`);
+                console.log(`Getting Subtitle ${subtitleTitle}...`);
                 return new Promise<void>(
                   (transcodeResolve, transcodeReject) => {
                     ffmpeg(inputFilePath)
@@ -175,7 +175,7 @@ export class HlsService {
                       .output(outputPlaylistPath)
                       .on('end', async () => {
                         subtitleFiles.push({
-                          fileName: `sub_${subtitleFileName}.m3u8`,
+                          fileName: `sub_${subtitleFileName}_vtt.m3u8`,
                           title: subtitleTitle,
                           language: subtitleLang,
                         });
@@ -189,6 +189,7 @@ export class HlsService {
                               file.startsWith(`sub_${subtitleFileName}_`) &&
                               file.endsWith('.ts'),
                           );
+                          tsFiles.push(`sub_${subtitleFileName}.m3u8`);
 
                           await Promise.all(
                             tsFiles.map((file) =>
@@ -196,7 +197,7 @@ export class HlsService {
                             ),
                           );
                           console.log(
-                            `Removed ${tsFiles.length} .ts segment files for ${subtitleTitle}`,
+                            `Removed ${tsFiles.length - 1} .ts segment files and 1 .m3u8 for ${subtitleTitle}`,
                           );
                         } catch (error) {
                           console.warn(
@@ -236,6 +237,9 @@ export class HlsService {
     const fileNameWithExt = basename(inputFilePath);
     const fileOutputDir = join(outputDir, fileName);
 
+    const transcodeStartsOn = Date.now();
+    console.log(`Start Transcoding for : ${fileNameWithExt}...`);
+
     if (!existsSync(fileOutputDir))
       mkdirSync(fileOutputDir, { recursive: true });
 
@@ -249,27 +253,24 @@ export class HlsService {
 
     if (targetResolutions.length === 0) {
       return console.warn(
-        `${fileNameWithExt}'s resolution is lower than the defined resolutions. Skipping transcoding.`,
+        `${fileNameWithExt}'s resolution is lower than the 360p. Skipping transcoding...`,
       );
     }
 
-    const duration = await this.getDuration(inputFilePath);
-    const thumbnail = await this.getThumbnail(inputFilePath, duration);
     const subtitles = await this.getSubtitles(inputFilePath, fileOutputDir);
 
     const variantPlaylists = [];
 
-    const transcodeStartsOn = Date.now();
     await Promise.all(
       targetResolutions.map(async ({ width, height, label }) => {
         const outputFileName = `${label}.m3u8`;
-        const segmentFileName = `${label}_%03d.ts`;
+        const segmentFileName = `${label}_%d.ts`;
 
         const outputFilePath = join(fileOutputDir, outputFileName);
         const outputSegmentPath = join(fileOutputDir, segmentFileName);
 
         console.log(
-          `Starting HLS conversion for : ${fileNameWithExt}, with format: ${label}.`,
+          `Starting HLS conversion for : ${fileNameWithExt}, with format: ${label}...`,
         );
 
         await new Promise<void>((resolve, reject) => {
@@ -305,7 +306,7 @@ export class HlsService {
             .output(outputFilePath)
             .on('end', () => {
               console.log(
-                `Completed HLS conversion for : ${fileNameWithExt}, with format: ${label}.`,
+                `Completed HLS conversion for : ${fileNameWithExt}, with format: ${label}...`,
               );
               resolve();
             })
@@ -324,30 +325,33 @@ export class HlsService {
 
     await this.createMasterPlaylist(fileOutputDir, variantPlaylists, subtitles);
 
+    const duration = await this.getDuration(inputFilePath);
+    const thumbnail = await this.getThumbnail(inputFilePath, duration);
+
     const transcodeEndOn = Date.now();
     console.log(
       `Master Playlist created for ${fileNameWithExt} in ${((transcodeEndOn - transcodeStartsOn) / 60000).toFixed(2)}Minutes.`,
     );
 
-    console.log('Deleting Input File...');
-    // unlinkSync(inputFilePath);
+    console.log(`Deleting Input File ${fileNameWithExt}...`);
+    unlink(inputFilePath);
 
     console.log(`Uploading ${fileNameWithExt} transcoded media to supabase...`);
 
-    // this.episodeProducerService.sendThumbnailUploadsMessage(
-    //   seriesId,
-    //   seasonId,
-    //   episodeId,
-    //   thumbnail as Express.Multer.File,
-    // );
-    // this.episodeProducerService.sendTranscodedMediaUploadsMessage(
-    //   fileOutputDir,
-    //   fileNameWithExt,
-    //   seriesId,
-    //   seasonId,
-    //   episodeId,
-    //   duration,
-    // );
+    this.episodeProducerService.sendThumbnailUploadsMessage(
+      seriesId,
+      seasonId,
+      episodeId,
+      thumbnail as Express.Multer.File,
+    );
+    this.episodeProducerService.sendTranscodedMediaUploadsMessage(
+      fileOutputDir,
+      fileNameWithExt,
+      seriesId,
+      seasonId,
+      episodeId,
+      duration,
+    );
   }
 
   private async createMasterPlaylist(
@@ -356,7 +360,26 @@ export class HlsService {
     subtitles: { fileName: string; title: string; language: string }[],
   ) {
     const masterPlaylistPath = join(outputDir, 'master.m3u8');
-    const masterPlaylistContent = ['#EXTM3U', '\n'];
+    const masterPlaylistContent = [
+      '#EXTM3U',
+      '#EXT-X-INDEPENDENT-SEGMENTS',
+      '\n',
+    ];
+
+    subtitles.sort((a, b) => {
+      const aIsEnglish =
+        a.title.toLowerCase().includes('en') ||
+        a.language.toLowerCase().includes('en')
+          ? -1
+          : 0;
+      const bIsEnglish =
+        b.title.toLowerCase().includes('en') ||
+        b.language.toLowerCase().includes('en')
+          ? -1
+          : 0;
+
+      return aIsEnglish - bIsEnglish;
+    });
 
     // Add VTT subtitle files
     subtitles.forEach((subtitle, index) => {
