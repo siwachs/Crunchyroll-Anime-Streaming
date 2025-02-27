@@ -2,7 +2,7 @@ export type EpisodeCardMini = {
   id: string;
   episode: string;
   thumbnail: string;
-  duration: string | number;
+  duration: number;
   title: string;
   metaTags: string[];
   season?: number;
@@ -12,7 +12,7 @@ export type Episode = {
   episode: string;
   title: string;
   thumbnail: string;
-  duration: string | number;
+  duration: number;
   metaTags: string[];
   releaseDate: string;
   likes: number;

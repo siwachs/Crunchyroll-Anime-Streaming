@@ -31,7 +31,9 @@ export default async function Watch({ params }: Readonly<PageProps>) {
   return (
     <>
       <main>
-        <VideoPlayer media={episode.media} />
+        <VideoPlayer
+          media={"http://localhost:8000/transcodes/video/master.m3u8"}
+        />
 
         <div className="content-wrapper">
           <div className="content-wrapper-body 2sm:pt-8 grid grid-cols-[minmax(min-content,54.375rem)_auto] justify-center pt-6">

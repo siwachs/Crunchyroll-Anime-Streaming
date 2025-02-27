@@ -113,8 +113,6 @@ function getReadableDate(dateString: string | Date) {
 }
 
 function timeToFormattedTime(seconds: number): string {
-  if (!seconds || seconds < 0) return "00:00";
-
   const days = Math.floor(seconds / 86400);
   const hours = Math.floor((seconds % 86400) / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -131,6 +129,24 @@ function timeToFormattedTime(seconds: number): string {
   return formattedTime;
 }
 
+function secondsToFormattedSeconds(seconds: number): string {
+  if (seconds < 60) return `${seconds}s`;
+
+  const days = Math.floor(seconds / 86400);
+  seconds %= 86400;
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  const minutes = Math.floor(seconds / 60);
+
+  let result = "";
+
+  if (days) result += `${days}d`;
+  if (hours) result += `${hours}h`;
+  if (minutes) result += `${minutes}m`;
+
+  return result;
+}
+
 export {
   triggerCallbackOnClickOrOnKeydown,
   getAttribute,
@@ -142,4 +158,5 @@ export {
   getLocaleDate,
   getReadableDate,
   timeToFormattedTime,
+  secondsToFormattedSeconds,
 };

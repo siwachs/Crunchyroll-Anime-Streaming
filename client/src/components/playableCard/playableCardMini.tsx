@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { cleanString, getTitleWithSeasonAndEpisodeNumber } from "@/lib/utils";
+import {
+  cleanString,
+  getTitleWithSeasonAndEpisodeNumber,
+  secondsToFormattedSeconds,
+} from "@/lib/utils";
 
 import { EpisodeCardMini } from "@/app/(main)/watch/[id]/[title]/page.types";
 
@@ -18,6 +22,8 @@ const PlayableCardMini: React.FC<{ episode: EpisodeCardMini }> = ({
     episode.episode,
     episode.title,
   );
+
+  const formattedDuration = secondsToFormattedSeconds(episode.duration);
 
   return (
     <div className="playable-card-mini app-transition-colors relative flex">
@@ -44,7 +50,7 @@ const PlayableCardMini: React.FC<{ episode: EpisodeCardMini }> = ({
           />
         </figure>
 
-        <div className="playable-card-duration">{episode.duration}</div>
+        <div className="playable-card-duration">{formattedDuration}</div>
       </Link>
 
       <div className="relative flex flex-1 items-center">

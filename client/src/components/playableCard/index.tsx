@@ -5,6 +5,7 @@ import {
   cleanString,
   getTitleWithSeasonAndEpisodeNumber,
   getLocaleDate,
+  secondsToFormattedSeconds,
 } from "@/lib/utils";
 
 import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown";
@@ -42,6 +43,8 @@ const PlayableCardHoverInfo: React.FC<{
     "",
   );
 
+  const formattedDuration = secondsToFormattedSeconds(episode.duration);
+
   return (
     <div className="playable-card-hover-info app-transition-opacity absolute inset-0 z-1 opacity-0">
       <div className="playable-card-hover-preview relative flex size-full bg-[var(--app-overlay-secondary)]">
@@ -63,7 +66,7 @@ const PlayableCardHoverInfo: React.FC<{
             />
           </figure>
 
-          <div className="playable-card-duration">{episode.duration}</div>
+          <div className="playable-card-duration">{formattedDuration}</div>
         </div>
 
         <div className="flex flex-1 flex-col pt-3 pb-[0.7625rem] pl-3 sm:p-0">
@@ -128,6 +131,8 @@ const PlayableCard: React.FC<{
     episode.title,
   );
 
+  const formattedDuration = secondsToFormattedSeconds(episode.duration);
+
   return (
     <div className="playable-card app-transition-colors relative flex sm:block">
       <Link
@@ -146,7 +151,7 @@ const PlayableCard: React.FC<{
           />
         </figure>
 
-        <div className="playable-card-duration">{episode.duration}</div>
+        <div className="playable-card-duration">{formattedDuration}</div>
       </Link>
 
       <PlayableCardHoverInfo

@@ -14,7 +14,7 @@ export type Episode = {
   episode: string;
   title: string;
   thumbnail: string;
-  duration: string | number;
+  duration: number;
   metaTags: string[];
   releaseDate: string;
   description: string;
