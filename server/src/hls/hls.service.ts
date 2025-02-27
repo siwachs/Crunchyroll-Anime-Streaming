@@ -151,7 +151,7 @@ export class HlsService {
                   `sub_${subtitleFileName}.m3u8`,
                 );
 
-                console.log(`Getting Subtitle ${subtitleLang}`);
+                console.log(`Getting Subtitle ${subtitleTitle}`);
                 return new Promise<void>(
                   (transcodeResolve, transcodeReject) => {
                     ffmpeg(inputFilePath)
@@ -180,7 +180,7 @@ export class HlsService {
                           language: subtitleLang,
                         });
 
-                        console.log(`Subtitle ${subtitleLang} is processed.`);
+                        console.log(`Subtitle ${subtitleTitle} is processed.`);
 
                         try {
                           const files = await readdir(fileOutputDir);
@@ -213,8 +213,6 @@ export class HlsService {
                 );
               }),
             );
-
-            break;
           }
 
           const gettingSubttileEndOn = Date.now();
@@ -258,7 +256,6 @@ export class HlsService {
     const duration = await this.getDuration(inputFilePath);
     const thumbnail = await this.getThumbnail(inputFilePath, duration);
     const subtitles = await this.getSubtitles(inputFilePath, fileOutputDir);
-    return console.log(subtitles);
 
     const variantPlaylists = [];
 
@@ -356,7 +353,7 @@ export class HlsService {
   private async createMasterPlaylist(
     outputDir: string,
     variants: { label: string; fileName: string }[],
-    subtitles: { fileName: string; language: string }[],
+    subtitles: { fileName: string; title: string; language: string }[],
   ) {
     const masterPlaylistPath = join(outputDir, 'master.m3u8');
     const masterPlaylistContent = ['#EXTM3U', '\n'];
@@ -365,7 +362,7 @@ export class HlsService {
     subtitles.forEach((subtitle, index) => {
       const defaultAttr = index === 0 ? ',DEFAULT=YES' : '';
       masterPlaylistContent.push(
-        `#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",NAME="${subtitle.language}",LANGUAGE="${subtitle.language}",AUTOSELECT=YES${defaultAttr},FORCED=NO,URI="${subtitle.fileName}"`,
+        `#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",NAME="${subtitle.title}",LANGUAGE="${subtitle.language}",AUTOSELECT=YES${defaultAttr},FORCED=NO,URI="${subtitle.fileName}"`,
       );
     });
 
