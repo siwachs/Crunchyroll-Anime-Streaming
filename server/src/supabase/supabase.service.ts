@@ -48,7 +48,7 @@ export class SupabaseService implements OnModuleInit {
 
         if (attempts >= retries) {
           console.error('Max retries reached. Upload failed.');
-          throw error;
+          console.error(error.message);
         }
       }
     }

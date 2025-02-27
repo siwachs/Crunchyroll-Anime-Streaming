@@ -1,4 +1,5 @@
 import { existsSync, mkdirSync, writeFileSync, unlinkSync } from 'fs';
+import { readdir, unlink } from 'fs/promises';
 import { basename, extname, join } from 'path';
 import { PassThrough } from 'stream';
 import { Injectable } from '@nestjs/common';
@@ -19,24 +20,24 @@ export class HlsService {
       label: '360p',
       videoBitrate: '800k',
     },
-    {
-      width: 854,
-      height: 480,
-      label: '480p',
-      videoBitrate: '1400k',
-    },
-    {
-      width: 1280,
-      height: 720,
-      label: '720p',
-      videoBitrate: '2800k',
-    },
-    {
-      width: 1920,
-      height: 1080,
-      label: '1080p',
-      videoBitrate: '5000k',
-    },
+    // {
+    //   width: 854,
+    //   height: 480,
+    //   label: '480p',
+    //   videoBitrate: '1400k',
+    // },
+    // {
+    //   width: 1280,
+    //   height: 720,
+    //   label: '720p',
+    //   videoBitrate: '2800k',
+    // },
+    // {
+    //   width: 1920,
+    //   height: 1080,
+    //   label: '1080p',
+    //   videoBitrate: '5000k',
+    // },
   ];
 
   constructor(
@@ -107,9 +108,9 @@ export class HlsService {
   }
 
   private async getSubtitles(inputFilePath: string, fileOutputDir: string) {
-    return new Promise<{ fileName: string; language: string }[]>(
+    return new Promise<{ fileName: string; title: string; language: string }[]>(
       (resolve, reject) => {
-        ffmpeg.ffprobe(inputFilePath, (err: Error, metadata) => {
+        ffmpeg.ffprobe(inputFilePath, async (err: Error, metadata) => {
           if (err) return reject(err);
 
           const subtitleStreams = metadata.streams.filter(
@@ -117,45 +118,110 @@ export class HlsService {
           );
           if (subtitleStreams.length === 0) return resolve([]);
 
-          const subtitleFiles: { fileName: string; language: string }[] = [];
+          const gettingSubttileStartOn = Date.now();
+          const subtitleFiles: {
+            fileName: string;
+            title: string;
+            language: string;
+          }[] = [];
+          const batchSize = 3;
 
-          let extractionPromises = subtitleStreams.map((stream, index) => {
-            const subtitleIndex = stream.index;
-            const subtitleLang = stream.tags?.language || `Track ${index + 1}`;
-            const subtitleM3U8 = `sub_${subtitleLang}.m3u8`;
-            const subtitleFilePath = join(fileOutputDir, subtitleM3U8);
-            const segmentFilePattern = `sub_${subtitleLang}_%03d.vtt`;
+          for (let i = 0; i < subtitleStreams.length; i += batchSize) {
+            const batch = subtitleStreams.slice(i, i + batchSize);
 
-            return new Promise<void>((subResolve, subReject) => {
-              ffmpeg(inputFilePath)
-                .outputOptions([
-                  `-map 0:${subtitleIndex}`,
-                  '-c:s webvtt',
-                  '-f segment',
-                  '-segment_time 10',
-                  '-segment_list',
-                  subtitleFilePath,
-                  '-segment_list_type m3u8',
-                ])
-                .output(join(fileOutputDir, segmentFilePattern))
-                .on('end', () => {
-                  subtitleFiles.push({
-                    fileName: subtitleM3U8,
-                    language: subtitleLang,
-                  });
-                  console.log(
-                    `Extracted segmented subtitle: ${subtitleM3U8} (${subtitleLang})`,
-                  );
-                  subResolve();
-                })
-                .on('error', (err: Error) => subReject(err))
-                .run();
-            });
-          });
+            await Promise.all(
+              batch.map((stream, index) => {
+                const subtitleIndex = stream.index;
 
-          Promise.all(extractionPromises)
-            .then(() => resolve(subtitleFiles))
-            .catch(reject);
+                const subtitleTitle =
+                  stream.tags?.title ||
+                  stream.tags?.language ||
+                  `Track_${index + 1}`;
+                const subtitleLang = stream.tags?.language || subtitleTitle;
+                const subtitleFileName = subtitleTitle
+                  .toLowerCase()
+                  .replaceAll(' ', '_');
+
+                const outputSegmentPath = join(
+                  fileOutputDir,
+                  `sub_${subtitleFileName}_%03d.ts`,
+                );
+                const outputPlaylistPath = join(
+                  fileOutputDir,
+                  `sub_${subtitleFileName}.m3u8`,
+                );
+
+                console.log(`Getting Subtitle ${subtitleLang}`);
+                return new Promise<void>(
+                  (transcodeResolve, transcodeReject) => {
+                    ffmpeg(inputFilePath)
+                      .outputOptions([
+                        `-map 0:v:0`, // Select video stream
+                        `-map 0:${subtitleIndex}`, // Select subtitle track
+                        '-c:v libx264',
+                        '-preset ultrafast', // Fastest preset
+                        '-s 176x144', // Lowest resolution
+                        '-b:v 50k', // Minimal bitrate
+                        '-r 10', // Reduce frame rate (faster processing)
+                        '-g 10', // Reduce GOP size (faster encoding)
+                        '-an', // No audio
+                        '-c:s webvtt',
+                        '-hls_time 10',
+                        '-hls_playlist_type vod',
+                        '-hls_segment_filename',
+                        outputSegmentPath,
+                        '-force_key_frames expr:gte(t,n_forced*10)',
+                      ])
+                      .output(outputPlaylistPath)
+                      .on('end', async () => {
+                        subtitleFiles.push({
+                          fileName: `sub_${subtitleFileName}.m3u8`,
+                          title: subtitleTitle,
+                          language: subtitleLang,
+                        });
+
+                        console.log(`Subtitle ${subtitleLang} is processed.`);
+
+                        try {
+                          const files = await readdir(fileOutputDir);
+                          const tsFiles = files.filter(
+                            (file) =>
+                              file.startsWith(`sub_${subtitleFileName}_`) &&
+                              file.endsWith('.ts'),
+                          );
+
+                          await Promise.all(
+                            tsFiles.map((file) =>
+                              unlink(join(fileOutputDir, file)),
+                            ),
+                          );
+                          console.log(
+                            `Removed ${tsFiles.length} .ts segment files for ${subtitleTitle}`,
+                          );
+                        } catch (error) {
+                          console.warn(
+                            `Failed to delete .ts segments for ${subtitleTitle}:`,
+                            error.message,
+                          );
+                        }
+
+                        transcodeResolve();
+                      })
+                      .on('error', (err: Error) => transcodeReject(err))
+                      .run();
+                  },
+                );
+              }),
+            );
+
+            break;
+          }
+
+          const gettingSubttileEndOn = Date.now();
+          console.log(
+            `Subtitle processing completed in ${((gettingSubttileEndOn - gettingSubttileStartOn) / 60000).toFixed(2)} minutes.`,
+          );
+          resolve(subtitleFiles);
         });
       },
     );
@@ -192,6 +258,7 @@ export class HlsService {
     const duration = await this.getDuration(inputFilePath);
     const thumbnail = await this.getThumbnail(inputFilePath, duration);
     const subtitles = await this.getSubtitles(inputFilePath, fileOutputDir);
+    return console.log(subtitles);
 
     const variantPlaylists = [];
 
@@ -234,6 +301,7 @@ export class HlsService {
               '10',
               '-hls_playlist_type',
               'vod',
+              `-force_key_frames expr:gte(t,n_forced*10)`,
               '-hls_segment_filename',
               outputSegmentPath,
             ])
@@ -265,24 +333,24 @@ export class HlsService {
     );
 
     console.log('Deleting Input File...');
-    unlinkSync(inputFilePath);
+    // unlinkSync(inputFilePath);
 
     console.log(`Uploading ${fileNameWithExt} transcoded media to supabase...`);
 
-    this.episodeProducerService.sendThumbnailUploadsMessage(
-      seriesId,
-      seasonId,
-      episodeId,
-      thumbnail as Express.Multer.File,
-    );
-    this.episodeProducerService.sendTranscodedMediaUploadsMessage(
-      fileOutputDir,
-      fileNameWithExt,
-      seriesId,
-      seasonId,
-      episodeId,
-      duration,
-    );
+    // this.episodeProducerService.sendThumbnailUploadsMessage(
+    //   seriesId,
+    //   seasonId,
+    //   episodeId,
+    //   thumbnail as Express.Multer.File,
+    // );
+    // this.episodeProducerService.sendTranscodedMediaUploadsMessage(
+    //   fileOutputDir,
+    //   fileNameWithExt,
+    //   seriesId,
+    //   seasonId,
+    //   episodeId,
+    //   duration,
+    // );
   }
 
   private async createMasterPlaylist(
@@ -297,7 +365,7 @@ export class HlsService {
     subtitles.forEach((subtitle, index) => {
       const defaultAttr = index === 0 ? ',DEFAULT=YES' : '';
       masterPlaylistContent.push(
-        `#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",NAME="${subtitle.language.toUpperCase()}",LANGUAGE="${subtitle.language}",AUTOSELECT=YES${defaultAttr},FORCED=NO,URI="${subtitle.fileName}"`,
+        `#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",NAME="${subtitle.language}",LANGUAGE="${subtitle.language}",AUTOSELECT=YES${defaultAttr},FORCED=NO,URI="${subtitle.fileName}"`,
       );
     });
 
