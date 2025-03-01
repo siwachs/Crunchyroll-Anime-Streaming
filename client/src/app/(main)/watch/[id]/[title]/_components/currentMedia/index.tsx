@@ -68,7 +68,7 @@ const CurrentMedia: React.FC<{
               mode="compact"
               averageRating={averageRating}
               totalRating={totalRating}
-              className="mb-1 self-center"
+              className="mb-1 sm:self-center"
             />
           </div>
 

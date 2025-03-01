@@ -14,31 +14,56 @@ import {
   Expand,
   Contract,
 } from "@/assets/imageDataURLs";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import "./index.css";
 
-const VideoPlayer = ({ media }: { media: string }) => {
+const VideoPlayer = ({
+  media,
+  duration,
+}: {
+  media: string;
+  duration: number;
+}) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const hlsRef = useRef<HLS | null>(null);
 
+  const [autoPlay, setAutoPlay] = useState(false);
   const [isMediaPlaying, setIsMediaPlaying] = useState(false);
   const [isMediaMute, setIsMediaMute] = useState(false);
-  const [isMediaSettingsOpen, setIsMediaSettingsOpen] = useState(false);
+  const [isMediaSettingsOpen, setIsMediaSettingsOpen] = useState(true);
   const [isMediaFullscreen, setIsMediaFullscreen] = useState(false);
 
-  const [totalDuration, setTotalDuration] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
 
   const [seekProgressPercentage, setSeekProgressPercentage] = useState(0);
+
+  const [audioTracks, setAudioTracks] = useState<
+    { id: number; name: string }[]
+  >([]);
+  const [selectedAudioTrack, setSelectedAudioTrack] = useState<number>(0);
+
+  const [subtitles, setSubtitles] = useState<{ id: number; name: string }[]>(
+    [],
+  );
+  const [selectedSubtitleTrack, setSelectedSubtitleTrack] =
+    useState<number>(-1);
+
+  const [qualityLevels, setQualityLevels] = useState<
+    { id: number; height: number }[]
+  >([]);
+  const [selectedQuality, setSelectedQuality] = useState<string | number>(
+    "Auto",
+  );
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    let hls: HLS | null = null;
     let animationFrameId: number;
 
     async function tryAutoPlay() {
-      if (!video) return;
+      if (!video || !autoPlay) return;
 
       try {
         await video.play();
@@ -60,31 +85,60 @@ const VideoPlayer = ({ media }: { media: string }) => {
       animationFrameId = requestAnimationFrame(updateElapsedTime);
     }
 
-    function setVideoDuration() {
-      if (!video) return;
-      setTotalDuration(video.duration);
-    }
-
     if (HLS.isSupported()) {
-      hls = new HLS();
+      const hls = new HLS();
+      hlsRef.current = hls;
+
       hls.loadSource(media);
       hls.attachMedia(video);
 
-      hls.on(HLS.Events.MANIFEST_PARSED, tryAutoPlay);
-      hls.on(HLS.Events.LEVEL_LOADED, setVideoDuration);
+      hls.on(HLS.Events.MANIFEST_PARSED, () => {
+        setAudioTracks(
+          hls.audioTracks.map((track, index) => ({
+            id: index,
+            name: track.name,
+          })),
+        );
+
+        if (hls.audioTracks.length > 0) {
+        }
+
+        setQualityLevels(
+          hls.levels.map((level, index) => ({
+            id: index,
+            height: level.height,
+          })),
+        );
+
+        setSubtitles(
+          hls.subtitleTracks.map((track, index) => ({
+            id: index,
+            name: track.name,
+          })),
+        );
+
+        tryAutoPlay();
+      });
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = media;
 
       video.addEventListener("loadedmetadata", () => {
         tryAutoPlay();
-        setVideoDuration();
       });
     }
 
     animationFrameId = requestAnimationFrame(updateElapsedTime);
 
     return () => {
-      if (hls) hls.destroy();
+      try {
+        if (hlsRef.current) {
+          hlsRef.current.destroy();
+          hlsRef.current = null;
+        }
+      } catch (error) {
+        console.error("Error while destroying HLS instance:", error);
+      }
+
       if (video) {
         video.removeEventListener("loadedmetadata", tryAutoPlay);
       }
@@ -93,7 +147,11 @@ const VideoPlayer = ({ media }: { media: string }) => {
     };
   }, [media]);
 
-  function toogleIsMediaPlaying() {
+  function toggleAutoPlay() {
+    setAutoPlay((prev) => !prev);
+  }
+
+  function toggleIsMediaPlaying() {
     if (!videoRef.current) return;
 
     if (isMediaPlaying) {
@@ -129,7 +187,7 @@ const VideoPlayer = ({ media }: { media: string }) => {
     video.currentTime = newTime;
   }
 
-  function toogleAudio() {
+  function toggleAudio() {
     const video = videoRef.current;
     if (!video) return;
 
@@ -138,7 +196,7 @@ const VideoPlayer = ({ media }: { media: string }) => {
     setIsMediaMute(isMuted);
   }
 
-  function toogleMediaFullscreen() {
+  function toggleIsMediaFullscreen() {
     const video = videoRef.current;
     if (!video) return;
 
@@ -151,12 +209,12 @@ const VideoPlayer = ({ media }: { media: string }) => {
     }
   }
 
-  function toogleMediaSettingsOpen() {
+  function toggleMediaSettingsOpen() {
     setIsMediaSettingsOpen((prev) => !prev);
   }
 
   const formattedElapsedTime = timeToFormattedTime(elapsedTime);
-  const formattedTotalDuration = timeToFormattedTime(totalDuration);
+  const formattedTotalDuration = timeToFormattedTime(duration);
 
   return (
     <div className="video-player relative grid w-full">
@@ -171,7 +229,7 @@ const VideoPlayer = ({ media }: { media: string }) => {
         <div className="controls absolute inset-0">
           <div className="relative size-full">
             <div className="absolute top-0 right-0 left-0 flex h-10 justify-between px-1.5">
-              <button onClick={toogleAudio} className="player-action-button">
+              <button onClick={toggleAudio} className="player-action-button">
                 {isMediaMute ? (
                   <Image
                     src={SpeakerWaveMute}
@@ -185,10 +243,10 @@ const VideoPlayer = ({ media }: { media: string }) => {
               </button>
 
               <div className="flex">
-                <div className="relative">
+                <div>
                   <button
                     className={`player-action-button ${isMediaSettingsOpen ? "bg-black" : ""}`}
-                    onClick={toogleMediaSettingsOpen}
+                    onClick={toggleMediaSettingsOpen}
                   >
                     <Image
                       src={SettingsGear}
@@ -197,10 +255,101 @@ const VideoPlayer = ({ media }: { media: string }) => {
                       width={24}
                     />
                   </button>
+
+                  {isMediaSettingsOpen && (
+                    <div className="absolute inset-0 z-98">
+                      <div className="scrollbar-thin h-52.75 w-93.75 overflow-x-hidden overflow-y-auto bg-black py-2.5">
+                        <div className="settings-setting-container">
+                          <button
+                            onClick={toggleMediaSettingsOpen}
+                            className="cursor-pointer"
+                          >
+                            <FaChevronLeft className="size-4" />
+                          </button>
+
+                          <span className="ml-8 text-xl font-semibold">
+                            Settings
+                          </span>
+                        </div>
+
+                        <button
+                          onClick={toggleAutoPlay}
+                          className="settings-setting-container cursor-pointer justify-between"
+                        >
+                          <span className="text-base font-semibold">
+                            Autoplay
+                          </span>
+
+                          <div
+                            style={{
+                              borderColor: `${autoPlay ? "rgb(40,189,187)" : "rgb(160, 160, 160)"}`,
+                            }}
+                            className="flex min-h-5 min-w-10 items-center rounded-[10px] border-2 bg-[rgb(25,46,56)]"
+                          >
+                            <div
+                              style={{
+                                backgroundColor: `${autoPlay ? "rgb(40,189,187)" : "rgb(160, 160, 160)"}`,
+                                transform: `translateX(${autoPlay ? "24px" : "4px"})`,
+                              }}
+                              className="size-2 rounded-lg transition-transform"
+                            />
+                          </div>
+                        </button>
+
+                        {audioTracks.length > 0 && (
+                          <button className="settings-setting-container cursor-pointer justify-between">
+                            <span className="text-base font-semibold">
+                              Audio
+                            </span>
+
+                            <div className="flex items-center">
+                              <span className="selected-setting-title">
+                                English
+                              </span>
+                              <FaChevronRight className="ml-2 size-3.5" />
+                            </div>
+                          </button>
+                        )}
+
+                        {subtitles.length > 0 && (
+                          <button className="settings-setting-container cursor-pointer justify-between">
+                            <span className="text-base font-semibold">
+                              Subtitles/CC
+                            </span>
+
+                            <div className="flex items-center">
+                              <span className="selected-setting-title">
+                                English
+                              </span>
+                              <FaChevronRight className="ml-2 size-3.5" />
+                            </div>
+                          </button>
+                        )}
+
+                        {qualityLevels.length > 0 && (
+                          <button className="settings-setting-container cursor-pointer justify-between">
+                            <span className="text-base font-semibold">
+                              Quality
+                            </span>
+
+                            <div className="flex items-center">
+                              <span className="selected-setting-title">
+                                Auto
+                              </span>
+                              <span className="ml-1 text-xs text-[rgb(160,160,160)]">
+                                1080p
+                              </span>
+                              <FaChevronRight className="ml-2 size-3.5" />
+                            </div>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <button
-                  onClick={toogleMediaFullscreen}
+                  onClick={toggleIsMediaFullscreen}
                   className="player-action-button"
                 >
                   {isMediaFullscreen ? (
@@ -223,7 +372,7 @@ const VideoPlayer = ({ media }: { media: string }) => {
             </div>
 
             <button
-              onClick={toogleIsMediaPlaying}
+              onClick={toggleIsMediaPlaying}
               className="absolute top-1/2 left-1/2 size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
             >
               {isMediaPlaying ? (

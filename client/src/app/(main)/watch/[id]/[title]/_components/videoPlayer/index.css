@@ -17,22 +17,29 @@
 }
 
 .seek {
-  @apply relative h-[2.5px] w-full appearance-none bg-[var(--meta-color)] outline-none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  @apply w-full cursor-pointer bg-transparent focus:outline-none active:outline-none;
 }
 
-.seek::-webkit-slider-runnable-track,
-.seek::-moz-range-track {
+.seek::-webkit-slider-runnable-track {
   @apply h-[2.5px] bg-[var(--meta-color)];
 }
 
-.seek::-webkit-slider-thumb,
-.seek::-moz-range-thumb {
-  @apply size-3 rounded-full border-none bg-[var(--app-background-crunchyroll-orange)] shadow-none;
+.seek::-moz-range-track {
+  @apply h-[2.5px] bg-[var(--meta-color)];
 }
 
 .seek::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
+
+  @apply -mt-[4.75px] size-3 rounded-full bg-[var(--app-background-crunchyroll-orange)];
+}
+
+.seek::-moz-range-thumb {
+  @apply size-3 border-0 border-none bg-[var(--app-background-crunchyroll-orange)];
 }
 
 .seek::-moz-range-progress {
@@ -46,4 +53,12 @@
 .player-action-button:hover,
 .player-action-button:focus-visible {
   @apply bg-black/60;
+}
+
+.settings-setting-container {
+  @apply flex h-12 w-full items-center px-5;
+}
+
+.selected-setting-title {
+  @apply block max-w-38.5 truncate text-xs text-[rgb(128,128,128)];
 }

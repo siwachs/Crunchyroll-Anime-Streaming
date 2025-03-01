@@ -33,6 +33,7 @@ export default async function Watch({ params }: Readonly<PageProps>) {
       <main>
         <VideoPlayer
           media={"http://localhost:8000/transcodes/video/master.m3u8"}
+          duration={episode.duration}
         />
 
         <div className="content-wrapper">
