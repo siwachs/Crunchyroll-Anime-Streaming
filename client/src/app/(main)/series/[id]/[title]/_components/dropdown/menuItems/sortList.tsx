@@ -1,6 +1,6 @@
-import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
+import { useSeasonEpisodes } from "@/providers/seaonEpisodes";
 
-import { SortOrder } from "@/providers/seasonEpisodesProvider.types";
+import { SortOrder } from "@/providers/seaonEpisodes/index.types";
 
 const SortList: React.FC<{
   toogleDropdown?: () => void;

@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 
-import { SeasonEpisodesProvider } from "@/providers/seasonEpisodesProvider";
+import { SeasonEpisodesProvider } from "@/providers/seaonEpisodes";
 
 import Banner from "./_components/banner";
 import Details from "./_components/details";

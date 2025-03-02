@@ -1,4 +1,4 @@
-import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
+import { useSeasonEpisodes } from "@/providers/seaonEpisodes";
 
 import PlayableCard, { PlayableCardSkeleton } from "@/components/playableCard";
 import ActionButton from "@/components/contentActionButtons/actionButton";

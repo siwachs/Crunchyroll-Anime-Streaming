@@ -1,4 +1,4 @@
-import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
+import { useSeasonEpisodes } from "@/providers/seaonEpisodes";
 
 import { getTitleWithSeasonNumber } from "@/lib/utils";
 

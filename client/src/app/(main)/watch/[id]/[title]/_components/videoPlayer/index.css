@@ -54,11 +54,3 @@
 .player-action-button:focus-visible {
   @apply bg-black/60;
 }
-
-.settings-setting-container {
-  @apply flex h-12 w-full items-center px-5;
-}
-
-.selected-setting-title {
-  @apply block max-w-38.5 truncate text-xs text-[rgb(128,128,128)];
-}

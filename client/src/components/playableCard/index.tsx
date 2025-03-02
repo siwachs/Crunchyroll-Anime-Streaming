@@ -11,7 +11,7 @@ import {
 import Dropdown from "@/app/(main)/series/[id]/[title]/_components/dropdown";
 import MarkEpisodeAsWatched from "@/app/(main)/series/[id]/[title]/_components/dropdown/menuItems/markEpisodeAsWatched";
 
-import { Season, Episode } from "@/providers/seasonEpisodesProvider.types";
+import { Season, Episode } from "@/providers/seaonEpisodes/index.types";
 
 import { HiOutlineCalendar } from "react-icons/hi";
 import { HiOutlinePlay } from "react-icons/hi2";

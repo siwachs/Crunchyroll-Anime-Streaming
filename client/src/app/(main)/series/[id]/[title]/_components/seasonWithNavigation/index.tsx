@@ -1,6 +1,6 @@
 "use client";
 
-import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
+import { useSeasonEpisodes } from "@/providers/seaonEpisodes";
 
 import TopControls from "./topControls";
 import SeasonEpisodes from "./seasonEpisodes";

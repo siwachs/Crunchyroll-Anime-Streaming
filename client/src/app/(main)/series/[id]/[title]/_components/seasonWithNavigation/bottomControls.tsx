@@ -1,4 +1,4 @@
-import { useSeasonEpisodes } from "@/providers/seasonEpisodesProvider";
+import { useSeasonEpisodes } from "@/providers/seaonEpisodes";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
