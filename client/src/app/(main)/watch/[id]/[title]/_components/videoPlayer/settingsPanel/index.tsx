@@ -1,34 +1,32 @@
-import { useState, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
+
+import { useVideoPlayer } from "@/providers/videoPlayer";
 
 import { SettingsGear } from "@/assets/imageDataURLs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import "./index.css";
 
-const SettingsPanel: React.FC<{
-  autoPlay: boolean;
-  setAutoPlay: Dispatch<SetStateAction<boolean>>;
-}> = ({ autoPlay, setAutoPlay }) => {
-  const [isMediaSettingsPanelOpen, setIsMediaSettingsPanelOpen] = useState<
-    "off" | "settings" | "audioTracks" | "subtitleTracks" | "qualityLevels"
-  >("settings");
-
-  function toggleMediaSettingsOpen() {
-    setIsMediaSettingsPanelOpen((prev) =>
-      prev === "settings" ? "off" : "settings",
-    );
-  }
-
-  function toggleAutoPlay() {
-    setAutoPlay((prev) => !prev);
-  }
+const SettingsPanel: React.FC = () => {
+  const {
+    isMediaSettingsPanelOpen,
+    toggleMediaSettingsPanelOpen,
+    autoPlay,
+    toggleAutoPlay,
+    audioTracks,
+    selectedAudioTrack,
+    subtitleTracks,
+    selectedSubtitleTrack,
+    qualityLevels,
+    selectedQuality,
+    currentLevel,
+  } = useVideoPlayer();
 
   return (
     <div className="relative">
       <button
         className={`player-action-button ${isMediaSettingsPanelOpen !== "off" ? "bg-black" : ""}`}
-        onClick={toggleMediaSettingsOpen}
+        onClick={toggleMediaSettingsPanelOpen}
       >
         <Image src={SettingsGear} alt="settings" height={24} width={24} />
       </button>
@@ -38,7 +36,7 @@ const SettingsPanel: React.FC<{
           <div className="scrollbar-thin h-27.75 w-80 overflow-x-hidden overflow-y-auto bg-black py-2.5">
             <div className="settings-setting-container">
               <button
-                onClick={toggleMediaSettingsOpen}
+                onClick={toggleMediaSettingsPanelOpen}
                 className="cursor-pointer"
               >
                 <FaChevronLeft className="size-4" />
@@ -69,20 +67,20 @@ const SettingsPanel: React.FC<{
               </div>
             </button>
 
-            {audioTracks.length > 0 && (
+            {audioTracks.length > 1 && (
               <button className="settings-setting-container cursor-pointer justify-between">
                 <span className="text-base font-semibold">Audio</span>
 
                 <div className="flex items-center">
                   <span className="selected-setting-title">
-                    {audioTracks[selectedAudioTracks].name}
+                    {audioTracks[selectedAudioTrack].name}
                   </span>
                   <FaChevronRight className="ml-2 size-3.5" />
                 </div>
               </button>
             )}
 
-            {subtitleTracks.length > 0 && (
+            {subtitleTracks.length > 1 && (
               <button className="settings-setting-container cursor-pointer justify-between">
                 <span className="text-base font-semibold">Subtitles/CC</span>
 
@@ -95,7 +93,7 @@ const SettingsPanel: React.FC<{
               </button>
             )}
 
-            {qualityLevels.length > 0 && (
+            {qualityLevels.length > 1 && (
               <button className="settings-setting-container cursor-pointer justify-between">
                 <span className="text-base font-semibold">Quality</span>
 

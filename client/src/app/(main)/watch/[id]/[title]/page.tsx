@@ -1,5 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 
+import { VideoPlayerProvider } from "@/providers/videoPlayer";
+
 import VideoPlayer from "./_components/videoPlayer";
 import MediaDetails from "./_components/currentMedia";
 import Videos from "./_components/videos";
@@ -31,7 +33,9 @@ export default async function Watch({ params }: Readonly<PageProps>) {
   return (
     <>
       <main>
-        <VideoPlayer media={episode.media} duration={episode.duration} />
+        <VideoPlayerProvider media={episode.media}>
+          <VideoPlayer duration={episode.duration} />
+        </VideoPlayerProvider>
 
         <div className="content-wrapper">
           <div className="content-wrapper-body 2sm:pt-8 grid grid-cols-[minmax(min-content,54.375rem)_auto] justify-center pt-6">
