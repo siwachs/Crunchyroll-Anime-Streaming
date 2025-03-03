@@ -34,10 +34,13 @@ export type Context = {
 
   qualityLevels: { id: number; height: number }[];
   selectedQuality: string | number;
-  setSelectedQuality: Dispatch<SetStateAction<string | number>>;
+  setSelectedQuality: Dispatch<SetStateAction<number>>;
   currentLevel: number;
 
   isMediaSettingsPanelOpen: MediaSettingsPanel;
   setIsMediaSettingsPanelOpen: Dispatch<SetStateAction<MediaSettingsPanel>>;
-  toggleMediaSettingsPanelOpen: () => void;
+
+  switchAudioTrack: (trackId: number) => void;
+  switchSubtitleTrack: (trackId: number) => void;
+  switchQualityLevel: (qualityLevelId: number) => void;
 };

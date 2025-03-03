@@ -49,14 +49,13 @@ export function VideoPlayerProvider({
   const [subtitleTracks, setSubtitleTracks] = useState<
     { id: number; name: string }[]
   >([]);
-  const [selectedSubtitleTrack, setSelectedSubtitleTrack] = useState<number>(0);
+  const [selectedSubtitleTrack, setSelectedSubtitleTrack] =
+    useState<number>(-1);
 
   const [qualityLevels, setQualityLevels] = useState<
     { id: number; height: number }[]
   >([]);
-  const [selectedQuality, setSelectedQuality] = useState<string | number>(
-    "Auto",
-  );
+  const [selectedQuality, setSelectedQuality] = useState<number>(-1);
   const [currentLevel, setCurrentLevel] = useState(360);
 
   const [isMediaSettingsPanelOpen, setIsMediaSettingsPanelOpen] =
@@ -101,10 +100,12 @@ export function VideoPlayerProvider({
 
       hls.on(HLS.Events.MANIFEST_PARSED, () => {
         setQualityLevels(
-          hls.levels.map((level, index) => ({
-            id: index,
-            height: level.height,
-          })),
+          hls.levels
+            .map((level, index) => ({
+              id: index,
+              height: level.height,
+            }))
+            .sort((a, b) => b.height - a.height),
         );
 
         tryAutoPlay();
@@ -229,10 +230,31 @@ export function VideoPlayerProvider({
     }
   }
 
-  function toggleMediaSettingsPanelOpen() {
-    setIsMediaSettingsPanelOpen((prev) =>
-      prev === "settings" ? "off" : "settings",
-    );
+  function switchAudioTrack(trackId: number) {
+    const hls = hlsRef.current;
+    if (!hls) return;
+
+    hls.audioTrack = trackId;
+    setSelectedAudioTrack(trackId);
+    setIsMediaSettingsPanelOpen("off");
+  }
+
+  function switchSubtitleTrack(trackId: number) {
+    const hls = hlsRef.current;
+    if (!hls) return;
+
+    hls.subtitleTrack = trackId;
+    setSelectedSubtitleTrack(trackId);
+    setIsMediaSettingsPanelOpen("off");
+  }
+
+  function switchQualityLevel(qualityLevelId: number) {
+    const hls = hlsRef.current;
+    if (!hls) return;
+
+    hls.currentLevel = qualityLevelId;
+    setSelectedQuality(qualityLevelId);
+    setIsMediaSettingsPanelOpen("off");
   }
 
   const value = useMemo(
@@ -260,7 +282,9 @@ export function VideoPlayerProvider({
       currentLevel,
       isMediaSettingsPanelOpen,
       setIsMediaSettingsPanelOpen,
-      toggleMediaSettingsPanelOpen,
+      switchAudioTrack,
+      switchSubtitleTrack,
+      switchQualityLevel,
     }),
     [
       autoPlay,

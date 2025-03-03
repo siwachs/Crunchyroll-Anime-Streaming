@@ -2,7 +2,10 @@
 @import "@styles/theme.css";
 @import "@styles/utilities.css";
 
-.settings-setting-container {
+.settings-setting-container,
+.subtitles-setting-container,
+.audio-setting-container,
+.quality-level-setting-container {
   @apply flex h-12 w-full items-center px-5;
 }
 
