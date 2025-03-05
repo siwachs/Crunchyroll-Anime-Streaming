@@ -5,8 +5,13 @@ import Image from "next/image";
 import { useVideoPlayer } from "@/providers/videoPlayer";
 import { timeToFormattedTime } from "@/lib/utils";
 
+import SettingsPanel from "./settingsPanel";
+
+import { Loader } from "@/assets/icons";
 import { FaPlay, FaPause } from "react-icons/fa";
 import {
+  FB10Secs,
+  FF10Secs,
   SpeakerWave,
   SpeakerWaveMute,
   Expand,
@@ -14,14 +19,16 @@ import {
 } from "@/assets/imageDataURLs";
 
 import "./index.css";
-import SettingsPanel from "./settingsPanel";
 
 const VideoPlayer: React.FC<{ duration: number }> = ({ duration }) => {
   const {
+    isLoading,
     elapsedTime,
     toggleAudio,
     isMediaMute,
+    fb10Secs,
     toggleIsMediaFullscreen,
+    ff10Secs,
     isMediaFullscreen,
     toggleIsMediaPlaying,
     isMediaPlaying,
@@ -33,7 +40,7 @@ const VideoPlayer: React.FC<{ duration: number }> = ({ duration }) => {
   const formattedTotalDuration = timeToFormattedTime(duration);
 
   return (
-    <div className="controls absolute inset-0">
+    <div className="controls absolute inset-0 bg-black/60">
       <div className="relative size-full">
         <div className="absolute top-0 right-0 left-0 flex h-10 justify-between px-1.5">
           <button onClick={toggleAudio} className="player-action-button">
@@ -70,16 +77,44 @@ const VideoPlayer: React.FC<{ duration: number }> = ({ duration }) => {
           </div>
         </div>
 
-        <button
-          onClick={toggleIsMediaPlaying}
-          className="absolute top-1/2 left-1/2 size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-        >
-          {isMediaPlaying ? (
-            <FaPause className="size-full" />
+        <div className="absolute top-1/2 left-1/2 flex w-[74.6667%] -translate-x-1/2 -translate-y-1/2 justify-evenly self-center">
+          {isLoading ? (
+            <Loader className="size-12" />
           ) : (
-            <FaPlay className="size-full" />
+            <>
+              <button onClick={fb10Secs} className="size-10 cursor-pointer">
+                <Image
+                  src={FB10Secs}
+                  alt="fb-10-secs"
+                  height={24}
+                  width={24}
+                  className="size-full"
+                />
+              </button>
+
+              <button
+                onClick={toggleIsMediaPlaying}
+                className="size-10 cursor-pointer"
+              >
+                {isMediaPlaying ? (
+                  <FaPause className="size-full" />
+                ) : (
+                  <FaPlay className="size-full" />
+                )}
+              </button>
+
+              <button onClick={ff10Secs} className="size-10 cursor-pointer">
+                <Image
+                  src={FF10Secs}
+                  alt="ff-10-secs"
+                  height={24}
+                  width={24}
+                  className="size-full"
+                />
+              </button>
+            </>
           )}
-        </button>
+        </div>
 
         <div className="duration-and-seek absolute right-0 bottom-0 left-0 px-4">
           <div className="duration flex justify-between text-xs font-semibold">

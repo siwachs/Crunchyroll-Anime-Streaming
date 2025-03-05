@@ -8,11 +8,17 @@ export type MediaSettingsPanel =
   | "qualityLevels";
 
 export type Context = {
+  isLoading: boolean;
+
   autoPlay: boolean;
   toggleAutoPlay: () => void;
 
+  fb10Secs: () => void;
+
   isMediaPlaying: boolean;
   toggleIsMediaPlaying: () => void;
+
+  ff10Secs: () => void;
 
   isMediaMute: boolean;
   toggleAudio: () => void;

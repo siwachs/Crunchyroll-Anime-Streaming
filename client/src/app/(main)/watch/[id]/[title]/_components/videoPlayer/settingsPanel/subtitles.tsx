@@ -29,7 +29,7 @@ const Subtitles: React.FC = () => {
         <button
           key={subtitleTrack.id}
           onClick={() => switchSubtitleTrack(subtitleTrack.id)}
-          className="subtitles-setting-container cursor-pointer"
+          className="subtitles-setting-container setting-button cursor-pointer"
         >
           {subtitleTrack.id === selectedSubtitleTrack ? (
             <RadioSelect className="mr-8 size-5" />
@@ -44,7 +44,7 @@ const Subtitles: React.FC = () => {
 
       <button
         onClick={() => switchSubtitleTrack(-1)}
-        className="subtitles-setting-container cursor-pointer"
+        className="subtitles-setting-container setting-button cursor-pointer"
       >
         {selectedSubtitleTrack === -1 ? (
           <RadioSelect className="mr-8 size-5" />

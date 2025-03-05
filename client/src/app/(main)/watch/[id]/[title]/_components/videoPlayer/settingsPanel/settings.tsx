@@ -44,7 +44,7 @@ const Settings: React.FC = () => {
 
       <button
         onClick={toggleAutoPlay}
-        className="settings-setting-container cursor-pointer justify-between"
+        className="settings-setting-container setting-button cursor-pointer justify-between"
       >
         <span className="text-base font-semibold">Autoplay</span>
 
@@ -67,7 +67,7 @@ const Settings: React.FC = () => {
       {audioTracks.length > 1 && (
         <button
           onClick={openAudio}
-          className="settings-setting-container cursor-pointer justify-between"
+          className="settings-setting-container setting-button cursor-pointer justify-between"
         >
           <span className="text-base font-semibold">Audio</span>
 
@@ -83,7 +83,7 @@ const Settings: React.FC = () => {
       {subtitleTracks.length > 1 && (
         <button
           onClick={openSubtitles}
-          className="settings-setting-container cursor-pointer justify-between"
+          className="settings-setting-container setting-button cursor-pointer justify-between"
         >
           <span className="text-base font-semibold">Subtitles/CC</span>
 
@@ -99,7 +99,7 @@ const Settings: React.FC = () => {
       {qualityLevels.length > 1 && (
         <button
           onClick={openQualityLevels}
-          className="settings-setting-container cursor-pointer justify-between"
+          className="settings-setting-container setting-button cursor-pointer justify-between"
         >
           <span className="text-base font-semibold">Quality</span>
 

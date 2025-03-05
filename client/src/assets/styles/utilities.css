@@ -38,3 +38,16 @@
 @utility grid-auto-flow-unset {
   grid-auto-flow: unset;
 }
+
+@keyframes spin-fast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility animate-spin-fast {
+  animation: spin-fast 0.6s linear infinite;
+}

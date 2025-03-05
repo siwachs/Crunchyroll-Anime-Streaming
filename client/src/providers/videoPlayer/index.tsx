@@ -14,6 +14,8 @@ import HLS from "hls.js";
 
 import { Context, MediaSettingsPanel } from "./index.types";
 
+import "@/app/(main)/watch/[id]/[title]/_components/videoPlayer/index.css";
+
 const VideoPlayerContext = createContext<Context | undefined>(undefined);
 
 export function useVideoPlayer() {
@@ -30,8 +32,13 @@ export function VideoPlayerProvider({
 }: Readonly<{ children: React.ReactNode; media: string }>) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<HLS | null>(null);
+  const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const initlizedPlayerRef = useRef(false);
 
-  const [autoPlay, setAutoPlay] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showControls, setShowControls] = useState(true);
+
+  const [autoPlay, setAutoPlay] = useState(true);
   const [isMediaPlaying, setIsMediaPlaying] = useState(false);
   const [isMediaMute, setIsMediaMute] = useState(false);
 
@@ -59,11 +66,44 @@ export function VideoPlayerProvider({
   const [currentLevel, setCurrentLevel] = useState(360);
 
   const [isMediaSettingsPanelOpen, setIsMediaSettingsPanelOpen] =
-    useState<MediaSettingsPanel>("settings");
+    useState<MediaSettingsPanel>("off");
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    function play() {
+      setIsMediaPlaying(true);
+    }
+
+    function pause() {
+      setIsMediaPlaying(false);
+    }
+
+    function waiting() {
+      setIsLoading(true);
+    }
+
+    function canPlay() {
+      setIsLoading(false);
+
+      if (!initlizedPlayerRef.current) {
+        initlizedPlayerRef.current = true;
+        hideControls();
+      }
+    }
+
+    function seeking() {
+      setIsLoading(true);
+    }
+
+    function seeked() {
+      setIsLoading(false);
+    }
+
+    function toggleFullscreen() {
+      setIsMediaFullscreen(document.fullscreenElement === video);
+    }
 
     let animationFrameId: number;
 
@@ -148,40 +188,100 @@ export function VideoPlayerProvider({
       });
     }
 
+    video.addEventListener("play", play);
+    video.addEventListener("pause", pause);
+
+    video.addEventListener("waiting", waiting);
+    video.addEventListener("canplay", canPlay);
+    video.addEventListener("canplaythrough", canPlay);
+    video.addEventListener("seeking", seeking);
+    video.addEventListener("seeked", seeked);
+
+    video.addEventListener("fullscreenchange", toggleFullscreen);
+
     animationFrameId = requestAnimationFrame(updateElapsedTime);
 
     return () => {
-      try {
-        if (hlsRef.current) {
-          hlsRef.current.destroy();
-          hlsRef.current = null;
-        }
-      } catch (error) {
-        console.error("Error while destroying HLS instance:", error);
-      }
+      hlsRef.current?.destroy();
+      hlsRef.current = null;
 
       if (video) {
         video.removeEventListener("loadedmetadata", tryAutoPlay);
+
+        video.removeEventListener("play", play);
+        video.removeEventListener("pause", pause);
+
+        video.removeEventListener("waiting", waiting);
+        video.removeEventListener("canplay", canPlay);
+        video.removeEventListener("canplaythrough", canPlay);
+        video.removeEventListener("seeking", seeking);
+        video.removeEventListener("seeked", seeked);
+
+        video.removeEventListener("fullscreenchange", toggleFullscreen);
       }
 
       cancelAnimationFrame(animationFrameId);
     };
   }, [media]);
 
+  // Stale State Managment
+  const isLoadingRef = useRef(true);
+  const isMediaPlayingRef = useRef(false);
+  const isMediaSettingsPanelOpenRef = useRef<MediaSettingsPanel>("off");
+  useEffect(() => {
+    isLoadingRef.current = isLoading;
+    isMediaPlayingRef.current = isMediaPlaying;
+    isMediaSettingsPanelOpenRef.current = isMediaSettingsPanelOpen;
+  }, [isLoading, isMediaPlaying, isMediaSettingsPanelOpen]);
+
+  // Update Que Position
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const selectedTrack = video.textTracks[selectedSubtitleTrack];
+    if (!selectedTrack?.cues) return;
+
+    const cues = selectedTrack.cues;
+    for (const cue of cues) {
+      if (cue instanceof VTTCue) {
+        cue.line = showControls ? -3 : "auto";
+      }
+    }
+  }, [showControls, selectedSubtitleTrack]);
+
   function toggleAutoPlay() {
     setAutoPlay((prev) => !prev);
   }
 
-  function toggleIsMediaPlaying() {
-    if (!videoRef.current) return;
+  function fb10Secs() {
+    const video = videoRef.current;
+    if (!video) return;
 
-    if (isMediaPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
+    const newTime = Math.max(video.currentTime - 10, 0);
+    video.currentTime = newTime;
 
-    setIsMediaPlaying((prev) => !prev);
+    setElapsedTime(newTime);
+    setSeekProgressPercentage((newTime / video.duration) * 100);
+  }
+
+  async function toggleIsMediaPlaying() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) await video.play();
+    else video.pause();
+  }
+
+  function ff10Secs() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const newTime = Math.min(video.currentTime + 10, video.duration);
+    video.currentTime = newTime;
+
+    setElapsedTime(newTime);
+    setSeekProgressPercentage((newTime / video.duration) * 100);
   }
 
   function seek(e: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLDivElement>) {
@@ -221,13 +321,8 @@ export function VideoPlayerProvider({
     const video = videoRef.current;
     if (!video) return;
 
-    if (!document.fullscreenElement) {
-      video.requestFullscreen?.();
-      setIsMediaFullscreen(true);
-    } else {
-      document.exitFullscreen?.();
-      setIsMediaFullscreen(false);
-    }
+    if (!document.fullscreenElement) video.requestFullscreen?.();
+    else document.exitFullscreen?.();
   }
 
   function switchAudioTrack(trackId: number) {
@@ -257,12 +352,38 @@ export function VideoPlayerProvider({
     setIsMediaSettingsPanelOpen("off");
   }
 
+  function showControlsOnMouseEnter() {
+    setShowControls(true);
+  }
+
+  function hideControls() {
+    setShowControls(
+      !(
+        !isLoadingRef.current &&
+        isMediaPlayingRef.current &&
+        isMediaSettingsPanelOpenRef.current === "off"
+      ),
+    );
+  }
+
+  function showControlsOnTouch() {
+    setShowControls(true);
+
+    if (hideControlsTimeoutRef.current)
+      clearTimeout(hideControlsTimeoutRef.current);
+
+    hideControlsTimeoutRef.current = setTimeout(hideControls, 3000);
+  }
+
   const value = useMemo(
     () => ({
+      isLoading,
       autoPlay,
       toggleAutoPlay,
+      fb10Secs,
       isMediaPlaying,
       toggleIsMediaPlaying,
+      ff10Secs,
       isMediaMute,
       toggleAudio,
       isMediaFullscreen,
@@ -287,6 +408,7 @@ export function VideoPlayerProvider({
       switchQualityLevel,
     }),
     [
+      isLoading,
       autoPlay,
       isMediaPlaying,
       isMediaMute,
@@ -306,16 +428,22 @@ export function VideoPlayerProvider({
 
   return (
     <VideoPlayerContext.Provider value={value}>
-      <div className="video-player relative grid w-full">
-        <div className="video-player-sizer pointer-events-none h-[56.25vw] max-h-40 min-h-[calc(20rem*0.5625)]" />
+      <div
+        onMouseEnter={showControlsOnMouseEnter}
+        onMouseLeave={hideControls}
+        onTouchStart={showControlsOnTouch}
+        className="video-player relative grid w-full"
+      >
+        <div className="video-player-sizer pointer-events-none" />
 
         <div className="relative size-full">
           <video
             ref={videoRef}
             className="video absolute aspect-video size-full"
+            controls={isMediaFullscreen}
           />
 
-          {children}
+          {(showControls || isLoading) && children}
         </div>
       </div>
     </VideoPlayerContext.Provider>

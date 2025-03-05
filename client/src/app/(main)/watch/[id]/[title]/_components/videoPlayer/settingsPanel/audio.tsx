@@ -29,7 +29,7 @@ const Audio: React.FC = () => {
         <button
           key={audioTrack.id}
           onClick={() => switchAudioTrack(audioTrack.id)}
-          className="audio-setting-container cursor-pointer"
+          className="audio-setting-container setting-button cursor-pointer"
         >
           {audioTrack.id === selectedAudioTrack ? (
             <RadioSelect className="mr-8 size-5" />
@@ -44,7 +44,7 @@ const Audio: React.FC = () => {
 
       <button
         onClick={() => switchAudioTrack(-1)}
-        className="subtitles-setting-container cursor-pointer"
+        className="subtitles-setting-container setting-button cursor-pointer"
       >
         {selectedAudioTrack === -1 ? (
           <RadioSelect className="mr-8 size-5" />

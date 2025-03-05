@@ -10,8 +10,14 @@
   grid-area: video-player;
 }
 
+.video-player-sizer,
+.settings-panel-sizer {
+  @apply h-[56.25vw] max-h-40 min-h-[calc(20rem*0.5625)];
+}
+
 @media screen and (min-height: 25rem) {
-  .video-player-sizer {
+  .video-player-sizer,
+  .settings-panel-sizer {
     @apply max-h-[calc(100vh-15.625rem)];
   }
 }

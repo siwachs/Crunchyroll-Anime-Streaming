@@ -27,7 +27,7 @@ const QualityLevels: React.FC = () => {
 
       <button
         onClick={() => switchQualityLevel(-1)}
-        className="subtitles-setting-container cursor-pointer"
+        className="subtitles-setting-container setting-button cursor-pointer"
       >
         {selectedQuality === -1 ? (
           <RadioSelect className="mr-8 size-5" />
@@ -43,7 +43,7 @@ const QualityLevels: React.FC = () => {
         <button
           key={qualityLevel.id}
           onClick={() => switchQualityLevel(qualityLevel.id)}
-          className="subtitles-setting-container cursor-pointer"
+          className="subtitles-setting-container setting-button cursor-pointer"
         >
           {qualityLevel.id === selectedQuality ? (
             <RadioSelect className="mr-8 size-5" />

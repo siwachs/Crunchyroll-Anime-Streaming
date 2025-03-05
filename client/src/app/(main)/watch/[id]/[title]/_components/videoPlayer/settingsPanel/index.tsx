@@ -22,7 +22,7 @@ const SettingsPanel: React.FC = () => {
   }
 
   return (
-    <div className="relative">
+    <div>
       <button
         className={`player-action-button ${isMediaSettingsPanelOpen !== "off" ? "bg-black" : ""}`}
         onClick={toggleMediaSettingsPanelOpen}
@@ -31,8 +31,8 @@ const SettingsPanel: React.FC = () => {
       </button>
 
       {isMediaSettingsPanelOpen !== "off" && (
-        <div className="absolute top-full right-0 left-auto z-98">
-          <div className="scrollbar-thin h-27.75 w-80 overflow-x-hidden overflow-y-auto bg-black py-2.5">
+        <div className="absolute top-0 right-0 left-0 z-98">
+          <div className="settings-panel-sizer scrollbar-thin overflow-x-hidden overflow-y-auto bg-black py-2.5">
             {isMediaSettingsPanelOpen === "settings" && <Settings />}
             {isMediaSettingsPanelOpen === "audioTracks" && <Audio />}
             {isMediaSettingsPanelOpen === "subtitleTracks" && <Subtitles />}
