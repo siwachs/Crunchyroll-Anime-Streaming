@@ -32,11 +32,11 @@
 }
 
 .playable-card-small-title {
-  @apply mb-1 self-start;
+  @apply mb-1 line-clamp-2 self-start;
 }
 
 .playable-card-small-title small {
-  @apply block truncate text-[0.625rem]/[0.875rem] font-black text-[var(--meta-color)] uppercase select-none;
+  @apply block text-[0.625rem]/[0.875rem] font-black text-[var(--meta-color)] uppercase select-none;
 }
 
 .playable-card-hover-title {

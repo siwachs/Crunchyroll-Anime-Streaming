@@ -15,6 +15,10 @@
   @apply h-[56.25vw] max-h-40 min-h-[calc(20rem*0.5625)];
 }
 
+.settings-panel-sizer {
+  @apply md:h-full md:max-h-75.5 md:w-80;
+}
+
 @media screen and (min-height: 25rem) {
   .video-player-sizer,
   .settings-panel-sizer {
@@ -30,26 +34,26 @@
 }
 
 .seek::-webkit-slider-runnable-track {
-  @apply h-[2.5px] bg-[var(--meta-color)];
+  @apply h-[2.5px] rounded-sm bg-[var(--meta-color)] sm:h-[3px];
 }
 
 .seek::-moz-range-track {
-  @apply h-[2.5px] bg-[var(--meta-color)];
+  @apply h-[2.5px] rounded-sm bg-[var(--meta-color)] sm:h-[3px];
 }
 
 .seek::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
 
-  @apply -mt-[4.75px] size-3 rounded-full bg-[var(--app-background-crunchyroll-orange)];
+  @apply -mt-[4.75px] size-3 rounded-full bg-[var(--app-background-crunchyroll-orange)] sm:size-4;
 }
 
 .seek::-moz-range-thumb {
-  @apply size-3 border-0 border-none bg-[var(--app-background-crunchyroll-orange)];
+  @apply size-3 border-0 border-none bg-[var(--app-background-crunchyroll-orange)] sm:size-4;
 }
 
 .seek::-moz-range-progress {
-  @apply h-[2.5px] bg-[var(--app-background-crunchyroll-orange)];
+  @apply h-[2.5px] bg-[var(--app-background-crunchyroll-orange)] sm:h-[3px];
 }
 
 .player-action-button {

@@ -116,8 +116,8 @@ const VideoPlayer: React.FC<{ duration: number }> = ({ duration }) => {
           )}
         </div>
 
-        <div className="duration-and-seek absolute right-0 bottom-0 left-0 px-4">
-          <div className="duration flex justify-between text-xs font-semibold">
+        <div className="duration-and-seek absolute right-0 bottom-0 left-0 px-4 sm:px-5">
+          <div className="duration flex justify-between text-xs font-medium select-none sm:text-sm/4.5">
             <span>{formattedElapsedTime}</span>
             <span>{formattedTotalDuration}</span>
           </div>
@@ -126,7 +126,7 @@ const VideoPlayer: React.FC<{ duration: number }> = ({ duration }) => {
             tabIndex={0}
             role="button"
             onKeyDown={undefined}
-            className="flex min-h-6 cursor-pointer items-center"
+            className="flex min-h-6 cursor-pointer items-center sm:min-h-10.5"
             onClick={seek}
           >
             <input

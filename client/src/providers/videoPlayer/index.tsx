@@ -14,8 +14,6 @@ import HLS from "hls.js";
 
 import { Context, MediaSettingsPanel } from "./index.types";
 
-import "@/app/(main)/watch/[id]/[title]/_components/videoPlayer/index.css";
-
 const VideoPlayerContext = createContext<Context | undefined>(undefined);
 
 export function useVideoPlayer() {
@@ -248,7 +246,7 @@ export function VideoPlayerProvider({
         cue.line = showControls ? -3 : "auto";
       }
     }
-  }, [showControls, selectedSubtitleTrack]);
+  }, [isMediaFullscreen, showControls, selectedSubtitleTrack]);
 
   function toggleAutoPlay() {
     setAutoPlay((prev) => !prev);
@@ -429,10 +427,12 @@ export function VideoPlayerProvider({
   return (
     <VideoPlayerContext.Provider value={value}>
       <div
+        role="region"
         onMouseEnter={showControlsOnMouseEnter}
         onMouseLeave={hideControls}
         onTouchStart={showControlsOnTouch}
         className="video-player relative grid w-full"
+        aria-label="video player controls"
       >
         <div className="video-player-sizer pointer-events-none" />
 
