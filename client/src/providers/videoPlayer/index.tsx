@@ -232,20 +232,30 @@ export function VideoPlayerProvider({
     isMediaSettingsPanelOpenRef.current = isMediaSettingsPanelOpen;
   }, [isLoading, isMediaPlaying, isMediaSettingsPanelOpen]);
 
-  // Update Que Position
+  // Update Que Positions
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const selectedTrack = video.textTracks[selectedSubtitleTrack];
-    if (!selectedTrack?.cues) return;
+    if (!selectedTrack) return;
 
-    const cues = selectedTrack.cues;
-    for (const cue of cues) {
-      if (cue instanceof VTTCue) {
-        cue.line = showControls ? -3 : "auto";
+    function updateCuePositions() {
+      if (!selectedTrack?.cues) return;
+
+      for (const cue of selectedTrack.cues) {
+        if (cue instanceof VTTCue) {
+          cue.line = showControls ? -4 : "auto";
+        }
       }
     }
+
+    updateCuePositions();
+
+    selectedTrack.addEventListener("cuechange", updateCuePositions);
+
+    return () =>
+      selectedTrack.removeEventListener("cuechange", updateCuePositions);
   }, [isMediaFullscreen, showControls, selectedSubtitleTrack]);
 
   function toggleAutoPlay() {
