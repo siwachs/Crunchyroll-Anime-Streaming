@@ -31,6 +31,7 @@ export function VideoPlayerProvider({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<HLS | null>(null);
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const initlizedPlayerRef = useRef(false);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -360,14 +361,13 @@ export function VideoPlayerProvider({
     setIsMediaSettingsPanelOpen("off");
   }
 
-  function showControlsOnMouseEnter() {
+  function showControlsOnMouseMove() {
     setShowControls(true);
   }
 
   function hideControls() {
     setShowControls(
       !(
-        !isLoadingRef.current &&
         isMediaPlayingRef.current &&
         isMediaSettingsPanelOpenRef.current === "off"
       ),
@@ -438,7 +438,7 @@ export function VideoPlayerProvider({
     <VideoPlayerContext.Provider value={value}>
       <div
         role="region"
-        onMouseEnter={showControlsOnMouseEnter}
+        onMouseMove={showControlsOnMouseMove}
         onMouseLeave={hideControls}
         onTouchStart={showControlsOnTouch}
         className="video-player relative grid w-full"
