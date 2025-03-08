@@ -8,6 +8,5 @@
         "distDir": "client/build"
       }
     }
-  ],
-  "ignore": ["server/**"]
+  ]
 }
