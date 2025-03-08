@@ -1,20 +1,21 @@
 # Crunchyroll Anime/Video Streaming - Server
 
-This is the high-performance backend for the Crunchyroll CMS, built using **NestJS**. It handles **HLS media transcoding and concurrent uploads using Kafka**, ensuring **optimized video streaming and content management**. The backend is fully independent from the client and designed for **high throughput and scalable performance**.
+This high-performance **NestJS** backend powers the Crunchyroll CMS, handling **HLS media transcoding, content creation, and file uploads**. It is fully decoupled from the client and optimized for **high throughput and scalability**.
 
-It supports **automatic API retry mechanisms** to handle failures and uses **promise pooling** for **efficient concurrent uploads**. Both **media transcoding and file uploads are managed asynchronously with Kafka**, improving performance and scalability. Static assets are stored in **Supabase’s S3-compatible bucket**, while **MongoDB** serves as the database.
+**Kafka asynchronously manages both media transcoding and static/media file uploads**, while **promise pooling and API retries** improve performance and stability. **FFmpeg** is used for video processing, **MongoDB** for content management, and **Supabase’s S3-compatible storage** for static assets.
 
-### 🔥 Tech Stack:
-- **Node.js** + **NestJS** – Scalable, modular backend.
+## 🔥 Tech Stack:
+- **Node.js + NestJS** – Scalable, modular backend.
 - **TypeScript** – Type-safe, maintainable code.
-- **FFmpeg** – Handles HLS media transcoding.
-- **Kafka** – Manages **both file uploads and transcoding** asynchronously.
-- **MongoDB** – NoSQL database for content management.
-- **Supabase (S3 Bucket)** – Cloud storage for static assets.
+- **FFmpeg** – HLS media transcoding.
+- **Kafka** – Asynchronous processing for **both transcoding and uploads**.
+- **MongoDB** – NoSQL database for content storage.
+- **Supabase (S3 Bucket)** – Cloud storage for static and media assets.
 
-### 🚀 Features:
-- **HLS Media Transcoding** – Converts videos into HLS segments for streaming.
-- **Kafka-Powered Processing** – **Handles both uploads and transcoding** asynchronously.
-- **Concurrent Uploads** – Uses **promise pooling** for optimized speed.
-- **Auto-Retry API Requests** – Ensures API reliability in case of failures.
-- **Optimized for High Throughput** – Designed to scale efficiently.
+## 🚀 Features:
+- **Decoupled CMS Server** – Handles **content creation, transcoding, and uploads**.
+- **Kafka-Powered Processing** – **Manages both transcoding and file uploads** asynchronously.
+- **HLS Media Transcoding** – Converts videos into HLS segments for optimized streaming.
+- **Concurrent Uploads** – Uses **promise pooling** for speed and efficiency.
+- **Auto-Retry API Requests** – Ensures reliability under failure conditions.
+- **Optimized for High Throughput** – Scales efficiently under heavy load.
