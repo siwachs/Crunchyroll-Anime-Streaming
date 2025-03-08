@@ -3,6 +3,14 @@ import { revalidateTag } from "next/cache";
 
 const clearCache = async (req: NextRequest) => {
   try {
+    if (process.env.NODE_ENV === "production")
+      return NextResponse.json(
+        {
+          message: "Manual revalidation is disabled in production.",
+        },
+        { status: 400 },
+      );
+
     const searchParams = req.nextUrl.searchParams;
 
     const cacheTag = searchParams.get("cacheTag");
